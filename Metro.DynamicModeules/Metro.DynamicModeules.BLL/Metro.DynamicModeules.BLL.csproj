@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A674DB78-C6CB-409B-893D-728ABF88EC84}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Metro.DynamicModeules.BLL</RootNamespace>
+    <AssemblyName>Metro.DynamicModeules.BLL</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>none</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.Protocols" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BllAttachmentLib.cs" />
+    <Compile Include="BllCompanyInfo.cs" />
+    <Compile Include="Base\BllBase.cs" />
+    <Compile Include="Base\BllBaseBusiness.cs" />
+    <Compile Include="Base\BllBaseDataDict.cs" />
+    <Compile Include="BllLocalLog.cs" />
+    <Compile Include="Business\BllAddress.cs" />
+    <Compile Include="Business\BllBusinessLog.cs" />
+    <Compile Include="Business\BllDeliveryInfo.cs" />
+    <Compile Include="Business\BllInOrder.cs" />
+    <Compile Include="Business\BllOrderDetail.cs" />
+    <Compile Include="Business\BllPO.cs" />
+    <Compile Include="Business\BllSO.cs" />
+    <Compile Include="Business\BllStowage.cs" />
+    <Compile Include="Business\BllUnknow.cs" />
+    <Compile Include="Business\BllIA.cs" />
+    <Compile Include="Business\BllIN.cs" />
+    <Compile Include="Business\BllIO.cs" />
+    <Compile Include="Business\BllIC.cs" />
+    <Compile Include="Business\BllAR.cs" />
+    <Compile Include="Business\BllAP.cs" />
+    <Compile Include="DataDict\BllCommonDataDict.cs" />
+    <Compile Include="DataDict\BllCustomer.cs" />
+    <Compile Include="DataDict\BllDriversInfo.cs" />
+    <Compile Include="DataDict\BllDriversVehicleRelation.cs" />
+    <Compile Include="DataDict\BllPerson.cs" />
+    <Compile Include="DataDict\BllNullObjectDataDict.cs" />
+    <Compile Include="DataDict\BllProduct.cs" />
+    <Compile Include="DataDict\BllAccountIDs.cs" />
+    <Compile Include="DataDict\Blltest03.cs" />
+    <Compile Include="DataDict\BllVehicleInfo.cs" />
+    <Compile Include="CommonData.cs" />
+    <Compile Include="GenerateItemsDef.cs" />
+    <Compile Include="Security\ActionNodeTag.cs" />
+    <Compile Include="Security\AuthNodeTag.cs" />
+    <Compile Include="Security\BllGroupAuthority.cs" />
+    <Compile Include="Security\BllMenuMgr.cs" />
+    <Compile Include="Security\DomainLdapTools.cs" />
+    <Compile Include="Security\LoginAuthorization.cs" />
+    <Compile Include="Security\NovellLdapTools.cs" />
+    <Compile Include="Security\BllUser.cs" />
+    <Compile Include="DataDictCache.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\HTX.Server\HTX.Server.DataAccess\HTX.Server.DataAccess.csproj">
+      <Project>{49d996ce-3e2f-4664-b861-b929a9e26537}</Project>
+      <Name>HTX.Server.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HTX.Bridge\HTX.Bridge.csproj">
+      <Project>{c722efff-6985-478d-9bb2-c536821ac2fe}</Project>
+      <Name>HTX.Bridge</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HTX.Common\HTX.Common.csproj">
+      <Project>{269eceff-b6c2-4708-86ba-afbb1a2b045c}</Project>
+      <Name>HTX.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HTX.Core\HTX.Core.csproj">
+      <Project>{2a59861c-5d4d-4768-b31f-7f59a8517dae}</Project>
+      <Name>HTX.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HTX.Interfaces\HTX.Interfaces.csproj">
+      <Project>{e96fa431-a247-49f3-892b-03e411957180}</Project>
+      <Name>HTX.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HTX.Models\HTX.Models.csproj">
+      <Project>{2cf256b2-f5e0-4670-8644-08ddf65b0009}</Project>
+      <Name>HTX.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HTX.WebServiceReference\HTX.WebServiceReference.csproj">
+      <Project>{830d9756-d0f4-4140-8afc-500e8eca03c4}</Project>
+      <Name>HTX.WebServiceReference</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

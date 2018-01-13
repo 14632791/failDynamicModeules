@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{937E0D53-9696-48AB-B12F-736BC6D43F15}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Metro.DynamicModeules.Models</RootNamespace>
+    <AssemblyName>Metro.DynamicModeules.Models</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\Metro.DynamicModeules.WebApi\packages\EntityFramework.6.2.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\Metro.DynamicModeules.WebApi\packages\EntityFramework.6.2.0\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="dtproperty.cs" />
+    <Compile Include="log_SO.cs" />
+    <Compile Include="log_SOs.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="sysdiagram.cs" />
+    <Compile Include="sys_BusinessTables.cs" />
+    <Compile Include="sys_DataSN.cs" />
+    <Compile Include="sys_DocSN.cs" />
+    <Compile Include="sys_FieldNameDefs.cs" />
+    <Compile Include="sys_Modules.cs" />
+    <Compile Include="tb_AccountIDs.cs" />
+    <Compile Include="tb_AP.cs" />
+    <Compile Include="tb_APs.cs" />
+    <Compile Include="tb_AR.cs" />
+    <Compile Include="tb_ARs.cs" />
+    <Compile Include="tb_AttachFile.cs" />
+    <Compile Include="tb_CommDataDictType.cs" />
+    <Compile Include="tb_CommonDataDict.cs" />
+    <Compile Include="tb_CompanyInfo.cs" />
+    <Compile Include="tb_Currency.cs" />
+    <Compile Include="tb_Customer.cs" />
+    <Compile Include="tb_CustomerAttribute.cs" />
+    <Compile Include="tb_DataSet.cs" />
+    <Compile Include="tb_IA.cs" />
+    <Compile Include="tb_IAs.cs" />
+    <Compile Include="tb_IC.cs" />
+    <Compile Include="tb_ICs.cs" />
+    <Compile Include="tb_IN.cs" />
+    <Compile Include="tb_INs.cs" />
+    <Compile Include="tb_IO.cs" />
+    <Compile Include="tb_IOs.cs" />
+    <Compile Include="tb_Location.cs" />
+    <Compile Include="tb_Log.cs" />
+    <Compile Include="tb_LogDtl.cs" />
+    <Compile Include="tb_LogFields.cs" />
+    <Compile Include="tb_LoginLog.cs" />
+    <Compile Include="tb_MyAuthorityItem.cs" />
+    <Compile Include="tb_MyFormTagName.cs" />
+    <Compile Include="tb_MyMenu.cs" />
+    <Compile Include="tb_MyUser.cs" />
+    <Compile Include="tb_MyUserGroup.cs" />
+    <Compile Include="tb_MyUserGroupRe.cs" />
+    <Compile Include="tb_MyUserRole.cs" />
+    <Compile Include="tb_PayType.cs" />
+    <Compile Include="tb_Person.cs" />
+    <Compile Include="tb_PO.cs" />
+    <Compile Include="tb_POs.cs" />
+    <Compile Include="tb_Product.cs" />
+    <Compile Include="tb_ProductCategory.cs" />
+    <Compile Include="tb_SO.cs" />
+    <Compile Include="tb_SOs.cs" />
+    <Compile Include="vw_APs.cs" />
+    <Compile Include="vw_ARs.cs" />
+    <Compile Include="vw_CommonDataDicts.cs" />
+    <Compile Include="vw_IAs.cs" />
+    <Compile Include="vw_ICs.cs" />
+    <Compile Include="vw_INs.cs" />
+    <Compile Include="vw_IOs.cs" />
+    <Compile Include="vw_LogOPType.cs" />
+    <Compile Include="vw_POs.cs" />
+    <Compile Include="vw_SOs.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
