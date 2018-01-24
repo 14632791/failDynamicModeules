@@ -1,14 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;  using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("tb_AttachFile")]
     public partial class tb_AttachFile: INotifyPropertyChanged
     {
 	
-[Column("FileID")]
+ [Key]
         public int FileID 
 		{ 
 		   get
@@ -23,7 +25,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private int _FileID;
-[Column("DocID")]
+ [StringLength(20)]
         public string DocID 
 		{ 
 		   get
@@ -38,7 +40,8 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private string _DocID;
-[Column("FileTitle")]
+ [Required]
+        [StringLength(100)]
         public string FileTitle 
 		{ 
 		   get
@@ -53,7 +56,8 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private string _FileTitle;
-[Column("FileName")]
+  [Required]
+        [StringLength(50)]
         public string FileName 
 		{ 
 		   get
@@ -68,7 +72,8 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private string _FileName;
-[Column("FileType")]
+     [Required]
+        [StringLength(10)]
         public string FileType 
 		{ 
 		   get
@@ -113,7 +118,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private byte[] _FileBody;
-[Column("IsDroped")]
+ [StringLength(1)]
         public string IsDroped 
 		{ 
 		   get

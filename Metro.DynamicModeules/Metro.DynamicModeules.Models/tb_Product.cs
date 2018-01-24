@@ -1,13 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;  using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("tb_Product")]
     public partial class tb_Product: INotifyPropertyChanged
     {
-	
+ [DatabaseGenerated(DatabaseGeneratedOption.Identity)]	
 [Column("isid")]
         public int isid 
 		{ 
@@ -24,6 +26,8 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private int _isid;
 [Column("ProductCode")]
+ [Key]
+        [StringLength(20)]
         public string ProductCode 
 		{ 
 		   get
@@ -39,6 +43,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _ProductCode;
 [Column("ProductName")]
+[StringLength(50)]
         public string ProductName 
 		{ 
 		   get
@@ -54,6 +59,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _ProductName;
 [Column("CategoryId")]
+ [StringLength(20)]
         public string CategoryId 
 		{ 
 		   get
@@ -84,6 +90,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private Nullable<decimal> _SellPrice;
 [Column("Supplier")]
+[StringLength(50)]
         public string Supplier 
 		{ 
 		   get
@@ -99,6 +106,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _Supplier;
 [Column("Remark")]
+ [StringLength(100)]
         public string Remark 
 		{ 
 		   get

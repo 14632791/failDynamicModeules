@@ -1,14 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;  using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("tb_ARs")]
     public partial class tb_ARs: INotifyPropertyChanged
     {
 	
-[Column("ISID")]
+[Key]
         public int ISID 
 		{ 
 		   get
@@ -23,7 +25,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private int _ISID;
-[Column("ARNO")]
+[StringLength(20)]
         public string ARNO 
 		{ 
 		   get
@@ -53,7 +55,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private Nullable<decimal> _Queue;
-[Column("InvoiceNo")]
+ [StringLength(20)]
         public string InvoiceNo 
 		{ 
 		   get
@@ -68,7 +70,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private string _InvoiceNo;
-[Column("SONO")]
+ [StringLength(20)]
         public string SONO 
 		{ 
 		   get
@@ -83,7 +85,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private string _SONO;
-[Column("Currency")]
+[StringLength(20)]
         public string Currency 
 		{ 
 		   get
@@ -113,7 +115,8 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private Nullable<decimal> _Amount;
-[Column("Remark")]
+
+ [StringLength(100)]
         public string Remark 
 		{ 
 		   get
@@ -143,7 +146,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private Nullable<System.DateTime> _CreationDate;
-[Column("CreatedBy")]
+[StringLength(20)]
         public string CreatedBy 
 		{ 
 		   get
@@ -173,7 +176,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private Nullable<System.DateTime> _LastUpdateDate;
-[Column("LastUpdatedBy")]
+ [StringLength(20)]
         public string LastUpdatedBy 
 		{ 
 		   get

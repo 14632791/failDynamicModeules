@@ -1,14 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;  using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("tb_CommonDataDict")]
     public partial class tb_CommonDataDict: INotifyPropertyChanged
     {
 	
 [Column("ISID")]
+ [Key]
         public int ISID 
 		{ 
 		   get
@@ -39,6 +42,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private Nullable<int> _DataType;
 [Column("DataCode")]
+ [StringLength(20)]
         public string DataCode 
 		{ 
 		   get
@@ -54,6 +58,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _DataCode;
 [Column("NativeName")]
+  [StringLength(100)]
         public string NativeName 
 		{ 
 		   get
@@ -69,6 +74,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _NativeName;
 [Column("EnglishName")]
+[StringLength(50)]
         public string EnglishName 
 		{ 
 		   get
@@ -99,6 +105,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private Nullable<System.DateTime> _CreationDate;
 [Column("CreatedBy")]
+[StringLength(20)]
         public string CreatedBy 
 		{ 
 		   get
@@ -129,6 +136,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private Nullable<System.DateTime> _LastUpdateDate;
 [Column("LastUpdatedBy")]
+[StringLength(20)]
         public string LastUpdatedBy 
 		{ 
 		   get

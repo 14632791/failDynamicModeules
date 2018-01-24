@@ -1,13 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;  using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("tb_LogDtl")]
     public partial class tb_LogDtl: INotifyPropertyChanged
     {
-	
+	  [Key]
 [Column("isid")]
         public int isid 
 		{ 
@@ -24,6 +26,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private int _isid;
 [Column("GUID32")]
+ [StringLength(32)]
         public string GUID32 
 		{ 
 		   get
@@ -39,6 +42,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _GUID32;
 [Column("TableName")]
+ [StringLength(20)]
         public string TableName 
 		{ 
 		   get
@@ -54,6 +58,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _TableName;
 [Column("FieldName")]
+ [StringLength(20)]
         public string FieldName 
 		{ 
 		   get
@@ -69,6 +74,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _FieldName;
 [Column("OldValue")]
+  [StringLength(250)]
         public string OldValue 
 		{ 
 		   get
@@ -84,6 +90,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _OldValue;
 [Column("NewValue")]
+ [StringLength(250)]
         public string NewValue 
 		{ 
 		   get

@@ -1,58 +1,61 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     [Table("tb_PayType")]
-    public partial class tb_PayType: INotifyPropertyChanged
+    public partial class tb_PayType : INotifyPropertyChanged
     {
-	
-[Column("isid")]
-        public int isid 
-		{ 
-		   get
-           {
-               return _isid;
-           }
-           set
-           {
-               if (Equals(_isid, value)) return;
-               _isid = value;
-               RaisePropertyChanged("isid");
-           }
-		} 
-		private int _isid;
-[Column("PayType")]
-        public string PayType 
-		{ 
-		   get
-           {
-               return _PayType;
-           }
-           set
-           {
-               if (Equals(_PayType, value)) return;
-               _PayType = value;
-               RaisePropertyChanged("PayType");
-           }
-		} 
-		private string _PayType;
-[Column("TypeName")]
-        public string TypeName 
-		{ 
-		   get
-           {
-               return _TypeName;
-           }
-           set
-           {
-               if (Equals(_TypeName, value)) return;
-               _TypeName = value;
-               RaisePropertyChanged("TypeName");
-           }
-		} 
-		private string _TypeName;
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("isid")]
+        public int isid
+        {
+            get
+            {
+                return _isid;
+            }
+            set
+            {
+                if (Equals(_isid, value)) return;
+                _isid = value;
+                RaisePropertyChanged("isid");
+            }
+        }
+        private int _isid;
+        [Column("PayType")]
+        [Key]
+        [StringLength(10)]
+        public string PayType
+        {
+            get
+            {
+                return _PayType;
+            }
+            set
+            {
+                if (Equals(_PayType, value)) return;
+                _PayType = value;
+                RaisePropertyChanged("PayType");
+            }
+        }
+        private string _PayType;
+        [Column("TypeName")]
+        [StringLength(20)]
+        public string TypeName
+        {
+            get
+            {
+                return _TypeName;
+            }
+            set
+            {
+                if (Equals(_TypeName, value)) return;
+                _TypeName = value;
+                RaisePropertyChanged("TypeName");
+            }
+        }
+        private string _TypeName;
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>

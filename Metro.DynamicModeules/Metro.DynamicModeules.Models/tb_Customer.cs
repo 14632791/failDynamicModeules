@@ -1,13 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;  using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("tb_Customer")]
     public partial class tb_Customer: INotifyPropertyChanged
     {
-	
+  [DatabaseGenerated(DatabaseGeneratedOption.Identity)]	
 [Column("ISID")]
         public int ISID 
 		{ 
@@ -24,6 +26,8 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private int _ISID;
 [Column("CustomerCode")]
+ [Key]
+        [StringLength(20)]
         public string CustomerCode 
 		{ 
 		   get
@@ -39,6 +43,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _CustomerCode;
 [Column("NativeName")]
+ [StringLength(100)]
         public string NativeName 
 		{ 
 		   get
@@ -54,6 +59,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _NativeName;
 [Column("EnglishName")]
+ [StringLength(100)]
         public string EnglishName 
 		{ 
 		   get
@@ -69,6 +75,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _EnglishName;
 [Column("AttributeCodes")]
+[StringLength(50)]
         public string AttributeCodes 
 		{ 
 		   get
@@ -84,6 +91,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _AttributeCodes;
 [Column("Address1")]
+ [StringLength(50)]
         public string Address1 
 		{ 
 		   get
@@ -99,6 +107,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _Address1;
 [Column("Address2")]
+ [StringLength(50)]
         public string Address2 
 		{ 
 		   get
@@ -129,6 +138,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _Address3;
 [Column("Country")]
+[StringLength(20)]
         public string Country 
 		{ 
 		   get
@@ -144,6 +154,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _Country;
 [Column("Region")]
+ [StringLength(20)]
         public string Region 
 		{ 
 		   get
@@ -159,6 +170,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _Region;
 [Column("City")]
+ [StringLength(20)]
         public string City 
 		{ 
 		   get
@@ -174,6 +186,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _City;
 [Column("CountryCode")]
+ [StringLength(6)]
         public string CountryCode 
 		{ 
 		   get
@@ -189,6 +202,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _CountryCode;
 [Column("CityCode")]
+  [StringLength(6)]
         public string CityCode 
 		{ 
 		   get
@@ -219,6 +233,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _Tel;
 [Column("Fax")]
+[StringLength(20)]
         public string Fax 
 		{ 
 		   get
@@ -249,6 +264,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _PostalCode;
 [Column("ZipCode")]
+ [StringLength(20)]
         public string ZipCode 
 		{ 
 		   get
@@ -279,6 +295,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _WebAddress;
 [Column("Email")]
+ [StringLength(200)]
         public string Email 
 		{ 
 		   get
@@ -294,6 +311,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _Email;
 [Column("Bank")]
+[StringLength(20)]
         public string Bank 
 		{ 
 		   get
@@ -324,6 +342,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _BankAccount;
 [Column("BankAddress")]
+ [StringLength(50)]
         public string BankAddress 
 		{ 
 		   get
@@ -339,6 +358,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _BankAddress;
 [Column("ContactPerson")]
+ [StringLength(20)]
         public string ContactPerson 
 		{ 
 		   get
@@ -354,6 +374,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _ContactPerson;
 [Column("Remark")]
+ [StringLength(200)]
         public string Remark 
 		{ 
 		   get
@@ -444,6 +465,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private Nullable<System.DateTime> _LastUpdateDate;
 [Column("LastUpdatedBy")]
+ [StringLength(50)]
         public string LastUpdatedBy 
 		{ 
 		   get

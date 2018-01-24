@@ -135,8 +135,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Page Include="LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -183,6 +191,10 @@
     <ProjectReference Include="..\Metro.DynamicModeules.BaseControls\Metro.DynamicModeules.BaseControls.csproj">
       <Project>{a482cd5f-389c-41c4-b537-cbac13eaa932}</Project>
       <Name>Metro.DynamicModeules.BaseControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Metro.DynamicModeules.Common\Metro.DynamicModeules.Common.csproj">
+      <Project>{269ECEFF-B6C2-4708-86BA-AFBB1A2B045C}</Project>
+      <Name>Metro.DynamicModeules.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Metro.DynamicModeules.Core\Metro.DynamicModeules.Core.csproj">
       <Project>{085A3767-0F46-4923-8EB5-596CE276FC47}</Project>

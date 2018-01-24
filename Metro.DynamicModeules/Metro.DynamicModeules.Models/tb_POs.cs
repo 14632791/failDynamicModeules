@@ -1,13 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;  using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("tb_POs")]
     public partial class tb_POs: INotifyPropertyChanged
     {
-	
+ [Key]	
 [Column("ISID")]
         public int ISID 
 		{ 
@@ -24,6 +26,8 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private int _ISID;
 [Column("PONO")]
+[Required]
+        [StringLength(20)]
         public string PONO 
 		{ 
 		   get
@@ -54,6 +58,8 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private decimal _Queue;
 [Column("ProductCode")]
+[Required]
+        [StringLength(20)]
         public string ProductCode 
 		{ 
 		   get
@@ -69,6 +75,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _ProductCode;
 [Column("Unit")]
+[StringLength(10)]
         public string Unit 
 		{ 
 		   get
@@ -98,7 +105,8 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private Nullable<int> _Quantity;
-[Column("Price")]
+
+[Column("Price",TypeName = "numeric")]
         public Nullable<decimal> Price 
 		{ 
 		   get
@@ -129,6 +137,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private Nullable<decimal> _Amount;
 [Column("Remark")]
+[StringLength(50)]
         public string Remark 
 		{ 
 		   get
@@ -159,6 +168,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private Nullable<System.DateTime> _CreationDate;
 [Column("CreatedBy")]
+ [StringLength(50)]
         public string CreatedBy 
 		{ 
 		   get
@@ -189,6 +199,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private Nullable<System.DateTime> _LastUpdateDate;
 [Column("LastUpdatedBy")]
+ [StringLength(20)]
         public string LastUpdatedBy 
 		{ 
 		   get

@@ -9,17 +9,7 @@
 ///*
 ///**************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Data;
-using Metro.DynamicModeules.Models;
-using Metro.DynamicModeules.Common;
-using Metro.DynamicModeules.Interfaces;
-using Metro.DynamicModeules.Bridge;
-using Metro.DynamicModeules.Models.SystemModels;
-using Metro.DynamicModeules.Models.DataDictModels;
-using Metro.DynamicModeules.Interfaces.Bridge;
 
 
 namespace Metro.DynamicModeules.BLL
@@ -199,71 +189,10 @@ namespace Metro.DynamicModeules.BLL
         public DataTable CommonDataDriversVehicleRelation { get; set; }
         #endregion
 
-
+        //下载刷新缓存
         public void DownloadBaseCacheData()
         {
-            IBridgeDataDict bridge = BridgeFactory.CreateDataDictBridge("");
-
-            //下载小字典表数据
-            _AllDataDicts = bridge.DownloadDicts();
-
-            //跟据存储过程返回数据表的顺序取
-            _BusinessTables = _AllDataDicts.Tables[1];
-            _User = _AllDataDicts.Tables[2];
-            _Person = _AllDataDicts.Tables[3];
-            _CustomerAttributes = _AllDataDicts.Tables[4];
-            _Bank = _AllDataDicts.Tables[5];
-            _CommonDataDictType = _AllDataDicts.Tables[6];
-            _PayType = _AllDataDicts.Tables[7];
-            _Currency = _AllDataDicts.Tables[8];
-            _Location = _AllDataDicts.Tables[9];
-            _DepartmentData = _AllDataDicts.Tables[10];
-            CommonDataDictOther = _AllDataDicts.Tables[11];
-            CommonDataDictDriversInfo = _AllDataDicts.Tables[12];
-            CommonDataVehicleInfo = _AllDataDicts.Tables[13];
-            CommonDataDriversVehicleRelation = _AllDataDicts.Tables[14];
-            CommonDataCustomer = _AllDataDicts.Tables[15];
-            //调用数据表名
-            _AllDataDicts.Tables[1].TableName = SysBusinessTables.__TableName;
-            _AllDataDicts.Tables[1].PrimaryKey = new DataColumn[] { _AllDataDicts.Tables[1].Columns[SysBusinessTables.__KeyName] };
-
-            _AllDataDicts.Tables[2].TableName = TUser.__TableName;
-            _AllDataDicts.Tables[2].PrimaryKey = new DataColumn[] { _AllDataDicts.Tables[2].Columns[TUser.__KeyName] };
-
-            _AllDataDicts.Tables[3].TableName = TblPerson.__TableName;
-            _AllDataDicts.Tables[3].PrimaryKey = new DataColumn[] { _AllDataDicts.Tables[3].Columns[TblPerson.__KeyName] };
-
-            _AllDataDicts.Tables[4].TableName = TblCustomerAttribute.__TableName;
-            _AllDataDicts.Tables[4].PrimaryKey = new DataColumn[] { _AllDataDicts.Tables[4].Columns[TblCustomerAttribute.__KeyName] };
-
-            _AllDataDicts.Tables[5].TableName = "#Bank"; //TblCommDataDictType表的银行类别的记录
-            _AllDataDicts.Tables[6].TableName = TblCommDataDictType.__TableName;
-            _AllDataDicts.Tables[6].PrimaryKey = new DataColumn[] { _AllDataDicts.Tables[6].Columns[TblCommDataDictType.__KeyName] };
-
-            _AllDataDicts.Tables[7].TableName = TblPayType.__TableName;
-            _AllDataDicts.Tables[7].PrimaryKey = new DataColumn[] { _AllDataDicts.Tables[7].Columns[TblPayType.__KeyName] };
-
-            _AllDataDicts.Tables[8].TableName = TblCurrency.__TableName;
-            _AllDataDicts.Tables[8].PrimaryKey = new DataColumn[] { _AllDataDicts.Tables[8].Columns[TblCurrency.__KeyName] };
-
-            _AllDataDicts.Tables[9].TableName = TblLocation.__TableName;
-            _AllDataDicts.Tables[9].PrimaryKey = new DataColumn[] { _AllDataDicts.Tables[9].Columns[TblLocation.__KeyName] };
-
-            _AllDataDicts.Tables[10].TableName = "#Dept"; //TblCommDataDictType表的部门类别的记录
-            _AllDataDicts.Tables[11].TableName = "tb_CommonDataDict"; //
-
-            _AllDataDicts.Tables[12].TableName = "tb_DriversInfo"; //
-            _AllDataDicts.Tables[12].PrimaryKey = new DataColumn[] { _AllDataDicts.Tables[12].Columns[TblDriversInfo.__KeyName] };
-
-            _AllDataDicts.Tables[13].TableName = "tb_VehicleInfo"; //
-            _AllDataDicts.Tables[13].PrimaryKey = new DataColumn[] { _AllDataDicts.Tables[13].Columns[TblVehicleInfo.__KeyName] };
-
-            _AllDataDicts.Tables[14].TableName = "tb_DriversVehicleRelation"; //
-            _AllDataDicts.Tables[14].PrimaryKey = new DataColumn[] {_AllDataDicts.Tables[14].Columns["Id"]};
-
-            _AllDataDicts.Tables[15].TableName = "tb_Customer"; //
-            _AllDataDicts.Tables[15].PrimaryKey = new DataColumn[] { _AllDataDicts.Tables[15].Columns[TblCustomer.__KeyName] };
-        }
+               }
 
         /// <summary>
         /// 跟据表名取数据表实例

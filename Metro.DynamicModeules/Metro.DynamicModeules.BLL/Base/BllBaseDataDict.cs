@@ -1,4 +1,6 @@
-﻿///*************************************************************************/
+﻿using Metro.DynamicModeules.BLL.Business;
+using Metro.DynamicModeules.Common;
+///*************************************************************************/
 ///*
 ///* 文件名    ：BllBaseDataDict.cs                                     
 ///* 程序说明  : 数据字典业务逻辑层基类
@@ -7,20 +9,7 @@
 ///* Copyright 2015 Metro.DynamicModeules software
 ///**************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Data;
-using Metro.DynamicModeules.Interfaces;
-using Metro.DynamicModeules.Common;
-using Metro.DynamicModeules.Core.Log;
-using Metro.DynamicModeules.Bridge;
-using Metro.DynamicModeules.Bridge.DataDictModule;
-using Metro.DynamicModeules.Interfaces.Bridge;
-using Metro.DynamicModeules.BLL.Business;
-using Metro.DynamicModeules.Interfaces.Sys;
-using Metro.DynamicModeules.Server.DataAccess.DalSystem;
-using Metro.DynamicModeules.Models;
 
 namespace Metro.DynamicModeules.BLL.Base
 {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Security.Cryptography;  
 using System.Text;
 namespace Metro.DynamicModeules.Common.DEncrypt
@@ -147,12 +148,37 @@ namespace Metro.DynamicModeules.Common.DEncrypt
 			des.Mode = CipherMode.ECB;  
 
 			return des.CreateDecryptor().TransformFinalBlock(encrypted, 0, encrypted.Length);
-		}  
-  
-		#endregion
+		}
 
-		
+        #endregion
 
-		
-	}
+        /// <summary>
+        /// 32位加密 2015.10.02 陈刚
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string Get32Md5Str(string str)
+        {
+            StringBuilder sb = new StringBuilder(32);
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] t = md5.ComputeHash(Encoding.UTF8.GetBytes(str));
+            foreach (byte t1 in t)
+            {
+                sb.Append(t1.ToString("x").PadLeft(2, '0'));
+            }
+            return sb.ToString();
+        }
+
+        public static string GetMd5(FileStream fs)
+        {
+            System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
+            var md5Byte = md5.ComputeHash(fs);
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < md5Byte.Length; i++)
+            {
+                sb.Append(md5Byte[i].ToString("x2"));
+            }
+            return sb.ToString();
+        }
+    }
 }

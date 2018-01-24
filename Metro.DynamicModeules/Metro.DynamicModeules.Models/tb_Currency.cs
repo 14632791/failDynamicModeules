@@ -1,13 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;  using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("tb_Currency")]
     public partial class tb_Currency: INotifyPropertyChanged
     {
-	
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]	
 [Column("isid")]
         public int isid 
 		{ 
@@ -24,6 +26,8 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private int _isid;
 [Column("Currency")]
+  [Key]
+        [StringLength(10)]
         public string Currency 
 		{ 
 		   get
@@ -39,6 +43,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _Currency;
 [Column("CurrencyName")]
+[StringLength(20)]
         public string CurrencyName 
 		{ 
 		   get

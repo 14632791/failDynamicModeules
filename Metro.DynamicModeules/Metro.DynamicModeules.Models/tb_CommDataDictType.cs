@@ -1,14 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;  using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("tb_CommDataDictType")]
     public partial class tb_CommDataDictType: INotifyPropertyChanged
     {
 	
-[Column("isid")]
+  [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int isid 
 		{ 
 		   get
@@ -24,6 +26,8 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private int _isid;
 [Column("DataType")]
+[Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int DataType 
 		{ 
 		   get
@@ -39,6 +43,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private int _DataType;
 [Column("TypeName")]
+ [StringLength(20)]
         public string TypeName 
 		{ 
 		   get

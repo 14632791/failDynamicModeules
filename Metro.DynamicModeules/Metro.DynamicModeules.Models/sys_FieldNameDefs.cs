@@ -1,14 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;  using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("sys_FieldNameDefs")]
     public partial class sys_FieldNameDefs: INotifyPropertyChanged
     {
 	
-[Column("isid")]
+ [Key]
         public int isid 
 		{ 
 		   get
@@ -23,7 +25,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private int _isid;
-[Column("TableName")]
+ [StringLength(50)]
         public string TableName 
 		{ 
 		   get
@@ -38,7 +40,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private string _TableName;
-[Column("FieldName")]
+[StringLength(50)]
         public string FieldName 
 		{ 
 		   get
@@ -53,7 +55,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private string _FieldName;
-[Column("DisplayName")]
+ [StringLength(50)]
         public string DisplayName 
 		{ 
 		   get
@@ -68,7 +70,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private string _DisplayName;
-[Column("Remark")]
+ [StringLength(100)]
         public string Remark 
 		{ 
 		   get
@@ -83,7 +85,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private string _Remark;
-[Column("FlagDisplay")]
+[StringLength(1)]
         public string FlagDisplay 
 		{ 
 		   get

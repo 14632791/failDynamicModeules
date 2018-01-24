@@ -1,4 +1,6 @@
-﻿///*************************************************************************/
+﻿using Metro.DynamicModeules.BLL.Business;
+using Metro.DynamicModeules.Common;
+///*************************************************************************/
 ///*
 ///* 文件名    ：BllBaseBusiness.cs                                      
 ///* 程序说明  : 业务单据逻辑层基类
@@ -8,19 +10,7 @@
 ///**************************************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Data;
-using Metro.DynamicModeules.Models;
-using Metro.DynamicModeules.Common;
-using Metro.DynamicModeules.Interfaces;
-using Metro.DynamicModeules.Interfaces.Bridge;
-using Metro.DynamicModeules.Bridge;
-using Metro.DynamicModeules.Bridge.SystemModule;
-using Metro.DynamicModeules.Models.SystemModels;
-using Metro.DynamicModeules.Interfaces.Sys;
-using Metro.DynamicModeules.Models.DataDictModels;
-using Metro.DynamicModeules.BLL.Business;
 
 namespace Metro.DynamicModeules.BLL.Base
 {

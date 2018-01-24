@@ -1,13 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;  using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("tb_IA")]
     public partial class tb_IA: INotifyPropertyChanged
     {
-	
+[DatabaseGenerated(DatabaseGeneratedOption.Identity)]	
 [Column("ISID")]
         public int ISID 
 		{ 
@@ -24,6 +26,8 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private int _ISID;
 [Column("IANO")]
+ [Key]
+        [StringLength(20)]
         public string IANO 
 		{ 
 		   get
@@ -54,6 +58,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private Nullable<System.DateTime> _DocDate;
 [Column("DocUser")]
+[StringLength(20)]
         public string DocUser 
 		{ 
 		   get
@@ -69,6 +74,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _DocUser;
 [Column("Reason")]
+[StringLength(200)]
         public string Reason 
 		{ 
 		   get
@@ -84,6 +90,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _Reason;
 [Column("FlagApp")]
+ [StringLength(1)]
         public string FlagApp 
 		{ 
 		   get
@@ -99,6 +106,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _FlagApp;
 [Column("Remark")]
+[StringLength(250)]
         public string Remark 
 		{ 
 		   get
@@ -114,6 +122,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _Remark;
 [Column("CreatedBy")]
+[StringLength(20)]
         public string CreatedBy 
 		{ 
 		   get
@@ -144,6 +153,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private Nullable<System.DateTime> _CreationDate;
 [Column("AppUser")]
+ [StringLength(20)]
         public string AppUser 
 		{ 
 		   get
@@ -174,6 +184,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private Nullable<System.DateTime> _AppDate;
 [Column("LastUpdatedBy")]
+[StringLength(20)]
         public string LastUpdatedBy 
 		{ 
 		   get

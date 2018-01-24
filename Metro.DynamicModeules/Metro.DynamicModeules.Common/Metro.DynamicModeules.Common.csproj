@@ -109,6 +109,7 @@
     <Compile Include="DEncrypt\RSACryption.cs" />
     <Compile Include="DetailButtons.cs" />
     <Compile Include="Encoder.cs" />
+    <Compile Include="GlobalData.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="HexCryptString.cs" />
     <Compile Include="IniFileMgr.cs" />
@@ -120,7 +121,6 @@
     <Compile Include="MenuType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RMBConverter.cs" />
-    <Compile Include="Security.cs" />
     <Compile Include="SerializeHelper.cs" />
     <Compile Include="ShellPathNameConvert.cs" />
     <Compile Include="SystemConfig.cs" />

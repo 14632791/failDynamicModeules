@@ -1,13 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;  using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("tb_Location")]
     public partial class tb_Location: INotifyPropertyChanged
     {
-	
+	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 [Column("ISID")]
         public int ISID 
 		{ 
@@ -24,6 +26,8 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private int _ISID;
 [Column("LocationID")]
+ [Key]
+        [StringLength(20)]
         public string LocationID 
 		{ 
 		   get
@@ -39,6 +43,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _LocationID;
 [Column("LocationName")]
+ [StringLength(50)]
         public string LocationName 
 		{ 
 		   get

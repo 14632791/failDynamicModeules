@@ -1,13 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;  using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("tb_Log")]
     public partial class tb_Log: INotifyPropertyChanged
     {
-	
+	[Key]
 [Column("isid")]
         public int isid 
 		{ 
@@ -24,6 +26,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private int _isid;
 [Column("GUID32")]
+  [StringLength(32)]
         public string GUID32 
 		{ 
 		   get
@@ -39,6 +42,8 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _GUID32;
 [Column("LogUser")]
+ [Required]
+        [StringLength(30)]
         public string LogUser 
 		{ 
 		   get
@@ -84,6 +89,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private int _OPType;
 [Column("TableName")]
+[StringLength(30)]
         public string TableName 
 		{ 
 		   get
@@ -99,6 +105,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _TableName;
 [Column("KeyFieldName")]
+ [StringLength(20)]
         public string KeyFieldName 
 		{ 
 		   get
@@ -114,6 +121,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _KeyFieldName;
 [Column("DocNo")]
+ [StringLength(20)]
         public string DocNo 
 		{ 
 		   get
@@ -129,6 +137,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _DocNo;
 [Column("IsMaster")]
+ [StringLength(1)]
         public string IsMaster 
 		{ 
 		   get

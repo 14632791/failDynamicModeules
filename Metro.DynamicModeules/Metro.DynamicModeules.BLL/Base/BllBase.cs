@@ -12,62 +12,96 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using Metro.DynamicModeules.Common;
+using Metro.DynamicModeules.Interface.Service.Base;
+using System.Linq.Expressions;
+using Metro.DynamicModeules.BLL.Security;
+using System.Xml.Linq;
+using System.Threading.Tasks;
 
 namespace Metro.DynamicModeules.BLL.Base
 {
     /// <summary>
     /// 业务逻辑层基类
     /// </summary>
-    public class BllBase
+    public class BllBase<T> : IServiceBase<T> where T : class
     {
-        /// <summary>
-        /// 创建原始数据用于更新. 由DataTable转换为DataSet
-        /// </summary>
-        protected DataSet CreateDataset(DataTable data, UpdateType updateType)
+
+        string _controllerName;
+        protected string ControllerName
         {
-            DataSet ds = new DataSet();
-            data.AcceptChanges(); //保存缓存数据
-            foreach (DataRow row in data.Rows)
-                this.SetRowState(row, updateType); //设置记录状态
-            ds.Tables.Add(data.Copy()); //加到新的DataSet
-            return ds;
+            get
+            {
+                if (string.IsNullOrEmpty(_controllerName))
+                {
+                    Type type = typeof(T);
+                    _controllerName = type.Name;
+                }
+                return _controllerName;
+            }
+        }
+        private string GetApiUrl(string methodName)
+        {
+            return string.Format("{0}/{1}/{2}", GlobalData.WEBURL, ControllerName, methodName);
+        }
+        public object[] Add(T model, bool isSave = true)
+        {
+            var apiParams = new { model, isSave };
+            return WebRequestHelper.PostHttp<object[]>(GetApiUrl("Add"), apiParams);
         }
 
-        /// <summary>
-        /// 更新记录状态
-        /// </summary>
-        /// <param name="dataRow">记录</param>
-        /// <param name="updateType">操作类型</param>
-        private void SetRowState(DataRow dataRow, UpdateType updateType)
+        public bool Add(IEnumerable<T> paramList, bool isSave = true)
         {
-            if (dataRow.RowState != DataRowState.Unchanged) return;
-            if (updateType == UpdateType.Add)
-                dataRow.SetAdded();
-            if (updateType == UpdateType.Modify)
-                dataRow.SetModified();
+            var apiParams = new { paramList, isSave };
+            return WebRequestHelper.PostHttp<bool>(GetApiUrl("Add"), apiParams);
         }
 
-        /// <summary>
-        /// 数字类型设置预设值0
-        /// </summary>
-        /// <param name="ds"></param>
-        protected void SetNumericDefaultValue(DataSet ds)
+        public bool Commit(bool isSave = true)
         {
-            foreach (DataTable t in ds.Tables)
-                this.SetNumericDefaultValue(t);
+            throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// 数字类型设置预设值0
-        /// </summary>
-        /// <param name="dt"></param>
-        protected void SetNumericDefaultValue(DataTable dt)
+        public bool Delete(bool isSave, object[] keyValues)
         {
-            string names = ",int,int16,int32,int64,decimal,float,double,";
-            foreach (DataColumn col in dt.Columns)
-                if (names.IndexOf(col.DataType.Name.ToLower()) > 0)
-                    col.DefaultValue = 0.00;
+            var apiParams = new { isSave, keyValues };
+            return WebRequestHelper.PostHttp<bool>(GetApiUrl("Delete"), apiParams);
+        }
 
+        public bool Delete(bool isSave, IEnumerable<T> entities)
+        {
+            var apiParams = new { isSave, entities };
+            return WebRequestHelper.PostHttp<bool>(GetApiUrl("Delete"), apiParams);
+        }
+
+        public bool Delete(T model, bool isSave = true)
+        {
+            var apiParams = new { model, isSave };
+            return WebRequestHelper.PostHttp<bool>(GetApiUrl("Delete"), apiParams);
+        }
+
+        public T Find(object[] keyValues)
+        {
+            return WebRequestHelper.PostHttp<T>(GetApiUrl("Find"), keyValues);
+        }
+
+        public async Task<IEnumerable<T>> GetSearchList(Expression<Func<T, bool>> where)
+        {
+            XElement xmlPredicate = SerializeHelper.SerializeExpression(where);
+            return await WebRequestHelper.AsyncPostHttp<IEnumerable<T>>(GetApiUrl("GetSearchList"), xmlPredicate);
+        }
+
+        public IEnumerable<T> GetSearchListByPage<TKey>(Expression<Func<T, bool>> where, Expression<Func<T, TKey>> xmlOrderBy, int pageSize, int pageIndex, out int totalRow)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Update(Expression<Func<T, bool>> where, Dictionary<string, object> dic, bool isSave = true)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Update(T model, bool isSave = true)
+        {
+            throw new NotImplementedException();
         }
     }
 }

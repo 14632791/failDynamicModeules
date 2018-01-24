@@ -1,13 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;  using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("tb_CompanyInfo")]
     public partial class tb_CompanyInfo: INotifyPropertyChanged
     {
-	
+   [DatabaseGenerated(DatabaseGeneratedOption.Identity)]	
 [Column("ISID")]
         public int ISID 
 		{ 
@@ -24,6 +26,8 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private int _ISID;
 [Column("CompanyCode")]
+ [Key]
+        [StringLength(3)]
         public string CompanyCode 
 		{ 
 		   get
@@ -39,6 +43,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _CompanyCode;
 [Column("NativeName")]
+ [StringLength(40)]
         public string NativeName 
 		{ 
 		   get
@@ -69,6 +74,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _EnglishName;
 [Column("ProgramName")]
+ [StringLength(40)]
         public string ProgramName 
 		{ 
 		   get
@@ -84,6 +90,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _ProgramName;
 [Column("ReportHead")]
+ [StringLength(50)]
         public string ReportHead 
 		{ 
 		   get
@@ -114,6 +121,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _Address;
 [Column("Tel")]
+  [StringLength(50)]
         public string Tel 
 		{ 
 		   get
@@ -159,6 +167,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private Nullable<System.DateTime> _CreationDate;
 [Column("CreatedBy")]
+[StringLength(50)]
         public string CreatedBy 
 		{ 
 		   get
@@ -189,6 +198,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private Nullable<System.DateTime> _LastUpdateDate;
 [Column("LastUpdatedBy")]
+[StringLength(20)]
         public string LastUpdatedBy 
 		{ 
 		   get

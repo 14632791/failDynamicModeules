@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -28,8 +29,7 @@ namespace Metro.DynamicModeules.Main
         {
             InitializeComponent();
             _viewModel = new MainWindowViewModel(DialogCoordinator.Instance);
-            DataContext = _viewModel;
-
+            DataContext = _viewModel;           
             Closing += (s, e) =>
             {               
                 if (!e.Cancel)
@@ -93,5 +93,54 @@ namespace Metro.DynamicModeules.Main
             get { return (bool)GetValue(UseAccentForDialogsProperty); }
             set { SetValue(UseAccentForDialogsProperty, value); }
         }
+
+        private async void ShowLimitedMessageDialog(object sender, RoutedEventArgs e)
+        {
+            var mySettings = new MetroDialogSettings()
+            {
+                AffirmativeButtonText = "Hi",
+                NegativeButtonText = "Go away!",
+                FirstAuxiliaryButtonText = "Cancel",
+                MaximumBodyHeight = 100,
+                ColorScheme = MetroDialogOptions.ColorScheme
+            };
+
+            MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro!" + string.Join(Environment.NewLine, "abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz"),
+                MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
+
+            if (result != MessageDialogResult.FirstAuxiliary)
+                await this.ShowMessageAsync("Result", "You said: " + (result == MessageDialogResult.Affirmative ? mySettings.AffirmativeButtonText : mySettings.NegativeButtonText +
+                    Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
+        }
+
+        private async void ShowCustomDialog(object sender, RoutedEventArgs e)
+        {
+            var dialog = (BaseMetroDialog)this.Resources["CustomDialogTest"];
+
+            await this.ShowMetroDialogAsync(dialog);
+
+            var textBlock = dialog.FindChild<TextBlock>("MessageTextBlock");
+            textBlock.Text = "A message box will appear in 3 seconds.";
+
+            await TaskEx.Delay(3000);
+
+            await this.ShowMessageAsync("Secondary dialog", "This message is shown on top of another.");
+
+            textBlock.Text = "The dialog will close in 2 seconds.";
+            await TaskEx.Delay(2000);
+
+            await this.HideMetroDialogAsync(dialog);
+        }
+
+        public MetroDialogSettings MetroDialogPotions
+        {
+            get { return (MetroDialogSettings)GetValue(MetroDialogPotionsProperty); }
+            set { SetValue(MetroDialogPotionsProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MetroDialogPotions.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MetroDialogPotionsProperty =
+            DependencyProperty.Register("MetroDialogPotions", typeof(MetroDialogSettings), typeof(MainWindow), new PropertyMetadata(null));
+
     }
 }

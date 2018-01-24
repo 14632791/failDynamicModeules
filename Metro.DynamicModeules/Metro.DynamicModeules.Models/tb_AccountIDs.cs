@@ -1,58 +1,60 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     [Table("tb_AccountIDs")]
-    public partial class tb_AccountIDs: INotifyPropertyChanged
+    public partial class tb_AccountIDs : INotifyPropertyChanged
     {
-	
-[Column("ISID")]
-        public int ISID 
-		{ 
-		   get
-           {
-               return _ISID;
-           }
-           set
-           {
-               if (Equals(_ISID, value)) return;
-               _ISID = value;
-               RaisePropertyChanged("ISID");
-           }
-		} 
-		private int _ISID;
-[Column("AccID")]
-        public string AccID 
-		{ 
-		   get
-           {
-               return _AccID;
-           }
-           set
-           {
-               if (Equals(_AccID, value)) return;
-               _AccID = value;
-               RaisePropertyChanged("AccID");
-           }
-		} 
-		private string _AccID;
-[Column("AccName")]
-        public string AccName 
-		{ 
-		   get
-           {
-               return _AccName;
-           }
-           set
-           {
-               if (Equals(_AccName, value)) return;
-               _AccName = value;
-               RaisePropertyChanged("AccName");
-           }
-		} 
-		private string _AccName;
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ISID
+        {
+            get
+            {
+                return _ISID;
+            }
+            set
+            {
+                if (Equals(_ISID, value)) return;
+                _ISID = value;
+                RaisePropertyChanged("ISID");
+            }
+        }
+        private int _ISID;
+        [Column("AccID")]
+        [Key]
+        [StringLength(20)]
+        public string AccID
+        {
+            get
+            {
+                return _AccID;
+            }
+            set
+            {
+                if (Equals(_AccID, value)) return;
+                _AccID = value;
+                RaisePropertyChanged("AccID");
+            }
+        }
+        private string _AccID;
+        [StringLength(50)]
+        public string AccName
+        {
+            get
+            {
+                return _AccName;
+            }
+            set
+            {
+                if (Equals(_AccName, value)) return;
+                _AccName = value;
+                RaisePropertyChanged("AccName");
+            }
+        }
+        private string _AccName;
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>

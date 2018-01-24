@@ -1,12 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;  using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("tb_CustomerAttribute")]
     public partial class tb_CustomerAttribute: INotifyPropertyChanged
     {
+[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 	
 [Column("ISID")]
         public int ISID 
@@ -24,6 +27,8 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private int _ISID;
 [Column("AttributeCode")]
+[Key]
+        [StringLength(10)]
         public string AttributeCode 
 		{ 
 		   get
@@ -54,6 +59,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _NativeName;
 [Column("EnglishName")]
+[StringLength(50)]
         public string EnglishName 
 		{ 
 		   get
@@ -69,6 +75,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _EnglishName;
 [Column("IsSelected")]
+ [StringLength(10)]
         public string IsSelected 
 		{ 
 		   get
@@ -99,6 +106,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private Nullable<System.DateTime> _CreationDate;
 [Column("CreatedBy")]
+ [StringLength(20)]
         public string CreatedBy 
 		{ 
 		   get
@@ -129,6 +137,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private Nullable<System.DateTime> _LastUpdateDate;
 [Column("LastUpdatedBy")]
+ [StringLength(20)]
         public string LastUpdatedBy 
 		{ 
 		   get

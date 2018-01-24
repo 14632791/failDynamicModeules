@@ -31,7 +31,7 @@ namespace Metro.DynamicModeules.Main.ViewModel
             this.Title = "Flyout Binding Test";
             _dialogCoordinator = dialogCoordinator;
            // SampleData.Seed();
-
+           
             // create accent color menu items for the demo
             this.AccentColors = ThemeManager.Accents
                                             .Select(a => new AccentColorMenuData() { Name = a.Name, ColorBrush = a.Resources["AccentColorBrush"] as Brush })

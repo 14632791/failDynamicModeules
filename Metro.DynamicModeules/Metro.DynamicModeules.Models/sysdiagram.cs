@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
     [Table("sysdiagrams")]
     public partial class sysdiagram: INotifyPropertyChanged
     {
 	
-[Column("name")]
+        [Required]
+        [StringLength(128)]
         public string name 
 		{ 
 		   get
@@ -23,7 +24,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private string _name;
-[Column("principal_id")]
+
         public int principal_id 
 		{ 
 		   get
@@ -38,7 +39,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private int _principal_id;
-[Column("diagram_id")]
+ [Key]
         public int diagram_id 
 		{ 
 		   get

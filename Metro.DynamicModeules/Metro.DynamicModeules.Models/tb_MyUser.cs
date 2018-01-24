@@ -1,13 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;  using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("tb_MyUser")]
     public partial class tb_MyUser: INotifyPropertyChanged
     {
-	
+	  [Key]
 [Column("isid")]
         public int isid 
 		{ 
@@ -24,6 +26,8 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private int _isid;
 [Column("Account")]
+ [Required]
+        [StringLength(30)]
         public string Account 
 		{ 
 		   get
@@ -39,6 +43,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _Account;
 [Column("NovellAccount")]
+[StringLength(100)]
         public string NovellAccount 
 		{ 
 		   get
@@ -54,6 +59,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _NovellAccount;
 [Column("DomainName")]
+[StringLength(100)]
         public string DomainName 
 		{ 
 		   get
@@ -69,6 +75,8 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _DomainName;
 [Column("UserName")]
+ [Required]
+        [StringLength(20)]
         public string UserName 
 		{ 
 		   get
@@ -84,6 +92,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _UserName;
 [Column("Address")]
+[StringLength(50)]
         public string Address 
 		{ 
 		   get
@@ -99,6 +108,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _Address;
 [Column("Tel")]
+[StringLength(50)]
         public string Tel 
 		{ 
 		   get
@@ -114,6 +124,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _Tel;
 [Column("Email")]
+[StringLength(40)]
         public string Email 
 		{ 
 		   get
@@ -129,6 +140,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _Email;
 [Column("Password")]
+ [StringLength(100)]
         public string Password 
 		{ 
 		   get
@@ -204,6 +216,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private Nullable<System.DateTime> _CreateTime;
 [Column("FlagAdmin")]
+ [StringLength(1)]
         public string FlagAdmin 
 		{ 
 		   get

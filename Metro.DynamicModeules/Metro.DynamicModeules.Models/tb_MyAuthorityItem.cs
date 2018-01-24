@@ -1,13 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;  using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("tb_MyAuthorityItem")]
     public partial class tb_MyAuthorityItem: INotifyPropertyChanged
     {
-	
+	  [Key]
 [Column("isid")]
         public int isid 
 		{ 
@@ -24,6 +26,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private int _isid;
 [Column("AuthorityName")]
+ [StringLength(20)]
         public string AuthorityName 
 		{ 
 		   get

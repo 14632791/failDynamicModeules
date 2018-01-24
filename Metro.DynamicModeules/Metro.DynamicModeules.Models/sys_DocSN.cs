@@ -1,14 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;  using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("sys_DocSN")]
     public partial class sys_DocSN: INotifyPropertyChanged
     {
 	
-[Column("isid")]
+ [Key]
         public int isid 
 		{ 
 		   get
@@ -23,7 +25,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private int _isid;
-[Column("DocName")]
+[StringLength(10)]
         public string DocName 
 		{ 
 		   get
@@ -38,7 +40,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private string _DocName;
-[Column("Header")]
+[StringLength(2)]
         public string Header 
 		{ 
 		   get
@@ -53,7 +55,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private string _Header;
-[Column("YYMM")]
+[StringLength(4)]
         public string YYMM 
 		{ 
 		   get
@@ -83,7 +85,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private Nullable<int> _MaxID;
-[Column("Remark")]
+[StringLength(100)]
         public string Remark 
 		{ 
 		   get

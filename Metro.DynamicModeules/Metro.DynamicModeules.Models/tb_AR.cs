@@ -1,14 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;  using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("tb_AR")]
     public partial class tb_AR: INotifyPropertyChanged
     {
 	
-[Column("ISID")]
+  [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ISID 
 		{ 
 		   get
@@ -23,7 +25,8 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private int _ISID;
-[Column("ARNO")]
+[Key]
+        [StringLength(20)]
         public string ARNO 
 		{ 
 		   get
@@ -53,7 +56,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private Nullable<System.DateTime> _ReceivedDate;
-[Column("CustomerCode")]
+ [StringLength(20)]
         public string CustomerCode 
 		{ 
 		   get
@@ -68,7 +71,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private string _CustomerCode;
-[Column("ChequeNo")]
+ [StringLength(20)]
         public string ChequeNo 
 		{ 
 		   get
@@ -83,7 +86,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private string _ChequeNo;
-[Column("ChequeBank")]
+ [StringLength(20)]
         public string ChequeBank 
 		{ 
 		   get
@@ -128,7 +131,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private Nullable<decimal> _Amount;
-[Column("Remark")]
+[StringLength(100)]
         public string Remark 
 		{ 
 		   get
@@ -158,7 +161,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private Nullable<System.DateTime> _CreationDate;
-[Column("CreatedBy")]
+[StringLength(20)]
         public string CreatedBy 
 		{ 
 		   get
@@ -188,7 +191,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private Nullable<System.DateTime> _LastUpdateDate;
-[Column("LastUpdatedBy")]
+  [StringLength(20)]
         public string LastUpdatedBy 
 		{ 
 		   get
@@ -203,7 +206,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private string _LastUpdatedBy;
-[Column("FlagApp")]
+[StringLength(1)]
         public string FlagApp 
 		{ 
 		   get
@@ -218,7 +221,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private string _FlagApp;
-[Column("AppUser")]
+ [StringLength(20)]
         public string AppUser 
 		{ 
 		   get

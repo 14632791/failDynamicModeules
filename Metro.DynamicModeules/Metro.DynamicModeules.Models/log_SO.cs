@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Metro.DynamicModeules.CodeFirst.Models
+namespace Metro.DynamicModeules.Models.Models
 {
+    [Table("log_SO")]
     public  class log_SO: INotifyPropertyChanged
     {
         public string C_TmpKey 

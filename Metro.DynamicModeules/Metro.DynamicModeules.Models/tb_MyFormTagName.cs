@@ -1,13 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;  using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("tb_MyFormTagName")]
     public partial class tb_MyFormTagName: INotifyPropertyChanged
     {
-	
+	  [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 [Column("AUID")]
         public int AUID 
 		{ 
@@ -23,7 +25,9 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private int _AUID;
-[Column("MenuName")]
+[Column("MenuName",Order = 0)]
+[StringLength(20)]
+  [Key]
         public string MenuName 
 		{ 
 		   get
@@ -38,7 +42,9 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private string _MenuName;
-[Column("TagValue")]
+[Column("TagValue",Order = 1)]
+[Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int TagValue 
 		{ 
 		   get
@@ -54,6 +60,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private int _TagValue;
 [Column("TagName")]
+ [StringLength(20)]
         public string TagName 
 		{ 
 		   get

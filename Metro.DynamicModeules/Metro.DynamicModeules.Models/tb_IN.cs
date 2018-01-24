@@ -1,13 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;  using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("tb_IN")]
     public partial class tb_IN: INotifyPropertyChanged
     {
-	
+[DatabaseGenerated(DatabaseGeneratedOption.Identity)]	
 [Column("ISID")]
         public int ISID 
 		{ 
@@ -24,6 +26,8 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private int _ISID;
 [Column("INNO")]
+ [Key]
+        [StringLength(20)]
         public string INNO 
 		{ 
 		   get
@@ -54,6 +58,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private Nullable<System.DateTime> _DocDate;
 [Column("DocUser")]
+[StringLength(20)]
         public string DocUser 
 		{ 
 		   get
@@ -84,6 +89,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _RefNo;
 [Column("SupplierCode")]
+ [StringLength(20)]
         public string SupplierCode 
 		{ 
 		   get
@@ -99,6 +105,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _SupplierCode;
 [Column("Department")]
+[StringLength(20)]
         public string Department 
 		{ 
 		   get
@@ -114,6 +121,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _Department;
 [Column("Deliver")]
+[StringLength(20)]
         public string Deliver 
 		{ 
 		   get
@@ -129,6 +137,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _Deliver;
 [Column("LocationID")]
+[StringLength(20)]
         public string LocationID 
 		{ 
 		   get
@@ -159,6 +168,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _Remark;
 [Column("CreatedBy")]
+[StringLength(20)]
         public string CreatedBy 
 		{ 
 		   get
@@ -189,6 +199,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private Nullable<System.DateTime> _CreationDate;
 [Column("FlagApp")]
+[StringLength(1)]
         public string FlagApp 
 		{ 
 		   get
@@ -204,6 +215,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _FlagApp;
 [Column("AppUser")]
+ [StringLength(20)]
         public string AppUser 
 		{ 
 		   get
@@ -234,6 +246,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private Nullable<System.DateTime> _AppDate;
 [Column("LastUpdatedBy")]
+ [StringLength(20)]
         public string LastUpdatedBy 
 		{ 
 		   get

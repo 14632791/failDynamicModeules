@@ -1,19 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 namespace Metro.DynamicModeules.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;  using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("tb_SO")]
     public partial class tb_SO: INotifyPropertyChanged
     {
-	
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tb_SO()
         {
-            this.tb_SOs = new List<tb_SOs>();
+            tb_SOs = new HashSet<tb_SOs>();
         }
 
 [Column("ISID")]
+ [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ISID 
 		{ 
 		   get
@@ -29,6 +32,8 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private int _ISID;
 [Column("SONO")]
+ [Key]
+        [StringLength(20)]
         public string SONO 
 		{ 
 		   get
@@ -44,6 +49,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _SONO;
 [Column("VerNo")]
+[StringLength(2)]
         public string VerNo 
 		{ 
 		   get
@@ -59,6 +65,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _VerNo;
 [Column("CustomerCode")]
+[StringLength(20)]
         public string CustomerCode 
 		{ 
 		   get
@@ -89,6 +96,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private Nullable<System.DateTime> _ReceiveDay;
 [Column("PayType")]
+ [StringLength(10)]
         public string PayType 
 		{ 
 		   get
@@ -104,6 +112,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _PayType;
 [Column("CustomerOrderNo")]
+ [StringLength(20)]
         public string CustomerOrderNo 
 		{ 
 		   get
@@ -119,6 +128,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _CustomerOrderNo;
 [Column("Salesman")]
+ [StringLength(20)]
         public string Salesman 
 		{ 
 		   get
@@ -134,6 +144,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _Salesman;
 [Column("Currency")]
+ [StringLength(4)]
         public string Currency 
 		{ 
 		   get
@@ -148,7 +159,8 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private string _Currency;
-[Column("Amount")]
+
+ [Column("Amount",TypeName = "numeric")]
         public Nullable<decimal> Amount 
 		{ 
 		   get
@@ -164,6 +176,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private Nullable<decimal> _Amount;
 [Column("FinishingStatus")]
+ [StringLength(10)]
         public string FinishingStatus 
 		{ 
 		   get
@@ -194,6 +207,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private Nullable<System.DateTime> _OrderFinishDay;
 [Column("Remark")]
+[StringLength(200)]
         public string Remark 
 		{ 
 		   get
@@ -224,6 +238,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private Nullable<System.DateTime> _CreationDate;
 [Column("CreatedBy")]
+[StringLength(20)]
         public string CreatedBy 
 		{ 
 		   get
@@ -254,6 +269,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private Nullable<System.DateTime> _LastUpdateDate;
 [Column("LastUpdatedBy")]
+[StringLength(50)]
         public string LastUpdatedBy 
 		{ 
 		   get
@@ -269,6 +285,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _LastUpdatedBy;
 [Column("FlagApp")]
+[StringLength(1)]
         public string FlagApp 
 		{ 
 		   get
@@ -284,6 +301,7 @@ namespace Metro.DynamicModeules.Models
 		} 
 		private string _FlagApp;
 [Column("AppUser")]
+[StringLength(20)]
         public string AppUser 
 		{ 
 		   get
@@ -313,6 +331,7 @@ namespace Metro.DynamicModeules.Models
            }
 		} 
 		private Nullable<System.DateTime> _AppDate;
+		 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_SOs> tb_SOs 
 		{ 
 		   get
