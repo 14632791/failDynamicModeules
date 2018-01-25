@@ -59,16 +59,7 @@ namespace Metro.DynamicModeules.BLL
         /// <param name="tableName">字典表名</param>
         public static void RefreshCache(string tableName)
         {
-            DataTable cache = DataDictCache.Cache.GetCacheTableData(tableName);
-
-            if (cache != null) //有客户窗体引用缓存数据时才更新
-            {
-                IBridgeDataDict bridge = BridgeFactory.CreateDataDictBridge(tableName, "");
-                DataTable data = bridge.GetDataDictByTableName(tableName);
-                cache.Rows.Clear();
-                foreach (DataRow row in data.Rows) cache.ImportRow(row);
-                cache.AcceptChanges();
-            }
+           
         }
 
         #endregion

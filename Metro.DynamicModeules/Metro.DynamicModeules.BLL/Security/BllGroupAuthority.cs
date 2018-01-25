@@ -1,4 +1,7 @@
 ﻿
+using Metro.DynamicModeules.BLL.Base;
+using Metro.DynamicModeules.Common;
+using Metro.DynamicModeules.Models;
 ///*************************************************************************/
 ///*
 ///* 文件名    ：BllGroupAuthority.cs    
@@ -11,21 +14,8 @@
 ///**************************************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Data;
 using System.Windows.Forms;
-using Metro.DynamicModeules.Common;
-using Metro.DynamicModeules.Models;
-using Metro.DynamicModeules.Interfaces;
-using Metro.DynamicModeules.BLL.Security;
-using Metro.DynamicModeules.Core;
-using Metro.DynamicModeules.BLL.Base;
-using Metro.DynamicModeules.Interfaces.Bridge;
-using Metro.DynamicModeules.Bridge;
-using Metro.DynamicModeules.Core.Sys;
-using Metro.DynamicModeules.Models.SystemModels;
-using Metro.DynamicModeules.Interfaces.Sys;
 
 
 
@@ -34,9 +24,8 @@ namespace Metro.DynamicModeules.BLL.Security
     /// <summary>
     /// 用户组及组权限业务逻辑
     /// </summary>
-    public class BllGroupAuthority : BllBase
+    public class BllGroupAuthority : BllBase<tb_MyUserGroupRe>
     {
-        private IBridgeUserGroup _MyBridge;//中间层(桥接功能)接口
         private TreeView _treeAuthority;//权限树视图
         private Control _groupName;//组名输入框
         private DataTable _AuthorityItem = null;//功能点数据表
@@ -44,8 +33,7 @@ namespace Metro.DynamicModeules.BLL.Security
 
         public BllGroupAuthority()
         {
-            _MyBridge = BridgeFactory.CreateUserGroupBridge();//创建中间层实例
-            _AuthorityItem = _MyBridge.GetAuthorityItem(); //获取权限功能点数据字典
+           // _AuthorityItem = _MyBridge.GetAuthorityItem(); //获取权限功能点数据字典
         }
 
         /// <summary>
@@ -85,9 +73,9 @@ namespace Metro.DynamicModeules.BLL.Security
             if (menuItemTag.FormAuthorities == 0) return; //此菜单对应的窗体没有分配权限(功能点)
 
             //取当前菜单权限.SystemAuthentication.UserAuthorities当前用户的权限数据
-            DataRow auth = GetDataRowByMenuName(SystemAuthentication.UserAuthorities, menuItemTag.ModuleID, menuItem.Name);
+            //DataRow auth = GetDataRowByMenuName(SystemAuthentication.UserAuthorities, menuItemTag.ModuleID, menuItem.Name);
 
-            int userAuths = auth == null ? 0 : ConvertEx.ToInt(auth[TUserRole.Authorities]);//当前用户拥有此菜单的权限
+            //int userAuths = auth == null ? 0 : ConvertEx.ToInt(auth[TUserRole.Authorities]);//当前用户拥有此菜单的权限
             int formAuths = menuItemTag.FormAuthorities; //窗体可用的功能点
             bool isAdmin = Loginer.CurrentUser.IsAdmin();//是否系统管理员
 
@@ -97,26 +85,26 @@ namespace Metro.DynamicModeules.BLL.Security
                 if (value == 0) continue;//不显示权限值为0的功能点
 
                 //用每个功能点的值与窗体的最大权限进行逻辑"与"运算, 但不能超出当前用户的权限．
-                if (((value & formAuths) == value) && (isAdmin || ((value & userAuths) == value)))
-                {
-                    string caption = row["AuthorityName"].ToString(); //取功能点名称
-                    DataRow tagNameRow = GetCustomTagName(menuItem.Name, value); //取功能点的自定义名称资料行
-                    if (tagNameRow != null) caption = tagNameRow["TagName"].ToString();//如果有自定义名称，则取定义名
+                //if (((value & formAuths) == value) && (isAdmin || ((value & userAuths) == value)))
+                //{
+                //    string caption = row["AuthorityName"].ToString(); //取功能点名称
+                //    DataRow tagNameRow = GetCustomTagName(menuItem.Name, value); //取功能点的自定义名称资料行
+                //    if (tagNameRow != null) caption = tagNameRow["TagName"].ToString();//如果有自定义名称，则取定义名
 
-                    //构建一个树结点Tag属性的引用对象，Node.Tag=引用对象
-                    ActionNodeTag tag = new ActionNodeTag(value, auth);
-                    tag.TagMenuNameRef = menuItem.Name;
-                    tag.TagNameTable = _FormTagCustomName;
-                    tag.TagNameDataRow = tagNameRow;
-                    tag.TagNameOld = caption; //按钮标题                    
+                //    //构建一个树结点Tag属性的引用对象，Node.Tag=引用对象
+                //    ActionNodeTag tag = new ActionNodeTag(value, auth);
+                //    tag.TagMenuNameRef = menuItem.Name;
+                //    tag.TagNameTable = _FormTagCustomName;
+                //    tag.TagNameDataRow = tagNameRow;
+                //    tag.TagNameOld = caption; //按钮标题                    
 
-                    TreeNode actionNode = new TreeNode(caption, 0, 0);//新增树结点
-                    actionNode.Tag = tag;//绑定引用的对象
-                    actionNode.ImageIndex = 2;
-                    actionNode.SelectedImageIndex = 2;
+                //    TreeNode actionNode = new TreeNode(caption, 0, 0);//新增树结点
+                //    actionNode.Tag = tag;//绑定引用的对象
+                //    actionNode.ImageIndex = 2;
+                //    actionNode.SelectedImageIndex = 2;
 
-                    node.Nodes.Add(actionNode);
-                }
+                //    node.Nodes.Add(actionNode);
+                //}
             }
         }
 
@@ -167,8 +155,8 @@ namespace Metro.DynamicModeules.BLL.Security
 
             //新增组权限记录
             DataRow newrow = auths.NewRow();
-            newrow[TUserRole.GroupCode] = _groupName.Text;
-            newrow[TUserRole.AuthorityID] = tag.AuthID;
+            //newrow[TUserRole.GroupCode] = _groupName.Text;
+            //newrow[TUserRole.AuthorityID] = tag.AuthID;
 
             if (tag.MenuItem.Tag != null && tag.MenuItem.Tag is MenuItemTag)
             {
@@ -177,8 +165,8 @@ namespace Metro.DynamicModeules.BLL.Security
                 moduleID = (tag.MenuItem.Tag as MenuItemTag).ModuleID;//模块编号
             }
 
-            newrow[TUserRole.Authorities] = actions;
-            newrow[TUserRole.ModuleID] = moduleID;
+            //newrow[TUserRole.Authorities] = actions;
+            //newrow[TUserRole.ModuleID] = moduleID;
             auths.Rows.Add(newrow);
         }
 
@@ -233,8 +221,8 @@ namespace Metro.DynamicModeules.BLL.Security
                 else if (tag.DataRow != null && n.Checked) //处理勾选状态的结点
                 {
                     int changed = GetActions(n);//累加权限值
-                    int oringed = int.Parse(tag.DataRow[TUserRole.Authorities].ToString());//取原始权限值
-                    if (changed != oringed) tag.DataRow[TUserRole.Authorities] = changed;//如权限有修改，更新最新的权限值
+                    //int oringed = int.Parse(tag.DataRow[TUserRole.Authorities].ToString());//取原始权限值
+                    //if (changed != oringed) tag.DataRow[TUserRole.Authorities] = changed;//如权限有修改，更新最新的权限值
                 }
                 else if (tag.DataRow != null && !n.Checked) //结点非勾选状态，表示已删除
                     tag.DataRow.Delete();//删除资料行
@@ -269,38 +257,38 @@ namespace Metro.DynamicModeules.BLL.Security
         /// <param name="lbAvailableUser">所有用户选择列表</param>
         /// <param name="lbSelectedUser">已选择的用户列表</param>
         /// <returns></returns>
-        private DataTable GetGroupUserChanges(DataSet currentBusiness, ListBox lbAvailableUser, ListBox lbSelectedUser)
-        {
-            DataTable AvaliableUser = currentBusiness.Tables[BusinessDataSetIndex.GroupAvailableUser].Copy();//当前组可选用户
-            DataTable SelectedUser = currentBusiness.Tables[BusinessDataSetIndex.GroupUsers].Copy();//当前组已选用户
+        //private DataTable GetGroupUserChanges(DataSet currentBusiness, ListBox lbAvailableUser, ListBox lbSelectedUser)
+        //{
+        //    DataTable AvaliableUser = currentBusiness.Tables[BusinessDataSetIndex.GroupAvailableUser].Copy();//当前组可选用户
+        //    DataTable SelectedUser = currentBusiness.Tables[BusinessDataSetIndex.GroupUsers].Copy();//当前组已选用户
 
-            //检查已删除的用户
-            foreach (ItemObject item in lbAvailableUser.Items)
-            {
-                DataRow row = (item as ItemObject).Value as DataRow;
-                if (row.Table.TableName.ToUpper() != AvaliableUser.TableName.ToUpper())
-                {
-                    DataRow[] rows = SelectedUser.Select(string.Format("Account='{0}'", row[TUser.Account]));
-                    if (rows.Length > 0) rows[0].Delete();//删除组的用户
-                }
-            }
+        //    //检查已删除的用户
+        //    foreach (ItemObject item in lbAvailableUser.Items)
+        //    {
+        //        DataRow row = (item as ItemObject).Value as DataRow;
+        //        if (row.Table.TableName.ToUpper() != AvaliableUser.TableName.ToUpper())
+        //        {
+        //            DataRow[] rows = SelectedUser.Select(string.Format("Account='{0}'", row[TUser.Account]));
+        //            if (rows.Length > 0) rows[0].Delete();//删除组的用户
+        //        }
+        //    }
 
-            //检查新增的用户
-            foreach (ItemObject item in lbSelectedUser.Items)
-            {
-                DataRow row = (item as ItemObject).Value as DataRow;
-                if (row.Table.TableName.ToUpper() != SelectedUser.TableName.ToUpper())
-                {
-                    DataRow newrow = SelectedUser.NewRow();
-                    newrow[TUserGroupRe.Account] = row[TUser.Account];
-                    newrow[TUserGroupRe.GroupCode] = this._groupName.Text;
-                    SelectedUser.Rows.Add(newrow);//增加用户
-                }
-            }
+        //    //检查新增的用户
+        //    foreach (ItemObject item in lbSelectedUser.Items)
+        //    {
+        //        DataRow row = (item as ItemObject).Value as DataRow;
+        //        if (row.Table.TableName.ToUpper() != SelectedUser.TableName.ToUpper())
+        //        {
+        //            DataRow newrow = SelectedUser.NewRow();
+        //            newrow[TUserGroupRe.Account] = row[TUser.Account];
+        //            newrow[TUserGroupRe.GroupCode] = this._groupName.Text;
+        //            SelectedUser.Rows.Add(newrow);//增加用户
+        //        }
+        //    }
 
-            DataTable ret = SelectedUser.GetChanges();
-            return ret == null ? SelectedUser.Clone() : ret;
-        }
+        //    DataTable ret = SelectedUser.GetChanges();
+        //    return ret == null ? SelectedUser.Clone() : ret;
+        //}
 
         /// <summary>
         /// 树结点勾选后触发的事件
@@ -331,15 +319,15 @@ namespace Metro.DynamicModeules.BLL.Security
         /// <param name="e"></param>
         private void OnTreeAuthorityBeforeCheck(object sender, TreeViewCancelEventArgs e)
         {
-            if (e.Action == TreeViewAction.ByKeyboard || e.Action == TreeViewAction.ByMouse)
-            {
-                Form form = _treeAuthority.FindForm();
-                if (form != null && form is IDataOperatable)
-                {
-                    UpdateType type = (form as IDataOperatable).UpdateType;
-                    e.Cancel = !(type == UpdateType.Modify || type == UpdateType.Add);
-                }
-            }
+            //if (e.Action == TreeViewAction.ByKeyboard || e.Action == TreeViewAction.ByMouse)
+            //{
+            //    Form form = _treeAuthority.FindForm();
+            //    if (form != null && form is IDataOperatable)
+            //    {
+            //        UpdateType type = (form as IDataOperatable).UpdateType;
+            //        e.Cancel = !(type == UpdateType.Modify || type == UpdateType.Add);
+            //    }
+            //}
         }
 
         /// <summary>
@@ -350,14 +338,14 @@ namespace Metro.DynamicModeules.BLL.Security
             try
             {
                 //取按钮自定义名称数据表
-                _FormTagCustomName = _MyBridge.GetFormTagCustomName();
+               // _FormTagCustomName = _MyBridge.GetFormTagCustomName();
 
                 this._treeAuthority.BeforeCheck += new TreeViewCancelEventHandler(OnTreeAuthorityBeforeCheck);
                 this._treeAuthority.AfterCheck -= new TreeViewEventHandler(OnTreeAuthorityAfterCheck);
                 this._treeAuthority.Nodes.Clear();
                 this._treeAuthority.BeginUpdate();
 
-                IMdiForm mainForm = (IMdiForm)_treeAuthority.FindForm().ParentForm;//取MDI主窗体的主菜单
+                //IMdiForm mainForm = (IMdiForm)_treeAuthority.FindForm().ParentForm;//取MDI主窗体的主菜单
 
                 //枚举主窗体的菜单
                 foreach (ToolStripItem item in mainForm.MainMenu.Items)
@@ -461,7 +449,7 @@ namespace Metro.DynamicModeules.BLL.Security
             }
             catch (Exception ex)
             {
-                Msg.ShowException(ex);
+               // Msg.ShowException(ex);
             }
             finally
             {
@@ -507,7 +495,7 @@ namespace Metro.DynamicModeules.BLL.Security
 
             int auth = 0;
 
-            if (row != null) auth = int.Parse(row[TUserRole.Authorities].ToString());//用户拥有当前菜单的权限
+          //  if (row != null) auth = int.Parse(row[TUserRole.Authorities].ToString());//用户拥有当前菜单的权限
 
             foreach (TreeNode n in node.Nodes)
             {
@@ -534,8 +522,8 @@ namespace Metro.DynamicModeules.BLL.Security
             foreach (DataRow row in users.Rows)
             {
                 string factory = string.Empty;
-                ItemObject item = new ItemObject(row[TUser.UserName].ToString() + factory, row);
-                list.Items.Add(item);
+                //ItemObject item = new ItemObject(row[TUser.UserName].ToString() + factory, row);
+                //list.Items.Add(item);
             }
         }
 
@@ -599,39 +587,36 @@ namespace Metro.DynamicModeules.BLL.Security
             return save;
         }
 
-        public DataTable GetUserGroup()
-        {
-            return _MyBridge.GetUserGroup();
-        }
+     
 
         /// <summary>
         /// 检查关键字是否已存在
         /// </summary>
-        public bool CheckNoExists(string groupCode)
-        {
-            return _MyBridge.CheckNoExists(groupCode);
-        }
+        //public bool CheckNoExists(string groupCode)
+        //{
+        //    return _MyBridge.CheckNoExists(groupCode);
+        //}
 
-        public DataSet GetGroupDataByKey(string groupName)
-        {
-            return _MyBridge.GetUserGroup(groupName);
-        }
+        //public DataSet GetGroupDataByKey(string groupName)
+        //{
+        //    return _MyBridge.GetUserGroup(groupName);
+        //}
 
-        public bool DeleteGroupByKey(string groupName)
-        {
-            return _MyBridge.DeleteGroupByKey(groupName);
-        }
+        //public bool DeleteGroupByKey(string groupName)
+        //{
+        //    return _MyBridge.DeleteGroupByKey(groupName);
+        //}
 
-        public bool SaveGroup(DataSet save)
-        {
-            IBridgeDataDict dataDict = BridgeFactory.CreateDataDictBridge(typeof(TUserGroup));
-            return dataDict.Update(save);
-        }
+        //public bool SaveGroup(DataSet save)
+        //{
+        //    IBridgeDataDict dataDict = BridgeFactory.CreateDataDictBridge(typeof(TUserGroup));
+        //    return dataDict.Update(save);
+        //}
 
-        public int GetFormAuthority(string account, int moduleID, string menuName)
-        {
-            return _MyBridge.GetFormAuthority(account, moduleID, menuName);
-        }
+        //public int GetFormAuthority(string account, int moduleID, string menuName)
+        //{
+        //    return _MyBridge.GetFormAuthority(account, moduleID, menuName);
+        //}
     }
 
 

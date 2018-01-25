@@ -54,17 +54,17 @@ namespace Metro.DynamicModeules.Main
                 pRingWaiting.Visibility = Visibility.Visible;
                 //this.SetButtonEnable(false);
                 this.ShowLoginInfo("正在验证用户名及密码");
-                BllUser.ValidateLogin(txtUser.Text, txtPwd.Text);//检查登录信息
-                string userID = txtUser.Text;
-                string password = CEncoder.Encode(txtPwd.Text);/*常规加密*/
-                string dataSetID = txtDataset.EditValue.ToString();//帐套编号
-                string dataSetDB = GetDataSetDBName();
+                //BllUser.ValidateLogin(txtUser.Text, txtPwd.Text);//检查登录信息
+                //string userID = txtUser.Text;
+                //string password = CEncoder.Encode(txtPwd.Text);/*常规加密*/
+                //string dataSetID = txtDataset.EditValue.ToString();//帐套编号
+                //string dataSetDB = GetDataSetDBName();
 
                 LoginUser loginUser = new LoginUser(userID, password, dataSetID, dataSetDB);
 
                 if (_CurrentAuthorization.Login(loginUser)) //调用登录策略
                 {
-                    if (chkSaveLoginInfo.IsChecked) this.SaveLoginInfo();//跟据选项保存登录信息  
+                    if (chkSaveLoginInfo.IsChecked.Value) this.SaveLoginInfo();//跟据选项保存登录信息  
                     SystemAuthentication.Current = _CurrentAuthorization; //授权成功, 保存当前授权模式
 
                     MainWindow MainForm = new MainWindow();//登录成功创建主窗体                    
@@ -89,15 +89,15 @@ namespace Metro.DynamicModeules.Main
             }
             catch (CustomException ex)
             {
-                this.SetButtonEnable(true);
+                //this.SetButtonEnable(true);
                 this.ShowLoginInfo(ex.Message);
-                Msg.Warning(ex.Message);
+                //Msg.Warning(ex.Message);
             }
             catch (Exception ex)
             {
-                this.SetButtonEnable(true);
+                //this.SetButtonEnable(true);
                 this.ShowLoginInfo("登录失败，请检查用户名和密码!");
-                Msg.Warning("登录失败，请检查用户名和密码!");
+                //Msg.Warning("登录失败，请检查用户名和密码!");
             }
             finally
             {

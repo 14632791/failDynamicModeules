@@ -1,4 +1,5 @@
-﻿///*************************************************************************/
+﻿
+///*************************************************************************/
 ///*
 ///* 文件名    ：BllBase.cs                                      
 ///* 程序说明  : 业务逻辑层基类
@@ -6,17 +7,14 @@
 ///* 
 ///* Copyright 2015 Metro.DynamicModeules software
 ///**************************************************************************/
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Data;
+using Metro.DynamicModeules.BLL.Security;
 using Metro.DynamicModeules.Common;
 using Metro.DynamicModeules.Interface.Service.Base;
+using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
-using Metro.DynamicModeules.BLL.Security;
-using System.Xml.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Metro.DynamicModeules.BLL.Base
 {
@@ -43,65 +41,77 @@ namespace Metro.DynamicModeules.BLL.Base
         {
             return string.Format("{0}/{1}/{2}", GlobalData.WEBURL, ControllerName, methodName);
         }
-        public object[] Add(T model, bool isSave = true)
+        public async Task<object[]> Add(T model, bool isSave = true)
         {
             var apiParams = new { model, isSave };
-            return WebRequestHelper.PostHttp<object[]>(GetApiUrl("Add"), apiParams);
+            return await WebRequestHelper.PostHttpAsync<object[]>(GetApiUrl("Add"), apiParams);
         }
 
-        public bool Add(IEnumerable<T> paramList, bool isSave = true)
+        public async Task<bool> Add(IEnumerable<T> paramList, bool isSave = true)
         {
             var apiParams = new { paramList, isSave };
-            return WebRequestHelper.PostHttp<bool>(GetApiUrl("Add"), apiParams);
+            return await WebRequestHelper.PostHttpAsync<bool>(GetApiUrl("Add"), apiParams);
         }
 
-        public bool Commit(bool isSave = true)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Delete(bool isSave, object[] keyValues)
+        public async Task<bool> Delete(bool isSave, object[] keyValues)
         {
             var apiParams = new { isSave, keyValues };
-            return WebRequestHelper.PostHttp<bool>(GetApiUrl("Delete"), apiParams);
+            return await WebRequestHelper.PostHttpAsync<bool>(GetApiUrl("Delete"), apiParams);
         }
 
-        public bool Delete(bool isSave, IEnumerable<T> entities)
+        public async Task<bool> Delete(bool isSave, IEnumerable<T> entities)
         {
             var apiParams = new { isSave, entities };
-            return WebRequestHelper.PostHttp<bool>(GetApiUrl("Delete"), apiParams);
+            return await WebRequestHelper.PostHttpAsync<bool>(GetApiUrl("Delete"), apiParams);
         }
 
-        public bool Delete(T model, bool isSave = true)
+        public async Task<bool> Delete(T model, bool isSave = true)
         {
             var apiParams = new { model, isSave };
-            return WebRequestHelper.PostHttp<bool>(GetApiUrl("Delete"), apiParams);
+            return await WebRequestHelper.PostHttpAsync<bool>(GetApiUrl("Delete"), apiParams);
         }
 
-        public T Find(object[] keyValues)
+        public async Task<T> Find(object[] keyValues)
         {
-            return WebRequestHelper.PostHttp<T>(GetApiUrl("Find"), keyValues);
+            return await WebRequestHelper.PostHttpAsync<T>(GetApiUrl("Find"), keyValues);
         }
 
-        public async Task<IEnumerable<T>> GetSearchList(Expression<Func<T, bool>> where)
+        public async Task<List<T>> GetSearchList(Expression<Func<T, bool>> where)
         {
             XElement xmlPredicate = SerializeHelper.SerializeExpression(where);
-            return await WebRequestHelper.AsyncPostHttp<IEnumerable<T>>(GetApiUrl("GetSearchList"), xmlPredicate);
+            return await WebRequestHelper.PostHttpAsync<List<T>>(GetApiUrl("GetSearchList"), xmlPredicate);
+        }
+        public async Task<long> GetListCount(Expression<Func<T, bool>> where)
+        {
+            XElement xmlPredicate = SerializeHelper.SerializeExpression(where);
+            return await WebRequestHelper.PostHttpAsync<long>(GetApiUrl("GetListCount"), xmlPredicate);
+        }
+        public async Task<List<T>> GetSearchListByPage<TKey>(Expression<Func<T, bool>> where, Expression<Func<T, TKey>> orderBy, int pageSize, int pageIndex)
+        {
+            XElement xmlPredicate = SerializeHelper.SerializeExpression(where);
+            XElement xmlOrderBy = SerializeHelper.SerializeExpression(orderBy);
+            var apiParams = new { xmlPredicate, xmlOrderBy, pageSize, pageIndex };
+            return await WebRequestHelper.PostHttpAsync<List<T>>(GetApiUrl("GetSearchListByPage"), apiParams);
         }
 
-        public IEnumerable<T> GetSearchListByPage<TKey>(Expression<Func<T, bool>> where, Expression<Func<T, TKey>> xmlOrderBy, int pageSize, int pageIndex, out int totalRow)
+        public async Task<bool> Update(Expression<Func<T, bool>> where, Dictionary<string, object> dic, bool isSave = true)
+        {
+            XElement xmlPredicate = SerializeHelper.SerializeExpression(where);
+            var apiParams = new { xmlPredicate, dic, isSave };
+            return await WebRequestHelper.PostHttpAsync<bool>(GetApiUrl("Update"), apiParams);
+        }
+
+        public async Task<bool> Update(T model, bool isSave = true)
+        {
+            var apiParams = new { model, isSave };
+            return await WebRequestHelper.PostHttpAsync<bool>(GetApiUrl("Update"), apiParams);
+        }
+
+        Task<bool> IServiceBase<T>.Commit(bool isSave)
         {
             throw new NotImplementedException();
         }
 
-        public bool Update(Expression<Func<T, bool>> where, Dictionary<string, object> dic, bool isSave = true)
-        {
-            throw new NotImplementedException();
-        }
 
-        public bool Update(T model, bool isSave = true)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

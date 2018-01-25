@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\ModelHandle.cs" />
     <Compile Include="dtproperty.cs" />
     <Compile Include="log_SO.cs" />
     <Compile Include="log_SOs.cs" />

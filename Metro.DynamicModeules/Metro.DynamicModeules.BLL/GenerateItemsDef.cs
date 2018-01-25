@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Metro.DynamicModeules.Common;
+using System;
 using System.Data;
-using Metro.DynamicModeules.Interfaces;
-using Metro.DynamicModeules.BLL;
-using Metro.DynamicModeules.BLL.Base;
-using Metro.DynamicModeules.Models;
-using Metro.DynamicModeules.Common;
-using Metro.DynamicModeules.BLL.Business;
-using Metro.DynamicModeules.Models.BusinessModels;
 
 namespace Metro.DynamicModeules.BLL
 {
@@ -61,7 +52,7 @@ namespace Metro.DynamicModeules.BLL
         /// </summary>
         /// <param name="targetBLL">目标单据的业务逻辑层</param>
         /// <returns></returns>
-        bool Generate(BllBaseBusiness targetBLL);
+        //bool Generate(BllBase targetBLL);
 
         /// <summary>
         /// 设置来源单据的单号
@@ -101,7 +92,7 @@ namespace Metro.DynamicModeules.BLL
         public void SetDocNo(string DocNo) { _DocNo = DocNo; }
 
 
-        public virtual bool Generate(BllBaseBusiness targetBLL) { return false; }
+        //public virtual bool Generate(BllBaseBusiness targetBLL) { return false; }
         public virtual bool IsDocNoExists(string DocNo) { return false; }
     }
 
@@ -124,67 +115,16 @@ namespace Metro.DynamicModeules.BLL
         }
 
         // 由销售报价单生成销售发票
-        public override bool Generate(BllBaseBusiness targetBLL)
-        {
-            if (targetBLL == null) throw new Exception("目标窗体的业务类没有实例化！");
-            if (_TargetFormType == null) throw new Exception("没有指定目标窗体类型！");
-            if (_TargetFormName == null) throw new Exception("没有指定目标窗体名称！");
-
-            BllIN sourceBLL = new BllIN();
-            DataSet sourceData = sourceBLL.GetBusinessByKey(_DocNo, false); //获取来源数据            
-
-            DataTable targetMaster = targetBLL.BusinessTables[0]; //获取目标单据的主表对象
-            DataTable targetDetail = targetBLL.BusinessTables[1];//获取目标单据的明细表对象
-
-            DataRow target = targetMaster.NewRow();
-            DataRow source = sourceData.Tables[0].Rows[0];
-            targetMaster.Rows.Clear();//清除主表一条记录
-            targetMaster.Rows.Add(target);
-
-            //下面的代码将两张表关联的数据赋值
-            target[TblIO.CustomerCode] = source[TblIN.SupplierCode];
-            target[TblIO.CustomerName] = source[TblIN.SupplierName];
-            target[TblIO.Deliver] = source[TblIN.Deliver];
-            target[TblIO.Department] = source[TblIN.Department];
-            target[TblIO.DocDate] = source[TblIN.DocDate];
-            target[TblIO.DocUser] = source[TblIN.DocUser];
-            target[TblIO.LocationID] = source[TblIN.LocationID];
-            target[TblIO.Remark] = source[TblIN.Remark];
-            target[TblIO.LastUpdateDate] = DateTime.Today;
-            target[TblIO.LastUpdatedBy] = Loginer.CurrentUser.Account;
-            target[TblIO.CreatedBy] = Loginer.CurrentUser.Account;
-            target[TblIO.CreationDate] = DateTime.Today;
-
-            //复制明细表数据
-            targetDetail.Rows.Clear();
-            foreach (DataRow detail in sourceData.Tables[1].Rows)
-            {
-                DataRow temp = targetDetail.NewRow();
-                temp[TblIOs.CreatedBy] = Loginer.CurrentUser.Account;
-                temp[TblIOs.CreationDate] = DateTime.Today;
-                temp[TblIOs.LastUpdateDate] = DateTime.Today;
-                temp[TblIOs.LastUpdatedBy] = Loginer.CurrentUser.Account;
-                temp[TblIOs.ProductCode] = detail[TblINs.ProductCode];
-                temp[TblIOs.ProductName] = detail[TblINs.ProductName];
-                temp[TblIOs.Quantity] = detail[TblINs.Quantity];
-                temp[TblIOs.Queue] = detail[TblINs.Queue];
-                temp[TblIOs.Remark] = detail[TblINs.Remark];
-
-                targetDetail.Rows.Add(temp);
-            }
-
-            _IsSuccess = true;
-            return _IsSuccess;
-        }
+      
 
         //检查来源单号是否存在
-        public override bool IsDocNoExists(string DocNo)
-        {
-            if (_IsDocNoRequired)
-                return new BllIN().CheckNoExists(DocNo);
-            else
-                return false;
-        }
+        //public override bool IsDocNoExists(string DocNo)
+        //{
+        //    if (_IsDocNoRequired)
+        //        return new BllIN().CheckNoExists(DocNo);
+        //    else
+        //        return false;
+        //}
     }
 
     #endregion

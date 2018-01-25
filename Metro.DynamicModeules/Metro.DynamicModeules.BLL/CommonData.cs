@@ -12,15 +12,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Data;
-using Metro.DynamicModeules.Common;
-using Metro.DynamicModeules.Models;
-using Metro.DynamicModeules.Interfaces.Bridge;
-using Metro.DynamicModeules.Bridge;
-using Metro.DynamicModeules.Interfaces;
-using Metro.DynamicModeules.Models.SystemModels;
-using System.Linq;
 
 namespace Metro.DynamicModeules.BLL
 {

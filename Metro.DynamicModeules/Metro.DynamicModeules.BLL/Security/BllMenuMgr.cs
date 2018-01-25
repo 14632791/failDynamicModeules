@@ -9,45 +9,25 @@
 ///* Copyright 2015 Metro.DynamicModeules software
 ///*
 ///**************************************************************************/
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-using Metro.DynamicModeules.Common;
-using System.Data;
-using Metro.DynamicModeules.Models;
-
-
-using Metro.DynamicModeules.Bridge;
 using Metro.DynamicModeules.BLL.Base;
-using Metro.DynamicModeules.Interfaces.Bridge;
-using Metro.DynamicModeules.Models.SystemModels;
+using Metro.DynamicModeules.Common;
+using Metro.DynamicModeules.Models;
+using System.Data;
+using System.Windows.Forms;
 
 namespace Metro.DynamicModeules.BLL.Security
 {
     /// <summary>
     /// 系统菜单数据管理类
     /// </summary>
-    public class BllMenuMgr : BllBaseDataDict
+    public class BllMenuMgr : BllBase<tb_MyMenu>
     {
         private int _LastUpdated = 0;//最后一次导入菜单更新的记录数
         private int _LastInserted = 0;//最后一次导入菜单数
         private DataTable _AuthorityItem = null; //功能点数据
         private DataTable _FormTagCustomName = null; //功能点自定义名称
 
-        private IBridgeUserGroup _MyBridge;
-
-        public BllMenuMgr()
-        {
-            _DataDictBridge = BridgeFactory.CreateDataDictBridge(typeof(TMenu));
-            _KeyFieldName = TMenu.__KeyName;
-            _SummaryTableName = TMenu.__TableName;
-
-            _MyBridge = BridgeFactory.CreateUserGroupBridge();
-            _AuthorityItem = _MyBridge.GetAuthorityItem(); //Actions Master Data       
-            _FormTagCustomName = _MyBridge.GetFormTagCustomName(); //自定义功能名称
-        }
+    
 
         /// <summary>
         /// 功能点数据
@@ -95,21 +75,11 @@ namespace Metro.DynamicModeules.BLL.Security
                     }
                 }
 
-                DataTable dt = _SummaryTable.GetChanges();
-
-                if (dt != null)
-                {
-                    DataSet ds = new DataSet();
-                    ds.Tables.Add(dt);
-                    bool success = _DataDictBridge.Update(ds); //保存数据
-                    if (success) _SummaryTable.AcceptChanges();
-                    return success;
-                }
-                else return true;
+              
+                 return true;
             }
             catch
-            {
-                _SummaryTable.RejectChanges();
+            {               
                 return false;
             }
         }
@@ -119,8 +89,8 @@ namespace Metro.DynamicModeules.BLL.Security
         /// </summary>
         private void MakeDeletedAll()
         {
-            while (_SummaryTable.Rows.Count > 0)
-                _SummaryTable.Rows[0].Delete();
+            //while (_SummaryTable.Rows.Count > 0)
+            //    _SummaryTable.Rows[0].Delete();
         }
 
         /// <summary>
@@ -150,44 +120,29 @@ namespace Metro.DynamicModeules.BLL.Security
         {
             MenuItemTag tag = item.Tag as MenuItemTag;
             string filter = string.Format("MenuName='{0}' and ModuleID={1}", item.Name, tag.ModuleID);
-            DataRow[] exists = _SummaryTable.Select(filter);
-            if (exists.Length > 0)
-            {
-                string caption = ConvertEx.ToString(exists[0][TMenu.MenuCaption]);
-                if (caption != item.Text)
-                {
-                    _LastUpdated += 1;
-                    exists[0][TMenu.MenuCaption] = item.Text; //更新菜单标题.
-                }
-            }
-            else
-            {
-                DataRow append = _SummaryTable.NewRow();
-                append[TMenu.Auths] = tag.FormAuthorities;
-                append[TMenu.MenuCaption] = item.Text;
-                append[TMenu.MenuName] = item.Name;
-                append[TMenu.MenuType] = tag.MenuType.ToString();
-                append[TMenu.ModuleID] = tag.ModuleID;
-                _SummaryTable.Rows.Add(append);
+            //DataRow[] exists = _SummaryTable.Select(filter);
+            //if (exists.Length > 0)
+            //{
+            //    string caption = ConvertEx.ToString(exists[0][TMenu.MenuCaption]);
+            //    if (caption != item.Text)
+            //    {
+            //        _LastUpdated += 1;
+            //        exists[0][TMenu.MenuCaption] = item.Text; //更新菜单标题.
+            //    }
+            //}
+            //else
+            //{
+            //    DataRow append = _SummaryTable.NewRow();
+            //    append[TMenu.Auths] = tag.FormAuthorities;
+            //    append[TMenu.MenuCaption] = item.Text;
+            //    append[TMenu.MenuName] = item.Name;
+            //    append[TMenu.MenuType] = tag.MenuType.ToString();
+            //    append[TMenu.ModuleID] = tag.ModuleID;
+            //    _SummaryTable.Rows.Add(append);
 
-                _LastInserted += 1;
-            }
+            //    _LastInserted += 1;
+            //}
         }
-
-        /// <summary>
-        /// 保存数据
-        /// </summary>
-        /// <param name="updateType"></param>
-        /// <returns></returns>
-        public override bool Update(UpdateType updateType)
-        {
-            DataSet data = new DataSet();
-            data.Tables.Add(_SummaryTable.Copy());
-            data.Tables.Add(_FormTagCustomName.Copy());
-            bool success = _DataDictBridge.Update(data);
-            if (success)
-                _FormTagCustomName = _MyBridge.GetFormTagCustomName(); //自定义功能名称
-            return success;
-        }
+        
     }
 }

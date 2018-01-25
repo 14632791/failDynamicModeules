@@ -90,8 +90,8 @@ namespace Metro.DynamicModeules.BLL.Security
         /// </summary>
         /// <param name="url">请求的url</param>
         /// <param name="parameters">参数</param>
-        /// <param name="id">ID 2015.10.2,加密要用到</param>
-        /// <param name="name">姓名 2015.10.2,加密要用到</param>
+        /// <param name="id">ID 加密要用到</param>
+        /// <param name="name">姓名 加密要用到</param>
         /// <returns></returns>
         public static T PostHttp<T>(string url, object parameters, string id = "", string name = "")
         {
@@ -149,7 +149,7 @@ namespace Metro.DynamicModeules.BLL.Security
             return rslt;
         }
 
-        public static async Task<T> AsyncPostHttp<T>(string url, object parameters, string id = "", string name = "")
+        public static async Task<T> PostHttpAsync<T>(string url, object parameters, string id = "", string name = "")
         {
             return await Task.Factory.StartNew(() =>
             {
@@ -157,6 +157,7 @@ namespace Metro.DynamicModeules.BLL.Security
             });
         }
 
+        
         /// <summary>
         /// 对HttpWebRequest的head进行加密 2015.10.02
         /// </summary>

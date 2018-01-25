@@ -34,7 +34,7 @@ namespace Metro.DynamicModeules.BLL.Security
             SearchResult user = GetUser(Environment.UserName);
             if (user != null)
             {
-                ResultPropertyValueCollection value = (ResultPropertyValueCollection)user.Properties["userprincipalname"];
+                ResultPropertyValueCollection value = user.Properties["userprincipalname"];
                 if ((value != null) && (value.Count > 0))
                     return value[0].ToString();
             }
@@ -51,8 +51,8 @@ namespace Metro.DynamicModeules.BLL.Security
             Domain domain = Domain.GetCurrentDomain();
             if (domain == null) throw new Exception("当前用户没有登录域！");
 
-            IList<SearchResult> result = DomainLdapTools.SearchObjects(domain.Name, "objectClass=user", true);
-            SearchResult currentUser = DomainLdapTools.LocateUser(result, Environment.UserName);
+            IList<SearchResult> result = SearchObjects(domain.Name, "objectClass=user", true);
+            SearchResult currentUser = LocateUser(result, Environment.UserName);
             return currentUser;
         }
 
@@ -66,7 +66,7 @@ namespace Metro.DynamicModeules.BLL.Security
         {
             foreach (SearchResult p in objs)
             {
-                ResultPropertyValueCollection temp = (ResultPropertyValueCollection)p.Properties["samaccountname"];
+                ResultPropertyValueCollection temp = p.Properties["samaccountname"];
                 if ((temp != null) && (temp.Count > 0))
                 {
                     if (temp[0].ToString().ToLower() == account.ToLower()) return p;
@@ -203,7 +203,7 @@ namespace Metro.DynamicModeules.BLL.Security
             List<string> result = new List<string>();
 
             SearchResult user = GetUser(account);
-            ResultPropertyValueCollection values = (ResultPropertyValueCollection)user.Properties["memberOf"];
+            ResultPropertyValueCollection values = user.Properties["memberOf"];
             foreach (object o in values)
             {
                 result.Add(o.ToString());
