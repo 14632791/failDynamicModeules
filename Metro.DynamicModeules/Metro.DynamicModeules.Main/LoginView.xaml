@@ -6,22 +6,17 @@
         xmlns:local="clr-namespace:Metro.DynamicModeules.Main" ShowMaxRestoreButton="False" ShowMinButton="False"
         mc:Ignorable="d" 
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="LoginView" Height="450" Width="500" Opacity="0.5">
+        Title="LoginView" Height="450" Width="500" >
     <Controls:MetroWindow.Resources>
         <Thickness x:Key="ControlMargin">5</Thickness>
-    </Controls:MetroWindow.Resources>
-    <Controls:MetroWindow.Background>
-        <ImageBrush/>
-        
-    </Controls:MetroWindow.Background>
-    <Grid  Background="{DynamicResource AccentColorBrush4}">
-       
-        <!--<Grid.Background>
+    </Controls:MetroWindow.Resources>   
+    <Grid >       
+        <Grid.Background>
             <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-                <GradientStop Color="#FF4CE1E8" Offset="0.1"/>
-                <GradientStop Color="#FFB7CBD1" Offset=".5"/>
+                <GradientStop Color="AliceBlue" Offset="0.1"/>
+                <GradientStop Color="White" Offset=".5"/>
             </LinearGradientBrush>
-        </Grid.Background>-->
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="40"/>
@@ -40,8 +35,8 @@
         <TextBox Margin="{StaticResource ControlMargin}"
                   Name="txtUser" Grid.Row="1" Background="Transparent"  Grid.Column="1"   HorizontalAlignment="Stretch" 
                          Controls:TextBoxHelper.ClearTextButton="True"
-                         Controls:TextBoxHelper.IsWaitingForData="True"
-                         Controls:TextBoxHelper.UseFloatingWatermark="True"
+                         Controls:TextBoxHelper.IsWaitingForData="False"
+                         Controls:TextBoxHelper.UseFloatingWatermark="False"
                          Controls:TextBoxHelper.Watermark="请输入用户名"
                           VerticalContentAlignment="Center"
                          SpellCheck.IsEnabled="True"/>

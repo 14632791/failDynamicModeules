@@ -2,6 +2,7 @@
 using Metro.DynamicModeules.Common;
 using Metro.DynamicModeules.Models;
 using System.Data;
+using System;
 
 /*==========================================
  *   程序说明: Customer的业务逻辑层
@@ -19,5 +20,9 @@ namespace Metro.DynamicModeules.BLL.DataDict
     /// </summary>
     public class BllCustomer : BllBase<tb_Customer>
     {
+        protected override string GetControllerName()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

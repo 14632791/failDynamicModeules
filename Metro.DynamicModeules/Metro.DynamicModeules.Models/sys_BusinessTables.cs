@@ -8,7 +8,6 @@ namespace Metro.DynamicModeules.Models
     [Table("sys_BusinessTables")]
     public partial class sys_BusinessTables : INotifyPropertyChanged
     {
-
         [Key]
         public int isid
         {

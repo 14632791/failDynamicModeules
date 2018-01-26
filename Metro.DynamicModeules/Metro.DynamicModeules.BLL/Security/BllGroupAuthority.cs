@@ -77,7 +77,7 @@ namespace Metro.DynamicModeules.BLL.Security
 
             //int userAuths = auth == null ? 0 : ConvertEx.ToInt(auth[TUserRole.Authorities]);//当前用户拥有此菜单的权限
             int formAuths = menuItemTag.FormAuthorities; //窗体可用的功能点
-            bool isAdmin = Loginer.CurrentUser.IsAdmin();//是否系统管理员
+            bool isAdmin = true;// Loginer.CurrentUser.IsAdmin();//是否系统管理员
 
             foreach (DataRow row in _AuthorityItem.Rows) //循环所有功能点.
             {
@@ -348,29 +348,29 @@ namespace Metro.DynamicModeules.BLL.Security
                 //IMdiForm mainForm = (IMdiForm)_treeAuthority.FindForm().ParentForm;//取MDI主窗体的主菜单
 
                 //枚举主窗体的菜单
-                foreach (ToolStripItem item in mainForm.MainMenu.Items)
-                {
-                    if (item is ToolStripSeparator) continue; //菜单分隔符不处理
-                    if (item.Tag != null && item.Tag.ToString().ToUpper() == "IsSystemMenu".ToUpper()) continue; //系统菜单不处理
+                //foreach (ToolStripItem item in mainForm.MainMenu.Items)
+                //{
+                //    if (item is ToolStripSeparator) continue; //菜单分隔符不处理
+                //    if (item.Tag != null && item.Tag.ToString().ToUpper() == "IsSystemMenu".ToUpper()) continue; //系统菜单不处理
 
-                    if (!Loginer.CurrentUser.IsAdmin() && !item.Enabled) continue; //没菜单权限(菜单不可用).不加载树
+                //    if (!Loginer.CurrentUser.IsAdmin() && !item.Enabled) continue; //没菜单权限(菜单不可用).不加载树
 
-                    AuthNodeTag tag = new AuthNodeTag(item.Name, null, item);
+                //    AuthNodeTag tag = new AuthNodeTag(item.Name, null, item);
 
-                    TreeNode node = new TreeNode(item.Text, 0, 0);
-                    node.ImageIndex = 0;
-                    node.SelectedImageIndex = 0;
-                    node.Tag = tag; //标记
+                //    TreeNode node = new TreeNode(item.Text, 0, 0);
+                //    node.ImageIndex = 0;
+                //    node.SelectedImageIndex = 0;
+                //    node.Tag = tag; //标记
 
-                    this._treeAuthority.Nodes.Add(node);
+                //    this._treeAuthority.Nodes.Add(node);
 
-                    //处理子菜单
-                    if (item is ToolStripMenuItem && (item as ToolStripMenuItem).DropDownItems.Count > 0)
-                    {
-                        InitAuthorityTreeChild(item as ToolStripMenuItem, node);
-                        node.Expand();
-                    }
-                }
+                //    //处理子菜单
+                //    if (item is ToolStripMenuItem && (item as ToolStripMenuItem).DropDownItems.Count > 0)
+                //    {
+                //        InitAuthorityTreeChild(item as ToolStripMenuItem, node);
+                //        node.Expand();
+                //    }
+                //}
 
                 this._treeAuthority.EndUpdate();
                 if (this._treeAuthority.Nodes.Count == 1) this._treeAuthority.Nodes[0].Expand();
@@ -389,7 +389,7 @@ namespace Metro.DynamicModeules.BLL.Security
             foreach (ToolStripItem item in parent.DropDownItems)
             {
                 if (item is ToolStripSeparator) continue; //分隔符不在树显示
-                if (!Loginer.CurrentUser.IsAdmin() && !item.Enabled) continue; //没菜单权限.不加载树
+                //if (!Loginer.CurrentUser.IsAdmin() && !item.Enabled) continue; //没菜单权限.不加载树
 
                 AuthNodeTag tag = new AuthNodeTag(item.Name, null, item);
                 TreeNode node = new TreeNode(item.Text, 0, 0);                
@@ -567,27 +567,30 @@ namespace Metro.DynamicModeules.BLL.Security
         public DataSet CreateSaveData(DataSet currentBusiness, ListBox lbAvailableUser, ListBox lbSelectedUser)
         {
             DataSet save = new DataSet();
-            DataRowState state = currentBusiness.Tables[BusinessDataSetIndex.Groups].Rows[0].RowState;
+            //DataRowState state = currentBusiness.Tables[BusinessDataSetIndex.Groups].Rows[0].RowState;
 
-            currentBusiness.Tables[BusinessDataSetIndex.Groups].AcceptChanges();
-            DataTable summary = currentBusiness.Tables[BusinessDataSetIndex.Groups].Copy();
+            //currentBusiness.Tables[BusinessDataSetIndex.Groups].AcceptChanges();
+            //DataTable summary = currentBusiness.Tables[BusinessDataSetIndex.Groups].Copy();
 
-            if (state == DataRowState.Added)
-                summary.Rows[0].SetAdded();
-            else if (state == DataRowState.Modified)
-                summary.Rows[0].SetModified();
+            //if (state == DataRowState.Added)
+            //    summary.Rows[0].SetAdded();
+            //else if (state == DataRowState.Modified)
+            //    summary.Rows[0].SetModified();
 
-            DataTable auths = GetGroupAuthorityChanges(currentBusiness.Tables[BusinessDataSetIndex.GroupAuthorities]).Copy();
-            DataTable user = GetGroupUserChanges(currentBusiness, lbAvailableUser, lbSelectedUser);
-            DataTable tagNames = _FormTagCustomName.GetChanges();
-            save.Tables.Add(summary); //用户组
-            save.Tables.Add(user); //用户数据                
-            save.Tables.Add(auths == null ? currentBusiness.Tables[BusinessDataSetIndex.GroupAuthorities].Clone() : auths); //权限数据
-            save.Tables.Add(tagNames == null ? _FormTagCustomName.Clone() : tagNames); //功能点的自定义名称
+            //DataTable auths = GetGroupAuthorityChanges(currentBusiness.Tables[BusinessDataSetIndex.GroupAuthorities]).Copy();
+            //DataTable user = GetGroupUserChanges(currentBusiness, lbAvailableUser, lbSelectedUser);
+            //DataTable tagNames = _FormTagCustomName.GetChanges();
+            //save.Tables.Add(summary); //用户组
+            //save.Tables.Add(user); //用户数据                
+            //save.Tables.Add(auths == null ? currentBusiness.Tables[BusinessDataSetIndex.GroupAuthorities].Clone() : auths); //权限数据
+            //save.Tables.Add(tagNames == null ? _FormTagCustomName.Clone() : tagNames); //功能点的自定义名称
             return save;
         }
 
-     
+        protected override string GetControllerName()
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// 检查关键字是否已存在

@@ -14,6 +14,9 @@ using Metro.DynamicModeules.Common;
 using Metro.DynamicModeules.Models;
 using System;
 using System.Data;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Metro.DynamicModeules.BLL.Security
 {
@@ -22,5 +25,9 @@ namespace Metro.DynamicModeules.BLL.Security
     /// </summary>
     public class BllUser : BllBase<tb_MyUser>
     {
+        protected override string GetControllerName()
+        {
+            return "MyUser";
+        }
     }
 }

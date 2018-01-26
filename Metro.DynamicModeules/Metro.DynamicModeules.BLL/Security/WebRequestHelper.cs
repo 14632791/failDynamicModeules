@@ -63,7 +63,7 @@ namespace Metro.DynamicModeules.BLL.Security
             }
             catch (Exception e)
             {
-                LogHelper.WriteLog(new LogMessage { UserId = 0, UserName = "sys", Info = "GetHttp" }, e);
+                LogHelper.Error(e);
             }
             T rslt = default(T);//new T();
             if (resultStr == "")//请求失败
@@ -79,7 +79,7 @@ namespace Metro.DynamicModeules.BLL.Security
                 catch (Exception e)
                 {
                     rslt = default(T);
-                    LogHelper.WriteLog(new LogMessage { UserId = 0, UserName = "sys", Info = "JsonDe<" + typeof(T) + ">" }, e);
+                    LogHelper.Error(e);//WriteLog(new LogMessage { UserId = 0, UserName = "sys", Info = "JsonDe<" + typeof(T) + ">" }, e);
                 }
             }
             return rslt;

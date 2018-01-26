@@ -1,4 +1,5 @@
-﻿using Metro.DynamicModeules.BLL.Base;
+﻿using System;
+using Metro.DynamicModeules.BLL.Base;
 using Metro.DynamicModeules.Models;
 
 /*==========================================
@@ -22,10 +23,9 @@ namespace Metro.DynamicModeules.BLL.DataDict
         /// </summary>
         /// <param name="id">编号</param>
         /// <returns></returns>
-        public bool IsExistsCommonType(int id)
+        protected override string GetControllerName()
         {
-            return _SelfBridge.IsExistsCommonType(id);
+            throw new NotImplementedException();
         }
-
     }
 }

@@ -14,6 +14,7 @@ using Metro.DynamicModeules.Common;
 using Metro.DynamicModeules.Models;
 using System.Data;
 using System.Windows.Forms;
+using System;
 
 namespace Metro.DynamicModeules.BLL.Security
 {
@@ -143,6 +144,10 @@ namespace Metro.DynamicModeules.BLL.Security
             //    _LastInserted += 1;
             //}
         }
-        
+
+        protected override string GetControllerName()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

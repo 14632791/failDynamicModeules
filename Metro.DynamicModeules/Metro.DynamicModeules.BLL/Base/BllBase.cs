@@ -21,25 +21,25 @@ namespace Metro.DynamicModeules.BLL.Base
     /// <summary>
     /// 业务逻辑层基类
     /// </summary>
-    public class BllBase<T> : IServiceBase<T> where T : class
+    public abstract class BllBase<T> : IServiceBase<T> where T : class  //
     {
 
-        string _controllerName;
-        protected string ControllerName
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_controllerName))
-                {
-                    Type type = typeof(T);
-                    _controllerName = type.Name;
-                }
-                return _controllerName;
-            }
-        }
+        //string _controllerName;
+        protected abstract string GetControllerName();
+        //{
+        //    get
+        //    {
+        //        if (string.IsNullOrEmpty(_controllerName))
+        //        {
+        //            Type type = typeof(T);
+        //            _controllerName = type.Name;
+        //        }
+        //        return _controllerName;
+        //    }
+        //}
         private string GetApiUrl(string methodName)
         {
-            return string.Format("{0}/{1}/{2}", GlobalData.WEBURL, ControllerName, methodName);
+            return string.Format("{0}/{1}/{2}", GlobalData.WEBURL, GetControllerName(), methodName);
         }
         public async Task<object[]> Add(T model, bool isSave = true)
         {
@@ -76,7 +76,7 @@ namespace Metro.DynamicModeules.BLL.Base
             return await WebRequestHelper.PostHttpAsync<T>(GetApiUrl("Find"), keyValues);
         }
 
-        public async Task<List<T>> GetSearchList(Expression<Func<T, bool>> where)
+        public virtual async Task<List<T>> GetSearchList(Expression<Func<T, bool>> where)
         {
             XElement xmlPredicate = SerializeHelper.SerializeExpression(where);
             return await WebRequestHelper.PostHttpAsync<List<T>>(GetApiUrl("GetSearchList"), xmlPredicate);
@@ -107,11 +107,10 @@ namespace Metro.DynamicModeules.BLL.Base
             return await WebRequestHelper.PostHttpAsync<bool>(GetApiUrl("Update"), apiParams);
         }
 
+      
         Task<bool> IServiceBase<T>.Commit(bool isSave)
         {
             throw new NotImplementedException();
         }
-
-
     }
 }

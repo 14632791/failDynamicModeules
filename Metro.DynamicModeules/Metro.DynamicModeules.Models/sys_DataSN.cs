@@ -95,10 +95,7 @@ namespace Metro.DynamicModeules.Models
         /// <param name="propertyName">The name of the property that changed.</param>
         protected virtual void RaisePropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

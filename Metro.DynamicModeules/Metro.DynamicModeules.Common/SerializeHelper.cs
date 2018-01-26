@@ -63,9 +63,15 @@ namespace Metro.DynamicModeules.Common
             {
                 throw new ArgumentNullException("xmlExpression");
             }
-            var knownTypes = new List<Type> { typeof(T) };
-            var serializer = CreateSerializer(knownTypes);
-            return serializer.Deserialize<Func<T, TResult>>(xmlExpression);
+            try
+            {
+                var knownTypes = new List<Type> { typeof(T) };
+                var serializer = CreateSerializer(knownTypes);
+                return serializer.Deserialize<Func<T, TResult>>(xmlExpression);
+            }catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public static Expression<Func<T, TResult>> DeserializeExpression<T, TResult>(XElement xmlExpression, IEnumerable<Type> knownTypes)

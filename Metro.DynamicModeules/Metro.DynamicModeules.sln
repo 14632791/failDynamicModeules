@@ -11,10 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{B804
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaterialDesignColors.Wpf", "MaterialDesignColors.Wpf\MaterialDesignColors.Wpf.csproj", "{90B53209-C60C-4655-B28D-A1B3E1044BA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DM.ModuleOne", "modules\DM.ModuleOne\DM.ModuleOne.csproj", "{36B72692-ED5B-4DA8-98E7-795CAE23F342}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DM.ModuleTwo", "modules\DM.ModuleTwo\DM.ModuleTwo.csproj", "{9D0FFEDA-5F0D-489C-AEC8-603D2405CA0D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metro.DynamicModeules.Core", "Metro.DynamicModeules.Core\Metro.DynamicModeules.Core.csproj", "{085A3767-0F46-4923-8EB5-596CE276FC47}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metro.DynamicModeules.Models", "Metro.DynamicModeules.Models\Metro.DynamicModeules.Models.csproj", "{937E0D53-9696-48AB-B12F-736BC6D43F15}"
@@ -71,30 +67,6 @@ Global
 		{90B53209-C60C-4655-B28D-A1B3E1044BA3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{90B53209-C60C-4655-B28D-A1B3E1044BA3}.Release|x86.ActiveCfg = Release|Any CPU
 		{90B53209-C60C-4655-B28D-A1B3E1044BA3}.Release|x86.Build.0 = Release|Any CPU
-		{36B72692-ED5B-4DA8-98E7-795CAE23F342}.AppVeyor|Any CPU.ActiveCfg = Release|Any CPU
-		{36B72692-ED5B-4DA8-98E7-795CAE23F342}.AppVeyor|Any CPU.Build.0 = Release|Any CPU
-		{36B72692-ED5B-4DA8-98E7-795CAE23F342}.AppVeyor|x86.ActiveCfg = Release|Any CPU
-		{36B72692-ED5B-4DA8-98E7-795CAE23F342}.AppVeyor|x86.Build.0 = Release|Any CPU
-		{36B72692-ED5B-4DA8-98E7-795CAE23F342}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{36B72692-ED5B-4DA8-98E7-795CAE23F342}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{36B72692-ED5B-4DA8-98E7-795CAE23F342}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{36B72692-ED5B-4DA8-98E7-795CAE23F342}.Debug|x86.Build.0 = Debug|Any CPU
-		{36B72692-ED5B-4DA8-98E7-795CAE23F342}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{36B72692-ED5B-4DA8-98E7-795CAE23F342}.Release|Any CPU.Build.0 = Release|Any CPU
-		{36B72692-ED5B-4DA8-98E7-795CAE23F342}.Release|x86.ActiveCfg = Release|Any CPU
-		{36B72692-ED5B-4DA8-98E7-795CAE23F342}.Release|x86.Build.0 = Release|Any CPU
-		{9D0FFEDA-5F0D-489C-AEC8-603D2405CA0D}.AppVeyor|Any CPU.ActiveCfg = Release|Any CPU
-		{9D0FFEDA-5F0D-489C-AEC8-603D2405CA0D}.AppVeyor|Any CPU.Build.0 = Release|Any CPU
-		{9D0FFEDA-5F0D-489C-AEC8-603D2405CA0D}.AppVeyor|x86.ActiveCfg = Release|Any CPU
-		{9D0FFEDA-5F0D-489C-AEC8-603D2405CA0D}.AppVeyor|x86.Build.0 = Release|Any CPU
-		{9D0FFEDA-5F0D-489C-AEC8-603D2405CA0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9D0FFEDA-5F0D-489C-AEC8-603D2405CA0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9D0FFEDA-5F0D-489C-AEC8-603D2405CA0D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{9D0FFEDA-5F0D-489C-AEC8-603D2405CA0D}.Debug|x86.Build.0 = Debug|Any CPU
-		{9D0FFEDA-5F0D-489C-AEC8-603D2405CA0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9D0FFEDA-5F0D-489C-AEC8-603D2405CA0D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9D0FFEDA-5F0D-489C-AEC8-603D2405CA0D}.Release|x86.ActiveCfg = Release|Any CPU
-		{9D0FFEDA-5F0D-489C-AEC8-603D2405CA0D}.Release|x86.Build.0 = Release|Any CPU
 		{085A3767-0F46-4923-8EB5-596CE276FC47}.AppVeyor|Any CPU.ActiveCfg = Release|Any CPU
 		{085A3767-0F46-4923-8EB5-596CE276FC47}.AppVeyor|Any CPU.Build.0 = Release|Any CPU
 		{085A3767-0F46-4923-8EB5-596CE276FC47}.AppVeyor|x86.ActiveCfg = Release|Any CPU
@@ -158,9 +130,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{36B72692-ED5B-4DA8-98E7-795CAE23F342} = {B8048C39-234B-4B9E-BE70-69201B23A173}
-		{9D0FFEDA-5F0D-489C-AEC8-603D2405CA0D} = {B8048C39-234B-4B9E-BE70-69201B23A173}
 	EndGlobalSection
 EndGlobal
