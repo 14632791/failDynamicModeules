@@ -8,7 +8,7 @@ namespace Metro.DynamicModeules.Models
     using System.Data.Entity.Spatial;
     using System.Runtime.Serialization;
 
-    [DataContract]
+    //[Serializable]
     [Table("tb_MyUser")]
     public partial class tb_MyUser : INotifyPropertyChanged
     {

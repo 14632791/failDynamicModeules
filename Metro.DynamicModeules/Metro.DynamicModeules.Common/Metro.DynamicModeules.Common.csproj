@@ -72,7 +72,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dynamic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=68293a411f0cabcc, processorArchitecture=MSIL">
-      <HintPath>..\..\..\DynamicWebApi\Metro.DynamicModeules.WebApi\packages\DynamicQuery.1.0\lib\35\Dynamic.dll</HintPath>
+      <HintPath>..\packages\DynamicQuery.1.0\lib\35\Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net40\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="ExpressionSerialization">
       <HintPath>..\lib\ExpressionSerialization.dll</HintPath>
@@ -80,17 +86,22 @@
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\Metro.DynamicModeules.WebApi\packages\log4net.2.0.8\lib\net40-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\Metro.DynamicModeules.WebApi\packages\Newtonsoft.Json.10.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -109,6 +120,21 @@
     <Compile Include="DEncrypt\RSACryption.cs" />
     <Compile Include="DetailButtons.cs" />
     <Compile Include="Encoder.cs" />
+    <Compile Include="ExpressionSerialization\DLinqSerializer.cs" />
+    <Compile Include="ExpressionSerialization\Evaluator.cs" />
+    <Compile Include="ExpressionSerialization\ExpressionSerializer %28GenerateXmlFromExpressionCore%29.cs" />
+    <Compile Include="ExpressionSerialization\ExpressionSerializer%28Deserialize%29.cs" />
+    <Compile Include="ExpressionSerialization\ExpressionSerializer%28Serialize%29.cs" />
+    <Compile Include="ExpressionSerialization\IQueryService.cs" />
+    <Compile Include="ExpressionSerialization\KnownTypeExpressionXmlConverter.cs" />
+    <Compile Include="ExpressionSerialization\LinqHelper.cs" />
+    <Compile Include="ExpressionSerialization\Query.cs" />
+    <Compile Include="ExpressionSerialization\QueryCreator.cs" />
+    <Compile Include="ExpressionSerialization\QueryExpressionXmlConverter.cs" />
+    <Compile Include="ExpressionSerialization\QueryProvider.cs" />
+    <Compile Include="ExpressionSerialization\RemoteProvider.cs" />
+    <Compile Include="ExpressionSerialization\TypeResolver.cs" />
+    <Compile Include="ExpressionSerialization\WebHttpClient.cs" />
     <Compile Include="GlobalData.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="HexCryptString.cs" />
@@ -120,7 +146,7 @@
     <Compile Include="MenuType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RMBConverter.cs" />
-    <Compile Include="SerializeHelper.cs" />
+    <Compile Include="ExpressionSerialization\SerializeHelper.cs" />
     <Compile Include="ShellPathNameConvert.cs" />
     <Compile Include="SystemConfig.cs" />
     <Compile Include="UpdateType.cs" />
@@ -144,6 +170,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

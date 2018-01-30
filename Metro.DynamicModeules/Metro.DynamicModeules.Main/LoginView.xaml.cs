@@ -19,6 +19,8 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Metro.DynamicModeules.Models;
 using Metro.DynamicModeules.BLL.DataDict;
+using Metro.DynamicModeules.BLL;
+using Metro.DynamicModeules.Common.ExpressionSerialization;
 
 namespace Metro.DynamicModeules.Main
 {
@@ -33,7 +35,8 @@ namespace Metro.DynamicModeules.Main
 
         }
         private BllUser _bllUser = new BllUser();
-
+        String _userID = "";
+        String _password = "";
 
         // Using a DependencyProperty as the backing store for MetroDialogPotions.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MetroDialogPotionsProperty =
@@ -43,39 +46,28 @@ namespace Metro.DynamicModeules.Main
         {
             try
             {
-                // this.Cursor = Cursors.Wait;
                 pRingWaiting.Visibility = Visibility.Visible;
-                //this.SetButtonEnable(false);
                 this.ShowLoginInfo("正在验证用户名及密码");
                 //BllUser.ValidateLogin(txtUser.Text, txtPwd.Text);//检查登录信息
-                string userID = txtUser.Text;
-                string password = CEncoder.Encode(txtPwd.Password);/*常规加密*/
-                                                                   //string dataSetID = txtDataset.EditValue.ToString();//帐套编号
-                                                                   //string dataSetDB = GetDataSetDBName();
-                                                                   //BllPayType bllPayType = new BllPayType();
-                                                                   //var paytypes = bllPayType.GetSearchList(p => p.PayType == "VIA");
-                Expression<Func<tb_MyUser, bool>> predicate = u => u.Account == userID;
+                _userID = txtUser.Text;
+                _password = CEncoder.Encode(txtPwd.Password);/*常规加密*/
+                //需要系列化的linq表达表需要通过以下语句生成
+                Expression<Func<tb_MyUser, bool>> predicate = SerializeHelper.CreateExpression<tb_MyUser, bool>("Account=@0&&Password=@1", new object[] { _userID, _password });
                 var user = await _bllUser.GetSearchList(predicate);
-                //LoginUser loginUser = new LoginUser(userID, password, dataSetID, dataSetDB);
                 if (null != user && user.Count > 0)
                 //if (_CurrentAuthorization.Login(loginUser)) //调用登录策略
                 {
                     // if (chkSaveLoginInfo.IsChecked.Value) this.SaveLoginInfo();//跟据选项保存登录信息  
                     //SystemAuthentication.Current = _CurrentAuthorization; //授权成功, 保存当前授权模式
-
-                    MainWindow MainForm = new MainWindow();//登录成功创建主窗体                    
-                    //Program.MainForm.InitUserInterface(new LoadStatus(form1.lblLoadingInfo, form1.progressBarControl1));
-                    this.DialogResult = true; //成功
-                    MainForm.Show();
-                    this.Hide();
-                    this.Close(); //关闭登陆窗体
-                    //while (form1.Opacity > 0)
+                    //Dispatcher.Invoke(new Action(() =>
                     //{
-                    //    form1.Opacity = form1.Opacity - 0.05;
-                    //    Application.DoEvents();
-                    //    Thread.Sleep(100);
-                    //}
-                    //form1.Close();
+                        DataDictCache.Instance.User = user[0];
+                        MainWindow MainForm = new MainWindow();//登录成功创建主窗体                    
+                                                               //Program.MainForm.InitUserInterface(new LoadStatus(form1.lblLoadingInfo, form1.progressBarControl1));
+                        MainForm.Show();
+                        this.Hide();
+                        this.Close(); //关闭登陆窗体
+                   // }));
                 }
                 else
                 {

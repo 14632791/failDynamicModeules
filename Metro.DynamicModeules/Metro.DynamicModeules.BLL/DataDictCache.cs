@@ -9,6 +9,7 @@
 ///*
 ///**************************************************************************/
 
+using Metro.DynamicModeules.Models;
 using System.Data;
 
 
@@ -24,21 +25,21 @@ namespace Metro.DynamicModeules.BLL
 
         #region 缓存数据唯一实例
 
-        private static DataDictCache _Cache = null;
+        private static DataDictCache _instance = null;
 
         /// <summary>
         /// 缓存数据唯一实例
         /// </summary>
-        public static DataDictCache Cache
+        public static DataDictCache Instance
         {
             get
             {
-                if (_Cache == null)
+                if (_instance == null)
                 {
-                    _Cache = new DataDictCache();
-                    _Cache.DownloadBaseCacheData();//下载基本数据                    
+                    _instance = new DataDictCache();
+                    _instance.DownloadBaseCacheData();//下载基本数据                    
                 }
-                return _Cache;
+                return _instance;
             }
         }
         #endregion
@@ -50,7 +51,7 @@ namespace Metro.DynamicModeules.BLL
         /// </summary>
         public static void RefreshCache()
         {
-            DataDictCache.Cache.DownloadBaseCacheData();
+            DataDictCache.Instance.DownloadBaseCacheData();
         }
 
         /// <summary>
@@ -65,7 +66,7 @@ namespace Metro.DynamicModeules.BLL
         #endregion
 
         #region 2.数据表缓存数据. 局域变易及属性定义
-
+        public tb_MyUser User { get; set; }
         private DataSet _AllDataDicts = null;
 
         private DataTable _BusinessTables = null;
@@ -79,9 +80,7 @@ namespace Metro.DynamicModeules.BLL
 
         private DataTable _PayType = null;
         public DataTable PayType { get { return _PayType; } }
-
-        private DataTable _User = null; //用户表
-        public DataTable User { get { return _User; } }
+        
 
         private DataTable _Person = null; //营销员
         public DataTable Person { get { return _Person; } }
@@ -117,7 +116,7 @@ namespace Metro.DynamicModeules.BLL
             {
                 if (commonHireType == null)
                 {
-                    commonHireType = (from q in DataDictCache.Cache.CommonDataDictOther.AsEnumerable() where q.Field<int>("DataType") == 6 select q).CopyToDataTable();
+                    commonHireType = (from q in DataDictCache.Instance.CommonDataDictOther.AsEnumerable() where q.Field<int>("DataType") == 6 select q).CopyToDataTable();
                 }
                 return commonHireType;
             }
@@ -133,7 +132,7 @@ namespace Metro.DynamicModeules.BLL
             {
                 if (commonVehicleType == null)
                 {
-                    commonVehicleType = (from q in DataDictCache.Cache.CommonDataDictOther.AsEnumerable() where q.Field<int>("DataType") == 7 select q).CopyToDataTable();
+                    commonVehicleType = (from q in DataDictCache.Instance.CommonDataDictOther.AsEnumerable() where q.Field<int>("DataType") == 7 select q).CopyToDataTable();
                 }
                 return commonVehicleType;
             }
@@ -149,7 +148,7 @@ namespace Metro.DynamicModeules.BLL
             {
                 if (commonOrderStatus == null)
                 {
-                    commonOrderStatus = (from q in DataDictCache.Cache.CommonDataDictOther.AsEnumerable() where q.Field<int>("DataType") == 9 select q).CopyToDataTable();
+                    commonOrderStatus = (from q in DataDictCache.Instance.CommonDataDictOther.AsEnumerable() where q.Field<int>("DataType") == 9 select q).CopyToDataTable();
                 }
                 return commonOrderStatus;
             }

@@ -9,9 +9,11 @@
 ///**************************************************************************/
 using Metro.DynamicModeules.BLL.Security;
 using Metro.DynamicModeules.Common;
+using Metro.DynamicModeules.Common.ExpressionSerialization;
 using Metro.DynamicModeules.Interface.Service.Base;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -21,22 +23,20 @@ namespace Metro.DynamicModeules.BLL.Base
     /// <summary>
     /// 业务逻辑层基类
     /// </summary>
-    public abstract class BllBase<T> : IServiceBase<T> where T : class  //
+    public class BllBase<T> : ICommonServiceAsyncBase<T> where T : class  
     {
 
-        //string _controllerName;
-        protected abstract string GetControllerName();
-        //{
-        //    get
-        //    {
-        //        if (string.IsNullOrEmpty(_controllerName))
-        //        {
-        //            Type type = typeof(T);
-        //            _controllerName = type.Name;
-        //        }
-        //        return _controllerName;
-        //    }
-        //}
+        string _controllerName;
+        protected virtual string GetControllerName()
+        {
+            if (string.IsNullOrEmpty(_controllerName))
+            {
+                Type type = typeof(T);
+                _controllerName = type.Name;
+            }
+            return _controllerName;
+        }
+
         private string GetApiUrl(string methodName)
         {
             return string.Format("{0}/{1}/{2}", GlobalData.WEBURL, GetControllerName(), methodName);
@@ -47,7 +47,7 @@ namespace Metro.DynamicModeules.BLL.Base
             return await WebRequestHelper.PostHttpAsync<object[]>(GetApiUrl("Add"), apiParams);
         }
 
-        public async Task<bool> Add(IEnumerable<T> paramList, bool isSave = true)
+        public async Task<bool> Add(T[] paramList, bool isSave = true)
         {
             var apiParams = new { paramList, isSave };
             return await WebRequestHelper.PostHttpAsync<bool>(GetApiUrl("Add"), apiParams);
@@ -59,7 +59,7 @@ namespace Metro.DynamicModeules.BLL.Base
             return await WebRequestHelper.PostHttpAsync<bool>(GetApiUrl("Delete"), apiParams);
         }
 
-        public async Task<bool> Delete(bool isSave, IEnumerable<T> entities)
+        public async Task<bool> Delete(bool isSave, T[] entities)
         {
             var apiParams = new { isSave, entities };
             return await WebRequestHelper.PostHttpAsync<bool>(GetApiUrl("Delete"), apiParams);
@@ -76,22 +76,22 @@ namespace Metro.DynamicModeules.BLL.Base
             return await WebRequestHelper.PostHttpAsync<T>(GetApiUrl("Find"), keyValues);
         }
 
-        public virtual async Task<List<T>> GetSearchList(Expression<Func<T, bool>> where)
+        public virtual async Task<ObservableCollection<T>> GetSearchList(Expression<Func<T, bool>> where)
         {
             XElement xmlPredicate = SerializeHelper.SerializeExpression(where);
-            return await WebRequestHelper.PostHttpAsync<List<T>>(GetApiUrl("GetSearchList"), xmlPredicate);
+            return await WebRequestHelper.PostHttpAsync<ObservableCollection<T>>(GetApiUrl("GetSearchList"), xmlPredicate);
         }
         public async Task<long> GetListCount(Expression<Func<T, bool>> where)
         {
             XElement xmlPredicate = SerializeHelper.SerializeExpression(where);
             return await WebRequestHelper.PostHttpAsync<long>(GetApiUrl("GetListCount"), xmlPredicate);
         }
-        public async Task<List<T>> GetSearchListByPage<TKey>(Expression<Func<T, bool>> where, Expression<Func<T, TKey>> orderBy, int pageSize, int pageIndex)
+        public async Task<ObservableCollection<T>> GetSearchListByPage<TKey>(Expression<Func<T, bool>> where, Expression<Func<T, TKey>> orderBy, int pageSize, int pageIndex)
         {
             XElement xmlPredicate = SerializeHelper.SerializeExpression(where);
             XElement xmlOrderBy = SerializeHelper.SerializeExpression(orderBy);
             var apiParams = new { xmlPredicate, xmlOrderBy, pageSize, pageIndex };
-            return await WebRequestHelper.PostHttpAsync<List<T>>(GetApiUrl("GetSearchListByPage"), apiParams);
+            return await WebRequestHelper.PostHttpAsync<ObservableCollection<T>>(GetApiUrl("GetSearchListByPage"), apiParams);
         }
 
         public async Task<bool> Update(Expression<Func<T, bool>> where, Dictionary<string, object> dic, bool isSave = true)
@@ -106,11 +106,6 @@ namespace Metro.DynamicModeules.BLL.Base
             var apiParams = new { model, isSave };
             return await WebRequestHelper.PostHttpAsync<bool>(GetApiUrl("Update"), apiParams);
         }
-
-      
-        Task<bool> IServiceBase<T>.Commit(bool isSave)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

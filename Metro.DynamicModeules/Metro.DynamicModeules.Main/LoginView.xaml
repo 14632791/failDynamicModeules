@@ -3,18 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Metro.DynamicModeules.Main" ShowMaxRestoreButton="False" ShowMinButton="False"
-        mc:Ignorable="d" 
+        xmlns:local="clr-namespace:Metro.DynamicModeules.Main"
+                      ShowMaxRestoreButton="False" 
+                      ShowMinButton="False"
+        mc:Ignorable="d" DataContext="{Binding Login,Source={StaticResource Locator}}"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         Title="LoginView" Height="450" Width="500" >
     <Controls:MetroWindow.Resources>
         <Thickness x:Key="ControlMargin">5</Thickness>
-    </Controls:MetroWindow.Resources>   
-    <Grid >       
+    </Controls:MetroWindow.Resources>
+    <Grid >
         <Grid.Background>
             <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-                <GradientStop Color="AliceBlue" Offset="0.1"/>
-                <GradientStop Color="White" Offset=".5"/>
+                <GradientStop Color="#FFA6ADBB" Offset="0.46"/>
+                <GradientStop Color="#FF22878B" Offset="0.029"/>
             </LinearGradientBrush>
         </Grid.Background>
         <Grid.RowDefinitions>
@@ -39,8 +41,9 @@
                          Controls:TextBoxHelper.UseFloatingWatermark="False"
                          Controls:TextBoxHelper.Watermark="请输入用户名"
                           VerticalContentAlignment="Center"
+                 Text="{Binding UserName}"
                          SpellCheck.IsEnabled="True"/>
-       
+
         <Label Content="密码：" Grid.Row="2" Style="{DynamicResource DescriptionHeaderStyle}" HorizontalAlignment="Right"  VerticalAlignment="Center"/>
         <PasswordBox Margin="{StaticResource ControlMargin}"
                        Controls:TextBoxHelper.SelectAllOnFocus="True"
@@ -51,7 +54,7 @@
                              Controls:TextBoxHelper.Watermark="请输入密码" />
         <CheckBox Content="是否保存密码" Name="chkSaveLoginInfo" Grid.Row="3" Grid.Column="1" Margin="5"/>
         <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Orientation="Horizontal">
-          
+
             <ToggleButton Width="100"
                           Margin="{StaticResource ControlMargin}"
                           Content="登 录" Name="tbtnLogin" Click="tbtnLogin_Click"

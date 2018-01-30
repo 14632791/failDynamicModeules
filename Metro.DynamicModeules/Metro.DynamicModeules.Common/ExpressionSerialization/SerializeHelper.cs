@@ -10,7 +10,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Xml.Linq;
 
-namespace Metro.DynamicModeules.Common
+namespace Metro.DynamicModeules.Common.ExpressionSerialization
 {
     /// <summary>
     /// linq表达示可序列化

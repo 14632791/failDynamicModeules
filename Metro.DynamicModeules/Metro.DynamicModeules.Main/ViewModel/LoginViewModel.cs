@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Metro.DynamicModeules.Main.ViewModel
 {
@@ -36,7 +37,7 @@ namespace Metro.DynamicModeules.Main.ViewModel
                 RaisePropertyChanged(() => UserName);
             }
         }
-        private RelayCommand _userLoginCommand;
+        private  RelayCommand _userLoginCommand;
         public RelayCommand UserLoginCommand
         {
             get
