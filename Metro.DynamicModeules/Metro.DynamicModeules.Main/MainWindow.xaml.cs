@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Metro.DynamicModeules.Core.Interfaces;
 using Metro.DynamicModeules.Main.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -15,13 +16,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Metro.DynamicModeules.Models;
+using System.ComponentModel.Composition;
 
 namespace Metro.DynamicModeules.Main
 {
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : MetroWindow
+    [Export(typeof(IHost))]
+    public partial class MainWindow : MetroWindow, IHost
     {
         //private bool _shutdown;
         private readonly MainWindowViewModel _viewModel;
@@ -130,6 +134,16 @@ namespace Metro.DynamicModeules.Main
             await TaskEx.Delay(2000);
 
             await this.HideMetroDialogAsync(dialog);
+        }
+
+        public void Exec(sys_Modules info)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShowProgress(string msg)
+        {
+            throw new NotImplementedException();
         }
 
         public MetroDialogSettings MetroDialogPotions

@@ -5,6 +5,7 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Metro.DynamicModeules.Core
@@ -73,9 +74,9 @@ namespace Metro.DynamicModeules.Core
         /// </summary>
         //protected Assembly _ModuleAssembly;
 
-        ///// <summary>
-        ///// 模块文件所在路径
-        ///// </summary>
+        /// <summary>
+        /// 模块文件所在路径
+        /// </summary>
         //public static readonly string MODULE_PATH = Application.StartupPath;
 
         ///// <summary>

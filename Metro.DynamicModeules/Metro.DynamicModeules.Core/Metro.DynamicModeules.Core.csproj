@@ -76,10 +76,16 @@
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CustomerService.cs" />
+    <Compile Include="SystemAuthentication.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Metro.DynamicModeules.Models\Metro.DynamicModeules.Models.csproj">
+      <Project>{937E0D53-9696-48AB-B12F-736BC6D43F15}</Project>
+      <Name>Metro.DynamicModeules.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

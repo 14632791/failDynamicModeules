@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metro.DynamicModeules.Commo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metro.DynamicModeules.Interface", "..\..\DynamicWebApi\Metro.DynamicModeules.WebApi\Metro.DynamicModeules.Interface\Metro.DynamicModeules.Interface.csproj", "{66B7A24B-9FB9-4436-A269-F6740E700C03}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfCustomLibDemo1", "WpfCustomLibDemo1\WpfCustomLibDemo1.csproj", "{0C712D61-17AB-49BE-B9BA-5FC038C14A1C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		AppVeyor|Any CPU = AppVeyor|Any CPU
@@ -127,8 +129,23 @@ Global
 		{66B7A24B-9FB9-4436-A269-F6740E700C03}.Release|Any CPU.Build.0 = Release|Any CPU
 		{66B7A24B-9FB9-4436-A269-F6740E700C03}.Release|x86.ActiveCfg = Release|Any CPU
 		{66B7A24B-9FB9-4436-A269-F6740E700C03}.Release|x86.Build.0 = Release|Any CPU
+		{0C712D61-17AB-49BE-B9BA-5FC038C14A1C}.AppVeyor|Any CPU.ActiveCfg = Release|Any CPU
+		{0C712D61-17AB-49BE-B9BA-5FC038C14A1C}.AppVeyor|Any CPU.Build.0 = Release|Any CPU
+		{0C712D61-17AB-49BE-B9BA-5FC038C14A1C}.AppVeyor|x86.ActiveCfg = Release|Any CPU
+		{0C712D61-17AB-49BE-B9BA-5FC038C14A1C}.AppVeyor|x86.Build.0 = Release|Any CPU
+		{0C712D61-17AB-49BE-B9BA-5FC038C14A1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C712D61-17AB-49BE-B9BA-5FC038C14A1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C712D61-17AB-49BE-B9BA-5FC038C14A1C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0C712D61-17AB-49BE-B9BA-5FC038C14A1C}.Debug|x86.Build.0 = Debug|Any CPU
+		{0C712D61-17AB-49BE-B9BA-5FC038C14A1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C712D61-17AB-49BE-B9BA-5FC038C14A1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C712D61-17AB-49BE-B9BA-5FC038C14A1C}.Release|x86.ActiveCfg = Release|Any CPU
+		{0C712D61-17AB-49BE-B9BA-5FC038C14A1C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0C712D61-17AB-49BE-B9BA-5FC038C14A1C} = {B8048C39-234B-4B9E-BE70-69201B23A173}
 	EndGlobalSection
 EndGlobal

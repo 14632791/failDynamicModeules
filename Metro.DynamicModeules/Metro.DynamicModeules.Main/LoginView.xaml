@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Metro.DynamicModeules.Main"
                       ShowMaxRestoreButton="False" 
-                      ShowMinButton="False"
+                      ShowMinButton="False" 
         mc:Ignorable="d" DataContext="{Binding Login,Source={StaticResource Locator}}"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         Title="LoginView" Height="450" Width="500" >

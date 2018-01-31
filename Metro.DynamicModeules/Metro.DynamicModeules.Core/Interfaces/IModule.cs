@@ -39,7 +39,7 @@ namespace Metro.DynamicModeules.Core.Interfaces
         }
     }
 
-    public abstract class ModuleBase //: IModuleBase
+    public class ModuleBase //: IModuleBase
     {
         public ModuleBase(ModuleID mid)
         {
