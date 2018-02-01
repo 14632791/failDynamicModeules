@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Metro.DynamicModeules.Main"
+        xmlns:local="clr-namespace:Metro.DynamicModeules.Main" 
                       ShowMaxRestoreButton="False" 
                       ShowMinButton="False" 
         mc:Ignorable="d" DataContext="{Binding Login,Source={StaticResource Locator}}"
@@ -55,7 +55,7 @@
         <CheckBox Content="是否保存密码" Name="chkSaveLoginInfo" Grid.Row="3" Grid.Column="1" Margin="5"/>
         <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Orientation="Horizontal">
 
-            <ToggleButton Width="100"
+            <ToggleButton Width="100" 
                           Margin="{StaticResource ControlMargin}"
                           Content="登 录" Name="tbtnLogin" Click="tbtnLogin_Click"
                           Style="{DynamicResource MetroFlatToggleButton}" />

@@ -29,6 +29,7 @@ namespace Metro.DynamicModeules.Core.Interfaces
     {
         private PluginHandle()
         {
+            InitializePlugins();
         }
         private static object _lockobj = new object();
         private static PluginHandle _instance;
@@ -87,7 +88,7 @@ namespace Metro.DynamicModeules.Core.Interfaces
                 //添加程序运行路径下的导出项目录
                 //catalog.Catalogs.Add(new DirectoryCatalog(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location),"*.dll"));
                 //添加插件目录下的导出项目录
-                string pluginDir = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Plugins");
+                string pluginDir = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "MODULES");
                 if (System.IO.Directory.Exists(pluginDir))
                 {
                     catalog.Catalogs.Add(new DirectoryCatalog(pluginDir, "*.dll"));
@@ -140,7 +141,7 @@ namespace Metro.DynamicModeules.Core.Interfaces
         /// 需要加载的模块
         /// </summary>
         /// <param name="info"></param>
-        void Exec(sys_Modules info);
+        void Exec();
 
         /// <summary>
         /// 显示加载进度

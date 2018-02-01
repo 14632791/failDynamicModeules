@@ -21,6 +21,7 @@ using Metro.DynamicModeules.Models;
 using Metro.DynamicModeules.BLL.DataDict;
 using Metro.DynamicModeules.BLL;
 using Metro.DynamicModeules.Common.ExpressionSerialization;
+using Metro.DynamicModeules.Core.Interfaces;
 
 namespace Metro.DynamicModeules.Main
 {
@@ -62,10 +63,10 @@ namespace Metro.DynamicModeules.Main
                     //Dispatcher.Invoke(new Action(() =>
                     //{
                         DataDictCache.Instance.User = user[0];
-                        MainWindow MainForm = new MainWindow();//登录成功创建主窗体                    
-                                                               //Program.MainForm.InitUserInterface(new LoadStatus(form1.lblLoadingInfo, form1.progressBarControl1));
-                        MainForm.Show();
-                        this.Hide();
+                    //new MainWindow().Show();                                           //Program.MainForm.InitUserInterface(new LoadStatus(form1.lblLoadingInfo, form1.progressBarControl1));
+                    Window mainpage = PluginHandle.Instance.Host.Value as Window;
+                    mainpage.Show();
+                    this.Hide();
                         this.Close(); //关闭登陆窗体
                    // }));
                 }

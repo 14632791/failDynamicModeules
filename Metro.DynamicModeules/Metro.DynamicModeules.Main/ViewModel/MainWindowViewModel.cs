@@ -59,7 +59,7 @@ namespace Metro.DynamicModeules.Main.ViewModel
 
             try
             {
-                HotkeyManager.Current.AddOrReplace("demo", HotKey.Key, HotKey.ModifierKeys, (sender, e) =>OnHotKey(sender, e));
+                HotkeyManager.Current.AddOrReplace("demo", HotKey.Key, HotKey.ModifierKeys,async (sender, e) =>await OnHotKey(sender, e));
             }
             catch (HotkeyAlreadyRegisteredException exception)
             {
@@ -511,7 +511,7 @@ namespace Metro.DynamicModeules.Main.ViewModel
                     _hotKey = value;
                     if (_hotKey != null && _hotKey.Key != Key.None)
                     {
-                        HotkeyManager.Current.AddOrReplace("demo", HotKey.Key, HotKey.ModifierKeys, (sender, e) => OnHotKey(sender, e));
+                        HotkeyManager.Current.AddOrReplace("demo", HotKey.Key, HotKey.ModifierKeys,async (sender, e) =>await OnHotKey(sender, e));
                     }
                     else
                     {

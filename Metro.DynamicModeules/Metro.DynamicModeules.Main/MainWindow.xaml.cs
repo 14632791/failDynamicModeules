@@ -41,6 +41,7 @@ namespace Metro.DynamicModeules.Main
                     _viewModel.Dispose();
                 }
             };
+            Exec();
         }
         public static readonly DependencyProperty ToggleFullScreenProperty =
            DependencyProperty.Register("ToggleFullScreen",
@@ -136,9 +137,13 @@ namespace Metro.DynamicModeules.Main
             await this.HideMetroDialogAsync(dialog);
         }
 
-        public void Exec(sys_Modules info)
+        public void Exec()
         {
-            throw new NotImplementedException();
+            foreach (var item in PluginHandle.Instance.PluginList)
+            {
+                Expander expander = new Expander { Name = item.Value.ModulesInfo.ModuleName };
+                sPanelRoot.Children.Add(expander);
+            }
         }
 
         public void ShowProgress(string msg)

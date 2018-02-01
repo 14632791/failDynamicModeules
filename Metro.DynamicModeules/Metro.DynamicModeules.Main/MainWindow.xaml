@@ -13,7 +13,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Metro.DynamicModeules.BaseControls;component/Themes/Expander.xaml"/>
+                <!--<ResourceDictionary Source="pack://application:,,,/Metro.DynamicModeules.BaseControls;component/Themes/Expander.xaml"/>-->
             </ResourceDictionary.MergedDictionaries>
 
             <Ellipse x:Key="AppThemeMenuIcon"
@@ -112,7 +112,7 @@
         <Line X1="0" Y1="0" Y2="0" X2="3000" Grid.Row="1" Grid.ColumnSpan="2"  Stroke="{DynamicResource AccentColorBrush}"/>
         <Grid Margin="3,0" Grid.Row="1">
             <ScrollViewer>
-                <StackPanel Margin="5 10 5 0">
+                <StackPanel Margin="5 10 5 0" x:Name="sPanelRoot">
                     <Expander Margin="5" 
                       Header="_Default TabControl"
                       IsExpanded="True">
