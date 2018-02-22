@@ -27,6 +27,8 @@ namespace Metro.DynamicModeules.Core.Interfaces
     /// </summary>
     public class PluginHandle : IDisposable
     {
+
+        #region 单例模式
         private PluginHandle()
         {
             InitializePlugins();
@@ -51,13 +53,8 @@ namespace Metro.DynamicModeules.Core.Interfaces
             }
         }
 
-        /// <summary>
-        /// 2917.9.19 初始化
-        /// </summary>
-        public static void Initialize()
-        {
-            _instance = new PluginHandle();
-        }
+        #endregion
+
         /// <summary>
         /// 存储MEF导出分类
         /// </summary>
@@ -133,7 +130,7 @@ namespace Metro.DynamicModeules.Core.Interfaces
     }
 
     /// <summary>
-    /// 插件载体需要实现该接口，从而使插件载体与插件核心部分解耦
+    /// 主界面的载体
     /// </summary>
     public interface IHost
     {

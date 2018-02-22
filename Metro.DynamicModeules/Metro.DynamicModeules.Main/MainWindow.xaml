@@ -142,7 +142,6 @@
                     </Expander>
 
                     <Expander Margin="5"
-                      Header="测试3"
                       IsExpanded="True">
                         <ListBox Margin="1"
                           BorderThickness="0" Style="{StaticResource VirtualisedMetroListBox}">
@@ -151,6 +150,16 @@
                             <ListBoxItem>Test 3</ListBoxItem>
                             <ListBoxItem>Test 4</ListBoxItem>
                         </ListBox>
+                        <Expander.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Height="28" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <iconPacks:PackIconModern Width="20"
+                                              Height="20" Margin="5"
+                                              Kind="PageCopy" />
+                                    <TextBlock Text="测试模块" Margin="5"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </Expander.HeaderTemplate>
                     </Expander>
                 </StackPanel>
             </ScrollViewer>
@@ -169,14 +178,13 @@
                 <Button Margin="5" Width="28" Height="28" ToolTip="Add" Style="{DynamicResource ButtonStyleKey}">
                         <iconPacks:PackIconModern Width="20"
                                               Height="20"
-                                              Kind="Add" />
+                                              Kind="Close" />
                     </Button>
                 <Button Margin="5"  Width="28" Height="28" ToolTip="Save"  Style="{DynamicResource ButtonStyleKey}">
                         <iconPacks:PackIconModern Width="20"
                                               Height="20"
                                               Kind="Save" />
-                    </Button>
-                <Separator Background="{DynamicResource AccentColorBrush}"/>
+                    </Button> 
                 <Button Margin="5"  Width="28" Height="28"  ToolTip="删除" Style="{DynamicResource ButtonStyleKey}">
                         <iconPacks:PackIconModern Width="20"
                                               Height="20"
@@ -196,8 +204,7 @@
                         <iconPacks:PackIconModern Width="20"
                                               Height="20"
                                               Kind="AppFavorite" />
-                    </Button>
-                <Separator Background="{DynamicResource AccentColorBrush}"/>
+                    </Button> 
              </ToolBar>
            <Controls:MetroAnimatedTabControl Grid.Row="1" Margin="3">
                 <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="24"

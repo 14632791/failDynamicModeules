@@ -18,6 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Metro.DynamicModeules.Models;
 using System.ComponentModel.Composition;
+using MahApps.Metro.IconPacks;
 
 namespace Metro.DynamicModeules.Main
 {
@@ -141,13 +142,14 @@ namespace Metro.DynamicModeules.Main
         {
             foreach (var item in PluginHandle.Instance.PluginList)
             {
-                Expander expander = new Expander { Name = item.Value.ModulesInfo.ModuleName };
+                Expander expander = new Expander { Header = item.Value.ModulesInfo.ModuleName };
                 sPanelRoot.Children.Add(expander);
             }
         }
 
         public void ShowProgress(string msg)
         {
+            
             throw new NotImplementedException();
         }
 

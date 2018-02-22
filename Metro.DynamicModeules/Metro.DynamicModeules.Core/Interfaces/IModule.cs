@@ -17,12 +17,15 @@ namespace Metro.DynamicModeules.Core.Interfaces
         {
             this.ParentModuleID = ParentModuleID;
         }
+
         /// <summary>
         /// 父结点
         /// </summary>
         public readonly ModuleID ParentModuleID;
        
-
+        /// <summary>
+        /// 初始化功能按钮
+        /// </summary>
         public void InitButton()
         {
             throw new NotImplementedException();
