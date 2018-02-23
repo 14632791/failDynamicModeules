@@ -7,7 +7,7 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:local="clr-namespace:Metro.DynamicModeules.Main.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="800">
     <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
         <Grid Background="{DynamicResource AccentColorBrush4}">
             <Grid.ColumnDefinitions>
@@ -18,14 +18,6 @@
                 <RowDefinition Height="83*" />
                 <RowDefinition Height="259*" />
             </Grid.RowDefinitions>
-
-            <TextBlock Grid.Column="1"
-                       VerticalAlignment="Center"
-                       FontFamily="Segoe UI"
-                       FontSize="30"
-                       FontWeight="Light"
-                       Foreground="{DynamicResource BlackBrush}"
-                       Text="相关模块" />
 
             <WrapPanel Grid.Row="1"
                        Grid.Column="1"
