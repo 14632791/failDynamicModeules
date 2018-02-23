@@ -1,10 +1,12 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Metro.DynamicModeules.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Metro.DynamicModeules.Main.ViewModel
 {
@@ -37,6 +39,19 @@ namespace Metro.DynamicModeules.Main.ViewModel
                 RaisePropertyChanged(() => UserName);
             }
         }
+        bool _isSave;
+        public bool IsSave
+        {
+            get
+            {
+                return _isSave;
+            }
+            set
+            {
+                _isSave = value;
+                RaisePropertyChanged(() => IsSave);
+            }
+        }
         private  RelayCommand _userLoginCommand;
         public RelayCommand UserLoginCommand
         {
@@ -47,6 +62,18 @@ namespace Metro.DynamicModeules.Main.ViewModel
 
                 }));
             }
+        }
+        private void SaveLoginInfo()
+        {
+            //存在用户配置文件，自动加载登录信息
+            string cfgINI = AppDomain.CurrentDomain.BaseDirectory + Globals.INI_CFG;
+            IniFile ini = new IniFile(cfgINI);
+            ini.IniWriteValue("LoginWindow", "User", UserName);
+            //ini.IniWriteValue("LoginWindow", "DataSetID", txtDataset.EditValue.ToString());
+            ini.IniWriteValue("LoginWindow", "Password", CEncoder.Encode(PassWord));
+            ini.IniWriteValue("LoginWindow", "SaveLogin", IsSave ? "Y" : "N");
+            //string strBridgeType = rgAccessType.SelectedIndex == 0 ? "ADODirect" : "WebService"; //2015.7.1 陈刚 写入访问方式
+            //ini.IniWriteValue("BridgeType", "BridgeType", strBridgeType);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Metro.DynamicModeules.BLL.Base
 
         private string GetApiUrl(string methodName)
         {
-            return string.Format("{0}/{1}/{2}", GlobalData.WEBURL, GetControllerName(), methodName);
+            return string.Format("{0}/{1}/{2}", Globals.WEBURL, GetControllerName(), methodName);
         }
         public async Task<object[]> Add(T model, bool isSave = true)
         {

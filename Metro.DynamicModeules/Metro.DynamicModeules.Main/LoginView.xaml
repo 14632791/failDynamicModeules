@@ -33,7 +33,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Label Content="欢 迎 使 用" Grid.ColumnSpan="3"   Style="{DynamicResource DescriptionHeaderStyle}" VerticalAlignment="Center"/>
-        <Label Content="用户名：" Grid.Row="1" Style="{DynamicResource DescriptionHeaderStyle}" HorizontalAlignment="Right"  VerticalAlignment="Center"/>
+        <Label Content="用户名" FontSize="14" Grid.Row="1" Style="{DynamicResource DescriptionHeaderStyle}" HorizontalAlignment="Right"  VerticalAlignment="Center"/>
         <TextBox Margin="{StaticResource ControlMargin}"
                   Name="txtUser" Grid.Row="1" Background="Transparent"  Grid.Column="1"   HorizontalAlignment="Stretch" 
                          Controls:TextBoxHelper.ClearTextButton="True"
@@ -44,25 +44,24 @@
                  Text="{Binding UserName}"
                          SpellCheck.IsEnabled="True"/>
 
-        <Label Content="密码：" Grid.Row="2" Style="{DynamicResource DescriptionHeaderStyle}" HorizontalAlignment="Right"  VerticalAlignment="Center"/>
+        <Label Content="密  码" FontSize="14" Grid.Row="2" Style="{DynamicResource DescriptionHeaderStyle}" HorizontalAlignment="Right"  VerticalAlignment="Center"/>
         <PasswordBox Margin="{StaticResource ControlMargin}"
                        Controls:TextBoxHelper.SelectAllOnFocus="True"
                       Controls:TextBoxHelper.ClearTextButton="True"
                      HorizontalAlignment="Stretch" 
-                     VerticalContentAlignment="Center"
+                     VerticalContentAlignment="Center" 
                      Name="txtPwd" Grid.Row="2" Grid.Column="1"  Background="Transparent" 
                              Controls:TextBoxHelper.Watermark="请输入密码" />
-        <CheckBox Content="是否保存密码" Name="chkSaveLoginInfo" Grid.Row="3" Grid.Column="1" Margin="5"/>
+        <CheckBox Content="记住密码" Name="chkSaveLoginInfo" Grid.Row="3" Grid.Column="1" Margin="5"/>
         <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Orientation="Horizontal">
 
-            <ToggleButton Width="100" 
+            <Button Width="130" 
                           Margin="{StaticResource ControlMargin}"
-                          Content="登 录" Name="tbtnLogin" Click="tbtnLogin_Click"
-                          Style="{DynamicResource MetroFlatToggleButton}" />
-            <ToggleButton Width="100"
+                          Content="登 录" Name="tbtnLogin" Click="tbtnLogin_Click"/>
+            <!--<ToggleButton Width="100"
                           Margin="{StaticResource ControlMargin}"
                           Content="取 消"
-                          Style="{DynamicResource MetroFlatToggleButton}" />
+                          Style="{DynamicResource MetroFlatToggleButton}" />-->
 
         </StackPanel>
         <Controls:ProgressRing Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" 

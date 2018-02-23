@@ -36,8 +36,8 @@ namespace Metro.DynamicModeules.Main
 
         }
         private BllUser _bllUser = new BllUser();
-        String _userID = "";
-        String _password = "";
+        string _userID = "";
+        string _password = "";
 
         // Using a DependencyProperty as the backing store for MetroDialogPotions.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MetroDialogPotionsProperty =
@@ -58,16 +58,18 @@ namespace Metro.DynamicModeules.Main
                 if (null != user && user.Count > 0)
                 //if (_CurrentAuthorization.Login(loginUser)) //调用登录策略
                 {
-                    // if (chkSaveLoginInfo.IsChecked.Value) this.SaveLoginInfo();//跟据选项保存登录信息  
+                    if (chkSaveLoginInfo.IsChecked.Value)
+                    {
+                        SaveLoginInfo();//跟据选项保存登录信息  
+                    }
                     //SystemAuthentication.Current = _CurrentAuthorization; //授权成功, 保存当前授权模式
-                    //Dispatcher.Invoke(new Action(() =>
-                    //{
-                        DataDictCache.Instance.User = user[0];
-                    //new MainWindow().Show();                                           //Program.MainForm.InitUserInterface(new LoadStatus(form1.lblLoadingInfo, form1.progressBarControl1));
-                    Window mainpage = PluginHandle.Instance.Host.Value as Window;
+                                                                          //Dispatcher.Invoke(new Action(() =>
+                                                                          //{
+                    DataDictCache.Instance.User = user[0];
+                     Window mainpage = PluginHandle.Instance.Host.Value as Window;
                     mainpage.Show();
                     this.Hide();
-                        this.Close(); //关闭登陆窗体
+                    this.Close(); //关闭登陆窗体
                    // }));
                 }
                 else
@@ -98,6 +100,16 @@ namespace Metro.DynamicModeules.Main
         private void ShowLoginInfo(string msg)
         {
             txtLoginInfo.Text += msg;
+        }
+        private void SaveLoginInfo()
+        {
+            //存在用户配置文件，自动加载登录信息
+            string cfgINI = AppDomain.CurrentDomain.BaseDirectory + Globals.INI_CFG;
+            IniFile ini = new IniFile(cfgINI);
+            ini.IniWriteValue("LoginWindow", "User", txtUser.Text);
+            ini.IniWriteValue("LoginWindow", "Password", CEncoder.Encode(txtPwd.Password));
+            ini.IniWriteValue("LoginWindow", "SaveLogin", chkSaveLoginInfo.IsChecked.Value ? "Y" : "N");
+           
         }
     }
 }

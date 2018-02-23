@@ -135,7 +135,6 @@
     <Compile Include="ExpressionSerialization\RemoteProvider.cs" />
     <Compile Include="ExpressionSerialization\TypeResolver.cs" />
     <Compile Include="ExpressionSerialization\WebHttpClient.cs" />
-    <Compile Include="GlobalData.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="HexCryptString.cs" />
     <Compile Include="IniFileMgr.cs" />

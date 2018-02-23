@@ -40,6 +40,16 @@ namespace Metro.DynamicModeules.Common
         public const int DEF_DECIMAL_ROUND = 2;//四舍五入小数位
 
         /// <summary>
+        /// 配置文件
+        /// </summary>
+        public const string INI_CFG = @"\config\user.ini";
+
+        /// <summary>
+        /// PMS web的根路径 2017.9.14
+        /// </summary>
+        public static readonly string WEBURL = ConfigHelper.GetConfigString("weburl");
+
+        /// <summary>
         /// 加载Debug\Images目录下的的图片
         /// </summary>
         /// <param name="imgFileName">文件名</param>
@@ -68,19 +78,6 @@ namespace Metro.DynamicModeules.Common
                 return null;
         }
 
-        /// <summary>
-        /// 移除SQL注入非法字符
-        /// </summary>
-        /// <param name="content">字符串内容</param>
-        /// <param name="returnMaxLength">返回的长度，0长度为不处理．</param>
-        /// <returns></returns>
-        public static string RemoveInjection(string content, int returnMaxLength)
-        {
-            string replaced = content.Replace("'", "").Replace("@", "").Replace("0x", "");
-            if (returnMaxLength == 0)
-                return replaced;
-            else
-                return replaced.Substring(0, replaced.Length < returnMaxLength ? replaced.Length : returnMaxLength);
-        }
+       
     }
 }

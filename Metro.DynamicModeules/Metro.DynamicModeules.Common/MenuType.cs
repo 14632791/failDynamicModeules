@@ -58,7 +58,7 @@ namespace Metro.DynamicModeules.Common
     public class MenuItemTag
     {
         private MenuType _type;
-        private int _FormAuthorities;
+        private int _formAuthorities;
         private int _moduleID;
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Metro.DynamicModeules.Common
         {
             _type = type;
             _moduleID = moduleID;
-            _FormAuthorities = formAuthorities;
+            _formAuthorities = formAuthorities;
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Metro.DynamicModeules.Common
         /// <summary>
         /// 窗体的可用权限
         /// </summary>
-        public int FormAuthorities { get { return _FormAuthorities; } }
+        public int FormAuthorities { get { return _formAuthorities; } }
     }
 
 }
