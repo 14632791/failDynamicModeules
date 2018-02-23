@@ -1,4 +1,5 @@
-﻿using Metro.DynamicModeules.Models;
+﻿using Metro.DynamicModeules.Interface.Sys;
+using Metro.DynamicModeules.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -63,8 +64,8 @@ namespace Metro.DynamicModeules.Core.Interfaces
         /// <summary>
         /// 存储所有插件
         /// </summary>
-        [ImportMany(typeof(IPlugin), AllowRecomposition = true)]
-        public List<Lazy<IPlugin>> PluginList { get; set; }
+        [ImportMany(typeof(IModuleBase), AllowRecomposition = true)]
+        public List<Lazy<IModuleBase>> PluginList { get; set; }
 
         /// <summary>
         /// 存储插件容器
@@ -78,7 +79,7 @@ namespace Metro.DynamicModeules.Core.Interfaces
         {
             try
             {
-                PluginList = new List<Lazy<IPlugin>>();
+                PluginList = new List<Lazy<IModuleBase>>();
                 catalog = new AggregateCatalog();
                 //添加插件容器中的导出项目录
                 catalog.Catalogs.Add(new AssemblyCatalog(System.Reflection.Assembly.GetEntryAssembly()));
@@ -101,9 +102,9 @@ namespace Metro.DynamicModeules.Core.Interfaces
 
         public void Exec(string name)
         {
-            foreach (Lazy<IPlugin> plugin in PluginList)
+            foreach (Lazy<IModuleBase> plugin in PluginList)
             {
-                plugin.Value.Exec();
+                plugin.Value.Initialize();
             }
         }
 
@@ -117,18 +118,7 @@ namespace Metro.DynamicModeules.Core.Interfaces
             PluginList = null;
         }
     }
-    public interface IPlugin
-    {
-        /// <summary>
-        /// 需要执行的功能
-        /// </summary>
-        void Exec();
-        /// <summary>
-        /// 模块信息
-        /// </summary>
-        sys_Modules ModulesInfo { get; set; }
-    }
-
+   
     /// <summary>
     /// 主界面的载体
     /// </summary>

@@ -1,4 +1,5 @@
 ﻿using Metro.DynamicModeules.Core.Interfaces;
+using Metro.DynamicModeules.Interface.Sys;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -38,15 +39,7 @@ namespace Metro.DynamicModeules.Core
                 return _instance;
             }
         }
-        /// <summary>
-        /// 模块文件名(DLL文件外)
-        /// </summary>
-        // protected string _ModuleFileName;
-
-        /// <summary>
-        /// 如果加载了模块. 返回该模块的主窗体对象.
-        /// </summary>
-        // protected IModuleBase _ModuleMainForm;
+       
 
         /// <summary>
         /// 存储所有插件
@@ -69,55 +62,7 @@ namespace Metro.DynamicModeules.Core
             var container = new CompositionContainer(aggregateCatalog);
             container.ComposeParts(this);
         }
-        /// <summary>
-        /// 模块所在的程序集
-        /// </summary>
-        //protected Assembly _ModuleAssembly;
-
-        /// <summary>
-        /// 模块文件所在路径
-        /// </summary>
-        //public static readonly string MODULE_PATH = Application.StartupPath;
-
-        ///// <summary>
-        ///// 模块所在的程序集
-        ///// </summary>
-        //public Assembly ModuleAssembly
-        //{
-        //    get { return _ModuleAssembly; }
-        //}
-
-        /// <summary>
-        /// 返回AssemblyModuleEntry，自定义模块特性
-        /// </summary>
-        //public string GetCurrentModuleName()
-        //{
-        //    return ModuleLoaderBase.GetModuleEntry(_ModuleAssembly).ModuleName;
-        //}
-
-        /// <summary>
-        /// 模块主窗体
-        /// </summary>
-        //public IModuleBase ModuleMainForm
-        //{
-        //    get { return _ModuleMainForm; }
-        //}
-
-        ///// <summary>
-        ///// 加载模块的菜单
-        ///// </summary>
-        ///// <param name="menuStrip">程序主窗体的菜单</param>
-        //public virtual void LoadMenu(MenuStrip moduleMenus)
-        //{
-        //    MenuStrip currentMenu = _ModuleMainForm.GetModuleMenu();
-        //    if ((currentMenu == null) || (currentMenu.Items.Count == 0)) return;
-
-        //    if (_ModuleMainForm != null)
-        //    {
-        //        int startIndex = moduleMenus.Items.Count == 0 ? 0 : moduleMenus.Items.Count;
-        //        moduleMenus.Items.Insert(startIndex, _ModuleMainForm.GetModuleMenu().Items[0]);
-        //    }
-        //}
+       
 
         /// <summary>
         /// 加载模块的菜单(支持一个模块内有多个顶级菜单)

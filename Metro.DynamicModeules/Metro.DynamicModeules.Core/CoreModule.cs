@@ -1,30 +1,35 @@
 ﻿using System;
 using Metro.DynamicModeules.Core.Interfaces;
 using System.Windows.Controls;
+using MahApps.Metro.IconPacks;
+using Metro.DynamicModeules.Models;
+using Metro.DynamicModeules.Interface.Sys;
 
 namespace Metro.DynamicModeules.Core
 {
     public class CoreModule : IModuleBase
-    {       
-        public void Initialize()
-        {
-           // _container.RegisterType<ICustomerService, CustomerService>(new ContainerControlledLifetimeManager());
-        }
-        public UInt16 ModuleID { get; set; }
+    {
+        public sys_Modules ModulesInfo { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public PackIconModernKind Kind { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public string ModuleName { get; set; }
+        public sys_Modules ModuleID => throw new NotImplementedException();
 
         public Control GetContainer()
         {
             throw new NotImplementedException();
         }
 
-        public Menu GetModuleMenu()
+        public MenuItem GetModuleMenu()
         {
             throw new NotImplementedException();
         }
 
         public void InitButton()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Initialize()
         {
             throw new NotImplementedException();
         }

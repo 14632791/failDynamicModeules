@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MahApps.Metro.IconPacks;
+using Metro.DynamicModeules.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -64,7 +66,7 @@ namespace Metro.DynamicModeules.Core.Interfaces
         /// 
         /// </summary>
         /// <returns></returns>
-        public Menu GetModuleMenu()
+        public MenuItem GetModuleMenu()
         {
             throw new NotImplementedException();
         }
@@ -87,56 +89,7 @@ namespace Metro.DynamicModeules.Core.Interfaces
         }
         
     }
-    /// <summary>
-    /// 模块主窗体接口
-    /// </summary>
-    public interface IModuleBase
-    {
-        /// <summary>
-        /// 模块编号,排序使用
-        /// </summary>
-        /// <returns></returns>
-        UInt16 ModuleID { get; set; }
 
-        /// <summary>
-        /// 模块名称
-        /// </summary>
-        /// <returns></returns>
-        string ModuleName { get; set; }
-
-        /// <summary>
-        /// 模块主窗体的菜单
-        /// </summary>
-        /// <returns></returns>
-        Menu GetModuleMenu();
-
-        /// <summary>
-        /// 模块主窗体功能按钮所在的容器 
-        /// </summary>
-        /// <returns></returns>
-        Control GetContainer();
-
-        /// <summary>
-        /// 设置模块的权限
-        /// </summary>
-        /// <param name="securityInfo">权限信息</param>
-        void SetSecurity(object securityInfo);
-
-        /// <summary>
-        /// 初始化模块主窗体的按钮
-        /// </summary>
-        void InitButton();
-
-        /// <summary>
-        /// 初始化模块主窗体的菜单
-        /// </summary>
-        void InitMenu();
-
-        /// <summary>
-        /// 初始化
-        /// </summary>
-        void Initialize();
-    }
 
     /// <summary>
     /// 模块编号.

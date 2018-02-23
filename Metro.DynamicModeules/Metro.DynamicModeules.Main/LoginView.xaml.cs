@@ -33,12 +33,12 @@ namespace Metro.DynamicModeules.Main
         public LoginView()
         {
             InitializeComponent();
-
+            GetDefaultUserInfo();
         }
         private BllUser _bllUser = new BllUser();
         string _userID = "";
         string _password = "";
-
+        string _cfgINI = AppDomain.CurrentDomain.BaseDirectory + Globals.INI_CFG;
         // Using a DependencyProperty as the backing store for MetroDialogPotions.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MetroDialogPotionsProperty =
             DependencyProperty.Register("MetroDialogPotions", typeof(MetroDialogSettings), typeof(LoginView), new PropertyMetadata(null));
@@ -49,28 +49,25 @@ namespace Metro.DynamicModeules.Main
             {
                 pRingWaiting.Visibility = Visibility.Visible;
                 this.ShowLoginInfo("正在验证用户名及密码");
-                //BllUser.ValidateLogin(txtUser.Text, txtPwd.Text);//检查登录信息
                 _userID = txtUser.Text;
                 _password = CEncoder.Encode(txtPwd.Password);/*常规加密*/
                 //需要系列化的linq表达表需要通过以下语句生成
                 Expression<Func<tb_MyUser, bool>> predicate = SerializeHelper.CreateExpression<tb_MyUser, bool>("Account=@0&&Password=@1", new object[] { _userID, _password });
                 var user = await _bllUser.GetSearchList(predicate);
                 if (null != user && user.Count > 0)
-                //if (_CurrentAuthorization.Login(loginUser)) //调用登录策略
                 {
                     if (chkSaveLoginInfo.IsChecked.Value)
                     {
                         SaveLoginInfo();//跟据选项保存登录信息  
                     }
-                    //SystemAuthentication.Current = _CurrentAuthorization; //授权成功, 保存当前授权模式
-                                                                          //Dispatcher.Invoke(new Action(() =>
-                                                                          //{
+                    //Dispatcher.Invoke(new Action(() =>
+                    //{
                     DataDictCache.Instance.User = user[0];
-                     Window mainpage = PluginHandle.Instance.Host.Value as Window;
+                    Window mainpage = PluginHandle.Instance.Host.Value as Window;
                     mainpage.Show();
                     this.Hide();
                     this.Close(); //关闭登陆窗体
-                   // }));
+                                  // }));
                 }
                 else
                 {
@@ -80,14 +77,11 @@ namespace Metro.DynamicModeules.Main
             }
             catch (CustomException ex)
             {
-                //this.SetButtonEnable(true);
                 this.ShowLoginInfo(ex.Message);
-                //Msg.Warning(ex.Message);
             }
             catch (Exception ex)
             {
                 LogHelper.Error(ex);
-                //this.SetButtonEnable(true);
                 this.ShowLoginInfo("登录失败，请检查用户名和密码!");
                 await this.ShowMessageAsync("登录失败", "请检查用户名和密码!");
             }
@@ -99,17 +93,22 @@ namespace Metro.DynamicModeules.Main
         }
         private void ShowLoginInfo(string msg)
         {
-            txtLoginInfo.Text += msg;
+            txtLoginInfo.Text += msg + "\n\r";
         }
         private void SaveLoginInfo()
         {
             //存在用户配置文件，自动加载登录信息
-            string cfgINI = AppDomain.CurrentDomain.BaseDirectory + Globals.INI_CFG;
-            IniFile ini = new IniFile(cfgINI);
-            ini.IniWriteValue("LoginWindow", "User", txtUser.Text);
-            ini.IniWriteValue("LoginWindow", "Password", CEncoder.Encode(txtPwd.Password));
+            IniFile ini = new IniFile(_cfgINI);
+            ini.IniWriteValue("LoginWindow", "User", _userID);
+            ini.IniWriteValue("LoginWindow", "Password", _password);
             ini.IniWriteValue("LoginWindow", "SaveLogin", chkSaveLoginInfo.IsChecked.Value ? "Y" : "N");
-           
+        }
+        private void GetDefaultUserInfo()
+        {
+            IniFile ini = new IniFile(_cfgINI);
+            txtUser.Text = ini.IniReadValue("LoginWindow", "User");
+            txtPwd.Password = CEncoder.Decode(ini.IniReadValue("LoginWindow", "Password"));
+            chkSaveLoginInfo.IsChecked = ini.IniReadValue("LoginWindow", "SaveLogin") == "Y";
         }
     }
 }

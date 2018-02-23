@@ -57,6 +57,9 @@
     <Reference Include="MahApps.Metro, Version=1.5.0.23, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net40\MahApps.Metro.dll</HintPath>
     </Reference>
+    <Reference Include="MahApps.Metro.IconPacks, Version=2.0.0.31, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.2.0.0\lib\net40\MahApps.Metro.IconPacks.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
     </Reference>
@@ -114,6 +117,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Views\ModuleBaseView.xaml.cs">
+      <DependentUpon>ModuleBaseView.xaml</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -125,9 +131,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="Themes\Controls.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -141,11 +145,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ModuleBaseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\DynamicWebApi\Metro.DynamicModeules.WebApi\Metro.DynamicModeules.Interface\Metro.DynamicModeules.Interface.csproj">
+      <Project>{66B7A24B-9FB9-4436-A269-F6740E700C03}</Project>
+      <Name>Metro.DynamicModeules.Interface</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MaterialDesignColors.Wpf\MaterialDesignColors.Wpf.csproj">
       <Project>{90b53209-c60c-4655-b28d-a1b3e1044ba3}</Project>
       <Name>MaterialDesignColors.Wpf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Metro.DynamicModeules.Models\Metro.DynamicModeules.Models.csproj">
+      <Project>{937e0d53-9696-48ab-b12f-736bc6d43f15}</Project>
+      <Name>Metro.DynamicModeules.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

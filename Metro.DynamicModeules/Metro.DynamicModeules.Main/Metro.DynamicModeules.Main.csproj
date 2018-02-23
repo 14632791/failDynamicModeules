@@ -198,7 +198,9 @@
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Config\LZHBaseFrame.ini" />
-    <None Include="Config\user.ini" />
+    <None Include="Config\user.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

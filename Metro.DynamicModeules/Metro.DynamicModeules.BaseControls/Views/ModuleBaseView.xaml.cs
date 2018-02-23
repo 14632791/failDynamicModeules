@@ -1,29 +1,31 @@
-﻿using Metro.DynamicModeules.Core.Interfaces;
+﻿using Metro.DynamicModeules.Interface.Sys;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
-using Metro.DynamicModeules.Models;
+using System.Windows;
 using System.Windows.Controls;
-using MahApps.Metro.IconPacks;
-using Metro.DynamicModeules.Interface.Sys;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
-namespace WpfCustomLibDemo1
+namespace Metro.DynamicModeules.BaseControls.Views
 {
-    [Export(typeof(IModuleBase))]
-    public class MyPlugin1 : IModuleBase
+    /// <summary>
+    /// ModuleBaseView.xaml 的交互逻辑
+    /// </summary>
+    public partial class ModuleBaseView : UserControl, IModuleBase
     {
-        public sys_Modules ModulesInfo { get; set; } = new sys_Modules { ModuleID = 1,
-            ModuleName = "数据字典" };
-        public PackIconModernKind Kind { get; set; }
-
-        public sys_Modules ModuleID => throw new NotImplementedException();
-
-        public void Exec()
+        public ModuleBaseView()
         {
-            throw new NotImplementedException();
+            InitializeComponent();
         }
+
+        public DynamicModeules.Models.sys_Modules ModuleID { get; set; }
 
         public Control GetContainer()
         {
