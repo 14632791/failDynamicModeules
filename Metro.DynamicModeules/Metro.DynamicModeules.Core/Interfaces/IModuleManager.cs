@@ -62,7 +62,7 @@ namespace Metro.DynamicModeules.Core.Interfaces
         AggregateCatalog catalog = new AggregateCatalog();
 
         /// <summary>
-        /// 存储所有插件
+        /// 存储所有主模块的插件
         /// </summary>
         [ImportMany(typeof(IModuleBase), AllowRecomposition = true)]
         public List<Lazy<IModuleBase>> PluginList { get; set; }
