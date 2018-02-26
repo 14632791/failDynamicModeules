@@ -41,7 +41,9 @@ namespace Metro.DynamicModeules.BaseControls.Views
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// 初始化子菜单
+        /// </summary>
         public void Initialize()
         {
             throw new NotImplementedException();
