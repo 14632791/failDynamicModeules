@@ -12,7 +12,7 @@ namespace Metro.DynamicModeules.Core
         public sys_Modules ModulesInfo { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public PackIconModernKind Kind { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public sys_Modules ModuleID => throw new NotImplementedException();
+        public sys_Modules Module => throw new NotImplementedException();
 
         public Control GetContainer()
         {

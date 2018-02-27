@@ -18,7 +18,7 @@ namespace WpfCustomLibDemo1
             ModuleName = "数据字典" };
         public PackIconModernKind Kind { get; set; }
 
-        public sys_Modules ModuleID => throw new NotImplementedException();
+        public sys_Modules Module => throw new NotImplementedException();
 
         public void Exec()
         {

@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls;
 using Metro.DynamicModeules.Core.Interfaces;
+using Metro.DynamicModeules.Interface.Sys;
 using System;
 using System.Collections.Generic;
 using System.Linq;

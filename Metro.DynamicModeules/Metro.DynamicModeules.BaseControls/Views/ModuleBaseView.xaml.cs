@@ -25,7 +25,7 @@ namespace Metro.DynamicModeules.BaseControls.Views
             InitializeComponent();
         }
 
-        public DynamicModeules.Models.sys_Modules ModuleID { get; set; }
+        public DynamicModeules.Models.sys_Modules Module { get; set; }
 
         public Control GetContainer()
         {

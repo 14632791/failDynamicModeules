@@ -15,6 +15,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using MahApps.Metro.IconPacks;
+using System.Collections;
+using Metro.DynamicModeules.Models;
 
 namespace Metro.DynamicModeules.BaseControls.Views
 {
@@ -22,6 +24,7 @@ namespace Metro.DynamicModeules.BaseControls.Views
     /// BaseDataView.xaml 的交互逻辑
     /// </summary>
     public partial class BaseDataView<T> : BaseChildView, IDataOperatable, IPrintableForm, ISummaryView<T>
+        where T:class,new()
     {
         public BaseDataView()
         {
@@ -41,9 +44,9 @@ namespace Metro.DynamicModeules.BaseControls.Views
 
         /// <summary>
         /// 主表的数据表格对象,必须由派生类指定表格类型。
-        /// 因Dev GridControl组件不可继承所以子类窗体Load的时候需要赋值.
+        /// 因Dev DataGrid组件不可继承所以子类窗体Load的时候需要赋值.
         /// </summary>
-        //protected Interface.Sys.ISummaryView<T> _SummaryView;
+        //protected Interface.Sys.ISummaryView<T> View;
 
         /// <summary>
         /// 数据编辑页的主容器
@@ -54,12 +57,12 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// <summary>
         /// 数据操作状态
         /// </summary>
-        protected UpdateType _UpdateType = UpdateType.None;
+        protected UpdateType _updateType = UpdateType.None;
 
         protected virtual string GetStateName()
         {
-            if (UpdateType.Add == _UpdateType) return "(新增模式)";
-            else if (UpdateType.Modify == _UpdateType) return "(修改模式)";
+            if (UpdateType.Add == _updateType) return "(新增模式)";
+            else if (UpdateType.Modify == _updateType) return "(修改模式)";
             else return "(查看模式)";
         }
 
@@ -82,17 +85,7 @@ namespace Metro.DynamicModeules.BaseControls.Views
             SetDetailEditorsAccessable(_DetailGroupControl, false);
         }
 
-        /// <summary>
-        /// 表格是否有数据
-        /// </summary>
-        /// <returns></returns>
-        public virtual bool HasData()
-        {
-            if (_SummaryView != null)
-                return RowCount > 0;
-            else
-                return false;
-        }
+       
 
         /// <summary>
         /// 是否数据发生改变
@@ -128,20 +121,20 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// </summary>
         public bool IsAddOrEditMode
         {
-            get { return (_UpdateType == UpdateType.Add) || (_UpdateType == UpdateType.Modify); }
+            get { return (_updateType == UpdateType.Add) || (_updateType == UpdateType.Modify); }
         }
 
         /// <summary>
         /// 数据操作状态
         /// </summary>
-        public UpdateType UpdateType { get { return _UpdateType; } }
+        public UpdateType UpdateType { get { return _updateType; } }
 
         public virtual string UpdateTypeName
         {
             get
             {
-                if (UpdateType.Add == _UpdateType) return "(新增模式)";
-                else if (UpdateType.Modify == _UpdateType) return "(修改模式)";
+                if (UpdateType.Add == _updateType) return "(新增模式)";
+                else if (UpdateType.Modify == _updateType) return "(修改模式)";
                 else return "(查看模式)";
             }
         }
@@ -166,14 +159,14 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// </summary>
         protected virtual void SetEditMode()
         {
-            _buttons.GetButtonByName("btnView").Enable = false;
-            _buttons.GetButtonByName("btnAdd").Enable = false;
-            _buttons.GetButtonByName("btnDelete").Enable = false;
-            _buttons.GetButtonByName("btnEdit").Enable = false;
-            _buttons.GetButtonByName("btnPrint").Enable = false;
-            _buttons.GetButtonByName("btnPreview").Enable = false;
-            _buttons.GetButtonByName("btnSave").Enable = true;
-            _buttons.GetButtonByName("btnCancel").Enable = true;
+            _buttons.FirstOrDefault(b=>b.Name=="btnView").Enable = false;
+            _buttons.FirstOrDefault(b => b.Name == "btnAdd").Enable = false;
+            _buttons.FirstOrDefault(b=>b.Name=="btnDelete").Enable = false;
+            _buttons.FirstOrDefault(b=>b.Name=="btnEdit").Enable = false;
+            _buttons.FirstOrDefault(b=>b.Name=="btnPrint").Enable = false;
+            _buttons.FirstOrDefault(b=>b.Name=="btnPreview").Enable = false;
+            _buttons.FirstOrDefault(b=>b.Name=="btnSave").Enable = true;
+            _buttons.FirstOrDefault(b=>b.Name=="btnCancel").Enable = true;
         }
 
         /// <summary>        
@@ -182,14 +175,14 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// </summary>
         protected virtual void SetViewMode()
         {
-            _buttons.GetButtonByName("btnView").Enable = _AllowDataOperate;
-            _buttons.GetButtonByName("btnAdd").Enable = _AllowDataOperate && ButtonAuthorized(ButtonAuthority.ADD);
-            _buttons.GetButtonByName("btnDelete").Enable = _AllowDataOperate && ButtonAuthorized(ButtonAuthority.DELETE);
-            _buttons.GetButtonByName("btnEdit").Enable = _AllowDataOperate && ButtonAuthorized(ButtonAuthority.EDIT);
-            _buttons.GetButtonByName("btnPrint").Enable = ButtonAuthorized(ButtonAuthority.PRINT);
-            _buttons.GetButtonByName("btnPreview").Enable = ButtonAuthorized(ButtonAuthority.PREVIEW);
-            _buttons.GetButtonByName("btnSave").Enable = false;
-            _buttons.GetButtonByName("btnCancel").Enable = false;
+            _buttons.FirstOrDefault(b=>b.Name=="btnView").Enable = _AllowDataOperate;
+            _buttons.FirstOrDefault(b=>b.Name=="btnAdd").Enable = _AllowDataOperate && ButtonAuthorized(ButtonAuthority.ADD);
+            _buttons.FirstOrDefault(b=>b.Name=="btnDelete").Enable = _AllowDataOperate && ButtonAuthorized(ButtonAuthority.DELETE);
+            _buttons.FirstOrDefault(b=>b.Name=="btnEdit").Enable = _AllowDataOperate && ButtonAuthorized(ButtonAuthority.EDIT);
+            _buttons.FirstOrDefault(b=>b.Name=="btnPrint").Enable = ButtonAuthorized(ButtonAuthority.PRINT);
+            _buttons.FirstOrDefault(b=>b.Name=="btnPreview").Enable = ButtonAuthorized(ButtonAuthority.PREVIEW);
+            _buttons.FirstOrDefault(b=>b.Name=="btnSave").Enable = false;
+            _buttons.FirstOrDefault(b => b.Name == "btnCancel").Enable = false;
         }
 
         /// <summary>
@@ -203,7 +196,7 @@ namespace Metro.DynamicModeules.BaseControls.Views
             //窗体可用权限=2^n= 1+2+4=7
             //比如新增功能点是2,那么检查新增按钮的方法是：  2 & 7 = 2，表示有权限。
             //
-            bool isAuth = Loginer.CurrentUser.IsAdmin() || (authorityValue & this.FormAuthorities) == authorityValue;
+            bool isAuth = true;// Loginer.CurrentUser.IsAdmin() || (authorityValue & this.FormAuthorities) == authorityValue;
             return isAuth;
         }
 
@@ -243,17 +236,16 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// 数据操作按钮
         /// </summary>
         /// <returns></returns>
-        public IButtonInfo[] GetDataOperatableButtons()
+        public List<IButtonInfo> GetDataOperatableButtons()
         {
-            ArrayList list = new ArrayList();
-            list.Add(this.ToolbarRegister.CreateButton("btnView", "查看", ResImage.reading, new Size(57, 57), this.DoViewContent));
-            list.Add(this.ToolbarRegister.CreateButton("btnAdd", "新增(F4)", ResImage.NewTask_32x32, new Size(57, 57), this.DoAdd));
-            list.Add(this.ToolbarRegister.CreateButton("btnDelete", "删除(F6)", ResImage.Delete_32x32, new Size(57, 57), (sender) => { this.DoDelete(sender); }));
-            list.Add(this.ToolbarRegister.CreateButton("btnEdit", "修改(F5)", ResImage.EditTask_32x32, new Size(57, 57), this.DoEdit));
-            list.Add(this.ToolbarRegister.CreateButton("btnSave", "保存(F2)", ResImage.Save_32x32, new Size(57, 57), new OnButtonClick(sender => { DoSave(sender); })));
-            list.Add(this.ToolbarRegister.CreateButton("btnCancel", "取消(F3)", ResImage.Refresh_32x32, new Size(57, 57), this.DoCancel));
-            IButtonInfo[] ii = (IButtonInfo[])list.ToArray(typeof(IButtonInfo));
-            return ii;
+            List<IButtonInfo> list = new List<IButtonInfo>();
+            list.Add(this.ToolbarRegister.CreateButton("btnView", "查看", PackIconModernKind.SocialReadability, new Size(57, 57), this.DoViewContent));
+            list.Add(this.ToolbarRegister.CreateButton("btnAdd", "新增(F4)", PackIconModernKind.EditAdd, new Size(57, 57), this.DoAdd));
+            list.Add(this.ToolbarRegister.CreateButton("btnDelete", "删除(F6)", PackIconModernKind.Delete, new Size(57, 57), (sender) => { this.DoDelete(sender); }));
+            list.Add(this.ToolbarRegister.CreateButton("btnEdit", "修改(F5)", PackIconModernKind.Edit, new Size(57, 57), this.DoEdit));
+            list.Add(this.ToolbarRegister.CreateButton("btnSave", "保存(F2)", PackIconModernKind.Save, new Size(57, 57), new OnButtonClick(sender => { DoSave(sender); })));
+            list.Add(this.ToolbarRegister.CreateButton("btnCancel", "取消(F3)", PackIconModernKind.Cancel, new Size(57, 57), this.DoCancel));
+            return list;
         }
 
         /// <summary>
@@ -262,7 +254,7 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// <param name="sender"></param>
         public virtual void DoViewContent(IButtonInfo sender)
         {
-            this.ButtonStateChanged(_UpdateType);
+            this.ButtonStateChanged(_updateType);
         }
 
         /// <summary>
@@ -271,9 +263,9 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// <param name="sender"></param>
         public virtual void DoAdd(IButtonInfo sender)
         {
-            this._UpdateType = UpdateType.Add;
+            this._updateType = UpdateType.Add;
             this.SetEditMode();
-            this.ButtonStateChanged(_UpdateType);
+            this.ButtonStateChanged(_updateType);
         }
 
         /// <summary>
@@ -282,9 +274,9 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// <param name="sender"></param>
         public virtual void DoEdit(IButtonInfo sender)
         {
-            this._UpdateType = UpdateType.Modify;
+            this._updateType = UpdateType.Modify;
             this.SetEditMode();
-            this.ButtonStateChanged(_UpdateType);
+            this.ButtonStateChanged(_updateType);
         }
 
         /// <summary>
@@ -295,18 +287,18 @@ namespace Metro.DynamicModeules.BaseControls.Views
         {
             try
             {
-                this._UpdateType = UpdateType.None;
+                this._updateType = UpdateType.None;
                 this.SetViewMode();
-                this.ButtonStateChanged(_UpdateType);
+                this.ButtonStateChanged(_updateType);
 
-                if (_UpdateType == UpdateType.Add)
+                if (_updateType == UpdateType.Add)
                     this.ShowSummaryPage(true);
                 else if (RowCount > 0)
                     this.DoViewContent(sender);
             }
             catch (Exception e)
             {
-                Msg.ShowException(e);
+               // Msg.ShowException(e);
             }
         }
 
@@ -322,10 +314,10 @@ namespace Metro.DynamicModeules.BaseControls.Views
 
         public virtual bool DoSave(IButtonInfo sender)
         {
-            this._UpdateType = UpdateType.None;
+            this._updateType = UpdateType.None;
             this.SetViewMode();
             this.ShowDetailPage(false);
-            this.ButtonStateChanged(_UpdateType);
+            this.ButtonStateChanged(_updateType);
             return true;
         }
         /// <summary>
@@ -347,13 +339,11 @@ namespace Metro.DynamicModeules.BaseControls.Views
         protected virtual void SetDetailEditorsAccessable(Control panel, bool value)
         {
             if (panel == null) return;
-
-            for (int i = 0; i < panel.Controls.Count; i++)
-            {
-                SetControlAccessable(panel.Controls[i], value);
-            }
-
-            controlNavigatorSummary.Enabled = !value;
+            //for (int i = 0; i < panel.Controls.Count; i++)
+            //{
+            //    SetControlAccessable(panel.Controls[i], value);
+            //}
+            //controlNavigatorSummary.Enabled = !value;
         }
 
         /// <summary>
@@ -364,73 +354,75 @@ namespace Metro.DynamicModeules.BaseControls.Views
             try
             {
                 if (control is Label) return;
-                if (control is ControlNavigator) return;
-                if (control is UserControl) return;
+                //if (control is ControlNavigator) return;
+                //if (control is UserControl) return;
 
-                if (control.Controls.Count > 0)
-                {
-                    foreach (Control c in control.Controls)
-                        SetControlAccessable(c, value);
-                }
-                if (control is ListBox)//2015.7.9 陈刚 对ListBox控件作禁用设置
-                {
-                    ListBox lstBox = control as ListBox;
-                    lstBox.Enabled = value;
-                    return;
-                }
-                System.Type type = control.GetType();
-                PropertyInfo[] infos = type.GetProperties();
-                foreach (PropertyInfo info in infos)
-                {
-                    if (info.Name == "ReadOnly")//ReadOnly
-                    {
-                        info.SetValue(control, !value, null);
-                        return;
-                    }
-                    if (info.Name == "Properties")//Properties.ReadOnly
-                    {
-                        object o = info.GetValue(control, null);
-                        if (o is RepositoryItem)
-                        {
-                            ((RepositoryItem)o).ReadOnly = !value;
-                        }
-                        //解决日期控件和ButtonEdit在浏览状态下也能按button的问题
-                        if ((o is RepositoryItemButtonEdit) && (((RepositoryItemButtonEdit)o).Buttons.Count > 0))
-                            ((RepositoryItemButtonEdit)o).Buttons[0].Enabled = value;
-                        if ((o is RepositoryItemDateEdit) && (((RepositoryItemDateEdit)o).Buttons.Count > 0))
-                            ((RepositoryItemDateEdit)o).Buttons[0].Enabled = value;
-                        return;
-                    }
-                    if (info.Name == "Views")//OptionsBehavior.Editable
-                    {
-                        object o = info.GetValue(control, null);
-                        if (null == o) return;
-                        foreach (object view in (GridControlViewCollection)o)
-                        {
-                            if (view is ColumnView)
-                                ((ColumnView)view).OptionsBehavior.Editable = value;
-                        }
-                        return;
-                    }
+                //if (control.Controls.Count > 0)
+                //{
+                //    foreach (Control c in control.Controls)
+                //        SetControlAccessable(c, value);
+                //}
+                //if (control is ListBox)//2015.7.9 陈刚 对ListBox控件作禁用设置
+                //{
+                //    ListBox lstBox = control as ListBox;
+                //    lstBox.Enabled = value;
+                //    return;
+                //}
+                //System.Type type = control.GetType();
+                //PropertyInfo[] infos = type.GetProperties();
+                //foreach (PropertyInfo info in infos)
+                //{
+                //    if (info.Name == "ReadOnly")//ReadOnly
+                //    {
+                //        info.SetValue(control, !value, null);
+                //        return;
+                //    }
+                //    if (info.Name == "Properties")//Properties.ReadOnly
+                //    {
+                //        object o = info.GetValue(control, null);
+                //        if (o is RepositoryItem)
+                //        {
+                //            ((RepositoryItem)o).ReadOnly = !value;
+                //        }
+                //        //解决日期控件和ButtonEdit在浏览状态下也能按button的问题
+                //        if ((o is RepositoryItemButtonEdit) && (((RepositoryItemButtonEdit)o).Buttons.Count > 0))
+                //            ((RepositoryItemButtonEdit)o).Buttons[0].Enabled = value;
+                //        if ((o is RepositoryItemDateEdit) && (((RepositoryItemDateEdit)o).Buttons.Count > 0))
+                //            ((RepositoryItemDateEdit)o).Buttons[0].Enabled = value;
+                //        return;
+                //    }
+                //    if (info.Name == "Views")//OptionsBehavior.Editable
+                //    {
+                //        object o = info.GetValue(control, null);
+                //        if (null == o) return;
+                //        foreach (object view in (GridControlViewCollection)o)
+                //        {
+                //            if (view is ColumnView)
+                //                ((ColumnView)view).OptionsBehavior.Editable = value;
+                //        }
+                //        return;
+                //    }
 
-                }
+                //}
             }
             catch (Exception ex)
-            { Msg.ShowException(ex); }
+            {
+               // Msg.ShowException(ex);
+            }
         }
 
         /// <summary>
         /// 设置Grid自定义按钮(Add,Insert,Delete)状态
         /// </summary>
-        protected void SetGridCustomButtonAccessable(GridControl gridControl, bool value)
+        protected void SetGridCustomButtonAccessable(DataGrid gridControl, bool value)
         {
-            NavigatorCustomButtons custom = gridControl.EmbeddedNavigator.Buttons.CustomButtons;
-            if (custom != null && custom.Count == 3)
-            {
-                custom[DetailButtons.Add].Enabled = value; //add
-                custom[DetailButtons.Insert].Enabled = value;//insert
-                custom[DetailButtons.Delete].Enabled = value;//del
-            }
+            //NavigatorCustomButtons custom = gridControl.EmbeddedNavigator.Buttons.CustomButtons;
+            //if (custom != null && custom.Count == 3)
+            //{
+            //    custom[DetailButtons.Add].Enabled = value; //add
+            //    custom[DetailButtons.Insert].Enabled = value;//insert
+            //    custom[DetailButtons.Delete].Enabled = value;//del
+            //}
         }
 
         /// <summary>
@@ -438,18 +430,18 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// </summary>
         protected void SetControlAccessableCycle(Control control, bool value)
         {
-            if (control.HasChildren)
-            {
-                foreach (Control ctrl in control.Controls)
-                {
-                    //DevExpress的内部(Inner)控件
-                    if (ctrl.Name == string.Empty)
-                        SetControlAccessable(control, value);
-                    else
-                        SetControlAccessableCycle(ctrl, value);
-                }
-            }
-            else SetControlAccessable(control, value);
+            //if (control.HasChildren)
+            //{
+            //    foreach (Control ctrl in control.Controls)
+            //    {
+            //        //DevExpress的内部(Inner)控件
+            //        if (ctrl.Name == string.Empty)
+            //            SetControlAccessable(control, value);
+            //        else
+            //            SetControlAccessableCycle(ctrl, value);
+            //    }
+            //}
+            //else SetControlAccessable(control, value);
         }
 
         /// <summary>
@@ -459,9 +451,9 @@ namespace Metro.DynamicModeules.BaseControls.Views
         {
             try
             {
-                if (SystemConfig.CurrentConfig == null) return;
-                if (!this.HasData()) return;
-                IButtonInfo btn = _buttons.GetButtonByName("btnEdit");
+                //if (SystemConfig.CurrentConfig == null) return;
+                //if (!this.HasData()) return;
+                //IButtonInfo btn = _buttons.GetButtonByName("btnEdit");
                 //双击表格进入修改状态
                 //if (SystemConfig.CurrentConfig.DoubleClickIntoEditMode)
                 //{
@@ -473,13 +465,13 @@ namespace Metro.DynamicModeules.BaseControls.Views
                 //}
                 //else //只能查看
                 //{
-                this.DoViewContent(btn);
+                //this.DoViewContent(btn);
                 //  SetDetailEditorsAccessable(_DetailGroupControl, false); //2015.6.15 注释 陈刚 2015.6.15
                 //}
             }
             catch (Exception ex)
             {
-                FileLog.Error(ex.StackTrace);
+                LogHelper.Error(ex.StackTrace);
             }
         }
 
@@ -492,27 +484,49 @@ namespace Metro.DynamicModeules.BaseControls.Views
         //{
         //    get
         //    {
-        //        if (_SummaryView == null) return null;
+        //        if (View == null) return null;
         //        return (DataTable)DataSource;
         //    }
         //}
 
-        DynamicModeules.Common.UpdateType IDataOperatable.UpdateType => throw new NotImplementedException();
+        DynamicModeules.Common.UpdateType IDataOperatable.UpdateType { get; }
 
-        public int RowCount => throw new NotImplementedException();
+        public int RowCount
+        {
+            get
+            {
+                return DataSource == null ? 0 : DataSource.Count;
+            }
+        }
 
-        public int FocusedRowHandle { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public ObservableCollection<T> DataSource { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int FocusedRowHandle { get; set; }
+        public ObservableCollection<T> DataSource { get; set; }
 
-        public ListCollectionView View => throw new NotImplementedException();
+        public ListCollectionView View
+        {
+            get
+            {
+                if (null == DataSource)
+                {
+                    return null;
+                }
+                else
+                {
+                    return CollectionViewSource.GetDefaultView(DataSource) as ListCollectionView;
+                }
+            }
+        }
 
         /// <summary>
         ///获取指定的资料行
         /// </summary>
         protected T GetDataRow(int rowIndex)
         {
-            if (rowIndex < 0) return null;
-            if (SummaryTable != null) return SummaryTable.Rows[rowIndex];
+            if (rowIndex < 0) return default(T);
+            if (View != null)
+            {
+                return View.GetItemAt(rowIndex) as T;
+            }
             return null;
         }
 
@@ -523,7 +537,7 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// </summary>
         protected virtual void DoMoveFirst()
         {
-            if (_SummaryView == null) return;
+            if (View == null) return;
             MoveFirst();
             if (tcBusiness.SelectedTabPage != tpSummary)
                 DoViewContent(null);
@@ -532,9 +546,9 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// <summary>
         /// 移到上一条记录
         /// </summary>
-        protected virtual void DoMovePrior()
+        protected virtual void DoMovePrevious()
         {
-            if (_SummaryView == null) return;
+            if (View == null) return;
             MovePrior();
             if (tcBusiness.SelectedTabPage != tpSummary)
                 DoViewContent(null);
@@ -545,7 +559,7 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// </summary>
         protected virtual void DoMoveNext()
         {
-            if (_SummaryView == null) return;
+            if (View == null) return;
             MoveNext();
             if (tcBusiness.SelectedTabPage != tpSummary)
                 DoViewContent(null);
@@ -556,7 +570,7 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// </summary>
         protected virtual void DoMoveLast()
         {
-            if (_SummaryView == null) return;
+            if (View == null) return;
             MoveLast();
             if (tcBusiness.SelectedTabPage != tpSummary)
                 DoViewContent(null);
@@ -571,10 +585,10 @@ namespace Metro.DynamicModeules.BaseControls.Views
         {
             if (_ActiveEditor != null)
             {
-                if (_ActiveEditor.CanFocus)
+                if (_ActiveEditor.IsFocused)
                     _ActiveEditor.Focus();
-                else
-                    this.SelectNextControl(_ActiveEditor, true, false, true, true);
+                //else
+                //    this.SelectNextControl(_ActiveEditor, true, false, true, true);
             }
         }
 
@@ -583,17 +597,16 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// </summary>
         protected virtual void ShowDetailPage(bool disableSummaryPage)
         {
-            try
-            {
-                this.SuspendLayout();
-                this.tpDetail.PageEnabled = true; //2015.6.15 陈刚 不再对Page作禁用
-                tcBusiness.SelectedTabPage = this.tpDetail;
-                tpSummary.PageEnabled = !disableSummaryPage;//2015.6.15 陈刚 不再对Page作禁用
-                FocusEditor(); //第一个编辑框获得焦点.
-                this.ResumeLayout();
-            }
-            catch (Exception ex)
-            { Msg.ShowException(ex); }
+            //try
+            //{
+            //    this.tpDetail.PageEnabled = true; //2015.6.15 陈刚 不再对Page作禁用
+            //    tcBusiness.SelectedTabPage = this.tpDetail;
+            //    tpSummary.PageEnabled = !disableSummaryPage;//2015.6.15 陈刚 不再对Page作禁用
+            //    FocusEditor(); //第一个编辑框获得焦点.
+            //    this.ResumeLayout();
+            //}
+            //catch (Exception ex)
+            //{ Msg.ShowException(ex); }
         }
 
         /// <summary>
@@ -601,15 +614,15 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// </summary>
         protected void ShowSummaryPage(bool disableDetailPage)
         {
-            try
-            {
-                this.tpSummary.PageEnabled = true;//2015.6.15 陈刚 不再对Page作禁用
-                tcBusiness.SelectedTabPage = this.tpSummary;
-                // tpDetail.PageEnabled = !disableDetailPage;//2015.6.15 陈刚 不再对Page作禁用
-                if (_SummaryView != null) SetFocus();
-            }
-            catch (Exception ex)
-            { Msg.ShowException(ex); }
+            //try
+            //{
+            //    this.tpSummary.PageEnabled = true;//2015.6.15 陈刚 不再对Page作禁用
+            //    tcBusiness.SelectedTabPage = this.tpSummary;
+            //    // tpDetail.PageEnabled = !disableDetailPage;//2015.6.15 陈刚 不再对Page作禁用
+            //    if (View != null) SetFocus();
+            //}
+            //catch (Exception ex)
+            //{ Msg.ShowException(ex); }
         }
 
         /// <summary>
@@ -617,23 +630,22 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// </summary>
         protected void ShowTip(string tip)
         {
-            lblPrompt.Text = tip;
-            lblPrompt.Update();
+            //lblPrompt.Text = tip;
+            //lblPrompt.Update();
         }
 
         /// <summary>
         ///获取当前光标所在的资料行. 
         /// </summary>
-        protected DataRow GetFocusedRow()
+        protected T GetFocusedRow()
         {
             if (FocusedRowHandle < 0)
-                return null;
+            {
+                return default(T);
+            }
             else
             {
-                if (DataSource is DataTable)
-                    return GetDataRow(FocusedRowHandle);
-                else
-                    return null;
+                return GetDataRow(FocusedRowHandle);
             }
         }
 
@@ -642,31 +654,31 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void FrmBaseDataForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (this.DataChanged)
-                e.Cancel = !Msg.AskQuestion("您修改了数据没有保存，确定要退出吗?");
-        }
+        //private void FrmBaseDataForm_FormClosing(object sender, FormClosingEventArgs e)
+        //{
+        //    if (this.DataChanged)
+        //        e.Cancel = !Msg.AskQuestion("您修改了数据没有保存，确定要退出吗?");
+        //}
 
         /// <summary>
         /// 清空容器内输入框.
         /// </summary>
         public void ClearContainerEditorText(Control container)
         {
-            for (int i = 0; i < container.Controls.Count; i++)
-            {
-                if (container.Controls[i] is TextEdit)
-                    ((TextEdit)container.Controls[i]).EditValue = null;
-                else if (container.Controls[i] is TextBoxBase)
-                    ((TextBoxBase)container.Controls[i]).Clear();
-            }
+            //for (int i = 0; i < container.child.Count; i++)
+            //{
+            //    if (container.Controls[i] is TextEdit)
+            //        ((TextEdit)container.Controls[i]).EditValue = null;
+            //    else if (container.Controls[i] is TextBoxBase)
+            //        ((TextBoxBase)container.Controls[i]).Clear();
+            //}
         }
 
 
         /// <summary>
         /// 绑定Summary的导航按钮.
         /// </summary>        
-        protected void BindingSummaryNavigator(ControlNavigator navigator, GridControl gc)
+        protected void BindingSummaryNavigator(ControlNavigator navigator, DataGrid gc)
         {
             navigator.NavigatableControl = gc;
             navigator.ButtonClick += new NavigatorButtonClickEventHandler(OnSummaryNavigatorButtonClick);
@@ -677,24 +689,24 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnSummaryNavigatorButtonClick(object sender, NavigatorButtonClickEventArgs e)
-        {
-            try
-            {
-                CCursor.ShowWaitCursor();
-                NavigatorButton btn = (NavigatorButton)e.Button;
-                ControlNavigatorButtons buttons = ((ControlNavigator)sender).Buttons;
-                if (e.Button == buttons.First) DoMoveFirst();
-                if (e.Button == buttons.Prev) DoMovePrior();
-                if (e.Button == buttons.Next) DoMoveNext();
-                if (e.Button == buttons.Last) DoMoveLast();
-            }
-            finally
-            {
-                e.Handled = true;
-                CCursor.ShowDefaultCursor();
-            }
-        }
+        //private void OnSummaryNavigatorButtonClick(object sender, NavigatorButtonClickEventArgs e)
+        //{
+        //    try
+        //    {
+        //        CCursor.ShowWaitCursor();
+        //        NavigatorButton btn = (NavigatorButton)e.Button;
+        //        ControlNavigatorButtons buttons = ((ControlNavigator)sender).Buttons;
+        //        if (e.Button == buttons.First) DoMoveFirst();
+        //        if (e.Button == buttons.Prev) DoMovePrior();
+        //        if (e.Button == buttons.Next) DoMoveNext();
+        //        if (e.Button == buttons.Last) DoMoveLast();
+        //    }
+        //    finally
+        //    {
+        //        e.Handled = true;
+        //        CCursor.ShowDefaultCursor();
+        //    }
+        //}
 
         #region 几个断言
 
@@ -727,7 +739,7 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// </summary>        
         protected void AssertFocusedRow()
         {
-            bool ret = (_SummaryView == null) || (!IsValidRowHandle(FocusedRowHandle));
+            bool ret = (View == null) || (!IsValidRowHandle(FocusedRowHandle));
             if (ret) throw new Exception("您没有选择记录，操作取消!");
         }
 
@@ -735,36 +747,17 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// 检查数据集是否有数据
         /// </summary>
         /// <param name="data"></param>
-        protected void AssertRowNull(DataSet data)
+        protected void AssertRowNull()
         {
-            bool ret = (data == null) || (data.Tables.Count == 0) || (data.Tables[0].Rows.Count <= 0);
+            bool ret = DataSource == null || DataSource.Count < 1;
             if (ret) throw new Exception("该数据集没有数据!");
         }
 
-        /// <summary>
-        /// 检查数据集是否有数据
-        /// </summary>
-        /// <param name="data"></param>
-        protected void AssertTableEmpty(DataSet ds)
-        {
-            if ((ds == null) || (ds.Tables.Count <= 0) || ds.Tables[0].Rows.Count <= 0)
-                throw new Exception("该数据集没有数据!");
-        }
+       
 
         #endregion
 
-        /// <summary>
-        /// 给表格绑定数据
-        /// </summary>
-        /// <param name="dataSource"></param>
-        protected void DoBindingSummaryGrid(DataTable dataSource)
-        {
-            if (_SummaryView != null)
-            {
-                DataSource = null;
-                DataSource = dataSource;
-            }
-        }
+       
 
         /// <summary>
         /// 删除表格内指定行号的记录
@@ -774,11 +767,7 @@ namespace Metro.DynamicModeules.BaseControls.Views
         {
             if (rowHandle >= 0)
             {
-                if (DataSource is DataTable)
-                {
-                    DataTable dt = (DataTable)DataSource;
-                    dt.Rows.Remove(GetDataRow(rowHandle));
-                }
+                View.RemoveAt(rowHandle);
             }
         }
 
@@ -796,7 +785,9 @@ namespace Metro.DynamicModeules.BaseControls.Views
                 ActiveControl = ctl;
             }
             catch (Exception ex)
-            { Msg.ShowException(ex); }
+            {
+               // Msg.ShowException(ex);
+            }
         }
 
         /// <summary>
@@ -804,20 +795,9 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// </summary>
         /// <param name="sourceRow">数据源</param>
         /// <param name="destRow">需要替换的记录</param>
-        protected void ReplaceDataRowChanges(DataRow sourceRow, DataRow destRow)
+        protected void ReplaceDataRowChanges(T sourceRow, T destRow)
         {
-            string fieldName;
-
-            //循环处理当前记录的所有字段
-            for (int i = 0; i <= sourceRow.Table.Columns.Count - 1; i++)
-            {
-                fieldName = sourceRow.Table.Columns[i].ColumnName;
-                //如果字段名相同，替换对应字段的数据。
-                if (destRow.Table.Columns.IndexOf(fieldName) >= 0)
-                {
-                    destRow[fieldName] = sourceRow[fieldName];
-                }
-            }
+            destRow = sourceRow.CloneModel();           
         }
 
         /// <summary>
@@ -830,12 +810,13 @@ namespace Metro.DynamicModeules.BaseControls.Views
         {
             if (DataSource == null) return;
             if (summary == null) return;
+            bool isSave = false;
             try
             {
                 //如果是新增后保存,在表格内插入一条记录.
-                if (_UpdateType == UpdateType.Add)
+                if (_updateType == UpdateType.Add)
                 {
-                    DataRow newrow = dt.NewRow();//表格的数据源增加一条记录
+                    T newrow = new T();//表格的数据源增加一条记录
                     this.ReplaceDataRowChanges(summary, newrow);//替换数据
                     dt.Rows.Add(newrow);
                     RefreshDataSource();
@@ -844,7 +825,7 @@ namespace Metro.DynamicModeules.BaseControls.Views
                 }
 
                 //如果是修改后保存,将最新数据替换当前记录的数据.
-                if (_UpdateType == UpdateType.Modify || _UpdateType == UpdateType.None)
+                if (_updateType == UpdateType.Modify || _updateType == UpdateType.None)
                 {
                     int focusedRowHandle = FocusedRowHandle;
                     DataRow dr = GetDataRow(focusedRowHandle);
@@ -852,10 +833,19 @@ namespace Metro.DynamicModeules.BaseControls.Views
                     dr.Table.AcceptChanges();
                     RefreshRow(focusedRowHandle);//修改或新增要刷新Grid数据          
                 }
+                isSave = true;
             }
             catch (Exception ex)
             {
                 Msg.ShowException(ex);
+                isSave = false;
+            }
+            finally
+            {
+                if (isSave)
+                {
+                    _updateType = UpdateType.None;
+                }
             }
         }
 
@@ -920,7 +910,9 @@ namespace Metro.DynamicModeules.BaseControls.Views
 
 
 
-
+        /// <summary>
+        /// 刷新
+        /// </summary>
         public void RefreshDataSource()
         {
             throw new NotImplementedException();
@@ -938,7 +930,9 @@ namespace Metro.DynamicModeules.BaseControls.Views
 
         public void MoveFirst()
         {
-            throw new NotImplementedException();
+            if (View == null) return;
+            if (tcBusiness.SelectedTabPage != tpSummary)
+                DoViewContent(null);
         }
 
         public void MovePrior()

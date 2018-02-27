@@ -210,14 +210,15 @@
                     </Button>
                 </StackPanel>
             </GroupBox>
-            <Controls:MetroAnimatedTabControl Grid.Row="1" Margin="3">
+            <Controls:MetroAnimatedTabControl Grid.Row="1" Margin="3"
+              Controls:TabControlHelper.Underlined="TabPanel"                                TabStripPlacement="Top">
 
-                <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="24"
+                <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="20"
                                                CloseButtonEnabled="False"
                                               Header="首页">
                     <view:RootTilesView/>
                 </Controls:MetroTabItem>
-                <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="24"
+                <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="20"
                                                CloseButtonEnabled="True"
                                               Header="can">
                     <TextBlock FontSize="30" Text="and ensure the command never closes" />

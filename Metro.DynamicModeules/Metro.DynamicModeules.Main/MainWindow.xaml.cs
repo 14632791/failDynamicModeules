@@ -122,14 +122,10 @@ namespace Metro.DynamicModeules.Main
         private async void ShowCustomDialog(object sender, RoutedEventArgs e)
         {
             var dialog = (BaseMetroDialog)this.Resources["CustomDialogTest"];
-
             await this.ShowMetroDialogAsync(dialog);
-
             var textBlock = dialog.FindChild<TextBlock>("MessageTextBlock");
             textBlock.Text = "A message box will appear in 3 seconds.";
-
             await TaskEx.Delay(3000);
-
             await this.ShowMessageAsync("Secondary dialog", "This message is shown on top of another.");
 
             textBlock.Text = "The dialog will close in 2 seconds.";
@@ -142,7 +138,7 @@ namespace Metro.DynamicModeules.Main
         {
             foreach (var item in PluginHandle.Instance.PluginList)
             {
-                Expander expander = new Expander { Header = item.Value.ModulesInfo.ModuleName };
+                Expander expander = new Expander { Header = item.Value.Module.ModuleName };
                 sPanelRoot.Children.Add(expander);
             }
         }

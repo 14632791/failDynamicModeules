@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\SimpleCommand.cs" />
+    <Compile Include="ControlzEx\GridNavigation.cs" />
     <Compile Include="ControlzEx\Msg.cs" />
     <Compile Include="ControlzEx\PackIcon.cs" />
     <Compile Include="ControlzEx\PackIconBase.cs" />
@@ -142,6 +143,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Page Include="Styles\GridNavigation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Controls.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

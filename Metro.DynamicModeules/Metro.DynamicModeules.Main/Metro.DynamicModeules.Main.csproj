@@ -211,6 +211,10 @@
     <Folder Include="Themes\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\DynamicWebApi\Metro.DynamicModeules.WebApi\Metro.DynamicModeules.Interface\Metro.DynamicModeules.Interface.csproj">
+      <Project>{66b7a24b-9fb9-4436-a269-f6740e700c03}</Project>
+      <Name>Metro.DynamicModeules.Interface</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Metro.DynamicModeules.BaseControls\Metro.DynamicModeules.BaseControls.csproj">
       <Project>{a482cd5f-389c-41c4-b537-cbac13eaa932}</Project>
       <Name>Metro.DynamicModeules.BaseControls</Name>
