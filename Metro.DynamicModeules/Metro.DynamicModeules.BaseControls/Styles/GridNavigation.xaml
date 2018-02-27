@@ -27,8 +27,9 @@
                         </Button>
                         <TextBlock Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <TextBlock.Text>
-                                <MultiBinding>
-                                    
+                                <MultiBinding StringFormat="记录 {0} of {1}">
+                                    <Binding Path="CurrentPage" RelativeSource="{RelativeSource Mode=TemplatedParent}"/>
+                                    <Binding Path="Total" RelativeSource="{RelativeSource Mode=TemplatedParent}"/>
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
