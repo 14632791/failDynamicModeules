@@ -160,14 +160,14 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// </summary>
         protected virtual void SetEditMode()
         {
-            _buttons.FirstOrDefault(b=>b.Name=="btnView").Enable = false;
-            _buttons.FirstOrDefault(b => b.Name == "btnAdd").Enable = false;
-            _buttons.FirstOrDefault(b=>b.Name=="btnDelete").Enable = false;
-            _buttons.FirstOrDefault(b=>b.Name=="btnEdit").Enable = false;
-            _buttons.FirstOrDefault(b=>b.Name=="btnPrint").Enable = false;
-            _buttons.FirstOrDefault(b=>b.Name=="btnPreview").Enable = false;
-            _buttons.FirstOrDefault(b=>b.Name=="btnSave").Enable = true;
-            _buttons.FirstOrDefault(b=>b.Name=="btnCancel").Enable = true;
+            //_buttons.FirstOrDefault(b=>b.Name=="btnView").IsEnabled = false;
+            //_buttons.FirstOrDefault(b => b.Name == "btnAdd").IsEnabled = false;
+            //_buttons.FirstOrDefault(b=>b.Name=="btnDelete").IsEnabled = false;
+            //_buttons.FirstOrDefault(b=>b.Name=="btnEdit").IsEnabled = false;
+            //_buttons.FirstOrDefault(b=>b.Name=="btnPrint").IsEnabled = false;
+            //_buttons.FirstOrDefault(b=>b.Name=="btnPreview").IsEnabled = false;
+            //_buttons.FirstOrDefault(b=>b.Name=="btnSave").IsEnabled = true;
+            //_buttons.FirstOrDefault(b=>b.Name=="btnCancel").IsEnabled = true;
         }
 
         /// <summary>        
@@ -176,14 +176,14 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// </summary>
         protected virtual void SetViewMode()
         {
-            _buttons.FirstOrDefault(b=>b.Name=="btnView").Enable = _AllowDataOperate;
-            _buttons.FirstOrDefault(b=>b.Name=="btnAdd").Enable = _AllowDataOperate && ButtonAuthorized(ButtonAuthority.ADD);
-            _buttons.FirstOrDefault(b=>b.Name=="btnDelete").Enable = _AllowDataOperate && ButtonAuthorized(ButtonAuthority.DELETE);
-            _buttons.FirstOrDefault(b=>b.Name=="btnEdit").Enable = _AllowDataOperate && ButtonAuthorized(ButtonAuthority.EDIT);
-            _buttons.FirstOrDefault(b=>b.Name=="btnPrint").Enable = ButtonAuthorized(ButtonAuthority.PRINT);
-            _buttons.FirstOrDefault(b=>b.Name=="btnPreview").Enable = ButtonAuthorized(ButtonAuthority.PREVIEW);
-            _buttons.FirstOrDefault(b=>b.Name=="btnSave").Enable = false;
-            _buttons.FirstOrDefault(b => b.Name == "btnCancel").Enable = false;
+            //_buttons.FirstOrDefault(b=>b.Name=="btnView").IsEnabled = _AllowDataOperate;
+            //_buttons.FirstOrDefault(b=>b.Name=="btnAdd").IsEnabled = _AllowDataOperate && ButtonAuthorized(ButtonAuthority.ADD);
+            //_buttons.FirstOrDefault(b=>b.Name=="btnDelete").IsEnabled = _AllowDataOperate && ButtonAuthorized(ButtonAuthority.DELETE);
+            //_buttons.FirstOrDefault(b=>b.Name=="btnEdit").IsEnabled = _AllowDataOperate && ButtonAuthorized(ButtonAuthority.EDIT);
+            //_buttons.FirstOrDefault(b=>b.Name=="btnPrint").IsEnabled = ButtonAuthorized(ButtonAuthority.PRINT);
+            //_buttons.FirstOrDefault(b=>b.Name=="btnPreview").IsEnabled = ButtonAuthorized(ButtonAuthority.PREVIEW);
+            //_buttons.FirstOrDefault(b=>b.Name=="btnSave").IsEnabled = false;
+            //_buttons.FirstOrDefault(b => b.Name == "btnCancel").IsEnabled = false;
         }
 
         /// <summary>
@@ -206,7 +206,20 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// </summary>        
         protected virtual void ButtonStateChanged(UpdateType currentState)
         {
-            //
+            PackIconMaterial FileFind;  // PackIconControl<PackIconMaterialKind>
+            PackIconMaterialLight Kind; //PackIconControl<PackIconMaterialLightKind>
+            PackIconFontAwesome EyeSlas; //PackIconControl<PackIconFontAwesomeKind>
+            PackIconOcticons Alert;  //PackIconControl<PackIconOcticonsKind>
+            PackIconModern _3dCollada;  //PackIconControl<PackIconModernKind>
+            PackIconEntypo AircraftLand;  //PackIconControl<PackIconEntypoKind>
+            PackIconSimpleIcons Amazon;  // PackIconControl<PackIconSimpleIconsKind>
+
+
+
+
+
+
+
         }
 
         #region IPrintableForm 成员
@@ -239,12 +252,13 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// <returns></returns>
         public List<IButtonInfo> GetDataOperatableButtons()
         {
-            List<IButtonInfo> list = new List<IButtonInfo>();
+          
+             List <IButtonInfo> list = new List<IButtonInfo>();
             list.Add(this.ToolbarRegister.CreateButton("btnView", "查看", PackIconModernKind.SocialReadability, new Size(57, 57), this.DoViewContent));
             list.Add(this.ToolbarRegister.CreateButton("btnAdd", "新增(F4)", PackIconModernKind.EditAdd, new Size(57, 57), this.DoAdd));
             list.Add(this.ToolbarRegister.CreateButton("btnDelete", "删除(F6)", PackIconModernKind.Delete, new Size(57, 57), (sender) => { this.DoDelete(sender); }));
             list.Add(this.ToolbarRegister.CreateButton("btnEdit", "修改(F5)", PackIconModernKind.Edit, new Size(57, 57), this.DoEdit));
-            list.Add(this.ToolbarRegister.CreateButton("btnSave", "保存(F2)", PackIconModernKind.Save, new Size(57, 57), new OnButtonClick(sender => { DoSave(sender); })));
+            list.Add(this.ToolbarRegister.CreateButton("btnSave", "保存(F2)", PackIconModernKind.Save, new Size(57, 57), (sender) => { this.DoSave(sender); } ));
             list.Add(this.ToolbarRegister.CreateButton("btnCancel", "取消(F3)", PackIconModernKind.Cancel, new Size(57, 57), this.DoCancel));
             return list;
         }
@@ -308,7 +322,7 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="IsRefreshCache">是否同时刷新缓存</param>
-        //public virtual void DoSave(IButtonInfo sender,bool IsRefreshCache)
+        //public virtual void DoSave(PackIconButton sender,bool IsRefreshCache)
         //{
         //    DoSave(sender);
         //}
@@ -454,7 +468,7 @@ namespace Metro.DynamicModeules.BaseControls.Views
             {
                 //if (SystemConfig.CurrentConfig == null) return;
                 //if (!this.HasData()) return;
-                //IButtonInfo btn = _buttons.GetButtonByName("btnEdit");
+                //PackIconButton btn = _buttons.GetButtonByName("btnEdit");
                 //双击表格进入修改状态
                 //if (SystemConfig.CurrentConfig.DoubleClickIntoEditMode)
                 //{

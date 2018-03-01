@@ -173,14 +173,13 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <GroupBox Header="编辑">
+            <GroupBox>
                 <StackPanel Orientation="Horizontal">
                     <Button Margin="5"  ToolTip="Add" >
                         <StackPanel Orientation="Horizontal">
-                            <iconPacks:PackIconModern Width="20"
-                                              Height="20" Margin="5"
+                            <iconPacks:PackIconModern Margin="5"
                                               Kind="Close" />
-                            <TextBlock Text="关闭" Margin="5" FontSize="14"/>
+                            <TextBlock Text="关闭" VerticalAlignment="Center" FontSize="15"/>
                         </StackPanel>
                     </Button>
                     <Button Margin="5"  Width="28" Height="28" ToolTip="Save"  Style="{DynamicResource ButtonStyleKey}">

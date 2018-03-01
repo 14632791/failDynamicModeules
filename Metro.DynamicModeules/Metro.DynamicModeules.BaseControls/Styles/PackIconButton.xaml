@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+                    xmlns:ControlEx="clr-namespace:Metro.DynamicModeules.BaseControls.ControlEx"
+                    xmlns:local="clr-namespace:Metro.DynamicModeules.BaseControls.Styles">
+   
+    <Style TargetType="{x:Type ControlEx:PackIconButton}">
+        <Setter Property="Content">
+            <Setter.Value>
+                <StackPanel Orientation="Horizontal">
+                    <ContentPresenter HorizontalAlignment="{Binding HorizontalContentAlignment,
+                        RelativeSource={RelativeSource Mode=Self}}" 
+                                          Margin="{Binding Padding,
+                        RelativeSource={RelativeSource Mode=Self}}" RecognizesAccessKey="True" 
+                                          SnapsToDevicePixels="{Binding SnapsToDevicePixels,
+                        RelativeSource={RelativeSource Mode=Self}}" 
+                                          VerticalAlignment="{Binding VerticalContentAlignment,
+                        RelativeSource={RelativeSource Mode=Self}}"
+                                      Content="{Binding Icon,
+                        RelativeSource={RelativeSource Mode=Self}}"/>
+                    <TextBlock Text="{Binding Caption,
+                        RelativeSource={RelativeSource Mode=Self}}"/>
+                </StackPanel>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

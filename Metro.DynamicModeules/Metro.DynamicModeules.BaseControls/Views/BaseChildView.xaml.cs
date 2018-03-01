@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.IconPacks;
+using Metro.DynamicModeules.BaseControls.ControlEx;
 using Metro.DynamicModeules.Interface.Sys;
 using System;
 using System.Collections;
