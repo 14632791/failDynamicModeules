@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using MahApps.Metro.IconPacks;
 using System.Collections;
 using Metro.DynamicModeules.Models;
+using Metro.DynamicModeules.BaseControls.ControlEx;
 
 namespace Metro.DynamicModeules.BaseControls.Views
 {
@@ -520,7 +521,7 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// <summary>
         ///获取指定的资料行
         /// </summary>
-        protected T GetDataRow(int rowIndex)
+        public T GetDataRow(int rowIndex)
         {
             if (rowIndex < 0) return default(T);
             if (View != null)
@@ -539,7 +540,7 @@ namespace Metro.DynamicModeules.BaseControls.Views
         {
             if (View == null) return;
             MoveFirst();
-            if (tcBusiness.SelectedTabPage != tpSummary)
+           // if (tcBusiness.SelectedTabPage != tpSummary)
                 DoViewContent(null);
         }
 
@@ -550,7 +551,7 @@ namespace Metro.DynamicModeules.BaseControls.Views
         {
             if (View == null) return;
             MovePrior();
-            if (tcBusiness.SelectedTabPage != tpSummary)
+            //if (tcBusiness.SelectedTabPage != tpSummary)
                 DoViewContent(null);
         }
 
@@ -561,7 +562,7 @@ namespace Metro.DynamicModeules.BaseControls.Views
         {
             if (View == null) return;
             MoveNext();
-            if (tcBusiness.SelectedTabPage != tpSummary)
+           // if (tcBusiness.SelectedTabPage != tpSummary)
                 DoViewContent(null);
         }
 
@@ -572,7 +573,7 @@ namespace Metro.DynamicModeules.BaseControls.Views
         {
             if (View == null) return;
             MoveLast();
-            if (tcBusiness.SelectedTabPage != tpSummary)
+            //if (tcBusiness.SelectedTabPage != tpSummary)
                 DoViewContent(null);
         }
 
@@ -678,11 +679,11 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// <summary>
         /// 绑定Summary的导航按钮.
         /// </summary>        
-        protected void BindingSummaryNavigator(ControlNavigator navigator, DataGrid gc)
-        {
-            navigator.NavigatableControl = gc;
-            navigator.ButtonClick += new NavigatorButtonClickEventHandler(OnSummaryNavigatorButtonClick);
-        }
+        //protected void BindingSummaryNavigator(ControlNavigator navigator, DataGrid gc)
+        //{
+        //    navigator.NavigatableControl = gc;
+        //    navigator.ButtonClick += new NavigatorButtonClickEventHandler(OnSummaryNavigatorButtonClick);
+        //}
 
         /// <summary>
         /// 主表格导航按钮的事件
@@ -779,10 +780,10 @@ namespace Metro.DynamicModeules.BaseControls.Views
         {
             try
             {
-                if (ActiveControl == null) return;
-                Control ctl = ActiveControl;
-                txtFocusForSave.Focus();
-                ActiveControl = ctl;
+                //if (ActiveControl == null) return;
+                //Control ctl = ActiveControl;
+                //txtFocusForSave.Focus();
+                //ActiveControl = ctl;
             }
             catch (Exception ex)
             {
@@ -818,26 +819,23 @@ namespace Metro.DynamicModeules.BaseControls.Views
                 {
                     T newrow = new T();//表格的数据源增加一条记录
                     this.ReplaceDataRowChanges(summary, newrow);//替换数据
-                    dt.Rows.Add(newrow);
+                    DataSource.Add(newrow);
                     RefreshDataSource();
-                    FocusedRowHandle = dt.Rows.Count - 1;
-                    dt.AcceptChanges();
                 }
 
                 //如果是修改后保存,将最新数据替换当前记录的数据.
                 if (_updateType == UpdateType.Modify || _updateType == UpdateType.None)
                 {
-                    int focusedRowHandle = FocusedRowHandle;
-                    DataRow dr = GetDataRow(focusedRowHandle);
+                    var dr = GetDataRow(FocusedRowHandle);
                     this.ReplaceDataRowChanges(summary, dr);//替换数据
-                    dr.Table.AcceptChanges();
-                    RefreshRow(focusedRowHandle);//修改或新增要刷新Grid数据          
+                    //dr.Table.AcceptChanges();
+                    RefreshRow(FocusedRowHandle);//修改或新增要刷新Grid数据          
                 }
                 isSave = true;
             }
             catch (Exception ex)
             {
-                Msg.ShowException(ex);
+                //Msg.ShowException(ex);
                 isSave = false;
             }
             finally
@@ -931,7 +929,7 @@ namespace Metro.DynamicModeules.BaseControls.Views
         public void MoveFirst()
         {
             if (View == null) return;
-            if (tcBusiness.SelectedTabPage != tpSummary)
+            //if (tcBusiness.SelectedTabPage != tpSummary)
                 DoViewContent(null);
         }
 

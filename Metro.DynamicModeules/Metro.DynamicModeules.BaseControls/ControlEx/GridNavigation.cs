@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Metro.DynamicModeules.BaseControls.ControlzEx
+namespace Metro.DynamicModeules.BaseControls.ControlEx
 {
   public  class GridNavigation: Control
     {

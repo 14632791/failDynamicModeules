@@ -5,21 +5,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Metro.DynamicModeules.BaseControls.ControlzEx
+namespace Metro.DynamicModeules.BaseControls.ControlEx
 {
     public class Msg
     {
-       
-        //public static async Task ShowDialogOutside(MetroWindow owner, MetroDialogSettings metroDialogOptions)
-        //{
-        //    var dialog = (BaseMetroDialog)owner.Resources["CustomDialogTest"];
-        //    dialog.DialogSettings.ColorScheme = metroDialogOptions.ColorScheme;
-        //    dialog = dialog.ShowDialogExternally();
-        //    await TaskEx.Delay(5000);
-        //    await dialog.RequestCloseAsync();
-        //}
+       public static MetroWindow Owner { get; set; }
 
-        public static async Task ShowMessageDialog(MetroWindow owner, MetroDialogSettings metroDialogOptions)
+        public static async Task ShowMessageDialog(MetroDialogSettings metroDialogOptions, MetroWindow owner = null)
         {
             // This demo runs on .Net 4.0, but we're using the Microsoft.Bcl.Async package so we have async/await support
             // The package is only used by the demo and not a dependency of the library!
@@ -40,7 +32,7 @@ namespace Metro.DynamicModeules.BaseControls.ControlzEx
         }
 
 
-        public static async Task ShowLimitedMessageDialog(MetroWindow owner, MetroDialogSettings metroDialogOptions)
+        public static async Task ShowLimitedMessageDialog(MetroDialogSettings metroDialogOptions, MetroWindow owner = null)
         {
             var mySettings = new MetroDialogSettings()
             {
@@ -59,46 +51,7 @@ namespace Metro.DynamicModeules.BaseControls.ControlzEx
                     Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
         }
 
-        //public static async Task ShowCustomDialog(MetroWindow owner)
-        //{
-        //    var dialog = (BaseMetroDialog)owner.Resources["CustomDialogTest"];
-        //    await owner.ShowMetroDialogAsync(dialog);
-        //    var textBlock = dialog.FindChild<TextBlock>("MessageTextBlock");
-        //    textBlock.Text = "A message box will appear in 3 seconds.";
-        //    await System.Threading.Tasks.TaskEx.Delay(3000);
-        //    await owner.ShowMessageAsync("Secondary dialog", "This message is shown on top of another.");
-        //    textBlock.Text = "The dialog will close in 2 seconds.";
-        //    await TaskEx.Delay(2000);
-        //    await owner.HideMetroDialogAsync(dialog);
-        //}
-
-        //public static async Task ShowAwaitCustomDialog(MetroWindow owner)
-        //{
-        //    EventHandler<DialogStateChangedEventArgs> dialogManagerOnDialogOpened = null;
-        //    dialogManagerOnDialogOpened = (o, args) =>
-        //    {
-        //        DialogManager.DialogOpened -= dialogManagerOnDialogOpened;
-        //        Console.WriteLine("Custom Dialog opened!");
-        //    };
-        //    DialogManager.DialogOpened += dialogManagerOnDialogOpened;
-        //    EventHandler<DialogStateChangedEventArgs> dialogManagerOnDialogClosed = null;
-        //    dialogManagerOnDialogClosed = async (o, args) =>
-        //    {
-        //        DialogManager.DialogClosed -= dialogManagerOnDialogClosed;
-        //        Console.WriteLine("Custom Dialog closed!");
-        //        await owner.ShowMessageAsync("Dialog gone", "The custom dialog has closed");
-        //    };
-        //    DialogManager.DialogClosed += dialogManagerOnDialogClosed;
-        //    var dialog = (BaseMetroDialog)owner.Resources["CustomCloseDialogTest"];
-        //    await owner.ShowMetroDialogAsync(dialog);
-        //    await dialog.WaitUntilUnloadedAsync();
-        //}
-
-        //public static async Task CloseCustomDialog(MetroWindow owner)
-        //{
-        //    var dialog = (BaseMetroDialog)owner.Resources["CustomCloseDialogTest"];
-        //    await owner.HideMetroDialogAsync(dialog);
-        //}
+      
 
         /// <summary>
         /// 登录密码弹框 
@@ -108,7 +61,7 @@ namespace Metro.DynamicModeules.BaseControls.ControlzEx
         /// <param name="userName"></param>
         /// <param name="action">录入密码后的回调</param>
         /// <returns></returns>
-        public static async Task ShowLoginDialogPasswordPreview(MetroWindow owner, MetroDialogSettings metroDialogOptions,string userName,Action<string,string> action)
+        public static async Task ShowLoginDialogPasswordPreview(MetroDialogSettings metroDialogOptions,string userName,Action<string,string> action, MetroWindow owner = null)
         {
             LoginDialogData result = await owner.ShowLoginAsync("Authentication", "请输入你的密码", new LoginDialogSettings { ColorScheme = metroDialogOptions.ColorScheme, InitialUsername = userName, EnablePasswordPreview = true });
             if (result == null)
@@ -122,7 +75,7 @@ namespace Metro.DynamicModeules.BaseControls.ControlzEx
             }
         }
 
-        public static async Task ShowLoginDialogOnlyPassword(MetroWindow owner, MetroDialogSettings metroDialogOptions,Action<string> action)
+        public static async Task ShowLoginDialogOnlyPassword( MetroDialogSettings metroDialogOptions,Action<string> action, MetroWindow owner = null)
         {
             LoginDialogData result = await owner.ShowLoginAsync("Authentication", "Enter your password", new LoginDialogSettings { ColorScheme = metroDialogOptions.ColorScheme, ShouldHideUsername = true });
             if (result == null)
@@ -142,7 +95,7 @@ namespace Metro.DynamicModeules.BaseControls.ControlzEx
         /// <param name="metroDialogOptions"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static async Task ShowLoginDialogWithRememberCheckBox(MetroWindow owner, MetroDialogSettings metroDialogOptions, Action<string, string> action)
+        public static async Task ShowLoginDialogWithRememberCheckBox(MetroDialogSettings metroDialogOptions, Action<string, string> action, MetroWindow owner = null)
         {
             LoginDialogData result = await owner.ShowLoginAsync("Authentication", "Enter your password", new LoginDialogSettings { ColorScheme = metroDialogOptions.ColorScheme, RememberCheckBoxVisibility = Visibility.Visible });
             if (result == null)
@@ -160,7 +113,7 @@ namespace Metro.DynamicModeules.BaseControls.ControlzEx
         /// </summary>
         /// <param name="owner"></param>
         /// <returns></returns>
-        public static async Task ShowProgressDialog(MetroWindow owner)
+        public static async Task ShowProgressDialog(MetroWindow owner=null)
         {
             var mySettings = new MetroDialogSettings()
             {
@@ -202,7 +155,7 @@ namespace Metro.DynamicModeules.BaseControls.ControlzEx
         /// <param name="content">正文</param>
         /// <param name="action">录入完成后要执行的回调</param>
         /// <returns></returns>
-        public static async Task ShowInputDialog(MetroWindow owner,string title,string content,Action<string> action)
+        public static async Task ShowInputDialog(string title,string content,Action<string> action, MetroWindow owner = null)
         {
             var result = await owner.ShowInputAsync(title, content);
             if (result == null) //user pressed cancel
@@ -211,7 +164,7 @@ namespace Metro.DynamicModeules.BaseControls.ControlzEx
             action?.Invoke(result);
         }
 
-        public static async Task ShowLoginDialog(MetroWindow owner, MetroDialogSettings metroDialogOptions)
+        public static async Task ShowLoginDialog( MetroDialogSettings metroDialogOptions, MetroWindow owner = null)
         {
             LoginDialogData result = await owner.ShowLoginAsync("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = metroDialogOptions.ColorScheme, InitialUsername = "MahApps" });
             if (result == null)

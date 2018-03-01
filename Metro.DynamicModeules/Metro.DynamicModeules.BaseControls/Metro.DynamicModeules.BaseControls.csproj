@@ -99,10 +99,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\SimpleCommand.cs" />
-    <Compile Include="ControlzEx\GridNavigation.cs" />
-    <Compile Include="ControlzEx\Msg.cs" />
-    <Compile Include="ControlzEx\PackIcon.cs" />
-    <Compile Include="ControlzEx\PackIconBase.cs" />
+    <Compile Include="ControlEx\GridNavigation.cs" />
+    <Compile Include="ControlEx\Msg.cs" />
+    <Compile Include="ControlEx\PackIcon.cs" />
+    <Compile Include="ControlEx\PackIconBase.cs" />
+    <Compile Include="ControlEx\SummaryView.xaml.cs">
+      <DependentUpon>SummaryView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\MathConverter.cs" />
     <Compile Include="Converters\MathMultipleConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -127,9 +130,6 @@
     <Compile Include="Views\ModuleBaseView.xaml.cs">
       <DependentUpon>ModuleBaseView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Page1.xaml.cs">
-      <DependentUpon>Page1.xaml</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -143,6 +143,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Page Include="ControlEx\SummaryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\GridNavigation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -172,10 +176,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ModuleBaseView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Page1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

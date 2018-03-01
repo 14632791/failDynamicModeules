@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 
-namespace Metro.DynamicModeules.BaseControls.ControlzEx
+namespace Metro.DynamicModeules.BaseControls.ControlEx
 {
     /// <summary>
     /// Icon from the Material Design Icons project, <see cref="https://materialdesignicons.com/"/>.

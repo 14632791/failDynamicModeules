@@ -89,6 +89,10 @@
       <Project>{66b7a24b-9fb9-4436-a269-f6740e700c03}</Project>
       <Name>Metro.DynamicModeules.Interface</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Metro.DynamicModeules.BaseControls\Metro.DynamicModeules.BaseControls.csproj">
+      <Project>{A482CD5F-389C-41C4-B537-CBAC13EAA932}</Project>
+      <Name>Metro.DynamicModeules.BaseControls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Metro.DynamicModeules.Models\Metro.DynamicModeules.Models.csproj">
       <Project>{937E0D53-9696-48AB-B12F-736BC6D43F15}</Project>
       <Name>Metro.DynamicModeules.Models</Name>

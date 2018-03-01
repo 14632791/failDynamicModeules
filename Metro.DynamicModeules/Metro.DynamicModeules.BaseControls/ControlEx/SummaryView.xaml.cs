@@ -12,17 +12,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Metro.DynamicModeules.BaseControls.Views
+namespace Metro.DynamicModeules.BaseControls.ControlEx
 {
     /// <summary>
-    /// Page1.xaml 的交互逻辑
+    /// SummaryView.xaml 的交互逻辑
     /// </summary>
-    public partial class Page1 : Page
+    public partial class SummaryView : UserControl
     {
-        public Page1()
+        public SummaryView()
         {
             InitializeComponent();
-            
         }
     }
 }

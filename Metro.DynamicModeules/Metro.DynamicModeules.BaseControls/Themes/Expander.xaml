@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:converters="clr-namespace:Metro.DynamicModeules.BaseControls.Converters"
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
-                    xmlns:packIcon="clr-namespace:Metro.DynamicModeules.BaseControls.ControlzEx">
+                    xmlns:packIcon="clr-namespace:Metro.DynamicModeules.BaseControls.ControlEx">
 
     <converters:MathMultipleConverter x:Key="MathMlpMultipleConverter" Operation="Multiply" />
 

@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Metro.DynamicModeules.BaseControls.ControlzEx
+namespace Metro.DynamicModeules.BaseControls.ControlEx
 {
     public abstract class PackIconBase : Control
     {
