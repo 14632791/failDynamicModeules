@@ -35,7 +35,7 @@ namespace Metro.DynamicModeules.Models
         /// </summary>
         /// <param name="oneT"></param>
         /// <returns></returns>
-        public static bool CompareModel<T>(this T oneT, T twoT)
+        public static bool CompareModel<T>(this T oneT, T twoT) where T : class
         {
             bool result = true;//两个类型作比较时使用,如果有不一样的就false
             Type typeOne = oneT.GetType();
@@ -136,7 +136,7 @@ namespace Metro.DynamicModeules.Models
         /// 获取当前的表名
         /// </summary>
         /// <returns></returns>
-        public static string GetTableName<T>()
+        public static string GetTableName<T>() where T : class
         {
             string name = typeof(T).GetAttributeValue((TableAttribute ta) => ta.Name);
             if (string.IsNullOrEmpty(name))

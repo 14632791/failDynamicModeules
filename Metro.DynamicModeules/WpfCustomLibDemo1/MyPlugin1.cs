@@ -11,8 +11,8 @@ using Metro.DynamicModeules.Interface.Sys;
 
 namespace WpfCustomLibDemo1
 {
-    [Export(typeof(IModuleBase))]
-    public class MyPlugin1 : IModuleBase
+    [Export(typeof(ModuleBase))]
+    public class MyPlugin1 : ModuleBase
     {
         public sys_Modules ModulesInfo { get; set; } = new sys_Modules { ModuleID = 1,
             ModuleName = "数据字典" };

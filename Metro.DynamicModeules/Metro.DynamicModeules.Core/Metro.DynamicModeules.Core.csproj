@@ -72,11 +72,11 @@
   <ItemGroup>
     <Compile Include="Interfaces\IModule.cs" />
     <Compile Include="Interfaces\IModuleManager.cs" />
-    <Compile Include="ModuleLoaderBase.cs" />
+    <Compile Include="ModuleBase.cs" />
+    <Compile Include="ModuleLoader.cs" />
     <Compile Include="ModuleManager.cs" />
     <Compile Include="Services\ICustomerService.cs" />
     <Compile Include="Interfaces\ILinkGroupService.cs" />
-    <Compile Include="CoreModule.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CustomerService.cs" />
@@ -99,6 +99,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

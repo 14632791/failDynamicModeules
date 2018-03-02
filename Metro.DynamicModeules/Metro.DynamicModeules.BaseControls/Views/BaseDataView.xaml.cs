@@ -160,6 +160,10 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// </summary>
         protected virtual void SetEditMode()
         {
+            foreach (IButtonInfo button in _buttons)
+            {
+
+            }
             //_buttons.FirstOrDefault(b=>b.Name=="btnView").IsEnabled = false;
             //_buttons.FirstOrDefault(b => b.Name == "btnAdd").IsEnabled = false;
             //_buttons.FirstOrDefault(b=>b.Name=="btnDelete").IsEnabled = false;
@@ -206,19 +210,13 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// </summary>        
         protected virtual void ButtonStateChanged(UpdateType currentState)
         {
-            PackIconMaterial FileFind;  // PackIconControl<PackIconMaterialKind>
-            PackIconMaterialLight Kind; //PackIconControl<PackIconMaterialLightKind>
-            PackIconFontAwesome EyeSlas; //PackIconControl<PackIconFontAwesomeKind>
-            PackIconOcticons Alert;  //PackIconControl<PackIconOcticonsKind>
-            PackIconModern _3dCollada;  //PackIconControl<PackIconModernKind>
-            PackIconEntypo AircraftLand;  //PackIconControl<PackIconEntypoKind>
-            PackIconSimpleIcons Amazon;  // PackIconControl<PackIconSimpleIconsKind>
-
-
-
-
-
-
+            //PackIconMaterial FileFind;  // PackIconControl<PackIconMaterialKind>
+            //PackIconMaterialLight Kind; //PackIconControl<PackIconMaterialLightKind>
+            //PackIconFontAwesome EyeSlas; //PackIconControl<PackIconFontAwesomeKind>
+            //PackIconOcticons Alert;  //PackIconControl<PackIconOcticonsKind>
+            //PackIconModern _3dCollada;  //PackIconControl<PackIconModernKind>
+            //PackIconEntypo AircraftLand;  //PackIconControl<PackIconEntypoKind>
+            //PackIconSimpleIcons Amazon;  // PackIconControl<PackIconSimpleIconsKind>
 
         }
 
@@ -612,16 +610,18 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// </summary>
         protected virtual void ShowDetailPage(bool disableSummaryPage)
         {
-            //try
-            //{
-            //    this.tpDetail.PageEnabled = true; //2015.6.15 陈刚 不再对Page作禁用
-            //    tcBusiness.SelectedTabPage = this.tpDetail;
-            //    tpSummary.PageEnabled = !disableSummaryPage;//2015.6.15 陈刚 不再对Page作禁用
-            //    FocusEditor(); //第一个编辑框获得焦点.
-            //    this.ResumeLayout();
-            //}
-            //catch (Exception ex)
-            //{ Msg.ShowException(ex); }
+            try
+            {
+                //this.tpDetail.PageEnabled = true; //2015.6.15 陈刚 不再对Page作禁用
+                //tcBusiness.SelectedTabPage = this.tpDetail;
+                //tpSummary.PageEnabled = !disableSummaryPage;//2015.6.15 陈刚 不再对Page作禁用
+                //FocusEditor(); //第一个编辑框获得焦点.
+                //this.ResumeLayout();
+            }
+            catch (Exception ex)
+            {
+                //Msg.ShowException(ex);
+            }
         }
 
         /// <summary>

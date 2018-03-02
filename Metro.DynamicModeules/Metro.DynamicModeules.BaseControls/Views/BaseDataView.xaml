@@ -4,9 +4,32 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Metro.DynamicModeules.BaseControls.Views"
+             xmlns:controlEx="clr-namespace:Metro.DynamicModeules.BaseControls.ControlEx"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="800">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <controlEx:FlipPanel Grid.ColumnSpan="2" BorderBrush="DarkOrange" BorderThickness="3" IsFlipped="False"
+         CornerRadius="4" Margin="10">
+            <controlEx:FlipPanel.FrontContent>
+                <DataGrid >
+                    <DataGrid.Columns>
+                        <DataGridCheckBoxColumn Header="选择"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </controlEx:FlipPanel.FrontContent>
+            <controlEx:FlipPanel.BackContent>
+                <Grid></Grid>
+            </controlEx:FlipPanel.BackContent>
+        </controlEx:FlipPanel>
+       
+        <controlEx:GridNavigation Grid.Row="1"/>
     </Grid>
 </UserControl>

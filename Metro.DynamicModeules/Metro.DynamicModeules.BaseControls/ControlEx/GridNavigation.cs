@@ -11,7 +11,7 @@ namespace Metro.DynamicModeules.BaseControls.ControlEx
 {
   public  class GridNavigation: Control
     {
-        public GridNavigation()
+        static GridNavigation()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(GridNavigation),
                new FrameworkPropertyMetadata(typeof(GridNavigation)));

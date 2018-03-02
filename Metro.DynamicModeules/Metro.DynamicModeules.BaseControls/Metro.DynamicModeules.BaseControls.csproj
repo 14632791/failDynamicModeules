@@ -100,14 +100,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\SimpleCommand.cs" />
+    <Compile Include="ControlEx\BusinessView.xaml.cs">
+      <DependentUpon>BusinessView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ControlEx\DetailView.xaml.cs">
+      <DependentUpon>DetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ControlEx\FlipPanel.cs" />
     <Compile Include="ControlEx\GridNavigation.cs" />
     <Compile Include="ControlEx\Msg.cs" />
     <Compile Include="ControlEx\PackIcon.cs" />
     <Compile Include="ControlEx\PackIconBase.cs" />
     <Compile Include="ControlEx\PackIconButton.cs" />
-    <Compile Include="ControlEx\SummaryView.xaml.cs">
-      <DependentUpon>SummaryView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Converters\MathConverter.cs" />
     <Compile Include="Converters\MathMultipleConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -145,9 +149,17 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Page Include="ControlEx\SummaryView.xaml">
+    <Page Include="ControlEx\BusinessView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ControlEx\DetailView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\FlipPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\GridNavigation.xaml">
       <SubType>Designer</SubType>

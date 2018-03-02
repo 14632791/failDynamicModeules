@@ -15,7 +15,7 @@ namespace Metro.DynamicModeules.BaseControls.ControlEx
     /// </summary>
     public class PackIconButton : Button, IButtonInfo
     {
-        public PackIconButton()
+        static PackIconButton()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(PackIconButton),
                new FrameworkPropertyMetadata(typeof(PackIconButton)));

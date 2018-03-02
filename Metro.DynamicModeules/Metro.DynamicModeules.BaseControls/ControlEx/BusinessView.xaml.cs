@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace Metro.DynamicModeules.BaseControls.ControlEx
 {
     /// <summary>
-    /// SummaryView.xaml 的交互逻辑
+    /// BusinessView.xaml 的交互逻辑
     /// </summary>
-    public partial class SummaryView : UserControl
+    public partial class BusinessView : UserControl
     {
-        public SummaryView()
+        public BusinessView()
         {
             InitializeComponent();
         }

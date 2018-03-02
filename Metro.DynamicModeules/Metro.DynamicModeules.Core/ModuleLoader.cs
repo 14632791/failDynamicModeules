@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,15 +15,15 @@ namespace Metro.DynamicModeules.Core
     /// <summary>
     /// 加载模块管理类(Load Module Manager)
     /// </summary>
-    public class ModuleLoaderBase
+    public class ModuleLoader
     {
-        private ModuleLoaderBase()
+        private ModuleLoader()
         {
-            Compile();
+           
         }
         static object _instanceLock = new object();
-        ModuleLoaderBase _instance;
-        public ModuleLoaderBase Instance
+        ModuleLoader _instance;
+        public ModuleLoader Instance
         {
             get
             {
@@ -32,7 +33,7 @@ namespace Metro.DynamicModeules.Core
                     {
                         if (null == _instance)
                         {
-                            _instance = new ModuleLoaderBase();
+                            _instance = new ModuleLoader();
                         }
                     }
                 }
@@ -41,29 +42,7 @@ namespace Metro.DynamicModeules.Core
         }
        
 
-        /// <summary>
-        /// 存储所有插件
-        /// </summary>
-        [ImportMany(typeof(IModuleBase), AllowRecomposition = true)]
-        public List<Lazy<IModuleBase>> PluginList { get; set; }
-
-
-        /// <summary>  
-        /// 通过容器对象将宿主和部件组装到一起。  
-        /// </summary>  
-        public void Compile()
-        {
-            PluginList = new List<Lazy<IModuleBase>>();
-            AggregateCatalog aggregateCatalog = new AggregateCatalog();
-            AssemblyCatalog assemblyCatalog = new AssemblyCatalog(typeof(IModuleBase).Assembly);
-            DirectoryCatalog directoryCatalog = new DirectoryCatalog("modules");
-            aggregateCatalog.Catalogs.Add(assemblyCatalog);
-            aggregateCatalog.Catalogs.Add(directoryCatalog);
-            var container = new CompositionContainer(aggregateCatalog);
-            container.ComposeParts(this);
-        }
        
-
         /// <summary>
         /// 加载模块的菜单(支持一个模块内有多个顶级菜单)
         /// </summary>
@@ -88,8 +67,12 @@ namespace Metro.DynamicModeules.Core
         /// </summary>
         /// <param name="moduleinfo">模块信息</param>
         /// <returns></returns>
-        public virtual bool LoadModule(IModuleBase moduleinfo)
+        public virtual bool LoadModule()
         {
+            foreach (var item in PluginList)
+            {
+
+            }
             //_ModuleFileName = moduleinfo.ModuleFile;
             //_ModuleAssembly = moduleinfo.ModuleAssembly;
             //string entry = GetModuleEntryNameSpace(_ModuleAssembly);
@@ -98,7 +81,7 @@ namespace Metro.DynamicModeules.Core
             //Form form = (Form)_ModuleAssembly.CreateInstance(entry);
             //_ModuleMainForm = null;
 
-            //if (form is IModuleBase) _ModuleMainForm = (IModuleBase)form;
+            //if (form is ModuleBase) _ModuleMainForm = (ModuleBase)form;
 
             //return _ModuleMainForm != null;
             return false;
@@ -107,44 +90,44 @@ namespace Metro.DynamicModeules.Core
         /// <summary>        
         /// 获取模块列表，转换为ModuleInfo集合.
         /// </summary>        
-        //public virtual IList<ModuleInfo> GetModuleList()
-        //{
-        //    try
-        //    {
-        //        string[] files = null; //模块文件(*.dll)
-        //        IList<ModuleInfo> list = new List<ModuleInfo>();
+        public virtual IList<ModuleInfo> GetModuleList()
+        {
+            try
+            {
+                string[] files = null; //模块文件(*.dll)
+                IList<ModuleInfo> list = new List<ModuleInfo>();
 
-        //        if (Directory.Exists(MODULE_PATH))
-        //            files = Directory.GetFiles(MODULE_PATH, "*Module.dll");
+                if (Directory.Exists(MODULE_PATH))
+                    files = Directory.GetFiles(MODULE_PATH, "*Module.dll");
 
-        //        foreach (string mod in files)
-        //        {
-        //            Assembly asm = null;
-        //            try
-        //            {
-        //                //.net framework dll
-        //                asm = Assembly.LoadFile(mod);
-        //            }
-        //            catch { continue; }
+                foreach (string mod in files)
+                {
+                    Assembly asm = null;
+                    try
+                    {
+                        //.net framework dll
+                        asm = Assembly.LoadFile(mod);
+                    }
+                    catch { continue; }
 
-        //            ModuleID id = GetModuleID(asm);
-        //            string name = GetCurrentModuleName();
-        //            if (id != ModuleID.None)
-        //            {
-        //                ModuleInfo m = new ModuleInfo(asm, id, name, mod);
-        //                list.Add(m);
-        //            }
-        //        }
-        //        var vlst = (from i in list orderby i.ModuleID ascending select i).ToList();
-        //        //SortModule(list); //模块排序.
-        //        return vlst;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Msg.ShowException(ex);
-        //        return null;
-        //    }
-        //}
+                    ModuleID id = GetModuleID(asm);
+                    string name = GetCurrentModuleName();
+                    if (id != ModuleID.None)
+                    {
+                        ModuleInfo m = new ModuleInfo(asm, id, name, mod);
+                        list.Add(m);
+                    }
+                }
+                var vlst = (from i in list orderby i.ModuleID ascending select i).ToList();
+                //SortModule(list); //模块排序.
+                return vlst;
+            }
+            catch (Exception ex)
+            {
+                Msg.ShowException(ex);
+                return null;
+            }
+        }
 
         /// <summary>
         /// 获取程序集自定义特性。
@@ -175,31 +158,7 @@ namespace Metro.DynamicModeules.Core
         /// </summary>
         public virtual void LoadGUI(object mainTabControl) { }
 
-        /// <summary>
-        /// 模块排序
-        /// </summary>
-        /// <param name="list"></param>
-        //public virtual void SortModule(IList<ModuleInfo> list)
-        //{
-        //    int i, j;
-        //    ModuleInfo temp;
-        //    bool done = false;
-        //    j = 1;
-        //    while ((j < list.Count) && (!done))
-        //    {
-        //        done = true;
-        //        for (i = 0; i < list.Count - j; i++)
-        //        {
-        //            if ((list[i] as ModuleInfo).ModuleID > (list[i + 1] as ModuleInfo).ModuleID)
-        //            {
-        //                done = false;
-        //                temp = list[i];
-        //                list[i] = list[i + 1];
-        //                list[i + 1] = temp;
-        //            }
-        //        }
-        //    }
-        //}
+
 
         #region 类公共静态方法
 
@@ -222,7 +181,6 @@ namespace Metro.DynamicModeules.Core
         //{
         //    AssemblyModuleEntry temp = new AssemblyModuleEntry(ModuleID.None, "", "");
         //    if (asm == null) return temp;
-
         //    object[] list = asm.GetCustomAttributes(typeof(AssemblyModuleEntry), false);
         //    if (list.Length > 0)
         //        return (AssemblyModuleEntry)list[0];

@@ -19,13 +19,13 @@
                             <ColumnDefinition Width=".5*"/>
                             <ColumnDefinition Width=".5*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Margin="5"  Command="{TemplateBinding NavigateCommand}" CommandParameter="First">
+                        <Button Margin="1"  Command="{TemplateBinding NavigateCommand}" CommandParameter="First">
                             <iconPacks:PackIconMaterial Kind="PageFirst"  ToolTip="第一页"/>
                         </Button>
-                        <Button Margin="5" Grid.Column="1" Command="{TemplateBinding NavigateCommand}" CommandParameter="Previous">
+                        <Button Margin="1" Grid.Column="1" Command="{TemplateBinding NavigateCommand}" CommandParameter="Previous">
                             <iconPacks:PackIconModern  Kind="NavigatePrevious"  ToolTip="上一页"/>
                         </Button>
-                        <TextBlock Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock FontSize="14" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <TextBlock.Text>
                                 <MultiBinding StringFormat="记录 {0} of {1}">
                                     <Binding Path="CurrentPage" RelativeSource="{RelativeSource Mode=TemplatedParent}"/>
@@ -33,10 +33,10 @@
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
-                        <Button Margin="5"  Grid.Column="3" ToolTip="下一页" Command="{TemplateBinding NavigateCommand}"  CommandParameter="Next">
+                        <Button Margin="1"  Grid.Column="3" ToolTip="下一页" Command="{TemplateBinding NavigateCommand}"  CommandParameter="Next">
                             <iconPacks:PackIconModern  Kind="NavigateNext" />
                         </Button>
-                        <Button Margin="5"  Grid.Column="4" ToolTip="最后一页" Command="{TemplateBinding NavigateCommand}"  CommandParameter="Last">
+                        <Button Margin="1"  Grid.Column="4" ToolTip="最后一页" Command="{TemplateBinding NavigateCommand}"  CommandParameter="Last">
                             <iconPacks:PackIconMaterial Kind="PageLast" />
                         </Button>
                     </Grid>
