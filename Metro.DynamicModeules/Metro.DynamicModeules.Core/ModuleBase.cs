@@ -13,6 +13,7 @@ namespace Metro.DynamicModeules.Core
     /// <summary>
     /// 模块主窗体
     /// </summary>
+    [Export(typeof(IModuleBase))]
     public abstract class ModuleBase : IModuleBase
     {
         public ModuleBase()

@@ -135,6 +135,9 @@
     <Compile Include="Security\AuthNodeTag.cs" />
     <Compile Include="Security\BllGroupAuthority.cs" />
     <Compile Include="Security\BllMenuMgr.cs" />
+    <Compile Include="Security\BllUserRole.cs" />
+    <Compile Include="Security\BllUserGroupRe.cs" />
+    <Compile Include="Security\BllUserGroup.cs" />
     <Compile Include="Security\DomainLdapTools.cs" />
     <Compile Include="Security\NovellLdapTools.cs" />
     <Compile Include="Security\BllUser.cs" />
@@ -177,9 +180,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Business\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

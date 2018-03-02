@@ -52,8 +52,8 @@ namespace Metro.DynamicModeules.Core
         /// <summary>
         /// 存储所有主模块的插件
         /// </summary>
-        [ImportMany(typeof(IModuleBase), AllowRecomposition = true)]
-        public List<Lazy<IModuleBase>> PluginList { get; set; }
+        [ImportMany(typeof(ModuleBase), AllowRecomposition = true)]
+        public List<Lazy<ModuleBase>> PluginList { get; set; }
 
         /// <summary>
         /// 存储插件容器
@@ -67,7 +67,7 @@ namespace Metro.DynamicModeules.Core
         {
             try
             {
-                PluginList = new List<Lazy<IModuleBase>>();
+                PluginList = new List<Lazy<ModuleBase>>();
                 catalog = new AggregateCatalog();
                 //添加插件容器中的导出项目录
                 catalog.Catalogs.Add(new AssemblyCatalog(System.Reflection.Assembly.GetEntryAssembly()));
@@ -90,7 +90,7 @@ namespace Metro.DynamicModeules.Core
 
         public void Exec(string name)
         {
-            foreach (Lazy<IModuleBase> plugin in PluginList)
+            foreach (Lazy<ModuleBase> plugin in PluginList)
             {
                 plugin.Value.Initialize();
             }

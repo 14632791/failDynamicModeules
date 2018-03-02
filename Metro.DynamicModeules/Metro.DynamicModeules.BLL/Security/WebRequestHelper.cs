@@ -21,7 +21,7 @@ namespace Metro.DynamicModeules.BLL.Security
         /// </summary>
         /// <param name="url">请求的url</param>
         /// <param name="parameters">参数</param>
-        public static T GetHttp<T>(string url, IDictionary<string, string> parameters, string id = "", string name = "")
+        public static T GetHttp<T>(string url, IDictionary<string, string> parameters, string id = "", string name = "", int timeout = 6000)
         {
             if (parameters == null)
             {
@@ -53,7 +53,7 @@ namespace Metro.DynamicModeules.BLL.Security
                 {
                     HttpHeadEncryption(request, id, name);
                 }
-                request.Timeout = 60000;
+                request.Timeout = timeout;
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 Stream stream = response.GetResponseStream();
                 StreamReader reader = new StreamReader(response.GetResponseStream());
@@ -93,7 +93,7 @@ namespace Metro.DynamicModeules.BLL.Security
         /// <param name="id">ID 加密要用到</param>
         /// <param name="name">姓名 加密要用到</param>
         /// <returns></returns>
-        public static T PostHttp<T>(string url, object parameters, string id = "", string name = "")
+        public static T PostHttp<T>(string url, object parameters, string id = "", string name = "", int timeout = 6000)
         {
             string resultStr = "";
             string jsonstr = "";
@@ -110,7 +110,7 @@ namespace Metro.DynamicModeules.BLL.Security
                 {
                     HttpHeadEncryption(request, id, name);
                 }
-                request.Timeout = 60000;
+                request.Timeout = timeout;
                 request.Method = "Post";
                 request.ContentType = "text/json; charset=utf-8";
                 request.ContentLength = encodeddata.Length;
