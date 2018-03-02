@@ -1,58 +1,16 @@
-﻿using Metro.DynamicModeules.Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
+﻿using Metro.DynamicModeules.Core;
 using Metro.DynamicModeules.Models;
-using System.Windows.Controls;
-using MahApps.Metro.IconPacks;
-using Metro.DynamicModeules.Interface.Sys;
+using System.ComponentModel.Composition;
 
 namespace WpfCustomLibDemo1
 {
     [Export(typeof(ModuleBase))]
     public class MyPlugin1 : ModuleBase
     {
-        public sys_Modules ModulesInfo { get; set; } = new sys_Modules { ModuleID = 1,
-            ModuleName = "数据字典" };
-        public PackIconModernKind Kind { get; set; }
-
-        public sys_Modules Module => throw new NotImplementedException();
-
-        public void Exec()
+        public sys_Modules ModulesInfo { get; set; } = new sys_Modules
         {
-            throw new NotImplementedException();
-        }
-
-        public Control GetContainer()
-        {
-            throw new NotImplementedException();
-        }
-
-        public MenuItem GetModuleMenu()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InitButton()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Initialize()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InitMenu()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetSecurity(object securityInfo)
-        {
-            throw new NotImplementedException();
-        }
+            ModuleID = 1,
+            ModuleName = "数据字典"
+        };
     }
 }

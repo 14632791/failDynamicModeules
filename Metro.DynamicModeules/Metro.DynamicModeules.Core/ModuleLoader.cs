@@ -1,14 +1,4 @@
-﻿using Metro.DynamicModeules.Core.Interfaces;
-using Metro.DynamicModeules.Interface.Sys;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace Metro.DynamicModeules.Core
 {
@@ -68,11 +58,7 @@ namespace Metro.DynamicModeules.Core
         /// <param name="moduleinfo">模块信息</param>
         /// <returns></returns>
         public virtual bool LoadModule()
-        {
-            foreach (var item in PluginList)
-            {
-
-            }
+        {           
             //_ModuleFileName = moduleinfo.ModuleFile;
             //_ModuleAssembly = moduleinfo.ModuleAssembly;
             //string entry = GetModuleEntryNameSpace(_ModuleAssembly);
@@ -87,47 +73,7 @@ namespace Metro.DynamicModeules.Core
             return false;
         }
 
-        /// <summary>        
-        /// 获取模块列表，转换为ModuleInfo集合.
-        /// </summary>        
-        public virtual IList<ModuleInfo> GetModuleList()
-        {
-            try
-            {
-                string[] files = null; //模块文件(*.dll)
-                IList<ModuleInfo> list = new List<ModuleInfo>();
-
-                if (Directory.Exists(MODULE_PATH))
-                    files = Directory.GetFiles(MODULE_PATH, "*Module.dll");
-
-                foreach (string mod in files)
-                {
-                    Assembly asm = null;
-                    try
-                    {
-                        //.net framework dll
-                        asm = Assembly.LoadFile(mod);
-                    }
-                    catch { continue; }
-
-                    ModuleID id = GetModuleID(asm);
-                    string name = GetCurrentModuleName();
-                    if (id != ModuleID.None)
-                    {
-                        ModuleInfo m = new ModuleInfo(asm, id, name, mod);
-                        list.Add(m);
-                    }
-                }
-                var vlst = (from i in list orderby i.ModuleID ascending select i).ToList();
-                //SortModule(list); //模块排序.
-                return vlst;
-            }
-            catch (Exception ex)
-            {
-                Msg.ShowException(ex);
-                return null;
-            }
-        }
+      
 
         /// <summary>
         /// 获取程序集自定义特性。
