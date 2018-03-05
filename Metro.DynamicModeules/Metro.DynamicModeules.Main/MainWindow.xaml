@@ -177,7 +177,8 @@
                 <ItemsControl Style="{StaticResource HeaderItemsStyle}"/>
             </GroupBox>
             <Controls:MetroAnimatedTabControl Grid.Row="1" Margin="3"
-              Controls:TabControlHelper.Underlined="TabPanel"                                TabStripPlacement="Top">
+              Controls:TabControlHelper.Underlined="TabPanel"                    
+                                              TabStripPlacement="Top">
 
                 <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="20"
                                                CloseButtonEnabled="False"

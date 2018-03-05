@@ -553,6 +553,22 @@ namespace Metro.DynamicModeules.Main.ViewModel
         public bool IsScaleDownLargerFrame { get { return ((MetroWindow)Application.Current.MainWindow).IconScalingMode == MultiFrameImageMode.ScaleDownLargerFrame; } }
 
         public bool IsNoScaleSmallerFrame { get { return ((MetroWindow)Application.Current.MainWindow).IconScalingMode == MultiFrameImageMode.NoScaleSmallerFrame; } }
+
+
+
+        #region 上方的按钮列表
+
+
+        #endregion
+
+        #region 左则的模块列表
+
+        #endregion
+
+        #region 右下方的tabItems列表
+
+        #endregion
+
     }
 
     public class AccentColorMenuData
@@ -575,15 +591,6 @@ namespace Metro.DynamicModeules.Main.ViewModel
             ThemeManager.ChangeAppStyle(Application.Current, accent, theme.Item1);
         }
     }
-
-
-
-
-    #region 扩展
-
-
-    #endregion
-
 
 
     public class AppThemeMenuData : AccentColorMenuData

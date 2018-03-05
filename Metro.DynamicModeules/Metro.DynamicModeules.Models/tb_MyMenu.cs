@@ -104,6 +104,8 @@ namespace Metro.DynamicModeules.Models
             }
         }
         private string _MenuType;
+               
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>

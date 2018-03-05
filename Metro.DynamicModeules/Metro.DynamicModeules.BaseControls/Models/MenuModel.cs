@@ -1,4 +1,5 @@
-﻿using Metro.DynamicModeules.Models.Base;
+﻿using Metro.DynamicModeules.Models;
+using Metro.DynamicModeules.Models.Base;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Input;
 
-namespace Metro.DynamicModeules.Models.ViewModel
+namespace Metro.DynamicModeules.BaseControls.Models
 {
     /// <summary>
     /// 菜单要binding的实体

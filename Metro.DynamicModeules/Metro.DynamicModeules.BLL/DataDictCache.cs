@@ -10,6 +10,7 @@
 ///**************************************************************************/
 
 using Metro.DynamicModeules.Models;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 
@@ -55,26 +56,47 @@ namespace Metro.DynamicModeules.BLL
         /// </summary>
         public ObservableCollection<tb_CommonDataDict> AllDataDicts { get; set; }
 
-        /// <summary>
-        /// 营业咒
-        /// </summary>
-        public ObservableCollection<tb_Person> Person
-        {
-            get; set;
-        }
-
-
-
+        
         /// <summary>
         /// 所有的字典类型
         /// </summary>
         private ObservableCollection<tb_CommDataDictType> CommonDataDictType { get; set; }
 
+        /// <summary>
+        /// 按钮对应的icon资源key
+        /// </summary>
+        public Dictionary<int, string> DictButtonIcons { get; set; }
 
         /// <summary>
-        /// 所有的按钮
+        /// 按钮字典表 定义功能点, 每个功能点必须唯一，为2^N 次方
         /// </summary>
         public ObservableCollection<tb_MyAuthorityItem> AuthorityItems { get; set; }
+
+        /// <summary>
+        /// tb_MyMenu菜单与按钮的中间表
+        /// </summary>
+        public ObservableCollection<tb_MyFormTagName> FormTagNames { get; set; }
+
+        /// <summary>
+        /// 组权限
+        /// </summary>
+        public ObservableCollection<tb_MyUserRole> UserRoles { get; set; }
+
+        /// <summary>
+        /// 组权限与用户的中间表
+        /// </summary>
+        public ObservableCollection<tb_MyUserGroupRe> UserGroupRes { get; set; }
+
+        /// <summary>
+        /// 本系统的菜单及分配菜单的权限值
+        /// </summary>
+        public ObservableCollection<tb_MyMenu> Menus { get; set; }
+
+        /// <summary>
+        /// 用户组
+        /// </summary>
+        public ObservableCollection<tb_MyUserGroup> UserGroups { get; set; }
+
         #endregion
 
         //下载刷新缓存
