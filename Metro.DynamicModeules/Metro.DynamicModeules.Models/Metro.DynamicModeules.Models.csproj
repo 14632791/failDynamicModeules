@@ -104,7 +104,6 @@
     <Compile Include="tb_ProductCategory.cs" />
     <Compile Include="tb_SO.cs" />
     <Compile Include="tb_SOs.cs" />
-    <Compile Include="ViewModel\MenuModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

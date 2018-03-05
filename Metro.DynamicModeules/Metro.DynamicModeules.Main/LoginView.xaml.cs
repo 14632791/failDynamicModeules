@@ -48,7 +48,7 @@ namespace Metro.DynamicModeules.Main
                     }
                     //Dispatcher.Invoke(new Action(() =>
                     //{
-                    DataDictCache.Instance.User = user[0];
+                    DataDictCache.Instance.LoginUser = user[0];
                     Window mainpage = PluginHandle.Instance.Host.Value as Window;
                     mainpage.Show();
                     this.Hide();

@@ -47,10 +47,12 @@ namespace Metro.DynamicModeules.BLL
 
 
         #region 2.数据表缓存数据. 局域变易及属性定义
+
         /// <summary>
         /// 当前用户
         /// </summary>
-        public tb_MyUser User { get; set; }
+        public tb_MyUser LoginUser { get; set; }
+
         /// <summary>
         /// 所有字典
         /// </summary>
@@ -60,7 +62,7 @@ namespace Metro.DynamicModeules.BLL
         /// <summary>
         /// 所有的字典类型
         /// </summary>
-        private ObservableCollection<tb_CommDataDictType> CommonDataDictType { get; set; }
+        private ObservableCollection<tb_CommDataDictType> AllCommonDataDictTypes { get; set; }
 
         /// <summary>
         /// 按钮对应的icon资源key
@@ -78,14 +80,14 @@ namespace Metro.DynamicModeules.BLL
         public ObservableCollection<tb_MyFormTagName> FormTagNames { get; set; }
 
         /// <summary>
-        /// 组权限
+        /// 当前用户的组权限
         /// </summary>
-        public ObservableCollection<tb_MyUserRole> UserRoles { get; set; }
+        public ObservableCollection<tb_MyUserRole> LoginUserRoles { get; set; }
 
         /// <summary>
-        /// 组权限与用户的中间表
+        /// 当前用户的组权限中间表
         /// </summary>
-        public ObservableCollection<tb_MyUserGroupRe> UserGroupRes { get; set; }
+        public ObservableCollection<tb_MyUserGroupRe> LoginUserGroupRes { get; set; }
 
         /// <summary>
         /// 本系统的菜单及分配菜单的权限值
@@ -93,7 +95,7 @@ namespace Metro.DynamicModeules.BLL
         public ObservableCollection<tb_MyMenu> Menus { get; set; }
 
         /// <summary>
-        /// 用户组
+        /// 当前用户组
         /// </summary>
         public ObservableCollection<tb_MyUserGroup> UserGroups { get; set; }
 
