@@ -1,27 +1,13 @@
-﻿using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
+﻿using MahApps.Metro.Controls.Dialogs;
+using Metro.DynamicModeules.BLL;
 using Metro.DynamicModeules.BLL.Security;
 using Metro.DynamicModeules.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using Metro.DynamicModeules.Models;
-using Metro.DynamicModeules.BLL.DataDict;
-using Metro.DynamicModeules.BLL;
 using Metro.DynamicModeules.Common.ExpressionSerialization;
-using Metro.DynamicModeules.Core.Interfaces;
+using Metro.DynamicModeules.Core;
+using Metro.DynamicModeules.Models;
+using System;
+using System.Linq.Expressions;
+using System.Windows;
 
 namespace Metro.DynamicModeules.Main
 {

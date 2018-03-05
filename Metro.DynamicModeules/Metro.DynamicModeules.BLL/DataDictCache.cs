@@ -10,6 +10,7 @@
 ///**************************************************************************/
 
 using Metro.DynamicModeules.Models;
+using System.Collections.ObjectModel;
 using System.Data;
 
 
@@ -23,7 +24,7 @@ namespace Metro.DynamicModeules.BLL
 
         private DataDictCache() { } /*私有构造器,不允许外部创建实例*/
 
-        #region 缓存数据唯一实例
+        #region 单例模式
 
         private static DataDictCache _instance = null;
 
@@ -37,186 +38,49 @@ namespace Metro.DynamicModeules.BLL
                 if (_instance == null)
                 {
                     _instance = new DataDictCache();
-                    _instance.DownloadBaseCacheData();//下载基本数据                    
                 }
                 return _instance;
             }
         }
         #endregion
 
-        #region 外部使用的静态方法
-
-        /// <summary>
-        /// 刷新缓存数据
-        /// </summary>
-        public static void RefreshCache()
-        {
-            DataDictCache.Instance.DownloadBaseCacheData();
-        }
-
-        /// <summary>
-        /// 刷新单个数据字典
-        /// </summary>
-        /// <param name="tableName">字典表名</param>
-        public static void RefreshCache(string tableName)
-        {
-           
-        }
-
-        #endregion
 
         #region 2.数据表缓存数据. 局域变易及属性定义
+        /// <summary>
+        /// 当前用户
+        /// </summary>
         public tb_MyUser User { get; set; }
-        private DataSet _AllDataDicts = null;
-
-        private DataTable _BusinessTables = null;
-        public DataTable BusinessTables { get { return _BusinessTables; } }
-
-        private DataTable _StockType = null;
-        public DataTable StockType { get { return _StockType; } }
-
-        private DataTable _Currency = null;
-        public DataTable Currency { get { return _Currency; } }
-
-        private DataTable _PayType = null;
-        public DataTable PayType { get { return _PayType; } }
-        
-
-        private DataTable _Person = null; //营销员
-        public DataTable Person { get { return _Person; } }
-
-        private DataTable _Storage = null; //仓库
-        public DataTable Storage { get { return _Storage; } }
-
-        private DataTable _Unit = null;
-        public DataTable Unit { get { return _Unit; } }
-
-        private DataTable _DepartmentData = null;
-        public DataTable DepartmentData { get { return _DepartmentData; } }
-
-        private DataTable _CustomerAttributes = null;
-        public DataTable CustomerAttributes { get { return _CustomerAttributes; } }
-
-        private DataTable _Bank = null;
-        public DataTable Bank { get { return _Bank; } }
-
-        private DataTable _CommonDataDictType = null;
-        public DataTable CommonDataDictType { get { return _CommonDataDictType; } }
-
-        private DataTable _Location = null;
-        public DataTable Location { get { return _Location; } }
-
-        private DataTable commonHireType = null;
         /// <summary>
-        /// 订车类型
+        /// 所有字典
         /// </summary>
-        public DataTable CommonHireType
+        public ObservableCollection<tb_CommonDataDict> AllDataDicts { get; set; }
+
+        /// <summary>
+        /// 营业咒
+        /// </summary>
+        public ObservableCollection<tb_Person> Person
         {
-            get
-            {
-                if (commonHireType == null)
-                {
-                    commonHireType = (from q in DataDictCache.Instance.CommonDataDictOther.AsEnumerable() where q.Field<int>("DataType") == 6 select q).CopyToDataTable();
-                }
-                return commonHireType;
-            }
+            get; set;
         }
 
-        private DataTable commonVehicleType = null;
-        /// <summary>
-        /// 车辆性质
-        /// </summary>
-        public DataTable CommonVehicleType
-        {
-            get
-            {
-                if (commonVehicleType == null)
-                {
-                    commonVehicleType = (from q in DataDictCache.Instance.CommonDataDictOther.AsEnumerable() where q.Field<int>("DataType") == 7 select q).CopyToDataTable();
-                }
-                return commonVehicleType;
-            }
-        }
 
-        private DataTable commonOrderStatus = null;
-        /// <summary>
-        /// 订单状态
-        /// </summary>
-        public DataTable CommonOrderStatus
-        {
-            get
-            {
-                if (commonOrderStatus == null)
-                {
-                    commonOrderStatus = (from q in DataDictCache.Instance.CommonDataDictOther.AsEnumerable() where q.Field<int>("DataType") == 9 select q).CopyToDataTable();
-                }
-                return commonOrderStatus;
-            }
-        }
-        /// <summary>
-        /// 除了银行、部门之外的所有数据字典信息 2015.6.24 陈刚 增加
-        /// </summary>
-        public DataTable CommonDataDictOther { get; set; }
 
         /// <summary>
-        /// 司机信息
+        /// 所有的字典类型
         /// </summary>
-        public DataTable CommonDataDictDriversInfo { get; set; }
+        private ObservableCollection<tb_CommDataDictType> CommonDataDictType { get; set; }
+
 
         /// <summary>
-        /// 车辆信息
+        /// 所有的按钮
         /// </summary>
-        public DataTable CommonDataVehicleInfo { get; set; }
-
-        /// <summary>
-        /// 客户资料
-        /// </summary>
-        public DataTable CommonDataCustomer { get; set; }
-
-        /// <summary>
-        /// 司机与负责车辆关系
-        /// </summary>
-        public DataTable CommonDataDriversVehicleRelation { get; set; }
+        public ObservableCollection<tb_MyAuthorityItem> AuthorityItems { get; set; }
         #endregion
 
         //下载刷新缓存
         public void DownloadBaseCacheData()
         {
-               }
-
-        /// <summary>
-        /// 跟据表名取数据表实例
-        /// </summary>
-        /// <param name="tableName">字典表名</param>
-        /// <returns></returns>
-        private DataTable GetCacheTableData(string tableName)
-        {
-            foreach (DataTable dt in _AllDataDicts.Tables)
-            {
-                if (dt.TableName.ToUpper() == tableName.ToUpper()) return dt;
-            }
-
-            DataTable cache = null;
-            //if (tableName == TblCommDataDictType.__TableName) cache = _CommonDataDictType;            
-            return cache;
         }
 
-        /// <summary>
-        ///删除字典数据某一行数据
-        /// </summary>
-        /// <param name="tableName">字典表名</param>
-        /// <param name="keyField">主键</param>
-        /// <param name="key">主键值</param>
-        public void DeleteCacheRow(string tableName, string keyField, string key)
-        {
-            DataTable cach = this.GetCacheTableData(tableName);
-            if (cach != null)
-            {
-                DataRow[] rows = cach.Select(keyField + "='" + key + "'");
-                if (rows.Length > 0)
-                    cach.Rows.Remove(rows[0]);
-                cach.AcceptChanges();
-            }
-        }
     }
 }

@@ -8,14 +8,8 @@ namespace Metro.DynamicModeules.Common.DEncrypt
 	/// Encrypt 的摘要说明。
     /// Copyright (C) PCL
 	/// </summary>
-	public class DEncrypt
-	{
-		/// <summary>
-		/// 构造方法
-		/// </summary>
-		public DEncrypt()  
-		{  
-		} 
+	public class DEncrypts
+	{	
 
 		#region 使用 缺省密钥字符串 加密/解密string
 

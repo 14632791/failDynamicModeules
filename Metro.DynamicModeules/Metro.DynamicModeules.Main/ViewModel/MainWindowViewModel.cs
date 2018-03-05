@@ -30,8 +30,8 @@ namespace Metro.DynamicModeules.Main.ViewModel
         {
             this.Title = "Flyout Binding Test";
             _dialogCoordinator = dialogCoordinator;
-           // SampleData.Seed();
-           
+            // SampleData.Seed();
+
             // create accent color menu items for the demo
             this.AccentColors = ThemeManager.Accents
                                             .Select(a => new AccentColorMenuData() { Name = a.Name, ColorBrush = a.Resources["AccentColorBrush"] as Brush })
@@ -59,7 +59,7 @@ namespace Metro.DynamicModeules.Main.ViewModel
 
             try
             {
-                HotkeyManager.Current.AddOrReplace("demo", HotKey.Key, HotKey.ModifierKeys,async (sender, e) =>await OnHotKey(sender, e));
+                HotkeyManager.Current.AddOrReplace("demo", HotKey.Key, HotKey.ModifierKeys, async (sender, e) => await OnHotKey(sender, e));
             }
             catch (HotkeyAlreadyRegisteredException exception)
             {
@@ -422,7 +422,7 @@ namespace Metro.DynamicModeules.Main.ViewModel
         }
 
 
-       // private ICommand showCustomDialogCommand;
+        // private ICommand showCustomDialogCommand;
 
         //public ICommand ShowCustomDialogCommand
         //{
@@ -511,7 +511,7 @@ namespace Metro.DynamicModeules.Main.ViewModel
                     _hotKey = value;
                     if (_hotKey != null && _hotKey.Key != Key.None)
                     {
-                        HotkeyManager.Current.AddOrReplace("demo", HotKey.Key, HotKey.ModifierKeys,async (sender, e) =>await OnHotKey(sender, e));
+                        HotkeyManager.Current.AddOrReplace("demo", HotKey.Key, HotKey.ModifierKeys, async (sender, e) => await OnHotKey(sender, e));
                     }
                     else
                     {
@@ -575,6 +575,16 @@ namespace Metro.DynamicModeules.Main.ViewModel
             ThemeManager.ChangeAppStyle(Application.Current, accent, theme.Item1);
         }
     }
+
+
+
+
+    #region 扩展
+
+
+    #endregion
+
+
 
     public class AppThemeMenuData : AccentColorMenuData
     {

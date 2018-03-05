@@ -112,19 +112,7 @@ namespace Metro.DynamicModeules.BLL
             _TargetFormName = targetFormName;
             _TargetFormMenuName = "menuItemStockOut";
             _ItemCaption = "由入库单(IN)->生成出库(IO)";
-        }
-
-        // 由销售报价单生成销售发票
-      
-
-        //检查来源单号是否存在
-        //public override bool IsDocNoExists(string DocNo)
-        //{
-        //    if (_IsDocNoRequired)
-        //        return new BllIN().CheckNoExists(DocNo);
-        //    else
-        //        return false;
-        //}
+        }        
     }
 
     #endregion

@@ -11,26 +11,9 @@ namespace Metro.DynamicModeules.Models.ViewModel
     /// <summary>
     /// 菜单要binding的实体
     /// </summary>
-    public class MenuModel : NotifyPropertyChanged
+    public class MenuModel : tb_MyMenu
     {
-        string _name;
-        /// <summary>
-        /// 名称
-        /// </summary>
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-            set
-            {
-                if (Equals(_name, value)) return;
-                _name = value;
-                RaisePropertyChanged("Name");
-            }
-        }
-
+       
         object _icon;
         /// <summary>
         /// 图标

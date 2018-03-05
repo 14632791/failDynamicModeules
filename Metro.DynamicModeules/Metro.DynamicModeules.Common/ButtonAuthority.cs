@@ -169,7 +169,7 @@ namespace Metro.DynamicModeules.Common
             ButtonAuthority.SHOW_VER_HISTORY;
 
         /// <summary>
-        /// 数据字典拥有的功能
+        /// 数据字典拥有的权限
         /// </summary>
         public const int MASTER_ACTION = DATA_ACTION_VALUE + REPORT_ACTION_VALUE;
 

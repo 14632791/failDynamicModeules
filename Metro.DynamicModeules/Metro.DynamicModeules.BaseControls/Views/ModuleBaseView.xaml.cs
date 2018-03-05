@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Metro.DynamicModeules.Models.ViewModel;
+using System.Collections.ObjectModel;
 
 namespace Metro.DynamicModeules.BaseControls.Views
 {
@@ -26,6 +28,9 @@ namespace Metro.DynamicModeules.BaseControls.Views
         }
 
         public DynamicModeules.Models.sys_Modules Module { get; set; }
+        public ObservableCollection<MenuModel> Menus { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Control Container { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public object Icon { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public Control GetContainer()
         {

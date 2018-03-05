@@ -43,14 +43,14 @@ namespace Metro.DynamicModeules.Main.ViewModel
             ////}
 
             SimpleIoc.Default.Register<LoginViewModel>();
-            SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<MainWindowViewModel>();
         }
 
-        public MainViewModel Main
+        public MainWindowViewModel Main
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
+                return ServiceLocator.Current.GetInstance<MainWindowViewModel>();
             }
         }
         public LoginViewModel Login

@@ -14,7 +14,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
-                <!--<ResourceDictionary Source="pack://application:,,,/Metro.DynamicModeules.BaseControls;component/Themes/Expander.xaml"/>-->
+                <ResourceDictionary Source="pack://application:,,,/Metro.DynamicModeules.BaseControls;component/Themes/Generic.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <Ellipse x:Key="AppThemeMenuIcon"
@@ -174,40 +174,7 @@
             </Grid.ColumnDefinitions>
 
             <GroupBox>
-                <StackPanel Orientation="Horizontal">
-                    <Button Margin="5"  ToolTip="Add" >
-                        <StackPanel Orientation="Horizontal">
-                            <iconPacks:PackIconModern Margin="5"
-                                              Kind="Close" />
-                            <TextBlock Text="关闭" VerticalAlignment="Center" FontSize="15"/>
-                        </StackPanel>
-                    </Button>
-                    <Button Margin="5"  Width="28" Height="28" ToolTip="Save"  Style="{DynamicResource ButtonStyleKey}">
-                        <iconPacks:PackIconModern Width="20"
-                                              Height="20"
-                                              Kind="Save" />
-                    </Button>
-                    <Button Margin="5"  Width="28" Height="28"  ToolTip="删除" Style="{DynamicResource ButtonStyleKey}">
-                        <iconPacks:PackIconModern Width="20"
-                                              Height="20"
-                                              Kind="Delete" />
-                    </Button>
-                    <Button 
-			ToolBar.OverflowMode="AsNeeded"
-			ToolTip="Copy that stuff">
-                        <iconPacks:PackIconModern Width="20"
-                                              Height="20"
-                                              Kind="PageCopy" />
-                    </Button>
-                    <Button
-			Command="Paste"
-			ToolBar.OverflowMode="AsNeeded" 
-			ToolTip="Paste some stuff">
-                        <iconPacks:PackIconModern Width="20"
-                                              Height="20"
-                                              Kind="AppFavorite" />
-                    </Button>
-                </StackPanel>
+                <ItemsControl Style="{StaticResource HeaderItemsStyle}"/>
             </GroupBox>
             <Controls:MetroAnimatedTabControl Grid.Row="1" Margin="3"
               Controls:TabControlHelper.Underlined="TabPanel"                                TabStripPlacement="Top">

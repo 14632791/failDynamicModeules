@@ -7,22 +7,24 @@ namespace Metro.DynamicModeules.Models
     [Table("tb_PayType")]
     public partial class tb_PayType : INotifyPropertyChanged
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("isid")]
-        public int isid
-        {
-            get
-            {
-                return _isid;
-            }
-            set
-            {
-                if (Equals(_isid, value)) return;
-                _isid = value;
-                RaisePropertyChanged("isid");
-            }
-        }
-        private int _isid;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[Column("isid")]
+        //public int isid
+        //{
+        //    get
+        //    {
+        //        return _isid;
+        //    }
+        //    set
+        //    {
+        //        if (Equals(_isid, value)) return;
+        //        _isid = value;
+        //        RaisePropertyChanged("isid");
+        //    }
+        //}
+        //private int _isid;
+
+
         [Column("PayType")]
         [Key]
         [StringLength(10)]

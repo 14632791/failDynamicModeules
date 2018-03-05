@@ -3,4 +3,21 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Metro.DynamicModeules.BaseControls;component/Styles/GridNavigation.xaml"/>
     </ResourceDictionary.MergedDictionaries>
+    <Style x:Key="HeaderItemsStyle" TargetType="{x:Type ItemsControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ItemsControl}">
+                    <WrapPanel Orientation="Horizontal">
+                        <Button Margin="5"  ToolTip="Add" BorderThickness="0">
+                            <StackPanel Orientation="Horizontal">
+                                <ContentPresenter/>
+                                <TextBlock Text="关闭" VerticalAlignment="Center" FontSize="15"/>
+                            </StackPanel>
+                        </Button>
+                        </WrapPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

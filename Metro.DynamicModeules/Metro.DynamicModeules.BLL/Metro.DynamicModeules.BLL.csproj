@@ -124,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\BllBase.cs" />
+    <Compile Include="Base\WebRequestHelper.cs" />
     <Compile Include="DataDict\BllCommonDataDict.cs" />
     <Compile Include="DataDict\BllCompanyInfo.cs" />
     <Compile Include="DataDict\BllCustomer.cs" />
@@ -143,7 +144,6 @@
     <Compile Include="Security\BllUser.cs" />
     <Compile Include="DataDictCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security\WebRequestHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\DynamicWebApi\Metro.DynamicModeules.WebApi\Metro.DynamicModeules.Interface\Metro.DynamicModeules.Interface.csproj">

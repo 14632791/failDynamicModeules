@@ -1,15 +1,14 @@
-﻿using Metro.DynamicModeules.Common;
-using Metro.DynamicModeules.Common.DEncrypt;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Metro.DynamicModeules.Common.DEncrypt;
+using Metro.DynamicModeules.Common;
 
-namespace Metro.DynamicModeules.BLL.Security
+namespace Metro.DynamicModeules.BLL.Base
 {
     internal class WebRequestHelper
     {
@@ -183,7 +182,7 @@ namespace Metro.DynamicModeules.BLL.Security
         private static string SignRequest(string id, string name)
         {
             string unSign = Token + id + name + Token;
-            return DEncrypt.Get32Md5Str(unSign).ToUpper();
+            return DEncrypts.Get32Md5Str(unSign).ToUpper();
         }
     }
 }
