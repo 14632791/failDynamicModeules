@@ -1,16 +1,19 @@
-﻿using MahApps.Metro;
+﻿using GalaSoft.MvvmLight;
+using MahApps.Metro;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Metro.DynamicModeules.BaseControls.Commands;
+using Metro.DynamicModeules.BaseControls.ViewModel;
+using Metro.DynamicModeules.Models;
 using NHotkey;
 using NHotkey.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,7 +23,7 @@ using System.Windows.Media;
 
 namespace Metro.DynamicModeules.Main.ViewModel
 {
-    public class MainWindowViewModel : INotifyPropertyChanged, IDataErrorInfo, IDisposable
+    public class MainWindowViewModel : ViewModelBase, IDataErrorInfo, IDisposable
     {
         private readonly IDialogCoordinator _dialogCoordinator;
         int? _integerGreater10Property;
@@ -262,19 +265,7 @@ namespace Metro.DynamicModeules.Main.ViewModel
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Raises the PropertyChanged event if needed.
-        /// </summary>
-        /// <param name="propertyName">The name of the property that changed.</param>
-        protected virtual void RaisePropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
+      
 
         public string this[string columnName]
         {
@@ -558,18 +549,57 @@ namespace Metro.DynamicModeules.Main.ViewModel
 
         #region 上方的按钮列表
 
-
+        ObservableCollection<tb_MyAuthorityItem> _buttons;
+        public ObservableCollection<tb_MyAuthorityItem> Buttons
+        {
+            get
+            {
+                return _buttons;
+            }
+            set
+            {
+                _buttons = value;
+                RaisePropertyChanged(() => Buttons);
+            }
+        }
         #endregion
 
         #region 左则的模块列表
 
+        ObservableCollection<ModuleBaseViewModel> _modules;
+        public ObservableCollection<ModuleBaseViewModel> Modules
+        {
+            get
+            {
+                return _modules;
+            }
+            set
+            {
+                _modules = value;
+                RaisePropertyChanged(() => Modules);
+            }
+        }
+
         #endregion
 
         #region 右下方的tabItems列表
-
+        ObservableCollection<UserControl> _tabPages;
+        public ObservableCollection<UserControl> TabPages
+        {
+            get
+            {
+                return _tabPages;
+            }
+            set
+            {
+                _tabPages = value;
+                RaisePropertyChanged(() => TabPages);
+            }
+        }
         #endregion
 
     }
+    #region 其它类定义
 
     public class AccentColorMenuData
     {
@@ -602,4 +632,6 @@ namespace Metro.DynamicModeules.Main.ViewModel
             ThemeManager.ChangeAppStyle(Application.Current, theme.Item2, appTheme);
         }
     }
+
+    #endregion
 }

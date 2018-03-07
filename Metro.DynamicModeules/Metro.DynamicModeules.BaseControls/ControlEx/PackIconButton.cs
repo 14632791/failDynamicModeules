@@ -7,13 +7,14 @@ using System.Windows.Controls;
 using MahApps.Metro.IconPacks;
 using System.Windows.Input;
 using System.Windows;
+using Metro.DynamicModeules.Models;
 
 namespace Metro.DynamicModeules.BaseControls.ControlEx
 {
     /// <summary>
     /// 带权限值的icon button
     /// </summary>
-    public class PackIconButton : Button, IButtonInfo
+    public class PackIconButton : Button
     {
         static PackIconButton()
         {
@@ -21,20 +22,7 @@ namespace Metro.DynamicModeules.BaseControls.ControlEx
                new FrameworkPropertyMetadata(typeof(PackIconButton)));
         }
 
-        /// <summary>
-        /// 标题
-        /// </summary>
-        public string Caption
-        {
-            get { return (string)GetValue(CaptionProperty); }
-            set { SetValue(CaptionProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for Caption.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty CaptionProperty =
-            DependencyProperty.Register("Caption", typeof(string), typeof(PackIconButton), new PropertyMetadata(""));
-
-
+      
         /// <summary>
         /// 排序
         /// </summary>
@@ -50,16 +38,9 @@ namespace Metro.DynamicModeules.BaseControls.ControlEx
 
 
       
-        public object Button { get; set; }
+        public tb_MyAuthorityItem Button { get; set; }
 
-        /// <summary>
-        /// 权限
-        /// </summary>
-        public int Authority
-        {
-            get;set;
-        }
-
+       
         public PackIconControl<object> Icon
         {
             get { return (PackIconControl<object>)GetValue(IconProperty); }

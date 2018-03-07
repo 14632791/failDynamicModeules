@@ -1,47 +1,33 @@
-﻿using MahApps.Metro.IconPacks;
-using Metro.DynamicModeules.BaseControls.ControlEx;
+﻿using GalaSoft.MvvmLight;
+using MahApps.Metro.IconPacks;
 using Metro.DynamicModeules.Interface.Sys;
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace Metro.DynamicModeules.BaseControls.Views
+namespace Metro.DynamicModeules.BaseControls.ViewModel
 {
-    /// <summary>
-    /// BaseChildView.xaml 的交互逻辑,子窗体基类
-    /// </summary>
-    public partial class BaseChildView : UserControl, IMdiChildWindow, IPurviewControllable, ISystemButtons
+    [Export(typeof(IMdiChildWindow))]
+    public partial class BaseChildViewModel : ViewModelBase,  IPurviewControllable, ISystemButtons
     {
-        public BaseChildView()
+        public BaseChildViewModel()
         {
-            InitializeComponent();
+            
         }
-
         /// <summary>
-        /// 父窗体的Toolbar组件
+        /// 按钮矢量图片类型
         /// </summary>
-        protected IToolbarRegister _toolbarRegister = null;
+        PackIconControl<object> Icon { get; set; }
+
 
         /// <summary>
         /// 初始化子窗体的按钮数组
         /// </summary>
         protected List<IButtonInfo> _buttons = new List<IButtonInfo>();
 
-        /// <summary>
-        /// 子窗体的观察者
-        /// </summary>
-        protected IList _observers = new ArrayList();
+
 
         /// <summary>
         /// 子窗体的系统按钮
@@ -144,19 +130,12 @@ namespace Metro.DynamicModeules.BaseControls.Views
 
         #region IMdiChildForm 接口实现
 
-        /// <summary>
-        /// 主窗体的Toolbar按钮注册器
-        /// </summary>
-        public IToolbarRegister ToolbarRegister
-        {
-            get { return _toolbarRegister; }
-            set { _toolbarRegister = value; }
-        }
+        
 
-        public virtual void RegisterToolBar(IToolbarRegister toolBarRegister)
+        public virtual void RegisterToolBar( )
         {
             //this.Buttons是当前窗体的按钮数组。
-            toolBarRegister.RegisteButton(this.Buttons.ToList());
+            //toolBarRegister.RegisteButton(this.Buttons.ToList());
         }
 
         /// <summary>
@@ -169,19 +148,20 @@ namespace Metro.DynamicModeules.BaseControls.Views
         /// </summary>        
         public void RegisterObserver(IObserver[] observers)
         {
-            foreach (IObserver o in observers) _observers.Add(o);
+            //foreach (IObserver o in observers) _observers.Add(o);
         }
 
         /// <summary>
         /// 子窗体的按钮数组
         /// </summary>
         public List<IButtonInfo> Buttons { get { return _buttons; } }
-        
+
 
         public int ChildAuthorities
         {
             get; set;
         }
+
         public string MenuName
         {
             get; set;
@@ -203,10 +183,10 @@ namespace Metro.DynamicModeules.BaseControls.Views
         {
             if (_systemButtons == null)
             {
-                _systemButtons.Add(this.ToolbarRegister.CreateButton("btnHelp", "帮助",
-                    PackIconModernKind.BookPerspectiveHelp, new Size(57, 28), this.DoHelp));
-                _systemButtons.Add(this.ToolbarRegister.CreateButton("btnClose", "关闭(F7)",
-                   PackIconModernKind.WindowClosed, new Size(57, 28), this.DoClose));
+                //_systemButtons.Add(this.ToolbarRegister.CreateButton("btnHelp", "帮助",
+                //    PackIconModernKind.BookPerspectiveHelp, new Size(57, 28), this.DoHelp));
+                //_systemButtons.Add(this.ToolbarRegister.CreateButton("btnClose", "关闭(F7)",
+                //   PackIconModernKind.WindowClosed, new Size(57, 28), this.DoClose));
             }
             return _systemButtons;
         }
@@ -227,14 +207,14 @@ namespace Metro.DynamicModeules.BaseControls.Views
         //通过Form Activated事件可以看到主窗体的ToolBar状态变化。
         private void FrmBaseChild_Activated(object sender, EventArgs e)
         {
-            this.RegisterToolBar(this.ToolbarRegister);
+            //this.RegisterToolBar(this.ToolbarRegister);
             this.NotifyObserver(); //通过其它观察者
         }
 
         //通知观察者进行更新
         private void NotifyObserver()
         {
-            foreach (IObserver o in _observers) if (o != null) o.Notify();
+            //foreach (IObserver o in _observers) if (o != null) o.Notify();
         }
     }
 }

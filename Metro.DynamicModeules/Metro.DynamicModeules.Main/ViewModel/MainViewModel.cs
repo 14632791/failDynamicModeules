@@ -1,6 +1,6 @@
 using GalaSoft.MvvmLight;
 
-namespace Metro.DynamicModeules.Core.ViewModel
+namespace Metro.DynamicModeules.Main.ViewModel
 {
     /// <summary>
     /// This class contains properties that the main View can data bind to.

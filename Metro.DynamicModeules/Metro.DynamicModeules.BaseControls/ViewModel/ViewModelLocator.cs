@@ -1,7 +1,7 @@
 /*
   In App.xaml:
   <Application.Resources>
-      <vm:ViewModelLocator xmlns:vm="clr-namespace:Metro.DynamicModeules.Main"
+      <vm:ViewModelLocator xmlns:vm="clr-namespace:Metro.DynamicModeules.BaseControls"
                            x:Key="Locator" />
   </Application.Resources>
   
@@ -12,11 +12,10 @@
   See http://www.galasoft.ch/mvvm
 */
 
-using GalaSoft.MvvmLight;
+using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
-using Microsoft.Practices.ServiceLocation;
 
-namespace Metro.DynamicModeules.Main.ViewModel
+namespace Metro.DynamicModeules.BaseControls.ViewModel
 {
     /// <summary>
     /// This class contains static references to all the view models in the
@@ -29,7 +28,7 @@ namespace Metro.DynamicModeules.Main.ViewModel
         /// </summary>
         public ViewModelLocator()
         {
-           // ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             ////if (ViewModelBase.IsInDesignModeStatic)
             ////{
@@ -42,16 +41,16 @@ namespace Metro.DynamicModeules.Main.ViewModel
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
 
-            SimpleIoc.Default.Register<MainViewModel>();
+            //SimpleIoc.Default.Register<MainViewModel>();
         }
 
-        public MainViewModel Main
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
-            }
-        }
+        //public MainViewModel Main
+        //{
+        //    get
+        //    {
+        //        return ServiceLocator.Current.GetInstance<MainViewModel>();
+        //    }
+        //}
         
         public static void Cleanup()
         {

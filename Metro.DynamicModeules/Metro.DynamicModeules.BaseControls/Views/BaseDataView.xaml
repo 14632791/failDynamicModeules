@@ -19,14 +19,17 @@
         <controlEx:FlipPanel Grid.ColumnSpan="2" BorderBrush="DarkOrange" BorderThickness="3" IsFlipped="False"
          CornerRadius="4" Margin="10">
             <controlEx:FlipPanel.FrontContent>
-                <DataGrid >
-                    <DataGrid.Columns>
+                <DataGrid Columns="{Binding Columns}">
+                    <!--<DataGrid.Columns>
                         <DataGridCheckBoxColumn Header="选择"/>
-                    </DataGrid.Columns>
+                        <DataGridTextColumn Header="XXX"/>
+                    </DataGrid.Columns>-->
                 </DataGrid>
             </controlEx:FlipPanel.FrontContent>
             <controlEx:FlipPanel.BackContent>
-                <Grid></Grid>
+                <Grid>
+                    <TextBlock Text="demo"/>
+                </Grid>
             </controlEx:FlipPanel.BackContent>
         </controlEx:FlipPanel>
        

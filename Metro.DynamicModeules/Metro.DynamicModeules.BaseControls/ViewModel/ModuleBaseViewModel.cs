@@ -1,24 +1,23 @@
-﻿using Metro.DynamicModeules.Interface.Sys;
+﻿using GalaSoft.MvvmLight;
+using Metro.DynamicModeules.BaseControls.Models;
+using Metro.DynamicModeules.Interface.Sys;
 using Metro.DynamicModeules.Models;
-using Metro.DynamicModeules.Models.ViewModel;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Windows.Controls;
 
-namespace Metro.DynamicModeules.Core
+namespace Metro.DynamicModeules.BaseControls.ViewModel
 {
     /// <summary>
-    /// 模块主窗体
+    /// ModuleBaseView.xaml 的交互逻辑
     /// </summary>
     [Export(typeof(IModuleBase))]
-    public abstract class ModuleBase : IModuleBase
+    public class ModuleBaseViewModel : ViewModelBase,IModuleBase
     {
-        public ModuleBase()
+        public ModuleBaseViewModel()
         {
-            Initialize();
             InitMenu();
             InitButton();
         }
@@ -28,10 +27,16 @@ namespace Metro.DynamicModeules.Core
         /// 子窗口插件
         /// </summary>
         [ImportMany(typeof(IMdiChildWindow), AllowRecomposition = true)]
-        public List<Lazy<IMdiChildWindow>> SubModuleList { get; private set; }
-        public ObservableCollection<MenuModel> Menus { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Control Container { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public object Icon { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public ObservableCollection<Lazy<IMdiChildWindow>> SubModuleList { get; private set; }
+        public ObservableCollection<MenuModel> Menus
+        {
+            get; set;
+        }
+        public Control Container { get; set; }
+        public object Icon
+        {
+            get; set;
+        }
 
         public Control GetContainer()
         {
@@ -43,14 +48,16 @@ namespace Metro.DynamicModeules.Core
             throw new NotImplementedException();
         }
 
-        public  void InitButton()
+        public void InitButton()
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// 初始化子菜单
+        /// </summary>
         public void Initialize()
         {
-            SubModuleList = new List<Lazy<IMdiChildWindow>>();
+            SubModuleList = new ObservableCollection<Lazy<IMdiChildWindow>>();
             AggregateCatalog aggregateCatalog = new AggregateCatalog();
             AssemblyCatalog assemblyCatalog = new AssemblyCatalog(typeof(IMdiChildWindow).Assembly);
             aggregateCatalog.Catalogs.Add(assemblyCatalog);
@@ -68,6 +75,4 @@ namespace Metro.DynamicModeules.Core
             throw new NotImplementedException();
         }
     }
-    
-    
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Metro.DynamicModeules.Main"
         mc:Ignorable="d"
-                      xmlns:view="clr-namespace:Metro.DynamicModeules.Main.Views"
+        xmlns:view="clr-namespace:Metro.DynamicModeules.Main.Views"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
@@ -174,14 +174,14 @@
             </Grid.ColumnDefinitions>
 
             <GroupBox>
-                <ItemsControl Style="{StaticResource HeaderItemsStyle}"/>
+                <ItemsControl Style="{StaticResource HeaderItemsStyle}" ItemsSource="{Binding Buttons}"/>
             </GroupBox>
             <Controls:MetroAnimatedTabControl Grid.Row="1" Margin="3"
               Controls:TabControlHelper.Underlined="TabPanel"                    
                                               TabStripPlacement="Top">
 
                 <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="20"
-                                               CloseButtonEnabled="False"
+                                               CloseButtonEnabled="False" 
                                               Header="首页">
                     <view:RootTilesView/>
                 </Controls:MetroTabItem>

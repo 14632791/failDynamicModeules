@@ -1,11 +1,12 @@
-﻿using Metro.DynamicModeules.Core;
+﻿using Metro.DynamicModeules.BaseControls.ViewModel;
+using Metro.DynamicModeules.Core;
 using Metro.DynamicModeules.Models;
 using System.ComponentModel.Composition;
 
 namespace WpfCustomLibDemo1
 {
-    [Export(typeof(ModuleBase))]
-    public class MyPlugin1 : ModuleBase
+    [Export(typeof(ModuleBaseViewModel))]
+    public class MyPlugin1 : ModuleBaseViewModel
     {
         public sys_Modules ModulesInfo { get; set; } = new sys_Modules
         {

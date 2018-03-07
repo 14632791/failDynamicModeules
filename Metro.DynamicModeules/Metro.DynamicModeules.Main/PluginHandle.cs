@@ -1,16 +1,12 @@
-﻿using Metro.DynamicModeules.Interface.Sys;
-using Metro.DynamicModeules.Models;
+﻿using Metro.DynamicModeules.BaseControls.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.Linq;
-using System.Text;
-using System.Windows.Controls;
 
-namespace Metro.DynamicModeules.Core
+namespace Metro.DynamicModeules.Main
 {
-    
+
     /// <summary>
     /// 模块级插件管理
     /// </summary>
@@ -52,8 +48,8 @@ namespace Metro.DynamicModeules.Core
         /// <summary>
         /// 存储所有主模块的插件
         /// </summary>
-        [ImportMany(typeof(ModuleBase), AllowRecomposition = true)]
-        public List<Lazy<ModuleBase>> PluginList { get; set; }
+        [ImportMany(typeof(ModuleBaseViewModel), AllowRecomposition = true)]
+        public List<Lazy<ModuleBaseViewModel>> PluginList { get; set; }
 
         /// <summary>
         /// 存储插件容器
@@ -67,7 +63,7 @@ namespace Metro.DynamicModeules.Core
         {
             try
             {
-                PluginList = new List<Lazy<ModuleBase>>();
+                PluginList = new List<Lazy<ModuleBaseViewModel>>();
                 catalog = new AggregateCatalog();
                 //添加插件容器中的导出项目录
                 catalog.Catalogs.Add(new AssemblyCatalog(System.Reflection.Assembly.GetEntryAssembly()));
@@ -90,7 +86,7 @@ namespace Metro.DynamicModeules.Core
 
         public void Exec(string name)
         {
-            foreach (Lazy<ModuleBase> plugin in PluginList)
+            foreach (Lazy<ModuleBaseViewModel> plugin in PluginList)
             {
                 plugin.Value.Initialize();
             }
