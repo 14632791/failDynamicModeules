@@ -14,7 +14,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     ///每个模块中唯一的主窗体类
     /// </summary>
     [Export(typeof(IModuleBase))]
-    public class ModuleBaseViewModel : ViewModelBase,IModuleBase
+    public class ModuleBaseViewModel : BaseChildViewModel, IModuleBase
     {
         public ModuleBaseViewModel()
         {

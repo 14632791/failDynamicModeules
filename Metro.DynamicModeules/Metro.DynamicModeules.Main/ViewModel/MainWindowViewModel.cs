@@ -583,8 +583,8 @@ namespace Metro.DynamicModeules.Main.ViewModel
         #endregion
 
         #region 右下方的tabItems列表
-        ObservableCollection<UserControl> _tabPages;
-        public ObservableCollection<UserControl> TabPages
+        ObservableCollection<BaseChildViewModel> _tabPages;
+        public ObservableCollection<BaseChildViewModel> TabPages
         {
             get
             {
@@ -597,7 +597,22 @@ namespace Metro.DynamicModeules.Main.ViewModel
             }
         }
         #endregion
-
+        /// <summary>
+        /// 当前选中的page
+        /// </summary>
+        BaseChildViewModel _activatePage;
+        public BaseChildViewModel ActivatePage
+        {
+            get
+            {
+                return _activatePage;
+            }
+            set
+            {
+                _activatePage = value;
+                RaisePropertyChanged(() => ActivetePage);
+            }
+        }
     }
     #region 其它类定义
 

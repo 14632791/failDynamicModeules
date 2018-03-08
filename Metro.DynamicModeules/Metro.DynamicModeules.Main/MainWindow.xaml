@@ -53,7 +53,7 @@
                                 <Setter.Value>
                                     <ControlTemplate>
                                         <Expander Header="{Binding Module.ModuleName}" >
-                                            <ListBox Margin="1" ItemsSource="{Binding LeftSubModuleStyle}" Style="{StaticResource ListBoxItemStyle}"
+                                            <ListBox Margin="1" ItemsSource="{Binding SubModuleList}" Style="{StaticResource LeftSubModuleStyle}"
                           BorderThickness="0">
                                             </ListBox>
                                         </Expander>
@@ -69,10 +69,10 @@
 
             <DataTemplate x:Key="RightTabControlItemTemplate">
                             <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="20"
-                                               CloseButtonEnabled="True" 
+                                               CloseButtonEnabled="True" Content="{Binding Owner}"
                                                CloseTabCommand="{Binding NeverCloseTabCommand}"
                                                CloseTabCommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}"
-                                               Header="can">
+                                               Header="{Binding MenuName}">
                                 
                             </Controls:MetroTabItem>
                         </DataTemplate>
@@ -195,7 +195,8 @@
                 </ItemsControl>
             </GroupBox>
 
-            <Controls:MetroAnimatedTabControl Grid.Column="1" Grid.Row="1" ItemTemplate="{StaticResource RightTabControlItemTemplate}">
+            <Controls:MetroAnimatedTabControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding TabPages}"
+                 SelectedItem="{Binding ActivatePage}"   ItemTemplate="{StaticResource RightTabControlItemTemplate}">
             </Controls:MetroAnimatedTabControl> 
 
         </Grid>

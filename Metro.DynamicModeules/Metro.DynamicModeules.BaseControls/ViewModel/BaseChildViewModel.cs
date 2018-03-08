@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls;
 
 namespace Metro.DynamicModeules.BaseControls.ViewModel
 {
@@ -19,9 +20,12 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <summary>
         /// 按钮矢量图片类型
         /// </summary>
-        PackIconControl<object> Icon { get; set; }
+      public  PackIconControl<object> Icon { get; set; }
 
-
+        /// <summary>
+        /// 应用的控件
+        /// </summary>
+        public Control Owner { get; set; }
         /// <summary>
         /// 初始化子窗体的按钮数组
         /// </summary>
@@ -166,8 +170,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             get; set;
         }
-        PackIconControl<object> IMdiChildWindow.Icon { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
+        
         /// <summary>
         /// 模板方法.初始化本窗体的按钮.
         ///  </summary>
