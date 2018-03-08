@@ -11,7 +11,7 @@ using System.Windows.Controls;
 namespace Metro.DynamicModeules.BaseControls.ViewModel
 {
     /// <summary>
-    /// ModuleBaseView.xaml 的交互逻辑
+    ///每个模块中唯一的主窗体类
     /// </summary>
     [Export(typeof(IModuleBase))]
     public class ModuleBaseViewModel : ViewModelBase,IModuleBase

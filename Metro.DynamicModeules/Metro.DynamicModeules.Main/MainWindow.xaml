@@ -9,14 +9,75 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+                      xmlns:controlEx="clr-namespace:Metro.DynamicModeules.BaseControls.ControlEx;assembly=Metro.DynamicModeules.BaseControls"
         Title="MainWindow" Height="800" Width="1024">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Metro.DynamicModeules.BaseControls;component/Themes/Generic.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
+            <!--module列表内部的子列表样式-->
+            <Style x:Key="LeftSubModuleStyle" TargetType="{x:Type ListBox}">
+                <Setter Property="ItemContainerStyle">
+                    <Setter.Value>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Margin" Value="2"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <Button>
+                                            <StackPanel Orientation="Horizontal">
+                                                <ContentPresenter Content="{Binding Icon}"/>
+                                                <TextBlock Text="{Binding FormMenuName}"/>
+                                            </StackPanel>
+                                        </Button>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+            <!--主窗体左则的module列表样式-->
+            <Style TargetType="{x:Type ListBox}" x:Key="LeftModuleStyle">
+                <Setter Property="SelectionMode" Value="Single"/>
+                <Setter Property="ItemContainerStyle">                    
+                    <Setter.Value>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Margin" Value="2"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Expander Header="{Binding Module.ModuleName}" >
+                                            <ListBox Margin="1" ItemsSource="{Binding LeftSubModuleStyle}" Style="{StaticResource ListBoxItemStyle}"
+                          BorderThickness="0">
+                                            </ListBox>
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>                       
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+            <!--右下方tabControl列表模板-->
 
+            <DataTemplate x:Key="RightTabControlItemTemplate">
+                            <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="20"
+                                               CloseButtonEnabled="True" 
+                                               CloseTabCommand="{Binding NeverCloseTabCommand}"
+                                               CloseTabCommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}"
+                                               Header="can">
+                                
+                            </Controls:MetroTabItem>
+                        </DataTemplate>
+                   
+            
             <Ellipse x:Key="AppThemeMenuIcon"
                      Width="16"
                      Height="16"
@@ -111,57 +172,8 @@
             </MenuItem>
         </Menu>
         <Line X1="0" Y1="0" Y2="0" X2="3000" Grid.Row="1" Grid.ColumnSpan="2"  Stroke="{DynamicResource AccentColorBrush}"/>
-        <Grid Margin="3,0" Grid.Row="1">
-            <ScrollViewer>
-                <StackPanel Margin="5 10 5 0" x:Name="sPanelRoot">
-                    <Expander Margin="5" Header="_Default TabControl" IsExpanded="True">
-                        <ListBox Margin="1"
-                          BorderThickness="0"
-                          SelectedIndex="0">
-                            <ListBoxItem>Test 1</ListBoxItem>
-                            <ListBoxItem>Test 2</ListBoxItem>
-                            <ListBoxItem>Test 3</ListBoxItem>
-                            <ListBoxItem>Test 4</ListBoxItem>
-                        </ListBox>
-                    </Expander>
 
-                    <Expander Margin="5"
-                      Header="_Generic theme TabControls"
-                      IsExpanded="True">
-                        <ListBox 
-                          BorderThickness="0"
-                          SelectedIndex="0" Style="{StaticResource VirtualisedMetroListBox}">
-                            <ListBoxItem>Test 1</ListBoxItem>
-                            <ListBoxItem>Test 2</ListBoxItem>
-                            <ListBoxItem>Test 3</ListBoxItem>
-                            <ListBoxItem>Test 4</ListBoxItem>
-                        </ListBox>
-
-                    </Expander>
-
-                    <Expander Margin="5"
-                      IsExpanded="True">
-                        <ListBox Margin="1"
-                          BorderThickness="0" Style="{StaticResource VirtualisedMetroListBox}">
-                            <ListBoxItem>Test 1</ListBoxItem>
-                            <ListBoxItem>Test 2</ListBoxItem>
-                            <ListBoxItem>Test 3</ListBoxItem>
-                            <ListBoxItem>Test 4</ListBoxItem>
-                        </ListBox>
-                        <Expander.HeaderTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Height="28" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                    <iconPacks:PackIconModern Width="20"
-                                              Height="20" Margin="5"
-                                              Kind="PageCopy" />
-                                    <TextBlock Text="测试模块" Margin="5"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </Expander.HeaderTemplate>
-                    </Expander>
-                </StackPanel>
-            </ScrollViewer>
-        </Grid>
+        <ListBox ItemsSource="{Binding Modules}"  Style="{StaticResource LeftModuleStyle}" Grid.Row="1"/>
         <GridSplitter HorizontalAlignment="Right" Grid.Row="1" Margin="0,1"
                       Grid.Column="0" Width="3"/>
         <Grid Grid.Column="1" Grid.Row="1" Margin="3,0">
@@ -174,49 +186,17 @@
             </Grid.ColumnDefinitions>
 
             <GroupBox>
-                <ItemsControl Style="{StaticResource HeaderItemsStyle}" ItemsSource="{Binding Buttons}"/>
+                <ItemsControl ItemsSource="{Binding Buttons}" >
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <controlEx:PackIconButton/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </GroupBox>
-            <Controls:MetroAnimatedTabControl Grid.Row="1" Margin="3"
-              Controls:TabControlHelper.Underlined="TabPanel"                    
-                                              TabStripPlacement="Top">
 
-                <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="20"
-                                               CloseButtonEnabled="False" 
-                                              Header="首页">
-                    <view:RootTilesView/>
-                </Controls:MetroTabItem>
-                <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="20"
-                                               CloseButtonEnabled="True"
-                                              Header="can">
-                    <TextBlock FontSize="30" Text="and ensure the command never closes" />
-                </Controls:MetroTabItem>
-                <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="24"
-                                               CloseButtonEnabled="True"
-                                               Header="have">
-                    <TextBlock FontSize="30" Text="More more content" />
-                </Controls:MetroTabItem>
-                <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="24"
-                                               CloseButtonEnabled="True"
-                                               Header="different">
-                    <TextBlock FontSize="30" Text="So much content!" />
-                </Controls:MetroTabItem>
-                <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="24"
-                                               CloseButtonEnabled="True"
-                                               Header="font">
-                    <TextBlock FontSize="30" Text="Content!" />
-                </Controls:MetroTabItem>
-                <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="24"
-                                               CloseButtonEnabled="True"
-                                               Header="sizes">
-                    <TextBlock FontSize="30" Text="This is not content (it is). This one won't close." />
-                </Controls:MetroTabItem>
-                <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="24"
-                                               CloseButtonEnabled="True"
-                                               Header="close button">
-                    <TextBlock FontSize="24" Text="The size of close button will be changed proportionately considering its header size." />
-                </Controls:MetroTabItem>
-            </Controls:MetroAnimatedTabControl>
-
+            <Controls:MetroAnimatedTabControl Grid.Column="1" Grid.Row="1" ItemTemplate="{StaticResource RightTabControlItemTemplate}">
+            </Controls:MetroAnimatedTabControl> 
 
         </Grid>
         <StatusBar Grid.Row="2" Grid.ColumnSpan="2">

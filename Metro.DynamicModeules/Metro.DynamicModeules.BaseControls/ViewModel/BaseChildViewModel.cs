@@ -10,7 +10,7 @@ using System.Text;
 namespace Metro.DynamicModeules.BaseControls.ViewModel
 {
     [Export(typeof(IMdiChildWindow))]
-    public partial class BaseChildViewModel : ViewModelBase,  IPurviewControllable, ISystemButtons
+    public class BaseChildViewModel : ViewModelBase, IMdiChildWindow, IPurviewControllable, ISystemButtons
     {
         public BaseChildViewModel()
         {
@@ -166,6 +166,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             get; set;
         }
+        PackIconControl<object> IMdiChildWindow.Icon { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         /// <summary>
         /// 模板方法.初始化本窗体的按钮.

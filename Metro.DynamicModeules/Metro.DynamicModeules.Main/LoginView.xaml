@@ -6,11 +6,20 @@
         xmlns:local="clr-namespace:Metro.DynamicModeules.Main" 
                       ShowMaxRestoreButton="False" 
                       ShowMinButton="False" 
-        mc:Ignorable="d" DataContext="{Binding Login,Source={StaticResource Locator}}"
+        mc:Ignorable="d" 
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="LoginView" Height="450" Width="500" >
+        xmlns:viewModel="clr-namespace:Metro.DynamicModeules.Main.ViewModel"
+        Height="450" Width="500" >
+    <Controls:MetroWindow.DataContext>
+        <viewModel:LoginViewModel/>
+    </Controls:MetroWindow.DataContext>
     <Controls:MetroWindow.Resources>
-        <Thickness x:Key="ControlMargin">5</Thickness>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/themes/metroheader.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Thickness x:Key="ControlMargin">5</Thickness>
+        </ResourceDictionary>
     </Controls:MetroWindow.Resources>
     <Grid >
         <Grid.Background>
@@ -64,11 +73,11 @@
                           Style="{DynamicResource MetroFlatToggleButton}" />-->
 
         </StackPanel>
-        <Controls:ProgressRing Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" 
+        <!--<Controls:ProgressRing Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" 
                               Grid.RowSpan="3" ToolTip="登录中，请稍等!"
                                HorizontalAlignment="Left"
                                Width="50" Margin="5,0,5,10"
-                              Name="pRingWaiting"    Visibility="Collapsed"     Height="50" />
+                              Name="pRingWaiting"    Visibility="Collapsed"     Height="50" />-->
         <TextBox TextWrapping="Wrap" Name="txtLoginInfo" BorderThickness="0"
                  Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="5" Margin="10" Background="Transparent"/>
     </Grid>

@@ -21,7 +21,6 @@ namespace Metro.DynamicModeules.BaseControls.ControlEx
             DefaultStyleKeyProperty.OverrideMetadata(typeof(PackIconButton),
                new FrameworkPropertyMetadata(typeof(PackIconButton)));
         }
-
       
         /// <summary>
         /// 排序
@@ -37,9 +36,19 @@ namespace Metro.DynamicModeules.BaseControls.ControlEx
             DependencyProperty.Register("Index", typeof(int), typeof(PackIconButton), new PropertyMetadata(0));
 
 
-      
-        public tb_MyAuthorityItem Button { get; set; }
 
+
+        public tb_MyAuthorityItem Button
+        {
+            get { return (tb_MyAuthorityItem)GetValue(ButtonProperty); }
+            set { SetValue(ButtonProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Button.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ButtonProperty =
+            DependencyProperty.Register("Button", typeof(tb_MyAuthorityItem), typeof(PackIconButton), new PropertyMetadata(null));
+
+               
        
         public PackIconControl<object> Icon
         {

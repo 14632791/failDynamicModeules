@@ -32,7 +32,7 @@ namespace Metro.DynamicModeules.Main
         {
             try
             {
-                pRingWaiting.Visibility = Visibility.Visible;
+                //pRingWaiting.Visibility = Visibility.Visible;
                 this.ShowLoginInfo("正在验证用户名及密码");
                 _userID = txtUser.Text;
                 _password = CEncoder.Encode(txtPwd.Password);/*常规加密*/
@@ -73,7 +73,7 @@ namespace Metro.DynamicModeules.Main
             finally
             {
                 //this.Cursor = Cursors.None;
-                pRingWaiting.Visibility = Visibility.Collapsed;
+                //pRingWaiting.Visibility = Visibility.Collapsed;
             }
         }
         private void ShowLoginInfo(string msg)

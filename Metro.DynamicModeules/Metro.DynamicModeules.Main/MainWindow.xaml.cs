@@ -125,8 +125,8 @@ namespace Metro.DynamicModeules.Main
         {
             foreach (var item in PluginHandle.Instance.PluginList)
             {
-                Expander expander = new Expander { Header = item.Value.Module.ModuleName };
-                sPanelRoot.Children.Add(expander);
+                //Expander expander = new Expander { Header = item.Value.Module.ModuleName };
+                //sPanelRoot.Children.Add(expander);
             }
         }
 
