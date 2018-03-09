@@ -141,8 +141,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="ViewModel\BaseChildViewModel.cs" />
-    <Compile Include="ViewModel\BaseDataViewModel.cs" />
+    <Compile Include="ViewModel\ChildBaseViewModel.cs" />
+    <Compile Include="ViewModel\DataChildBaseViewModel.cs" />
     <Compile Include="ViewModel\ModuleBaseViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

@@ -5,6 +5,7 @@ using Metro.DynamicModeules.Models;
 using Metro.DynamicModeules.Models.Sys;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
@@ -12,10 +13,13 @@ using System.Windows.Controls;
 
 namespace Metro.DynamicModeules.BaseControls.ViewModel
 {
-    [Export(typeof(IMdiChildWindow))]
-    public class BaseChildViewModel : ViewModelBase, IMdiChildWindow//, IPurviewControllable, ISystemButtons
+    /// <summary>
+    /// 模板子项的基类
+    /// </summary>
+    //[Export(typeof(IMdiChildWindow))]
+    public abstract class ChildBaseViewModel : ModuleBaseViewModel, IMdiChildWindow, ISystemButtons//IPurviewControllable
     {
-        public BaseChildViewModel()
+        public ChildBaseViewModel(Control owner):base( owner)
         {
             
         }
@@ -33,37 +37,48 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             set
             {
                 _subItem = value;
-
+                RaisePropertyChanged(() => SubItem);
             }
         }
-        /// <summary>
-        /// 按钮矢量图片类型
-        /// </summary>
-      public  PackIconControl<object> Icon { get; set; }
 
-        /// <summary>
-        /// 应用的控件
-        /// </summary>
-        public Control Owner { get; set; }
+        ObservableCollection<IButtonInfo> _buttons = new ObservableCollection<IButtonInfo>();
         /// <summary>
         /// 初始化子窗体的按钮数组
         /// </summary>
-        protected List<IButtonInfo> _buttons = new List<IButtonInfo>();
-        
+        public ObservableCollection<IButtonInfo> Buttons {
+            get
+            {
+                return _buttons;
+            }
+            set
+            {
+                _buttons = value;
+                RaisePropertyChanged(() => Buttons);
+            }
+        }
 
+        ObservableCollection<IButtonInfo> _systemButtons = new ObservableCollection<IButtonInfo>();
         /// <summary>
         /// 子窗体的系统按钮
         /// </summary>
-        protected List<IButtonInfo> _systemButtons = new List<IButtonInfo>();
-
-    
+        public ObservableCollection<IButtonInfo> SystemButtons
+        {
+            get
+            {
+                return _systemButtons;
+            }
+            set
+            {
+                _systemButtons = value;
+                RaisePropertyChanged(() => SystemButtons);
+            }
+        }
+            
 
 
         #region IPurviewControllable 接口实现
 
-        
-
-       
+               
 
         /// <summary>
         /// 派生类通过重写该虚方法自定义每个按钮可用状态
@@ -72,8 +87,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             return false;
         }
-
-       
+              
 
         /// <summary>
         /// 检查当前用户是否拥有本窗体的特定权限
@@ -88,23 +102,13 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <summary>
         /// 可以通过外部调用该方法重新设置按钮权限.
         /// </summary>
-        public virtual void SetButtonAuthority() { }
+        public abstract void SetButtonAuthority();
 
         #endregion
 
         #region IMdiChildForm 接口实现
-
         
-
-       
-
-        /// <summary>
-        /// 子窗体的按钮数组
-        /// </summary>
-        public List<IButtonInfo> Buttons { get { return _buttons; } }
-
-
-        
+                
         
         /// <summary>
         /// 模板方法.初始化本窗体的按钮.
@@ -112,7 +116,10 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         public virtual void InitButtons()
         {
             var bi = this.GetSystemButtons();
-            _buttons.AddRange(bi);
+            foreach (var item in bi)
+            {
+                _buttons.Add(item);
+            }
         }
 
         /// <summary>
@@ -120,14 +127,15 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>        
         public virtual List<IButtonInfo> GetSystemButtons()
         {
-            if (_systemButtons == null)
-            {
-                //_systemButtons.Add(this.ToolbarRegister.CreateButton("btnHelp", "帮助",
-                //    PackIconModernKind.BookPerspectiveHelp, new Size(57, 28), this.DoHelp));
-                //_systemButtons.Add(this.ToolbarRegister.CreateButton("btnClose", "关闭(F7)",
-                //   PackIconModernKind.WindowClosed, new Size(57, 28), this.DoClose));
-            }
-            return _systemButtons;
+            return new List<IButtonInfo>();
+            //if (SystemButtons == null)
+            //{
+            //    //_systemButtons.Add(this.ToolbarRegister.CreateButton("btnHelp", "帮助",
+            //    //    PackIconModernKind.BookPerspectiveHelp, new Size(57, 28), this.DoHelp));
+            //    //_systemButtons.Add(this.ToolbarRegister.CreateButton("btnClose", "关闭(F7)",
+            //    //   PackIconModernKind.WindowClosed, new Size(57, 28), this.DoClose));
+            //}
+            //return _systemButtons;
         }
 
         public virtual void DoHelp(IButtonInfo sender)
@@ -140,8 +148,13 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             //NotifyObserver();
         }
 
+        public override void InitMenu()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
-       
+
     }
 }

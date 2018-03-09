@@ -67,6 +67,6 @@ namespace Metro.DynamicModeules.BaseControls.ControlEx
         /// <summary>
         /// 要执行的方法
         /// </summary>
-        public ICommand ClickCommand { get; }
+        public ICommand ClickCommand { get; set; }
     }
 }

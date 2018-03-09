@@ -584,8 +584,8 @@ namespace Metro.DynamicModeules.Main.ViewModel
         #endregion
 
         #region 右下方的tabItems列表
-        ObservableCollection<BaseChildViewModel> _tabPages;
-        public ObservableCollection<BaseChildViewModel> TabPages
+        ObservableCollection<ChildBaseViewModel> _tabPages;
+        public ObservableCollection<ChildBaseViewModel> TabPages
         {
             get
             {
@@ -601,8 +601,8 @@ namespace Metro.DynamicModeules.Main.ViewModel
         /// <summary>
         /// 当前选中的page
         /// </summary>
-        BaseChildViewModel _activatePage;
-        public BaseChildViewModel ActivatePage
+        ChildBaseViewModel _activatePage;
+        public ChildBaseViewModel ActivatePage
         {
             get
             {

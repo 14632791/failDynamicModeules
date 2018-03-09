@@ -12,7 +12,11 @@ using Metro.DynamicModeules.Common;
 
 namespace Metro.DynamicModeules.BaseControls.ViewModel
 {
- public   class BaseDataViewModel<T>: BaseChildViewModel, IDataOperatable, IPrintableForm, ISummaryView<T>
+    /// <summary>
+    /// 带数据处理的子窗体viewModel
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+ public  abstract class DataChildBaseViewModel<T>: ChildBaseViewModel, IDataOperatable<T>, ISummaryView<T>, IPrintableForm
         where T:class,new()
     {
 
@@ -26,12 +30,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         protected Control _KeyEditor;
 
-        /// <summary>
-        /// 主表的数据表格对象,必须由派生类指定表格类型。
-        /// 因Dev DataGrid组件不可继承所以子类窗体Load的时候需要赋值.
-        /// </summary>
-        //protected Interface.Sys.ISummaryView<T> View;
-
+     
         /// <summary>
         /// 数据编辑页的主容器
         /// 因继承问题,需要在子类窗体Load的时候需要赋值
@@ -54,6 +53,10 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 是否允许用户操作数据
         /// </summary>
         protected bool _AllowDataOperate = true;
+
+        public DataChildBaseViewModel(Control owner) : base(owner)
+        {
+        }
 
 
 
@@ -132,9 +135,14 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
 
             List<IButtonInfo> dataButton = this.GetDataOperatableButtons();
             List<IButtonInfo> printButton = this.GetPrintableButtons();
-
-            this.Buttons.AddRange(dataButton);
-            this.Buttons.AddRange(printButton);
+            foreach (var item in dataButton)
+            {
+                this.Buttons.Add(item);
+            }
+            foreach (var item in printButton)
+            {
+                this.Buttons.Add(item);
+            }
         }
 
         /// <summary>        
@@ -143,7 +151,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         protected virtual void SetEditMode()
         {
-            foreach (IButtonInfo button in _buttons)
+            foreach (IButtonInfo button in Buttons)
             {
 
             }
@@ -248,7 +256,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 查看选中记录的数据
         /// </summary>
         /// <param name="sender"></param>
-        public virtual void DoViewContent(IButtonInfo sender)
+        public virtual void DoViewContent(T row)
         {
             this.ButtonStateChanged(_updateType);
         }
@@ -257,7 +265,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 新增记录
         /// </summary>
         /// <param name="sender"></param>
-        public virtual void DoAdd(IButtonInfo sender)
+        public virtual void DoAdd(T row)
         {
             this._updateType = UpdateType.Add;
             this.SetEditMode();
@@ -268,7 +276,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 修改数据
         /// </summary>
         /// <param name="sender"></param>
-        public virtual void DoEdit(IButtonInfo sender)
+        public virtual void DoEdit(T row)
         {
             this._updateType = UpdateType.Modify;
             this.SetEditMode();
@@ -279,7 +287,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 取消新增或修改
         /// </summary>
         /// <param name="sender"></param>
-        public virtual void DoCancel(IButtonInfo sender)
+        public virtual void DoCancel(T row)
         {
             try
             {
@@ -290,7 +298,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 if (_updateType == UpdateType.Add)
                     this.ShowSummaryPage(true);
                 else if (RowCount > 0)
-                    this.DoViewContent(sender);
+                    this.DoViewContent(row);
             }
             catch (Exception e)
             {
@@ -308,7 +316,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         //    DoSave(sender);
         //}
 
-        public virtual bool DoSave(IButtonInfo sender)
+        public virtual bool DoSave(T row)
         {
             this._updateType = UpdateType.None;
             this.SetViewMode();
@@ -320,7 +328,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 删除记录
         /// </summary>
         /// <param name="sender"></param>
-        public virtual bool DoDelete(IButtonInfo sender)
+        public virtual bool DoDelete(T row)
         {
             return true;
         }
@@ -512,13 +520,8 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 }
             }
         }
-
-        ObservableCollection<T> ISummaryView<T>.DataSource { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        ListCollectionView ISummaryView<T>.View => throw new NotImplementedException();
-
-        UpdateType IDataOperatable.UpdateType => throw new NotImplementedException();
-
+            
+     
         /// <summary>
         ///获取指定的资料行
         /// </summary>
@@ -712,55 +715,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         //    }
         //}
 
-        #region 几个断言
-
-        /// <summary>
-        /// 检查对象是否为空
-        /// </summary>
-        /// <param name="obj">要检测的对象</param>
-        /// <param name="errMsg">如果为空提示信息</param>
-        protected void AssertNull(object obj, string errMsg)
-        {
-            if (null == obj) throw new Exception(errMsg);
-        }
-
-        /// <summary>
-        /// 检查对象对等
-        /// </summary>
-        /// <param name="objA">对象A</param>
-        /// <param name="objB">对象B</param>
-        /// <param name="errMsg">如果不相等提示信息</param>
-        protected void AssertEqual(object objA, object objB, string errMsg)
-        {
-            if (objA != null && objB != null)
-            {
-                if (!objA.Equals(objB))
-                    throw new Exception(errMsg);
-            }
-        }
-        /// <summary>
-        /// 检查是否有选择一条记录.
-        /// </summary>        
-        protected void AssertFocusedRow()
-        {
-            bool ret = (View == null) || (!IsValidRowHandle(FocusedRowHandle));
-            if (ret) throw new Exception("您没有选择记录，操作取消!");
-        }
-
-        /// <summary>
-        /// 检查数据集是否有数据
-        /// </summary>
-        /// <param name="data"></param>
-        protected void AssertRowNull()
-        {
-            bool ret = DataSource == null || DataSource.Count < 1;
-            if (ret) throw new Exception("该数据集没有数据!");
-        }
-
-
-
-        #endregion
-
+      
 
 
         /// <summary>
@@ -851,63 +806,6 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         }
 
 
-        /// <summary>
-        /// 给绑定数据源的输入控件赋值
-        /// </summary>
-        //protected void SetEditorBindingValue(Control bindingControl, object value)
-        //{
-        //    try
-        //    {
-        //        // if (value == DBNull.Value || value == null) return;
-        //        object temp = null;
-        //        if (value != DBNull.Value) temp = value;
-        //        DataConverter.SetValueOfObject(bindingControl, "EditValue", temp);
-        //        if (bindingControl.DataBindings.Count > 0)
-        //        {
-        //            object dataSource = bindingControl.DataBindings[0].DataSource;
-        //            string field = bindingControl.DataBindings[0].BindingMemberInfo.BindingField;
-        //            if (dataSource is DataTable)
-        //            {
-        //                DataRow row = (dataSource as DataTable).Rows[0];
-        //                row.BeginEdit();
-        //                row[field] = value;
-        //                row.EndEdit();
-        //            }
-        //            else
-        //            {
-        //                DataConverter.SetValueOfObject(dataSource, field, value);
-        //            }
-        //            bindingControl.Focus();
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        FileLog.Error(e.StackTrace);
-        //        throw e;
-        //    } //这里不用显示异常信息. 
-        //}
-
-        /// <summary>
-        /// 设置输入组件只读及背景色
-        /// </summary>
-        /// <param name="editor">输入组件</param>
-        /// <param name="enable">可写/只读</param>
-        /// <param name="setBackgroundColor">是否设置背景色</param>
-        //protected void SetEditorEnable(TextEdit editor, bool enable, bool setBackgroundColor)
-        //{
-        //    if (enable && setBackgroundColor)
-        //        editor.BackColor = Color.White;
-        //    if (!enable && setBackgroundColor)
-        //        editor.BackColor = SystemColors.ButtonFace;
-
-        //    editor.Properties.ReadOnly = !enable;
-        //}
-
-        private void FrmBaseDataForm_Load(object sender, EventArgs e)
-        {
-        }
-
-
 
 
 
@@ -960,5 +858,13 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             throw new NotImplementedException();
         }
+
+        public void DoViewContent()
+        {
+            throw new NotImplementedException();
+        }
+        /*分割线*/
+
+
     }
 }

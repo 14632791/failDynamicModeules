@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using MahApps.Metro.IconPacks;
 using Metro.DynamicModeules.BaseControls.Models;
 using Metro.DynamicModeules.Interface.Sys;
 using Metro.DynamicModeules.Models;
@@ -14,13 +15,13 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     /// <summary>
     ///每个模块中唯一的主窗体类
     /// </summary>
-    [Export(typeof(IModuleBase))]
-    public class ModuleBaseViewModel : ViewModelBase, IModuleBase
+    //[Export(typeof(IModuleBase))]
+    public abstract class ModuleBaseViewModel : ViewModelBase, IModuleBase
     {
-        public ModuleBaseViewModel()
+        public ModuleBaseViewModel(Control owner)
         {
-            InitMenu();
-            InitButton();
+            Owner = owner;
+            Initialize();
         }
         public sys_Modules Module { get; set; }
 
@@ -34,19 +35,13 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             get; set;
         }
         public Control Owner { get; set; }
-        public object Icon
-        {
-            get; set;
-        }       
+        public PackIconControl<object> Icon { get; set; }
 
-        public void InitButton()
-        {
-            throw new NotImplementedException();
-        }
+       
         /// <summary>
         /// 初始化子菜单
         /// </summary>
-        public void Initialize()
+        public virtual void Initialize()
         {
             SubModuleList = new ObservableCollection<Lazy<IMdiChildWindow>>();
             AggregateCatalog aggregateCatalog = new AggregateCatalog();
@@ -54,12 +49,12 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             aggregateCatalog.Catalogs.Add(assemblyCatalog);
             var container = new CompositionContainer(aggregateCatalog);
             container.ComposeParts(this);
+            InitMenu();
         }
-
-        public void InitMenu()
-        {
-            throw new NotImplementedException();
-        }
+        /// <summary>
+        /// 初始化该模块下的所有子项
+        /// </summary>
+        public abstract void InitMenu();
       
     }
 }
