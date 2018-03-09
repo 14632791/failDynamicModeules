@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace SystemModule.Views
 {
     /// <summary>
-    /// UserView.xaml 的交互逻辑
+    /// UserFrontView.xaml 的交互逻辑
     /// </summary>
-    public partial class UserView : UserControl
+    public partial class UserFrontView : UserControl
     {
-        public UserView()
+        public UserFrontView()
         {
             InitializeComponent();
         }

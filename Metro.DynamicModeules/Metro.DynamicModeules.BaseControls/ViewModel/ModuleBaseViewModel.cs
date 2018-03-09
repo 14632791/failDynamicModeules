@@ -44,6 +44,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {           
             Owner = GetOwner();
             InitMenu();
+            Owner.DataContext = this;//指定数据源
         }
         /// <summary>
         /// 初始化该模块下的所有子项

@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="SystemModule.Views.UserFrontView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SystemModule.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <ListView ItemsSource="{Binding}">
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn Header="登录账号" DisplayMemberBinding="{Binding Account}"/>
+                        <GridViewColumn Header="Novell账号" DisplayMemberBinding="{Binding NovellAccount}"/>
+                        <GridViewColumn Header="域账号" DisplayMemberBinding="{Binding DomainName}"/>
+                        <GridViewColumn Header="用户名" DisplayMemberBinding="{Binding UserName}"/>
+                        <GridViewColumn Header="地址" DisplayMemberBinding="{Binding Address}"/>
+                        <GridViewColumn Header="电话" DisplayMemberBinding="{Binding Tel}"/>
+                        <GridViewColumn Header="邮箱" DisplayMemberBinding="{Binding Email}"/>
+                        <GridViewColumn Header="最后登录时间" DisplayMemberBinding="{Binding LastLoginTime}"/>
+                        <GridViewColumn Header="最后登出时间" DisplayMemberBinding="{Binding LastLogoutTime}"/>
+                        <GridViewColumn Header="是否锁定" DisplayMemberBinding="{Binding IsLocked}"/>
+                        <GridViewColumn Header="创建时间" DisplayMemberBinding="{Binding CreateTime}"/>
+                        <GridViewColumn Header="是否管理员" DisplayMemberBinding="{Binding FlagAdmin}"/>
+                        <GridViewColumn Header="登录次数" DisplayMemberBinding="{Binding LoginCounter}"/>
+
+                    </GridView.Columns>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</UserControl>

@@ -7,22 +7,24 @@ using System.Windows.Controls;
 
 namespace Metro.DynamicModeules.BaseControls.ControlEx
 {
-    public class DataChildBaseView : Control
+    public class DataChildBaseView : ContentControl
     {
         static DataChildBaseView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DataChildBaseView),
              new FrameworkPropertyMetadata(typeof(DataChildBaseView)));
         }
-        public DataGrid DataGrid
+
+
+        public object BackContent
         {
-            get { return (DataGrid)GetValue(DataGridProperty); }
-            set { SetValue(DataGridProperty, value); }
+            get { return (object)GetValue(BackContentProperty); }
+            set { SetValue(BackContentProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for DataGrid.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty DataGridProperty =
-            DependencyProperty.Register("DataGrid", typeof(DataGrid), typeof(DataChildBaseView), new PropertyMetadata(null));
-
+        // Using a DependencyProperty as the backing store for BackContent.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BackContentProperty =
+            DependencyProperty.Register("BackContent", typeof(object), typeof(DataChildBaseView), new PropertyMetadata(0));
+              
     }
 }

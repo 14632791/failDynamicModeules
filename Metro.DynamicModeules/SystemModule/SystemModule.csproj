@@ -116,14 +116,22 @@
     </Compile>
     <Compile Include="ViewModel\SystemMainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="Views\UserView.xaml.cs">
-      <DependentUpon>UserView.xaml</DependentUpon>
+    <Compile Include="Views\UserBackView.xaml.cs">
+      <DependentUpon>UserBackView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserFrontView.xaml.cs">
+      <DependentUpon>UserFrontView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserView.cs" />
     <Page Include="Views\SystemMainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\UserView.xaml">
+    <Page Include="Views\UserBackView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserFrontView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -14,16 +14,11 @@
                             <ColumnDefinition Width="300"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <controlEx:FlipPanel Grid.ColumnSpan="2" BorderBrush="DarkOrange" BorderThickness="3" IsFlipped="False"
+                        <controlEx:FlipPanel BackContent="{TemplateBinding BackContent}" Grid.ColumnSpan="2" BorderBrush="DarkOrange" BorderThickness="3" IsFlipped="False"
          CornerRadius="4" Margin="10">
                             <controlEx:FlipPanel.FrontContent>
-                                <ContentPresenter Content="{TemplateBinding DataGrid}"/>
-                            </controlEx:FlipPanel.FrontContent>
-                            <controlEx:FlipPanel.BackContent>
-                                <Grid>
-                                    <TextBlock Text="demo"/>
-                                </Grid>
-                            </controlEx:FlipPanel.BackContent>
+                                <ContentPresenter/>
+                            </controlEx:FlipPanel.FrontContent>                           
                         </controlEx:FlipPanel>
 
                         <controlEx:GridNavigation Grid.Row="1"/>
