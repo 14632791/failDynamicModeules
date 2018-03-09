@@ -1,6 +1,7 @@
-namespace Metro.DynamicModeules.Models
+namespace Metro.DynamicModeules.Models.Sys
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -8,6 +9,12 @@ namespace Metro.DynamicModeules.Models
     [Table("tb_MyMenu")]
     public partial class tb_MyMenu : INotifyPropertyChanged
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tb_MyMenu()
+        {
+            tb_MyAuthorityItem = new HashSet<tb_MyAuthorityItem>();
+        }
+
         [Key]
         [Column("isid")]
         public int isid
@@ -57,8 +64,8 @@ namespace Metro.DynamicModeules.Models
             }
         }
         private string _MenuCaption;
-        [Column("Auths")]
-        public Nullable<int> Auths
+        [Column("Authorities")]
+        public int Authorities
         {
             get
             {
@@ -68,10 +75,10 @@ namespace Metro.DynamicModeules.Models
             {
                 if (Equals(_Auths, value)) return;
                 _Auths = value;
-                RaisePropertyChanged("Auths");
+                RaisePropertyChanged("Authorities");
             }
         }
-        private Nullable<int> _Auths;
+        private int _Auths;
         [Column("ModuleID")]
         public Nullable<int> ModuleID
         {
@@ -104,7 +111,11 @@ namespace Metro.DynamicModeules.Models
             }
         }
         private string _MenuType;
-               
+
+        public virtual sys_Modules sys_Modules { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tb_MyAuthorityItem> tb_MyAuthorityItem { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -114,10 +125,7 @@ namespace Metro.DynamicModeules.Models
         /// <param name="propertyName">The name of the property that changed.</param>
         protected virtual void RaisePropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

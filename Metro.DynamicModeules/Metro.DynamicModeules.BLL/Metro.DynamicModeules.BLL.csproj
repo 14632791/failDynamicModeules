@@ -137,7 +137,6 @@
     <Compile Include="Security\BllGroupAuthority.cs" />
     <Compile Include="Security\BllMenuMgr.cs" />
     <Compile Include="Security\BllUserRole.cs" />
-    <Compile Include="Security\BllUserGroupRe.cs" />
     <Compile Include="Security\BllUserGroup.cs" />
     <Compile Include="Security\DomainLdapTools.cs" />
     <Compile Include="Security\NovellLdapTools.cs" />

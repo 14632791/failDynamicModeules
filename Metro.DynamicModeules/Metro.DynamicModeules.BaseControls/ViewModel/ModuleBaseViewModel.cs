@@ -2,6 +2,7 @@
 using Metro.DynamicModeules.BaseControls.Models;
 using Metro.DynamicModeules.Interface.Sys;
 using Metro.DynamicModeules.Models;
+using Metro.DynamicModeules.Models.Sys;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
@@ -14,7 +15,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     ///每个模块中唯一的主窗体类
     /// </summary>
     [Export(typeof(IModuleBase))]
-    public class ModuleBaseViewModel : BaseChildViewModel, IModuleBase
+    public class ModuleBaseViewModel : ViewModelBase, IModuleBase
     {
         public ModuleBaseViewModel()
         {

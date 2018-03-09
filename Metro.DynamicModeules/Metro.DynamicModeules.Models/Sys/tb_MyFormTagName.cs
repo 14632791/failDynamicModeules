@@ -1,4 +1,4 @@
-namespace Metro.DynamicModeules.Models
+namespace Metro.DynamicModeules.Models.Sys
 {
     using System;
     using System.Collections.Generic;
@@ -7,9 +7,6 @@ namespace Metro.DynamicModeules.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    /// <summary>
-    /// 自定义按钮tb_MyAuthorityItem与模块子项tb_MyMenu之间的关系表
-    /// </summary>
     [Table("tb_MyFormTagName")]
     public partial class tb_MyFormTagName : INotifyPropertyChanged
     {

@@ -1,4 +1,4 @@
-namespace Metro.DynamicModeules.Models
+namespace Metro.DynamicModeules.Models.Sys
 {
     using System;
     using System.Collections.Generic;
@@ -7,8 +7,8 @@ namespace Metro.DynamicModeules.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("tb_MyUserGroup")]
-    public partial class tb_MyUserGroup : INotifyPropertyChanged
+    [Table("tb_MyUserGroupRe")]
+    public partial class tb_MyUserGroupRe : INotifyPropertyChanged
     {
 
         [Column("isid")]
@@ -28,6 +28,7 @@ namespace Metro.DynamicModeules.Models
         }
         private int _isid;
         [Column("GroupCode")]
+        [Required]
         [StringLength(30)]
         public string GroupCode
         {
@@ -43,22 +44,23 @@ namespace Metro.DynamicModeules.Models
             }
         }
         private string _GroupCode;
-        [Column("GroupName")]
-        [StringLength(100)]
-        public string GroupName
+        [Column("Account")]
+        [Required]
+        [StringLength(30)]
+        public string Account
         {
             get
             {
-                return _GroupName;
+                return _Account;
             }
             set
             {
-                if (Equals(_GroupName, value)) return;
-                _GroupName = value;
-                RaisePropertyChanged("GroupName");
+                if (Equals(_Account, value)) return;
+                _Account = value;
+                RaisePropertyChanged("Account");
             }
         }
-        private string _GroupName;
+        private string _Account;
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>

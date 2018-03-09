@@ -15,6 +15,7 @@ using Metro.DynamicModeules.Models;
 using System.Data;
 using System.Windows.Forms;
 using System;
+using Metro.DynamicModeules.Models.Sys;
 
 namespace Metro.DynamicModeules.BLL.Security
 {

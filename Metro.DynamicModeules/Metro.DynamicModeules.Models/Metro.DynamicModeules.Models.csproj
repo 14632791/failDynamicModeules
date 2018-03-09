@@ -80,7 +80,7 @@
     <Compile Include="sys_DataSN.cs" />
     <Compile Include="sys_DocSN.cs" />
     <Compile Include="sys_FieldNameDefs.cs" />
-    <Compile Include="sys_Modules.cs" />
+    <Compile Include="Sys\sys_Modules.cs" />
     <Compile Include="tb_AccountIDs.cs" />
     <Compile Include="tb_AP.cs" />
     <Compile Include="tb_APs.cs" />
@@ -107,13 +107,11 @@
     <Compile Include="tb_LogDtl.cs" />
     <Compile Include="tb_LogFields.cs" />
     <Compile Include="tb_LoginLog.cs" />
-    <Compile Include="tb_MyAuthorityItem.cs" />
-    <Compile Include="tb_MyFormTagName.cs" />
-    <Compile Include="tb_MyMenu.cs" />
-    <Compile Include="tb_MyUser.cs" />
-    <Compile Include="tb_MyUserGroup.cs" />
-    <Compile Include="tb_MyUserGroupRe.cs" />
-    <Compile Include="tb_MyUserRole.cs" />
+    <Compile Include="Sys\tb_MyAuthorityItem.cs" />
+    <Compile Include="Sys\tb_MyMenu.cs" />
+    <Compile Include="Sys\tb_MyUser.cs" />
+    <Compile Include="Sys\tb_MyUserGroup.cs" />
+    <Compile Include="Sys\tb_MyUserGroupRole.cs" />
     <Compile Include="tb_PayType.cs" />
     <Compile Include="tb_Person.cs" />
     <Compile Include="tb_PO.cs" />

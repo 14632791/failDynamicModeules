@@ -10,6 +10,7 @@
 ///**************************************************************************/
 
 using Metro.DynamicModeules.Models;
+using Metro.DynamicModeules.Models.Sys;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -64,40 +65,42 @@ namespace Metro.DynamicModeules.BLL
         /// </summary>
         private ObservableCollection<tb_CommDataDictType> AllCommonDataDictTypes { get; set; }
 
-        /// <summary>
-        /// 按钮对应的icon资源key
-        /// </summary>
-        public Dictionary<int, string> DictButtonIcons { get; set; }
+
+        #endregion
+
+        #region 权限相关的数据
 
         /// <summary>
         /// 按钮字典表 定义功能点, 每个功能点必须唯一，为2^N 次方
         /// </summary>
         public ObservableCollection<tb_MyAuthorityItem> AuthorityItems { get; set; }
 
-        /// <summary>
-        /// tb_MyMenu菜单与按钮的中间表
-        /// </summary>
-        public ObservableCollection<tb_MyFormTagName> FormTagNames { get; set; }
 
         /// <summary>
         /// 当前用户的组权限
         /// </summary>
-        public ObservableCollection<tb_MyUserRole> LoginUserRoles { get; set; }
-
-        /// <summary>
-        /// 当前用户的组权限中间表
-        /// </summary>
-        public ObservableCollection<tb_MyUserGroupRe> LoginUserGroupRes { get; set; }
+        public ObservableCollection<tb_MyUserGroupRole> LoginGroupRoles { get; set; }
 
         /// <summary>
         /// 本系统的菜单及分配菜单的权限值
         /// </summary>
         public ObservableCollection<tb_MyMenu> Menus { get; set; }
+              
 
         /// <summary>
-        /// 当前用户组
+        /// 所有模块
+        /// </summary>
+        public ObservableCollection<sys_Modules> Modules { get; set; }
+
+        /// <summary>
+        /// 所有用户组，一般不加载，只有在用户权限管理中才加载数据
         /// </summary>
         public ObservableCollection<tb_MyUserGroup> UserGroups { get; set; }
+
+        /// <summary>
+        /// 所有的用户信息，一般不加载，只有在用户权限管理中才加载数据
+        /// </summary>
+        public ObservableCollection<tb_MyUser> Users { get; set; }
 
         #endregion
 

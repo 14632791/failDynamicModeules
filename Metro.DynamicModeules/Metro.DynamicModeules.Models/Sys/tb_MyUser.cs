@@ -1,4 +1,4 @@
-namespace Metro.DynamicModeules.Models
+namespace Metro.DynamicModeules.Models.Sys
 {
     using System;
     using System.Collections.Generic;
@@ -8,29 +8,22 @@ namespace Metro.DynamicModeules.Models
     using System.Data.Entity.Spatial;
     using System.Runtime.Serialization;
 
-    //[Serializable]
+
     [Table("tb_MyUser")]
     public partial class tb_MyUser : INotifyPropertyChanged
     {
-        [Key]
-        [Column("isid")]
-        public int isid
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tb_MyUser()
         {
-            get
-            {
-                return _isid;
-            }
-            set
-            {
-                if (Equals(_isid, value)) return;
-                _isid = value;
-                RaisePropertyChanged("isid");
-            }
+            tb_MyUserGroup = new HashSet<tb_MyUserGroup>();
         }
-        private int _isid;
+
+       
+        [Key]
         [Column("Account")]
         [Required]
-        [StringLength(30)]
+        [StringLength(50)]
         public string Account
         {
             get
@@ -265,6 +258,7 @@ namespace Metro.DynamicModeules.Models
         }
         private Nullable<int> _LoginCounter;
         [Column("DataSets")]
+        [StringLength(250)]
         public string DataSets
         {
             get
@@ -279,6 +273,21 @@ namespace Metro.DynamicModeules.Models
             }
         }
         private string _DataSets;
+
+        [Column("CreatedBy")]
+        [StringLength(50)]
+        public string CreatedBy { get; set; }
+
+        [Column("LastUpdateTime")]
+        public DateTime? LastUpdateTime { get; set; }
+
+        [Column("LastUpdatedBy")]
+        [StringLength(50)]
+        public string LastUpdatedBy { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tb_MyUserGroup> tb_MyUserGroup { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
@@ -287,10 +296,7 @@ namespace Metro.DynamicModeules.Models
         /// <param name="propertyName">The name of the property that changed.</param>
         protected virtual void RaisePropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

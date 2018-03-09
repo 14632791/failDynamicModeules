@@ -196,7 +196,8 @@
             </GroupBox>
 
             <Controls:MetroAnimatedTabControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding TabPages}"
-                 SelectedItem="{Binding ActivatePage}"   ItemTemplate="{StaticResource RightTabControlItemTemplate}">
+                 SelectedItem="{Binding ActivatePage}"   
+                 ItemTemplate="{StaticResource RightTabControlItemTemplate}">
             </Controls:MetroAnimatedTabControl> 
 
         </Grid>

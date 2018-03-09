@@ -2,6 +2,7 @@
 using Metro.DynamicModeules.BLL.Base;
 using Metro.DynamicModeules.Common;
 using Metro.DynamicModeules.Models;
+using Metro.DynamicModeules.Models.Sys;
 ///*************************************************************************/
 ///*
 ///* 文件名    ：BllGroupAuthority.cs    
@@ -24,7 +25,7 @@ namespace Metro.DynamicModeules.BLL.Security
     /// <summary>
     /// 用户组及组权限业务逻辑
     /// </summary>
-    public class BllGroupAuthority : BllBase<tb_MyUserGroupRe>
+    public class BllGroupAuthority : BllBase<tb_MyUser>
     {
         private TreeView _treeAuthority;//权限树视图
         private Control _groupName;//组名输入框

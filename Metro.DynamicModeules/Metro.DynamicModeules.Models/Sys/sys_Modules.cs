@@ -1,4 +1,4 @@
-namespace Metro.DynamicModeules.Models
+namespace Metro.DynamicModeules.Models.Sys
 {
     using System;
     using System.Collections.Generic;
@@ -10,23 +10,12 @@ namespace Metro.DynamicModeules.Models
     [Table("sys_Modules")]
     public partial class sys_Modules : INotifyPropertyChanged
     {
-
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int isid
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public sys_Modules()
         {
-            get
-            {
-                return _isid;
-            }
-            set
-            {
-                if (Equals(_isid, value)) return;
-                _isid = value;
-                RaisePropertyChanged("isid");
-            }
+            tb_MyMenu = new HashSet<tb_MyMenu>();
         }
-        private int _isid;
-        [Column("ModuleID")]
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ModuleID
@@ -43,6 +32,9 @@ namespace Metro.DynamicModeules.Models
             }
         }
         private int _ModuleID;
+        /// <summary>
+        /// Ä£¿éÃû³Æ
+        /// </summary>
         [StringLength(50)]
         public string ModuleName
         {
@@ -58,6 +50,8 @@ namespace Metro.DynamicModeules.Models
             }
         }
         private string _ModuleName;
+		
+		public virtual ICollection<tb_MyMenu> tb_MyMenu { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
@@ -66,10 +60,7 @@ namespace Metro.DynamicModeules.Models
         /// <param name="propertyName">The name of the property that changed.</param>
         protected virtual void RaisePropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -5,6 +5,7 @@ using MahApps.Metro.Controls.Dialogs;
 using Metro.DynamicModeules.BaseControls.Commands;
 using Metro.DynamicModeules.BaseControls.ViewModel;
 using Metro.DynamicModeules.Models;
+using Metro.DynamicModeules.Models.Sys;
 using NHotkey;
 using NHotkey.Wpf;
 using System;
@@ -610,7 +611,7 @@ namespace Metro.DynamicModeules.Main.ViewModel
             set
             {
                 _activatePage = value;
-                RaisePropertyChanged(() => ActivetePage);
+                RaisePropertyChanged(() => ActivatePage);
             }
         }
     }

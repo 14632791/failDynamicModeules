@@ -1,13 +1,26 @@
-namespace Metro.DynamicModeules.Models
+namespace Metro.DynamicModeules.Models.Sys
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
+    /// <summary>
+    /// 自定义按钮
+    /// </summary>
     [Table("tb_MyAuthorityItem")]
     public partial class tb_MyAuthorityItem : INotifyPropertyChanged
     {
+	   [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+      
+	  public tb_MyAuthorityItem()
+        {
+            tb_MyMenu = new HashSet<tb_MyMenu>();
+        }
+        /// <summary>
+        /// 主键id
+        /// </summary>
         [Key]
         [Column("isid")]
         public int isid
@@ -24,6 +37,9 @@ namespace Metro.DynamicModeules.Models
             }
         }
         private int _isid;
+        /// <summary>
+        /// 按钮名称
+        /// </summary>
         [Column("AuthorityName")]
         [StringLength(20)]
         public string AuthorityName
@@ -40,6 +56,10 @@ namespace Metro.DynamicModeules.Models
             }
         }
         private string _AuthorityName;
+
+        /// <summary>
+        /// 按钮的权限值
+        /// </summary>
         [Column("AuthorityValue")]
         public int AuthorityValue
         {
@@ -55,6 +75,8 @@ namespace Metro.DynamicModeules.Models
             }
         }
         private int _AuthorityValue;
+		
+	    public virtual ICollection<tb_MyMenu> tb_MyMenu { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
@@ -63,10 +85,7 @@ namespace Metro.DynamicModeules.Models
         /// <param name="propertyName">The name of the property that changed.</param>
         protected virtual void RaisePropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

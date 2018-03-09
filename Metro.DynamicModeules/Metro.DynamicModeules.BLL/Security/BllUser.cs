@@ -17,6 +17,7 @@ using System.Data;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Metro.DynamicModeules.Models.Sys;
 
 namespace Metro.DynamicModeules.BLL.Security
 {

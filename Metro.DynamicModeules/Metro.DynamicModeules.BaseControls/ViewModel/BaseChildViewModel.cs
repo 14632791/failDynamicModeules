@@ -1,6 +1,8 @@
 ﻿using GalaSoft.MvvmLight;
 using MahApps.Metro.IconPacks;
 using Metro.DynamicModeules.Interface.Sys;
+using Metro.DynamicModeules.Models;
+using Metro.DynamicModeules.Models.Sys;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -11,11 +13,28 @@ using System.Windows.Controls;
 namespace Metro.DynamicModeules.BaseControls.ViewModel
 {
     [Export(typeof(IMdiChildWindow))]
-    public class BaseChildViewModel : ViewModelBase, IMdiChildWindow, IPurviewControllable, ISystemButtons
+    public class BaseChildViewModel : ViewModelBase, IMdiChildWindow//, IPurviewControllable, ISystemButtons
     {
         public BaseChildViewModel()
         {
             
+        }
+
+        tb_MyMenu _subItem;
+        /// <summary>
+        /// 对应的子项实体
+        /// </summary>
+        public tb_MyMenu SubItem
+        {
+            get
+            {
+                return _subItem;
+            }
+            set
+            {
+                _subItem = value;
+
+            }
         }
         /// <summary>
         /// 按钮矢量图片类型
@@ -38,59 +57,14 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         protected List<IButtonInfo> _systemButtons = new List<IButtonInfo>();
 
-        /// <summary>
-        /// 窗体是否正在关闭状态
-        /// </summary>
-        protected bool _isClosing = false;
-
-        /// <summary>
-        /// 否只保留一个子窗体实例
-        /// </summary>
-        protected bool _allowMultiInstatnce = false;
-
-        /// <summary>
-        /// 窗体的可用权限
-        /// </summary>
-        protected int _formAuthorities = 0;
-
-        /// <summary>
-        /// 打开窗体的菜单名
-        /// </summary>
-        protected string _formMenuName = "";
+    
 
 
         #region IPurviewControllable 接口实现
 
-        /// <summary>
-        /// 窗体可用权限.为2^n方:1,2,4,8,16.....n^2
-        /// 打开窗体时从数据库获取权限值保存在该变量
-        /// </summary>
-        public int FormAuthorities
-        {
-            get
-            {
-                return _formAuthorities;
-            }
-            set
-            {
-                _formAuthorities = value;
-            }
-        }
+        
 
-        /// <summary>
-        ///  打开窗体的菜单名
-        /// </summary>
-        public string FormMenuName
-        {
-            get
-            {
-                return _formMenuName;
-            }
-            set
-            {
-                _formMenuName = value;
-            }
-        }
+       
 
         /// <summary>
         /// 派生类通过重写该虚方法自定义每个按钮可用状态
@@ -100,20 +74,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             return false;
         }
 
-        /// <summary>
-        /// 系统是否只保留一个子窗体实例
-        /// </summary>
-        public bool AllowMultiInstatnce
-        {
-            get
-            {
-                return _allowMultiInstatnce;
-            }
-            set
-            {
-                _allowMultiInstatnce = value;
-            }
-        }
+       
 
         /// <summary>
         /// 检查当前用户是否拥有本窗体的特定权限
@@ -122,7 +83,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <returns></returns>
         public bool HasPurview(int value)
         {
-            return (value & _formAuthorities) == value;
+            return true;// (value & _formAuthorities) == value;
         }
 
         /// <summary>
@@ -136,24 +97,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
 
         
 
-        public virtual void RegisterToolBar( )
-        {
-            //this.Buttons是当前窗体的按钮数组。
-            //toolBarRegister.RegisteButton(this.Buttons.ToList());
-        }
-
-        /// <summary>
-        /// 当前窗体是否正在关闭状态
-        /// </summary>
-        public bool IsClosing { get { return _isClosing; } set { _isClosing = value; } }
-
-        /// <summary>
-        /// 注册子窗体观察者
-        /// </summary>        
-        public void RegisterObserver(IObserver[] observers)
-        {
-            //foreach (IObserver o in observers) _observers.Add(o);
-        }
+       
 
         /// <summary>
         /// 子窗体的按钮数组
@@ -161,15 +105,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         public List<IButtonInfo> Buttons { get { return _buttons; } }
 
 
-        public int ChildAuthorities
-        {
-            get; set;
-        }
-
-        public string MenuName
-        {
-            get; set;
-        }
+        
         
         /// <summary>
         /// 模板方法.初始化本窗体的按钮.
@@ -202,23 +138,11 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
 
         public virtual void DoClose(IButtonInfo sender)
         {
-            NotifyObserver();
+            //NotifyObserver();
         }
 
         #endregion
 
-        //当子窗体获得焦点时注册本窗体的按钮。
-        //通过Form Activated事件可以看到主窗体的ToolBar状态变化。
-        private void FrmBaseChild_Activated(object sender, EventArgs e)
-        {
-            //this.RegisterToolBar(this.ToolbarRegister);
-            this.NotifyObserver(); //通过其它观察者
-        }
-
-        //通知观察者进行更新
-        private void NotifyObserver()
-        {
-            //foreach (IObserver o in _observers) if (o != null) o.Notify();
-        }
+       
     }
 }
