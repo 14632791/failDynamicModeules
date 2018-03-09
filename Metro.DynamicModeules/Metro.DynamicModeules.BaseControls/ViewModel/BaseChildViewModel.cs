@@ -49,8 +49,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 初始化子窗体的按钮数组
         /// </summary>
         protected List<IButtonInfo> _buttons = new List<IButtonInfo>();
-
-
+        
 
         /// <summary>
         /// 子窗体的系统按钮

@@ -65,7 +65,13 @@ namespace Metro.DynamicModeules.BLL
         /// </summary>
         private ObservableCollection<tb_CommDataDictType> AllCommonDataDictTypes { get; set; }
 
-
+        /// <summary>
+        /// 公司资料
+        /// </summary>
+        public  tb_CompanyInfo CompanyInfo
+        {
+            get;set;
+        }
         #endregion
 
         #region 权限相关的数据

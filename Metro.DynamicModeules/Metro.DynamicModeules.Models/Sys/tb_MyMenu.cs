@@ -1,10 +1,13 @@
 namespace Metro.DynamicModeules.Models.Sys
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Runtime.Serialization;
 
     [Table("tb_MyMenu")]
     public partial class tb_MyMenu : INotifyPropertyChanged
@@ -12,7 +15,8 @@ namespace Metro.DynamicModeules.Models.Sys
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tb_MyMenu()
         {
-            tb_MyAuthorityItem = new HashSet<tb_MyAuthorityItem>();
+            tb_MyUserGroupRole = new ObservableCollection<tb_MyUserGroupRole>();
+            tb_MyAuthorityItem = new ObservableCollection<tb_MyAuthorityItem>();
         }
 
         [Key]
@@ -112,7 +116,11 @@ namespace Metro.DynamicModeules.Models.Sys
         }
         private string _MenuType;
 
+        [JsonIgnore]
         public virtual sys_Modules sys_Modules { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tb_MyUserGroupRole> tb_MyUserGroupRole { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_MyAuthorityItem> tb_MyAuthorityItem { get; set; }

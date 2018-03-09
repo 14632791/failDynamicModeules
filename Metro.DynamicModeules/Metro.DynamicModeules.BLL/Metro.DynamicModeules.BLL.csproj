@@ -129,7 +129,6 @@
     <Compile Include="DataDict\BllCompanyInfo.cs" />
     <Compile Include="DataDict\BllCustomer.cs" />
     <Compile Include="DataDict\BllAccountIDs.cs" />
-    <Compile Include="CommonData.cs" />
     <Compile Include="DataDict\BllPayType.cs" />
     <Compile Include="GenerateItemsDef.cs" />
     <Compile Include="Security\ActionNodeTag.cs" />

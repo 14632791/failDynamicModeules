@@ -33,21 +33,11 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             get; set;
         }
-        public Control Container { get; set; }
+        public Control Owner { get; set; }
         public object Icon
         {
             get; set;
-        }
-
-        public Control GetContainer()
-        {
-            throw new NotImplementedException();
-        }
-
-        public MenuItem GetModuleMenu()
-        {
-            throw new NotImplementedException();
-        }
+        }       
 
         public void InitButton()
         {
@@ -70,10 +60,6 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             throw new NotImplementedException();
         }
-
-        public void SetSecurity(object securityInfo)
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 }

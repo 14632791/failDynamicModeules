@@ -15,7 +15,7 @@ namespace Metro.DynamicModeules.BaseControls.ControlEx
     /// <summary>
     /// 带权限值的icon button
     /// </summary>
-    public class PackIconButton : Button
+    public class PackIconButton : Button, IButtonInfo
     {
         static PackIconButton()
         {
@@ -38,16 +38,18 @@ namespace Metro.DynamicModeules.BaseControls.ControlEx
 
 
 
-
-        public tb_MyAuthorityItem Button
+        /// <summary>
+        /// 对应的实体
+        /// </summary>
+        public tb_MyAuthorityItem MyAuthorityItem
         {
-            get { return (tb_MyAuthorityItem)GetValue(ButtonProperty); }
-            set { SetValue(ButtonProperty, value); }
+            get { return (tb_MyAuthorityItem)GetValue(MyAuthorityItemProperty); }
+            set { SetValue(MyAuthorityItemProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Button.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ButtonProperty =
-            DependencyProperty.Register("Button", typeof(tb_MyAuthorityItem), typeof(PackIconButton), new PropertyMetadata(null));
+        public static readonly DependencyProperty MyAuthorityItemProperty =
+            DependencyProperty.Register("MyAuthorityItem", typeof(tb_MyAuthorityItem), typeof(PackIconButton), new PropertyMetadata(null));
 
                
        
@@ -56,10 +58,15 @@ namespace Metro.DynamicModeules.BaseControls.ControlEx
             get { return (PackIconControl<object>)GetValue(IconProperty); }
             set { SetValue(IconProperty, value); }
         }
+     
 
         // Using a DependencyProperty as the backing store for Icon.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IconProperty =
             DependencyProperty.Register("Icon", typeof(PackIconControl<object>), typeof(PackIconButton), new PropertyMetadata(null));
-        
+
+        /// <summary>
+        /// 要执行的方法
+        /// </summary>
+        public ICommand ClickCommand { get; }
     }
 }

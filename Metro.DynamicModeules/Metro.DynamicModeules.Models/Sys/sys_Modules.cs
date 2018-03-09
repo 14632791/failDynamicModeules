@@ -6,6 +6,7 @@ namespace Metro.DynamicModeules.Models.Sys
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Collections.ObjectModel;
 
     [Table("sys_Modules")]
     public partial class sys_Modules : INotifyPropertyChanged
@@ -13,7 +14,7 @@ namespace Metro.DynamicModeules.Models.Sys
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public sys_Modules()
         {
-            tb_MyMenu = new HashSet<tb_MyMenu>();
+            tb_MyMenu = new ObservableCollection<tb_MyMenu>();
         }
 
         [Key]

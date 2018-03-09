@@ -5,6 +5,7 @@ namespace Metro.DynamicModeules.Models
     using System.ComponentModel.DataAnnotations;  using System.ComponentModel;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Collections.ObjectModel;
 
     [Table("tb_SO")]
     public partial class tb_SO: INotifyPropertyChanged
@@ -12,7 +13,7 @@ namespace Metro.DynamicModeules.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tb_SO()
         {
-            tb_SOs = new HashSet<tb_SOs>();
+            tb_SOs = new ObservableCollection<tb_SOs>();
         }
 
 [Column("ISID")]

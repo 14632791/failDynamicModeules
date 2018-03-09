@@ -6,6 +6,7 @@ namespace Metro.DynamicModeules.Models.Sys
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Collections.ObjectModel;
 
     [Table("tb_MyUserGroup")]
     public partial class tb_MyUserGroup : INotifyPropertyChanged
@@ -13,8 +14,8 @@ namespace Metro.DynamicModeules.Models.Sys
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tb_MyUserGroup()
         {
-            tb_MyUserGroupRole = new HashSet<tb_MyUserGroupRole>();
-            tb_MyUser = new HashSet<tb_MyUser>();
+            tb_MyUserGroupRole = new ObservableCollection<tb_MyUserGroupRole>();
+            tb_MyUser = new ObservableCollection<tb_MyUser>();
         }
 
 

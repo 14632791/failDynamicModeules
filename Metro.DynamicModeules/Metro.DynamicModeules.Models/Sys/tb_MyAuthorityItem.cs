@@ -2,21 +2,21 @@ namespace Metro.DynamicModeules.Models.Sys
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     /// <summary>
-    /// 自定义按钮
+    /// 功能点字典
     /// </summary>
     [Table("tb_MyAuthorityItem")]
     public partial class tb_MyAuthorityItem : INotifyPropertyChanged
     {
 	   [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-      
-	  public tb_MyAuthorityItem()
+       public tb_MyAuthorityItem()
         {
-            tb_MyMenu = new HashSet<tb_MyMenu>();
+            tb_MyMenu = new ObservableCollection<tb_MyMenu>();
         }
         /// <summary>
         /// 主键id
@@ -58,7 +58,7 @@ namespace Metro.DynamicModeules.Models.Sys
         private string _AuthorityName;
 
         /// <summary>
-        /// 按钮的权限值
+        /// 按钮的功能点权限值. 只能为2^次方, 1,2,4,8,16,….2^N
         /// </summary>
         [Column("AuthorityValue")]
         public int AuthorityValue
