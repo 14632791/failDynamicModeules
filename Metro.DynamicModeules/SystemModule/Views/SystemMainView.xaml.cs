@@ -7,13 +7,12 @@ using SystemModule.ViewModel;
 namespace SystemModule.Views
 {
     /// <summary>
-    /// ModuleBaseView.xaml 的交互逻辑
+    /// SystemMainView.xaml 的交互逻辑
     /// </summary>
-    public partial class MainView : UserControl
+    public partial class SystemMainView : UserControl
     {
-        public MainView()
+        public SystemMainView()
         {
-            DataContext = ViewModelLocator.Instance.Main;
         }
     }
 }

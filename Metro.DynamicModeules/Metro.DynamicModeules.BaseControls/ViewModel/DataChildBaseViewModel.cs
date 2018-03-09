@@ -53,12 +53,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 是否允许用户操作数据
         /// </summary>
         protected bool _AllowDataOperate = true;
-
-        public DataChildBaseViewModel(Control owner) : base(owner)
-        {
-        }
-
-
+               
 
         /// <summary>
         /// 自定义初始化窗体操作, 窗体的Load事件必须调用此方法

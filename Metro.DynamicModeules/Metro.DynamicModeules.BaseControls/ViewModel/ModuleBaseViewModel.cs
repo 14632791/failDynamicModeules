@@ -18,23 +18,22 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     //[Export(typeof(IModuleBase))]
     public abstract class ModuleBaseViewModel : ViewModelBase, IModuleBase
     {
-        public ModuleBaseViewModel(Control owner)
+        public ModuleBaseViewModel()
         {
-            Owner = owner;
             Initialize();
         }
         public sys_Modules Module { get; set; }
-
         /// <summary>
         /// 子窗口插件
         /// </summary>
         [ImportMany(typeof(IMdiChildWindow), AllowRecomposition = true)]
-        public ObservableCollection<Lazy<IMdiChildWindow>> SubModuleList { get; private set; }
+        public ObservableCollection<Lazy<IMdiChildWindow>> SubModuleList { get; set; }
         public ObservableCollection<MenuModel> Menus
         {
             get; set;
         }
-        public Control Owner { get; set; }
+        public  Control Owner { get; set; }
+        public abstract Control GetOwner();
         public PackIconControl<object> Icon { get; set; }
 
        
@@ -42,13 +41,8 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 初始化子菜单
         /// </summary>
         public virtual void Initialize()
-        {
-            SubModuleList = new ObservableCollection<Lazy<IMdiChildWindow>>();
-            AggregateCatalog aggregateCatalog = new AggregateCatalog();
-            AssemblyCatalog assemblyCatalog = new AssemblyCatalog(typeof(IMdiChildWindow).Assembly);
-            aggregateCatalog.Catalogs.Add(assemblyCatalog);
-            var container = new CompositionContainer(aggregateCatalog);
-            container.ComposeParts(this);
+        {           
+            Owner = GetOwner();
             InitMenu();
         }
         /// <summary>

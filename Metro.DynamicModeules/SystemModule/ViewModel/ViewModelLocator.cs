@@ -54,15 +54,15 @@ namespace SystemModule.ViewModel
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
 
-            SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<SystemMainViewModel>();
             
         }
 
-        public MainViewModel Main
+        public SystemMainViewModel Main
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
+                return ServiceLocator.Current.GetInstance<SystemMainViewModel>();
             }
         }
         

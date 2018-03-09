@@ -7,12 +7,12 @@ using System.Windows.Controls;
 
 namespace Metro.DynamicModeules.BaseControls.ControlEx
 {
-    public class BaseDataView : Control
+    public class DataChildBaseView : Control
     {
-        static BaseDataView()
+        static DataChildBaseView()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(BaseDataView),
-             new FrameworkPropertyMetadata(typeof(BaseDataView)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(DataChildBaseView),
+             new FrameworkPropertyMetadata(typeof(DataChildBaseView)));
         }
         public DataGrid DataGrid
         {
@@ -22,7 +22,7 @@ namespace Metro.DynamicModeules.BaseControls.ControlEx
 
         // Using a DependencyProperty as the backing store for DataGrid.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DataGridProperty =
-            DependencyProperty.Register("DataGrid", typeof(DataGrid), typeof(BaseDataView), new PropertyMetadata(null));
+            DependencyProperty.Register("DataGrid", typeof(DataGrid), typeof(DataChildBaseView), new PropertyMetadata(null));
 
     }
 }

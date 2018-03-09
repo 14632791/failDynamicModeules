@@ -19,10 +19,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     //[Export(typeof(IMdiChildWindow))]
     public abstract class ChildBaseViewModel : ModuleBaseViewModel, IMdiChildWindow, ISystemButtons//IPurviewControllable
     {
-        public ChildBaseViewModel(Control owner):base( owner)
-        {
-            
-        }
+      
 
         tb_MyMenu _subItem;
         /// <summary>

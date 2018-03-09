@@ -1,12 +1,12 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:controlEx="clr-namespace:Metro.DynamicModeules.BaseControls.ControlEx"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+   
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/Metro.DynamicModeules.BaseControls;component/Styles/ModuleTileList.xaml"/>
-        <ResourceDictionary Source="pack://application:,,,/Metro.DynamicModeules.BaseControls;component/Styles/BaseDataView.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Metro.DynamicModeules.BaseControls;component/Styles/ModuleBaseView.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Metro.DynamicModeules.BaseControls;component/Styles/DataChildBaseView.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/Metro.DynamicModeules.BaseControls;component/Styles/GridNavigation.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/Metro.DynamicModeules.BaseControls;component/Themes/Expander.xaml"/>
     </ResourceDictionary.MergedDictionaries>
-    
-   
+       
 </ResourceDictionary>

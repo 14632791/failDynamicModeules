@@ -12,14 +12,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Metro.DynamicModeules.BaseControls.ControlEx
+namespace SystemModule.Views
 {
     /// <summary>
-    /// DetailView.xaml 的交互逻辑
+    /// UserView.xaml 的交互逻辑
     /// </summary>
-    public partial class DetailView : UserControl
+    public partial class UserView : UserControl
     {
-        public DetailView()
+        public UserView()
         {
             InitializeComponent();
         }

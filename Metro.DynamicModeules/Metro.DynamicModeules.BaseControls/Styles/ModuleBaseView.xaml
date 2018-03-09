@@ -2,12 +2,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls">
     <!--每个模块的Tile主界面-->
-    <Style TargetType="ItemsControl" x:Key="ModuleListStyle">
+    <Style TargetType="{x:Type ListBox}" x:Key="ModuleBaseViewStyle">
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <WrapPanel  Width="{Binding Width,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"
-                       HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+                        <WrapPanel  Width="{Binding Width,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"
+                       HorizontalAlignment="Left"  VerticalAlignment="Top">
+                       
+                    </WrapPanel>
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
@@ -27,7 +29,7 @@
     </Style>
     <!--子模块列表-->
     <ScrollViewer x:Key="SubModuleListViewer" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
-        <ItemsControl Style="{StaticResource ModuleListStyle}" 
+        <ListBox Style="{StaticResource ModuleBaseViewStyle}" 
             ItemsSource="{Binding SubModuleList,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"/>
     </ScrollViewer>
 </ResourceDictionary>
