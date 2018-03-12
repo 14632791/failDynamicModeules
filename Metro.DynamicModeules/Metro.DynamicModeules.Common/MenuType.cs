@@ -11,46 +11,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
+using Metro.DynamicModeules.Models.Sys;
 
 namespace Metro.DynamicModeules.Common
 {
-    /// <summary>
-    /// 菜单类型
-    /// </summary>
-    public enum MenuType
-    {
-        Unknow = 0,
-
-        /// <summary>
-        /// 模块主菜单(一级菜单)
-        /// </summary>
-        Module = 1, //
-
-        /// <summary>
-        /// 数据窗体菜单
-        /// </summary>
-        DataForm = 2,
-
-        /// <summary>
-        /// 父级菜单(下面有子菜单)
-        /// </summary>
-        ItemOwner = 3,
-
-        /// <summary>
-        /// 报表菜单
-        /// </summary>
-        Report = 4,
-
-        /// <summary>
-        /// 独立功能(用于扩展)
-        /// </summary>
-        Action = 5,
-
-        /// <summary>
-        /// 对话框
-        /// </summary>
-        Dialog = 6
-    }
+    
 
     /// <summary>
     /// 菜单标记(Tag)

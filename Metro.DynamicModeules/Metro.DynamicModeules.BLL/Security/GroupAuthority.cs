@@ -25,14 +25,14 @@ namespace Metro.DynamicModeules.BLL.Security
     /// <summary>
     /// 用户组及组权限业务逻辑
     /// </summary>
-    public class BllGroupAuthority : BllBase<tb_MyUser>
+    public class GroupAuthority : BllBase<tb_MyUser>
     {
         private TreeView _treeAuthority;//权限树视图
         private Control _groupName;//组名输入框
         private DataTable _AuthorityItem = null;//功能点数据表
         private DataTable _FormTagCustomName = null;//窗体按钮列表(自定义按钮名)
 
-        public BllGroupAuthority()
+        public GroupAuthority()
         {
            // _AuthorityItem = _MyBridge.GetAuthorityItem(); //获取权限功能点数据字典
         }
@@ -42,7 +42,7 @@ namespace Metro.DynamicModeules.BLL.Security
         /// </summary>
         /// <param name="treeAuthority">权限树视图</param>
         /// <param name="groupName">组名输入框</param>
-        public BllGroupAuthority(TreeView treeAuthority, Control groupName)
+        public GroupAuthority(TreeView treeAuthority, Control groupName)
             : this()
         {
             _treeAuthority = treeAuthority;

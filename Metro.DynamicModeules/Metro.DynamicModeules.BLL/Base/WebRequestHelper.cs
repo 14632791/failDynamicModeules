@@ -92,7 +92,7 @@ namespace Metro.DynamicModeules.BLL.Base
         /// <param name="id">ID 加密要用到</param>
         /// <param name="name">姓名 加密要用到</param>
         /// <returns></returns>
-        public static T PostHttp<T>(string url, object parameters, string id = "", string name = "", int timeout = 6000)
+        public static T PostHttp<T>(string url, object parameters, string id = "", string name = "", int timeout = 10000)
         {
             string resultStr = "";
             string jsonstr = "";

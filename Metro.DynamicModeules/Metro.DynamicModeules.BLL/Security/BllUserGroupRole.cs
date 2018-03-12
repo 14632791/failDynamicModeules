@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Metro.DynamicModeules.BLL.Security
 {
-   public class BllUserRole : BllBase<tb_MyUserGroupRole>
+   public class BllUserGroupRole : BllBase<tb_MyUserGroupRole>
     {
         protected override string GetControllerName()
         {

@@ -122,7 +122,6 @@
     <Compile Include="Views\UserFrontView.xaml.cs">
       <DependentUpon>UserFrontView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserView.cs" />
     <Page Include="Views\SystemMainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

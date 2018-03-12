@@ -22,7 +22,7 @@ namespace Metro.DynamicModeules.BLL.Security
     /// <summary>
     /// 系统菜单数据管理类
     /// </summary>
-    public class BllMenuMgr : BllBase<tb_MyMenu>
+    public class MenuMgr : BllBase<tb_MyMenu>
     {
         private int _LastUpdated = 0;//最后一次导入菜单更新的记录数
         private int _LastInserted = 0;//最后一次导入菜单数

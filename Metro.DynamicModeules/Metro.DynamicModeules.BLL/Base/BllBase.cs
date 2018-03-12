@@ -50,7 +50,7 @@ namespace Metro.DynamicModeules.BLL.Base
         public async Task<bool> Add(T[] paramList, bool isSave = true)
         {
             var apiParams = new { paramList, isSave };
-            return await WebRequestHelper.PostHttpAsync<bool>(GetApiUrl("Add"), apiParams);
+            return await WebRequestHelper.PostHttpAsync<bool>(GetApiUrl("Add1"), apiParams);
         }
 
         public async Task<bool> Delete(bool isSave, object[] keyValues)
@@ -62,13 +62,13 @@ namespace Metro.DynamicModeules.BLL.Base
         public async Task<bool> Delete(bool isSave, T[] entities)
         {
             var apiParams = new { isSave, entities };
-            return await WebRequestHelper.PostHttpAsync<bool>(GetApiUrl("Delete"), apiParams);
+            return await WebRequestHelper.PostHttpAsync<bool>(GetApiUrl("Delete1"), apiParams);
         }
 
         public async Task<bool> Delete(T model, bool isSave = true)
         {
             var apiParams = new { model, isSave };
-            return await WebRequestHelper.PostHttpAsync<bool>(GetApiUrl("Delete"), apiParams);
+            return await WebRequestHelper.PostHttpAsync<bool>(GetApiUrl("Delete2"), apiParams);
         }
 
         public async Task<T> Find(object[] keyValues)

@@ -7,6 +7,7 @@ namespace Metro.DynamicModeules.Models.Sys
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
     using System.Collections.ObjectModel;
+    using Newtonsoft.Json;
 
     [Table("tb_MyUserGroup")]
     public partial class tb_MyUserGroup : INotifyPropertyChanged
@@ -69,6 +70,7 @@ namespace Metro.DynamicModeules.Models.Sys
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_MyUserGroupRole> tb_MyUserGroupRole { get; set; }
 
+        //[JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_MyUser> tb_MyUser { get; set; }
 

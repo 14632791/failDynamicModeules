@@ -186,6 +186,12 @@
   <ItemGroup>
     <Content Include="Dynamic Expressions.html" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Metro.DynamicModeules.Models\Metro.DynamicModeules.Models.csproj">
+      <Project>{937E0D53-9696-48AB-B12F-736BC6D43F15}</Project>
+      <Name>Metro.DynamicModeules.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

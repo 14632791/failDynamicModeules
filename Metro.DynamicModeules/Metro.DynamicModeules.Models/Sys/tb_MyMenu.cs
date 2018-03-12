@@ -97,7 +97,9 @@ namespace Metro.DynamicModeules.Models.Sys
                 RaisePropertyChanged("ModuleID");
             }
         }
+
         private Nullable<int> _ModuleID;
+
         [Column("MenuType")]
         [Required]
         [StringLength(20)]
@@ -105,16 +107,16 @@ namespace Metro.DynamicModeules.Models.Sys
         {
             get
             {
-                return _MenuType;
+                return _menuType;
             }
             set
             {
-                if (Equals(_MenuType, value)) return;
-                _MenuType = value;
+                if (Equals(_menuType, value)) return;
+                _menuType = value;
                 RaisePropertyChanged("MenuType");
             }
         }
-        private string _MenuType;
+        private string _menuType;
 
         [JsonIgnore]
         public virtual sys_Modules sys_Modules { get; set; }
@@ -122,6 +124,7 @@ namespace Metro.DynamicModeules.Models.Sys
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_MyUserGroupRole> tb_MyUserGroupRole { get; set; }
 
+        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_MyAuthorityItem> tb_MyAuthorityItem { get; set; }
 
@@ -135,5 +138,43 @@ namespace Metro.DynamicModeules.Models.Sys
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+    }
+
+    /// <summary>
+    /// 菜单类型
+    /// </summary>
+    public enum MenuType
+    {
+        Unknow = 0,
+
+        /// <summary>
+        /// 模块主菜单(一级菜单)
+        /// </summary>
+        Module = 1, //
+
+        /// <summary>
+        /// 数据窗体菜单
+        /// </summary>
+        DataForm = 2,
+
+        /// <summary>
+        /// 父级菜单(下面有子菜单)
+        /// </summary>
+        ItemOwner = 3,
+
+        /// <summary>
+        /// 报表菜单
+        /// </summary>
+        Report = 4,
+
+        /// <summary>
+        /// 独立功能(用于扩展)
+        /// </summary>
+        Action = 5,
+
+        /// <summary>
+        /// 对话框
+        /// </summary>
+        Dialog = 6
     }
 }

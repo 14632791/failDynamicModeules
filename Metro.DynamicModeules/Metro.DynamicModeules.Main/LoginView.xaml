@@ -16,7 +16,6 @@
     <Controls:MetroWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/themes/metroheader.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Thickness x:Key="ControlMargin">5</Thickness>
         </ResourceDictionary>
