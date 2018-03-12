@@ -75,6 +75,7 @@ namespace Metro.DynamicModeules.BLL
             {
                 _loginUser = value;
                 RaisePropertyChanged("LoginUser");
+                DownloadBaseCacheData();
             }
         }
         private tb_MyUser _loginUser;
@@ -99,7 +100,8 @@ namespace Metro.DynamicModeules.BLL
         /// <summary>
         /// 所有的字典类型
         /// </summary>
-        private ObservableCollection<tb_CommDataDictType> AllCommonDataDictTypes {
+        private ObservableCollection<tb_CommDataDictType> AllCommonDataDictTypes
+        {
             get
             {
                 return _commonDataDictTypes;
@@ -133,7 +135,7 @@ namespace Metro.DynamicModeules.BLL
         #region 权限相关的数据
 
         /// <summary>
-        /// 按钮字典表 定义功能点, 每个功能点必须唯一，为2^N 次方
+        /// 所有按钮字典表 定义功能点, 每个功能点必须唯一，为2^N 次方
         /// </summary>
         public ObservableCollection<tb_MyAuthorityItem> AuthorityItems
         {
@@ -185,21 +187,21 @@ namespace Metro.DynamicModeules.BLL
         ObservableCollection<tb_MyMenu> _loginMenus;
 
         /// <summary>
-        /// 当前用户模块
+        /// 要加载的所有用户模块
         /// </summary>
-        public ObservableCollection<sys_Modules> LoginModules
+        public ObservableCollection<sys_Modules> Modules
         {
             get
             {
-                return _loginModules;
+                return _modules;
             }
             set
             {
-                _loginModules = value;
-                RaisePropertyChanged("LoginGroupRoles");
+                _modules = value;
+                RaisePropertyChanged("Modules");
             }
         }
-        ObservableCollection<sys_Modules> _loginModules;
+        ObservableCollection<sys_Modules> _modules;
 
         /// <summary>
         /// 当前用户组
@@ -226,11 +228,15 @@ namespace Metro.DynamicModeules.BLL
         /// </summary>
         /// <param name="account"></param>
         public async void DownloadBaseCacheData()
-        {
-            Expression<Func<tb_MyUserGroup, bool>> predicate = 
-            SerializeHelper.CreateExpression<tb_MyUserGroup, bool>("tb_MyUser.Contains(@0))", new object[] { LoginUser });
-            LoginUserGroups = await  _bllUserGroup.GetSearchList(predicate);
-
+        {   //获取当前用户组
+            LoginUserGroups = await _bllUserGroup.GetGroupsByAccount(LoginUser.Account);
+             //所有模块
+            Expression<Func<sys_Modules, bool>> predicate = SerializeHelper.CreateExpression<sys_Modules, bool>("ModuleID>@0", new object[] { -1});
+            Modules=await _bllModules.GetSearchList(predicate);
+            //所有子项
+            //所有按钮
+            Expression<Func<tb_MyAuthorityItem, bool>> predAuthorityItem = SerializeHelper.CreateExpression<tb_MyAuthorityItem, bool>("isid>@0", new object[] { -1 });
+           AuthorityItems = await _bllAuthItem.GetSearchList(predAuthorityItem);
         }
 
     }

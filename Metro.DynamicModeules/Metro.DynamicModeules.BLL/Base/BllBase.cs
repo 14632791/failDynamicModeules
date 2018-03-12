@@ -23,7 +23,7 @@ namespace Metro.DynamicModeules.BLL.Base
     /// <summary>
     /// 业务逻辑层基类
     /// </summary>
-    public class BllBase<T> : ICommonServiceAsyncBase<T> where T : class  
+    public class BllBase<T> where T : class  //: ICommonServiceAsyncBase<T> 
     {
 
         string _controllerName;
@@ -37,7 +37,7 @@ namespace Metro.DynamicModeules.BLL.Base
             return _controllerName;
         }
 
-        private string GetApiUrl(string methodName)
+        protected string GetApiUrl(string methodName)
         {
             return string.Format("{0}/{1}/{2}", Globals.WEBURL, GetControllerName(), methodName);
         }
@@ -78,7 +78,7 @@ namespace Metro.DynamicModeules.BLL.Base
 
         public virtual async Task<ObservableCollection<T>> GetSearchList(Expression<Func<T, bool>> where)
         {
-            XElement xmlPredicate = SerializeHelper.SerializeExpression(where);
+            XElement xmlPredicate = xmlPredicate = SerializeHelper.SerializeExpression(where);
             return await WebRequestHelper.PostHttpAsync<ObservableCollection<T>>(GetApiUrl("GetSearchList"), xmlPredicate);
         }
         public async Task<long> GetListCount(Expression<Func<T, bool>> where)
@@ -106,6 +106,6 @@ namespace Metro.DynamicModeules.BLL.Base
             var apiParams = new { model, isSave };
             return await WebRequestHelper.PostHttpAsync<bool>(GetApiUrl("Update"), apiParams);
         }
-        
+
     }
 }
