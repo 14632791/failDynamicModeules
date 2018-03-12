@@ -76,11 +76,11 @@ namespace Metro.DynamicModeules.Models.Sys
         [StringLength(50)]
         public string LastUpdatedBy { get; set; }
 
-        [JsonIgnore]
-        public virtual tb_MyMenu tb_MyMenu { get; set; }
+        //[JsonIgnore]
+        //public virtual tb_MyMenu tb_MyMenu { get; set; }
 
-        [JsonIgnore]
-        public virtual tb_MyUserGroup tb_MyUserGroup { get; set; }
+        //[JsonIgnore]
+        //public virtual tb_MyUserGroup tb_MyUserGroup { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

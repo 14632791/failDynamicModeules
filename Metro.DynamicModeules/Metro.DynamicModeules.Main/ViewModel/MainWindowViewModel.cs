@@ -1,9 +1,11 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Metro.DynamicModeules.BaseControls.Commands;
 using Metro.DynamicModeules.BaseControls.ViewModel;
+using Metro.DynamicModeules.BLL;
 using Metro.DynamicModeules.Models;
 using Metro.DynamicModeules.Models.Sys;
 using NHotkey;
@@ -310,7 +312,7 @@ namespace Metro.DynamicModeules.Main.ViewModel
                 });
             }
         }
-
+        
         private ICommand neverCloseTabCommand;
 
         public ICommand NeverCloseTabCommand
@@ -414,19 +416,17 @@ namespace Metro.DynamicModeules.Main.ViewModel
         }
 
 
-        // private ICommand showCustomDialogCommand;
-
-        //public ICommand ShowCustomDialogCommand
-        //{
-        //    get
-        //    {
-        //        return this.showCustomDialogCommand ?? (this.showCustomDialogCommand = new SimpleCommand
-        //        {
-        //            CanExecuteDelegate = x => true,
-        //            ExecuteDelegate = x => RunCustomFromVm()
-        //        });
-        //    }
-        //}
+        private ICommand _refreshCommand;
+        /// <summary>
+        /// 刷新缓存command
+        /// </summary>
+        public ICommand RefreshCommand
+        {
+            get
+            {
+                return this._refreshCommand ?? (this._refreshCommand = new RelayCommand(DataDictCache.Instance.DownloadBaseCacheData));
+            }
+        }
 
         //private async void RunCustomFromVm()
         //{

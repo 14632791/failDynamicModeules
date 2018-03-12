@@ -16,7 +16,7 @@ namespace Metro.DynamicModeules.Models.Sys
 	   [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
        public tb_MyAuthorityItem()
         {
-            tb_MyMenu = new ObservableCollection<tb_MyMenu>();
+            //tb_MyMenu = new ObservableCollection<tb_MyMenu>();
         }
         /// <summary>
         /// Ö÷¼üid
@@ -76,7 +76,7 @@ namespace Metro.DynamicModeules.Models.Sys
         }
         private int _AuthorityValue;
 		
-	    public virtual ICollection<tb_MyMenu> tb_MyMenu { get; set; }
+	    //public virtual ICollection<tb_MyMenu> tb_MyMenu { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>

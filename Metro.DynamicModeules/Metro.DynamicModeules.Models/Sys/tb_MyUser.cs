@@ -17,7 +17,7 @@ namespace Metro.DynamicModeules.Models.Sys
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tb_MyUser()
         {
-            tb_MyUserGroup = new ObservableCollection<tb_MyUserGroup>();
+            //tb_MyUserGroup = new ObservableCollection<tb_MyUserGroup>();
         }
 
        
@@ -286,9 +286,9 @@ namespace Metro.DynamicModeules.Models.Sys
         [StringLength(50)]
         public string LastUpdatedBy { get; set; }
 
-        [JsonIgnore]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tb_MyUserGroup> tb_MyUserGroup { get; set; }
+        //[JsonIgnore]
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        //public virtual ICollection<tb_MyUserGroup> tb_MyUserGroup { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

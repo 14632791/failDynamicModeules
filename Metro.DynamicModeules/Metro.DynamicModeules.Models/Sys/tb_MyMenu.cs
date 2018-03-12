@@ -15,8 +15,8 @@ namespace Metro.DynamicModeules.Models.Sys
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tb_MyMenu()
         {
-            tb_MyUserGroupRole = new ObservableCollection<tb_MyUserGroupRole>();
-            tb_MyAuthorityItem = new ObservableCollection<tb_MyAuthorityItem>();
+            //tb_MyUserGroupRole = new ObservableCollection<tb_MyUserGroupRole>();
+            //tb_MyAuthorityItem = new ObservableCollection<tb_MyAuthorityItem>();
         }
 
         [Key]
@@ -118,15 +118,15 @@ namespace Metro.DynamicModeules.Models.Sys
         }
         private string _menuType;
 
-        [JsonIgnore]
-        public virtual sys_Modules sys_Modules { get; set; }
+        //[JsonIgnore]
+        //public virtual sys_Modules sys_Modules { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tb_MyUserGroupRole> tb_MyUserGroupRole { get; set; }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        //public virtual ICollection<tb_MyUserGroupRole> tb_MyUserGroupRole { get; set; }
 
-        [JsonIgnore]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tb_MyAuthorityItem> tb_MyAuthorityItem { get; set; }
+        //[JsonIgnore]
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        //public virtual ICollection<tb_MyAuthorityItem> tb_MyAuthorityItem { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

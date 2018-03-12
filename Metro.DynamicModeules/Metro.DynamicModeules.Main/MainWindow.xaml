@@ -169,6 +169,9 @@
                           Header="Window icon: no scale, smaller frame"
                           IsCheckable="True"
                           IsChecked="{Binding IsNoScaleSmallerFrame, Mode=OneWay}" />
+                <Separator />
+                <MenuItem Command="{Binding RefreshCommand}"
+                          Header="刷新缓存"/>
             </MenuItem>
         </Menu>
         <Line X1="0" Y1="0" Y2="0" X2="3000" Grid.Row="1" Grid.ColumnSpan="2"  Stroke="{DynamicResource AccentColorBrush}"/>

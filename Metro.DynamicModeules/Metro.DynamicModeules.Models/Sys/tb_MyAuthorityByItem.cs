@@ -1,21 +1,22 @@
 namespace ClassLibraryTest
 {
+    using Metro.DynamicModeules.Models.Base;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class tb_MyUserGroupRe
+    public partial class tb_MyAuthorityByItem: NotifyPropertyChanged
     {
         [Key]
         [Column(Order = 0)]
-        [StringLength(30)]
-        public string GroupCode { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int ItemId { get; set; }
 
         [Key]
         [Column(Order = 1)]
-        [StringLength(50)]
-        public string Account { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int MenuId { get; set; }
     }
 }

@@ -15,8 +15,8 @@ namespace Metro.DynamicModeules.Models.Sys
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tb_MyUserGroup()
         {
-            tb_MyUserGroupRole = new ObservableCollection<tb_MyUserGroupRole>();
-            tb_MyUser = new ObservableCollection<tb_MyUser>();
+            //tb_MyUserGroupRole = new ObservableCollection<tb_MyUserGroupRole>();
+            //tb_MyUser = new ObservableCollection<tb_MyUser>();
         }
 
 
@@ -67,12 +67,13 @@ namespace Metro.DynamicModeules.Models.Sys
         [Column("LastUpdatedBy")]
         [StringLength(50)]
         public string LastUpdatedBy { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tb_MyUserGroupRole> tb_MyUserGroupRole { get; set; }
 
-        //[JsonIgnore]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tb_MyUser> tb_MyUser { get; set; }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        //public virtual ICollection<tb_MyUserGroupRole> tb_MyUserGroupRole { get; set; }
+
+        ////[JsonIgnore]
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        //public virtual ICollection<tb_MyUser> tb_MyUser { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
