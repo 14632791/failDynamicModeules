@@ -1,5 +1,7 @@
-﻿using Metro.DynamicModeules.BaseControls.ViewModel;
+﻿using MahApps.Metro.IconPacks;
+using Metro.DynamicModeules.BaseControls.ViewModel;
 using Metro.DynamicModeules.Interface.Sys;
+using Metro.DynamicModeules.Models.Sys;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,23 +17,21 @@ namespace SystemModule.ViewModel
     [Export(typeof(IModuleBase))]
     public class SystemMainViewModel : ModuleBaseViewModel
     {
-        
-
-        public override Control GetOwner()
+        protected override Control GetOwner()
         {
             return new SystemMainView();
         }
-
-       
-
-        public override void InitMenu()
+        protected override object GetIcon()
         {
-            SubModuleList = new ObservableCollection<Lazy<IMdiChildWindow>>();
-            AggregateCatalog aggregateCatalog = new AggregateCatalog();
-            AssemblyCatalog assemblyCatalog = new AssemblyCatalog(typeof(IMdiChildWindow).Assembly);
-            aggregateCatalog.Catalogs.Add(assemblyCatalog);
-            var container = new CompositionContainer(aggregateCatalog);
-            container.ComposeParts(this);
+            return new PackIconMaterial { Kind = PackIconMaterialKind.AccountSettingsVariant };
+        }
+        protected override sys_Modules GetModule()
+        {
+            return new sys_Modules
+            {
+                ModuleID = 7,
+                ModuleName = "系统管理"
+            };
         }
     }
 }

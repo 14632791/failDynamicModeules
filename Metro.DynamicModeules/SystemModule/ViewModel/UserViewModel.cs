@@ -12,10 +12,13 @@ using SystemModule.Views;
 
 namespace SystemModule.ViewModel
 {
+    /// <summary>
+    /// 用户管理界面
+    /// </summary>
     [Export(typeof(IMdiChildWindow))]
     public class UserViewModel : DataChildBaseViewModel<tb_MyUser>
     {
-        public override Control GetOwner()
+        protected override Control GetOwner()
         {
             return new DataChildBaseView
             {
@@ -25,6 +28,19 @@ namespace SystemModule.ViewModel
         }
 
         public override void SetButtonAuthority()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override object GetIcon()
+        {
+            throw new NotImplementedException();
+        }
+        /// <summary>
+        /// 获取对应的父模块
+        /// </summary>
+        /// <returns></returns>
+        protected override sys_Modules GetModule()
         {
             throw new NotImplementedException();
         }

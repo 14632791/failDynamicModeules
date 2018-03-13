@@ -33,23 +33,51 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             get; set;
         }
         public  Control Owner { get; set; }
-        public abstract Control GetOwner();
-        public PackIconControl<object> Icon { get; set; }
-
-       
         /// <summary>
-        /// 初始化子菜单
+        /// 获取窗体所有者
+        /// </summary>
+        /// <returns></returns>
+        protected abstract Control GetOwner();
+
+        /// <summary>
+        /// 获取该模块的实体对象
+        /// </summary>
+        /// <returns></returns>
+        protected abstract sys_Modules GetModule();
+
+        /// <summary>
+        /// 获取该模块的图标
+        /// </summary>
+        /// <returns></returns>
+        protected abstract object GetIcon(); 
+
+        public object Icon { get; set; }
+
+        /// <summary>
+        /// 初始化该模块下的所有子项
+        /// </summary>
+        public virtual void InitMenu()
+        {
+            SubModuleList = new ObservableCollection<Lazy<IMdiChildWindow>>();
+            AggregateCatalog aggregateCatalog = new AggregateCatalog();
+            AssemblyCatalog assemblyCatalog = new AssemblyCatalog(typeof(IMdiChildWindow).Assembly);
+            aggregateCatalog.Catalogs.Add(assemblyCatalog);
+            var container = new CompositionContainer(aggregateCatalog);
+            container.ComposeParts(this);
+        }
+
+
+        /// <summary>
+        /// 初始化
         /// </summary>
         public virtual void Initialize()
-        {           
+        {
+            Icon = GetIcon();
+            Module = GetModule();
             Owner = GetOwner();
             InitMenu();
             Owner.DataContext = this;//指定数据源
         }
-        /// <summary>
-        /// 初始化该模块下的所有子项
-        /// </summary>
-        public abstract void InitMenu();
-      
+
     }
 }

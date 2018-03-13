@@ -21,9 +21,8 @@ namespace Metro.DynamicModeules.Main
         public MainWindow()
         {
             InitializeComponent();
-            _viewModel = new MainWindowViewModel(DialogCoordinator.Instance) {
-                Modules = new System.Collections.ObjectModel.ObservableCollection<ModuleBaseViewModel>() };
-            DataContext = _viewModel;           
+            _viewModel = new MainWindowViewModel(DialogCoordinator.Instance);
+             DataContext = _viewModel;           
             Closing += (s, e) =>
             {               
                 if (!e.Cancel)

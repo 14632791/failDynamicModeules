@@ -32,7 +32,17 @@ namespace Metro.DynamicModeules.Main.ViewModel
         int? _integerGreater10Property;
         private bool _animateOnPositionChange = true;
 
-        public MainWindowViewModel(IDialogCoordinator dialogCoordinator)
+        MainWindowViewModel()
+        {
+            #region 初始化属性成员
+
+            Buttons = new ObservableCollection<tb_MyAuthorityItem>();
+            Modules = new ObservableCollection<ModuleBaseViewModel>();
+            TabPages = new ObservableCollection<ChildBaseViewModel>();
+            #endregion
+
+        }
+        public MainWindowViewModel(IDialogCoordinator dialogCoordinator):this()
         {
             this.Title = "Flyout Binding Test";
             _dialogCoordinator = dialogCoordinator;
@@ -60,7 +70,6 @@ namespace Metro.DynamicModeules.Main.ViewModel
                              };
 
             BrushResources = FindBrushResources();
-
             CultureInfos = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).ToList();
 
             try
@@ -70,7 +79,7 @@ namespace Metro.DynamicModeules.Main.ViewModel
             catch (HotkeyAlreadyRegisteredException exception)
             {
                 System.Diagnostics.Trace.TraceWarning("Uups, the hotkey {0} is already registered!", exception.Name);
-            }
+            }           
         }
 
         public void Dispose()
@@ -268,7 +277,7 @@ namespace Metro.DynamicModeules.Main.ViewModel
             }
         }
 
-      
+
 
         public string this[string columnName]
         {
@@ -312,7 +321,7 @@ namespace Metro.DynamicModeules.Main.ViewModel
                 });
             }
         }
-        
+
         private ICommand neverCloseTabCommand;
 
         public ICommand NeverCloseTabCommand
