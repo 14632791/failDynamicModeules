@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Text;
 namespace Metro.DynamicModeules.Models.Base
 {
    public class NotifyPropertyChanged: INotifyPropertyChanged
-    {
+    {      
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>

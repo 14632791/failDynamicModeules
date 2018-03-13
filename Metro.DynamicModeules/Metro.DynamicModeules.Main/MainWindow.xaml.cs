@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Metro.DynamicModeules.BaseControls.ViewModel;
 using Metro.DynamicModeules.Main.ViewModel;
 using System;
 using System.ComponentModel.Composition;
@@ -20,7 +21,8 @@ namespace Metro.DynamicModeules.Main
         public MainWindow()
         {
             InitializeComponent();
-            _viewModel = new MainWindowViewModel(DialogCoordinator.Instance);
+            _viewModel = new MainWindowViewModel(DialogCoordinator.Instance) {
+                Modules = new System.Collections.ObjectModel.ObservableCollection<ModuleBaseViewModel>() };
             DataContext = _viewModel;           
             Closing += (s, e) =>
             {               
@@ -125,6 +127,7 @@ namespace Metro.DynamicModeules.Main
         {
             foreach (var item in PluginHandle.Instance.PluginList)
             {
+                _viewModel.Modules.Add((ModuleBaseViewModel)item.Value);
                 //Expander expander = new Expander { Header = item.Value.Module.ModuleName };
                 //sPanelRoot.Children.Add(expander);
             }

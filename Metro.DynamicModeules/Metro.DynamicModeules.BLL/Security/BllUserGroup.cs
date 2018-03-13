@@ -18,8 +18,7 @@ namespace Metro.DynamicModeules.BLL.Security
         }
         public async  Task<ObservableCollection<tb_MyUserGroup>> GetGroupsByAccount(string userAccount)
         {
-            var apiParams = new { userAccount};
-            return await WebRequestHelper.PostHttpAsync<ObservableCollection<tb_MyUserGroup>>(GetApiUrl("GetGroupsByAccount"), apiParams);
+            return await WebRequestHelper.PostHttpAsync<ObservableCollection<tb_MyUserGroup>>(GetApiUrl("GetGroupsByAccount"), userAccount);
         }
     }
 }

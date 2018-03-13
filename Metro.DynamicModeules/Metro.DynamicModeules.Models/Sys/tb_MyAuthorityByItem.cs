@@ -1,4 +1,4 @@
-namespace ClassLibraryTest
+namespace Metro.DynamicModeules.Models.Sys
 {
     using Metro.DynamicModeules.Models.Base;
     using System;
@@ -7,16 +7,43 @@ namespace ClassLibraryTest
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class tb_MyAuthorityByItem: NotifyPropertyChanged
+    [Table("tb_MyAuthorityByItem")]
+    public class tb_MyAuthorityByItem: NotifyPropertyChanged
     {
         [Key]
         [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int ItemId { get; set; }
+        public int ItemId
+        {
+            get
+            {
+                return _itemId;
+            }
+            set
+            {
+                if (Equals(_itemId, value)) return;
+                _itemId = value;
+                RaisePropertyChanged("ItemId");
+            }
+        }
+        int _itemId;
 
         [Key]
         [Column(Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int MenuId { get; set; }
+        public int MenuId
+        {
+            get
+            {
+                return _menuId;
+            }
+            set
+            {
+                if (Equals(_menuId, value)) return;
+                _menuId = value;
+                RaisePropertyChanged("MenuId");
+            }
+        }
+        int _menuId;
     }
 }

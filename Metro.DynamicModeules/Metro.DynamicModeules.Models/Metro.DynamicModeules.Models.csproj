@@ -79,6 +79,8 @@
     <Compile Include="log_SOs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="sysdiagram.cs" />
+    <Compile Include="Sys\tb_MyAuthorityByItem.cs" />
+    <Compile Include="Sys\tb_MyUserGroupRe.cs" />
     <Compile Include="sys_BusinessTables.cs" />
     <Compile Include="sys_DataSN.cs" />
     <Compile Include="sys_DocSN.cs" />
