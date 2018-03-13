@@ -1,11 +1,13 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Metro.DynamicModeules.BaseControls.Commands;
 using Metro.DynamicModeules.BaseControls.ViewModel;
 using Metro.DynamicModeules.BLL;
+using Metro.DynamicModeules.BLL.Base;
 using Metro.DynamicModeules.Models;
 using Metro.DynamicModeules.Models.Sys;
 using NHotkey;
@@ -36,9 +38,11 @@ namespace Metro.DynamicModeules.Main.ViewModel
         {
             #region 初始化属性成员
 
-            Buttons = new ObservableCollection<tb_MyAuthorityItem>();
+            //Buttons = new ObservableCollection<tb_MyAuthorityItem>();
             Modules = new ObservableCollection<ModuleBaseViewModel>();
             TabPages = new ObservableCollection<ChildBaseViewModel>();
+            //检查子界面
+            Messenger.Default.Register<ChildBaseViewModel>(this, MessengerToken.FocusedChild, SetFocusedChild);
             #endregion
 
         }
@@ -437,19 +441,7 @@ namespace Metro.DynamicModeules.Main.ViewModel
             }
         }
 
-        //private async void RunCustomFromVm()
-        //{
-        //    var customDialog = new CustomDialog() { Title = "Custom Dialog" };
-
-        //    var customDialogExampleContent = new CustomDialogExampleContent(instance =>
-        //    {
-        //        _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        //        System.Diagnostics.Debug.WriteLine(instance.FirstName);
-        //    });
-        //    customDialog.Content = new CustomDialogExample { DataContext = customDialogExampleContent };
-
-        //    await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        //}
+      
 
         public IEnumerable<string> BrushResources { get; private set; }
 
@@ -555,23 +547,34 @@ namespace Metro.DynamicModeules.Main.ViewModel
 
         public bool IsNoScaleSmallerFrame { get { return ((MetroWindow)Application.Current.MainWindow).IconScalingMode == MultiFrameImageMode.NoScaleSmallerFrame; } }
 
-
+        #region Expand 2018.3.13
+        /// <summary>
+        /// 设置获得焦点的界面
+        /// </summary>
+        private void SetFocusedChild(ChildBaseViewModel page)
+        {
+            if (!TabPages.Contains(page))
+            {
+                TabPages.Add(page);
+            }
+            FocusedPage = page;
+        }
 
         #region 上方的按钮列表
 
-        ObservableCollection<tb_MyAuthorityItem> _buttons;
-        public ObservableCollection<tb_MyAuthorityItem> Buttons
-        {
-            get
-            {
-                return _buttons;
-            }
-            set
-            {
-                _buttons = value;
-                RaisePropertyChanged(() => Buttons);
-            }
-        }
+        //ObservableCollection<tb_MyAuthorityItem> _buttons;
+        //public ObservableCollection<tb_MyAuthorityItem> Buttons
+        //{
+        //    get
+        //    {
+        //        return _buttons;
+        //    }
+        //    set
+        //    {
+        //        _buttons = value;
+        //        RaisePropertyChanged(() => Buttons);
+        //    }
+        //}
         #endregion
 
         #region 左则的模块列表
@@ -611,7 +614,7 @@ namespace Metro.DynamicModeules.Main.ViewModel
         /// 当前选中的page
         /// </summary>
         ChildBaseViewModel _activatePage;
-        public ChildBaseViewModel ActivatePage
+        public ChildBaseViewModel FocusedPage
         {
             get
             {
@@ -620,10 +623,13 @@ namespace Metro.DynamicModeules.Main.ViewModel
             set
             {
                 _activatePage = value;
-                RaisePropertyChanged(() => ActivatePage);
+                RaisePropertyChanged(() => FocusedPage);
             }
         }
     }
+
+#endregion
+
     #region 其它类定义
 
     public class AccentColorMenuData

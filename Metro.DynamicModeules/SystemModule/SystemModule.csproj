@@ -113,7 +113,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ViewModel\UserViewModel.cs" />
+    <Compile Include="ViewModel\DataChildUserViewModel.cs" />
     <Compile Include="Views\SystemMainView.xaml.cs">
       <DependentUpon>SystemMainView.xaml</DependentUpon>
     </Compile>

@@ -177,4 +177,6 @@ namespace Metro.DynamicModeules.Models.Sys
         /// </summary>
         Dialog = 6
     }
+
+    
 }

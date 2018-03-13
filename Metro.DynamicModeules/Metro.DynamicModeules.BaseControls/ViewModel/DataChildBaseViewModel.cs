@@ -9,6 +9,8 @@ using Metro.DynamicModeules.Interface;
 using System.Windows.Controls;
 using Metro.DynamicModeules.Models;
 using Metro.DynamicModeules.Common;
+using System.Windows.Input;
+using GalaSoft.MvvmLight.Command;
 
 namespace Metro.DynamicModeules.BaseControls.ViewModel
 {
@@ -16,44 +18,67 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     /// 带数据处理的子窗体viewModel
     /// </summary>
     /// <typeparam name="T"></typeparam>
- public  abstract class DataChildBaseViewModel<T>: ChildBaseViewModel, IDataOperatable<T>, ISummaryView<T>, IPrintableForm
-        where T:class,new()
+    public abstract class DataChildBaseViewModel<T> : ChildBaseViewModel, IDataOperatable<T>, ISummaryView<T>, IPrintableForm
+           where T : class, new()
     {
+        
+       
 
+        string _stateName;
         /// <summary>
-        /// 当显示修改明细页时,首先获取焦点的编辑框.
+        /// 状态字符
         /// </summary>
-        protected Control _ActiveEditor;
-
-        /// <summary>
-        /// 关键字段输入框,新增时不可修改
-        /// </summary>
-        protected Control _KeyEditor;
-
-     
-        /// <summary>
-        /// 数据编辑页的主容器
-        /// 因继承问题,需要在子类窗体Load的时候需要赋值
-        /// </summary>
-        protected Control _DetailGroupControl;
+        public string StateName
+        {
+            get
+            {
+                return _stateName;
+            }
+            set
+            {
+                _stateName = value;
+                RaisePropertyChanged(() => StateName);
+            }
+        }
 
         /// <summary>
         /// 数据操作状态
         /// </summary>
         protected UpdateType _updateType = UpdateType.None;
-
+        public UpdateType DataUpdateType
+        {
+            get
+            {
+                return _updateType;
+            }
+            set
+            {
+                _updateType = value;
+                StateName = GetStateName();
+            }
+        }
         protected virtual string GetStateName()
         {
-            if (UpdateType.Add == _updateType) return "(新增模式)";
-            else if (UpdateType.Modify == _updateType) return "(修改模式)";
-            else return "(查看模式)";
+            string utype = "(查看模式)";
+            switch (_updateType)
+            {
+                case UpdateType.Add:
+                    utype = "(新增模式)";
+                    break;
+                case UpdateType.Modify:
+                    utype = "(修改模式)";
+                    break;
+                default:
+                    break;
+            }
+            return utype;
         }
 
         /// <summary>
         /// 是否允许用户操作数据
         /// </summary>
         protected bool _AllowDataOperate = true;
-               
+
 
         /// <summary>
         /// 自定义初始化窗体操作, 窗体的Load事件必须调用此方法
@@ -64,7 +89,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             this.SetViewMode();//预设为数据查看模式
             this.SetButtonAuthority();//设置按钮权限
             //无操作状态下不可输入数据
-            SetDetailEditorsAccessable(_DetailGroupControl, false);
+            //SetDetailEditorsAccessable(_DetailGroupControl, false);
         }
 
 
@@ -515,8 +540,8 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 }
             }
         }
-            
-     
+
+
         /// <summary>
         ///获取指定的资料行
         /// </summary>
@@ -578,19 +603,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
 
         #endregion
 
-        /// <summary>
-        /// 第一个编辑控件设置焦点.
-        /// </summary>
-        protected void FocusEditor()
-        {
-            if (_ActiveEditor != null)
-            {
-                if (_ActiveEditor.IsFocused)
-                    _ActiveEditor.Focus();
-                //else
-                //    this.SelectNextControl(_ActiveEditor, true, false, true, true);
-            }
-        }
+
 
         /// <summary>
         /// 显示明细页
@@ -710,7 +723,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         //    }
         //}
 
-      
+
 
 
         /// <summary>

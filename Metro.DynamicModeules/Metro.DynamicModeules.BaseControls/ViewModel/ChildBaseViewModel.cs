@@ -1,5 +1,8 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using MahApps.Metro.IconPacks;
+using Metro.DynamicModeules.BLL.Base;
 using Metro.DynamicModeules.Interface.Sys;
 using Metro.DynamicModeules.Models;
 using Metro.DynamicModeules.Models.Sys;
@@ -10,6 +13,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Metro.DynamicModeules.BaseControls.ViewModel
 {
@@ -17,9 +21,23 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     /// 模板子项的基类
     /// </summary>
     //[Export(typeof(IMdiChildWindow))]
-    public abstract class ChildBaseViewModel : ModuleBaseViewModel, IMdiChildWindow, ISystemButtons//IPurviewControllable
+    public abstract class ChildBaseViewModel : CommonModuleBaseViewModel, IMdiChildWindow, ISystemButtons//IPurviewControllable
     {
-      
+        /// <summary>
+        /// 单击该控件时，打开对应的控件
+        /// </summary>
+        public ICommand OpenOwnerCommand
+        {
+            get
+            {
+                return _clickCommand ?? (_clickCommand = new RelayCommand(OnOpenOwner));
+            }
+        }
+        ICommand _clickCommand;
+        protected virtual void OnOpenOwner()
+        {
+            Messenger.Default.Send( MessengerToken.FocusedChild, Owner);
+        }
 
         tb_MyMenu _subItem;
         /// <summary>
@@ -69,9 +87,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 _systemButtons = value;
                 RaisePropertyChanged(() => SystemButtons);
             }
-        }
-            
-
+        } 
 
         #region IPurviewControllable 接口实现
 
@@ -144,11 +160,14 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             //NotifyObserver();
         }
-
-        public override void InitMenu()
+        /// <summary>
+        /// 初始化菜单
+        /// </summary>
+        public void InitMenu()
         {
             throw new NotImplementedException();
         }
+
 
         #endregion
 

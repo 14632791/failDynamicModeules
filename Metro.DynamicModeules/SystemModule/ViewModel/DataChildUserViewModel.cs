@@ -1,4 +1,5 @@
-﻿using Metro.DynamicModeules.BaseControls.ControlEx;
+﻿using MahApps.Metro.IconPacks;
+using Metro.DynamicModeules.BaseControls.ControlEx;
 using Metro.DynamicModeules.BaseControls.ViewModel;
 using Metro.DynamicModeules.Interface.Sys;
 using Metro.DynamicModeules.Models.Sys;
@@ -16,7 +17,7 @@ namespace SystemModule.ViewModel
     /// 用户管理界面
     /// </summary>
     [Export(typeof(IMdiChildWindow))]
-    public class UserViewModel : DataChildBaseViewModel<tb_MyUser>
+    public class DataChildUserViewModel : DataChildBaseViewModel<tb_MyUser>
     {
         protected override Control GetOwner()
         {
@@ -34,15 +35,7 @@ namespace SystemModule.ViewModel
 
         protected override object GetIcon()
         {
-            throw new NotImplementedException();
-        }
-        /// <summary>
-        /// 获取对应的父模块
-        /// </summary>
-        /// <returns></returns>
-        protected override sys_Modules GetModule()
-        {
-            throw new NotImplementedException();
-        }
+            return new PackIconMaterial { Kind = PackIconMaterialKind.AccountSettingsVariant };
+        }      
     }
 }

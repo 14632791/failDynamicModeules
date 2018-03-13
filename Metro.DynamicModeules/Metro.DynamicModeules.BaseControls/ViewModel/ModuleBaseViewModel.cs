@@ -1,6 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
 using MahApps.Metro.IconPacks;
-using Metro.DynamicModeules.BaseControls.Models;
 using Metro.DynamicModeules.Interface.Sys;
 using Metro.DynamicModeules.Models;
 using Metro.DynamicModeules.Models.Sys;
@@ -16,28 +15,15 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     ///每个模块中唯一的主窗体类
     /// </summary>
     //[Export(typeof(IModuleBase))]
-    public abstract class ModuleBaseViewModel : ViewModelBase, IModuleBase
+    public abstract class ModuleBaseViewModel : CommonModuleBaseViewModel, IModuleBase
     {
-        public ModuleBaseViewModel()
-        {
-            Initialize();
-        }
-        public sys_Modules Module { get; set; }
+       
         /// <summary>
         /// 子窗口插件
         /// </summary>
         [ImportMany(typeof(IMdiChildWindow), AllowRecomposition = true)]
         public ObservableCollection<Lazy<IMdiChildWindow>> SubModuleList { get; set; }
-        public ObservableCollection<MenuModel> Menus
-        {
-            get; set;
-        }
-        public  Control Owner { get; set; }
-        /// <summary>
-        /// 获取窗体所有者
-        /// </summary>
-        /// <returns></returns>
-        protected abstract Control GetOwner();
+               
 
         /// <summary>
         /// 获取该模块的实体对象
@@ -45,14 +31,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <returns></returns>
         protected abstract sys_Modules GetModule();
 
-        /// <summary>
-        /// 获取该模块的图标
-        /// </summary>
-        /// <returns></returns>
-        protected abstract object GetIcon(); 
-
-        public object Icon { get; set; }
-
+       
         /// <summary>
         /// 初始化该模块下的所有子项
         /// </summary>
@@ -70,12 +49,67 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <summary>
         /// 初始化
         /// </summary>
+        public override void Initialize()
+        {
+            base.Initialize();           
+            Module = GetModule();
+            InitMenu();
+        }
+
+    }
+
+    /// <summary>
+    /// 主模块与子模块通用的基类
+    /// </summary>
+    public abstract class CommonModuleBaseViewModel : ViewModelBase
+    {
+        public CommonModuleBaseViewModel()
+        {
+            Initialize();
+        }
+        public sys_Modules Module { get; set; }
+       
+
+        public Control Owner { get; set; }
+        /// <summary>
+        /// 获取窗体所有者
+        /// </summary>
+        /// <returns></returns>
+        protected abstract Control GetOwner();
+
+       
+        /// <summary>
+        /// 获取该模块的图标
+        /// </summary>
+        /// <returns></returns>
+        protected abstract object GetIcon();
+
+        object _icon;
+        /// <summary>
+        /// 图标
+        /// </summary>
+        public object Icon
+        {
+            get
+            {
+                return _icon;
+            }
+            set
+            {
+                if (Equals(_icon, value)) return;
+                _icon = value;
+                RaisePropertyChanged("Icon");
+            }
+        }
+              
+
+        /// <summary>
+        /// 初始化
+        /// </summary>
         public virtual void Initialize()
         {
             Icon = GetIcon();
-            Module = GetModule();
             Owner = GetOwner();
-            InitMenu();
             Owner.DataContext = this;//指定数据源
         }
 
