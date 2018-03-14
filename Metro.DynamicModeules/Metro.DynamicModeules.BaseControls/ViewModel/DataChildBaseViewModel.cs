@@ -12,6 +12,7 @@ using Metro.DynamicModeules.Common;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using Metro.DynamicModeules.BLL.Base;
+using System.Collections;
 
 namespace Metro.DynamicModeules.BaseControls.ViewModel
 {
@@ -19,7 +20,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     /// 带数据处理的子窗体viewModel
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class DataChildBaseViewModel<T> : ChildBaseViewModel//, IDataOperatable<T>, ISummaryView<T>, IPrintableForm
+    public abstract class DataChildBaseViewModel<T> : ChildBaseViewModel, IDataOperatable, ISummaryView<T>//, IPrintableForm
            where T : class, new()
     {
 
@@ -161,8 +162,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         public override void InitButtons()
         {
             base.InitButtons();
-
-            List<ButtonInfoViewModel> dataButton = this.GetDataOperatableButtons();
+            List<ButtonInfoViewModel> dataButton = (List<ButtonInfoViewModel>)this.GetDataOperatableButtons();
             List<ButtonInfoViewModel> printButton = this.GetPrintableButtons();
             foreach (var item in dataButton)
             {
@@ -268,7 +268,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 数据操作按钮
         /// </summary>
         /// <returns></returns>
-        public List<ButtonInfoViewModel> GetDataOperatableButtons()
+        public IList GetDataOperatableButtons()
         {
 
             List<ButtonInfoViewModel> list = new List<ButtonInfoViewModel>();
@@ -294,7 +294,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 新增记录
         /// </summary>
         /// <param name="sender"></param>
-        public virtual void DoAdd(T row)
+        public virtual void DoAdd()
         {
             this._updateType = UpdateType.Add;
             this.SetEditMode();
@@ -305,7 +305,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 修改数据
         /// </summary>
         /// <param name="sender"></param>
-        public virtual void DoEdit(T row)
+        public virtual void DoEdit()
         {
             this._updateType = UpdateType.Modify;
             this.SetEditMode();
@@ -316,7 +316,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 取消新增或修改
         /// </summary>
         /// <param name="sender"></param>
-        public virtual void DoCancel(T row)
+        public virtual void DoCancel()
         {
             try
             {
@@ -327,7 +327,9 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 if (_updateType == UpdateType.Add)
                     this.ShowSummaryPage(true);
                 else if (RowCount > 0)
-                    this.DoViewContent(row);
+                {
+                    //this.DoViewContent(row);
+                }
             }
             catch (Exception e)
             {
@@ -338,7 +340,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <summary>
         /// 保存数据
         /// </summary>
-        public virtual bool DoSave(T row)
+        public virtual bool DoSave()
         {
             this._updateType = UpdateType.None;
             this.SetViewMode();
@@ -351,7 +353,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 删除记录
         /// </summary>
         /// <param name="sender"></param>
-        public virtual bool DoDelete(T row)
+        public virtual bool DoDelete()
         {
             return true;
         }
@@ -543,6 +545,8 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 }
             }
         }
+
+        public T FocusedRow { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 
         /// <summary>
@@ -798,7 +802,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                     var dr = GetDataRow(FocusedRowHandle);
                     this.ReplaceDataRowChanges(summary, dr);//替换数据
                     //dr.Table.AcceptChanges();
-                    RefreshRow(FocusedRowHandle);//修改或新增要刷新Grid数据          
+                    //RefreshRow(FocusedRowHandle);//修改或新增要刷新Grid数据          
                 }
                 isSave = true;
             }
@@ -816,33 +820,19 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             }
         }
 
+        public void DoViewContent()
+        {
+            throw new NotImplementedException();
+        }
 
-
-
-
-        /// <summary>
-        /// 刷新
-        /// </summary>
         public void RefreshDataSource()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void BindingDoubleClick(EventHandler eventHandler)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetFocus()
         {
             throw new NotImplementedException();
         }
 
         public void MoveFirst()
         {
-            if (View == null) return;
-            //if (tcBusiness.SelectedTabPage != tpSummary)
-            DoViewContent(null);
+            throw new NotImplementedException();
         }
 
         public void MovePrior()
@@ -859,23 +849,5 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             throw new NotImplementedException();
         }
-
-        public bool IsValidRowHandle(int rowHandle)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RefreshRow(int rowHandle)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DoViewContent()
-        {
-            throw new NotImplementedException();
-        }
-        /*分割线*/
-
-
     }
 }

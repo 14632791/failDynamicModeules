@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Metro.DynamicModeules.Interface.Sys;
 using Metro.DynamicModeules.Models.Sys;
 
 namespace Metro.DynamicModeules.BLL.Base
@@ -14,7 +15,7 @@ namespace Metro.DynamicModeules.BLL.Base
             Icon = icon;
             AuthorityItem = item;
         }
-
+        //public IDataOperatable DataOperatabler { get; set; }
         tb_MyAuthorityItem _authorityItem;
         public tb_MyAuthorityItem AuthorityItem
         {
@@ -56,7 +57,7 @@ namespace Metro.DynamicModeules.BLL.Base
         RelayCommand _clickCommand;
         public RelayCommand ClickCommand
         {
-            get;set;
+            get; set;
             //get
             //{
             //    return _clickCommand ?? (_clickCommand = new RelayCommand(OnClick));
