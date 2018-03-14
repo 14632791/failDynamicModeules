@@ -21,7 +21,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     /// 模板子项的基类
     /// </summary>
     //[Export(typeof(IMdiChildWindow))]
-    public abstract class ChildBaseViewModel : CommonModuleBaseViewModel, IMdiChildWindow, ISystemButtons//IPurviewControllable
+    public abstract class ChildBaseViewModel : CommonModuleBaseViewModel//, IMdiChildWindow, ISystemButtons,IPurviewControllable
     {
         public ChildBaseViewModel()
         {
@@ -71,11 +71,11 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         }
         protected abstract tb_MyMenu GetMenu();
 
-        ObservableCollection<IButtonInfo> _buttons ;
+        ObservableCollection<ButtonInfoViewModel> _buttons ;
         /// <summary>
         /// 初始化子窗体的按钮数组
         /// </summary>
-        public ObservableCollection<IButtonInfo> Buttons {
+        public ObservableCollection<ButtonInfoViewModel> Buttons {
             get
             {
                 return _buttons;
@@ -87,11 +87,11 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             }
         }
 
-        ObservableCollection<IButtonInfo> _systemButtons = new ObservableCollection<IButtonInfo>();
+        ObservableCollection<ButtonInfoViewModel> _systemButtons = new ObservableCollection<ButtonInfoViewModel>();
         /// <summary>
         /// 子窗体的系统按钮
         /// </summary>
-        public ObservableCollection<IButtonInfo> SystemButtons
+        public ObservableCollection<ButtonInfoViewModel> SystemButtons
         {
             get
             {
@@ -154,9 +154,9 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <summary>
         /// 系统按钮列表。注：子窗体享用系统按钮，如帮助/关闭窗体常用功能。
         /// </summary>        
-        public virtual List<IButtonInfo> GetSystemButtons()
+        public virtual List<ButtonInfoViewModel> GetSystemButtons()
         {
-            return new List<IButtonInfo>();
+            return new List<ButtonInfoViewModel>();
             //if (SystemButtons == null)
             //{
             //    //_systemButtons.Add(this.ToolbarRegister.CreateButton("btnHelp", "帮助",

@@ -17,7 +17,6 @@ namespace Metro.DynamicModeules.Models.Sys
         public tb_MyAuthorityItem()
         {
         }
-     
 
         /// <summary>
         /// °´Å¥Ãû³Æ

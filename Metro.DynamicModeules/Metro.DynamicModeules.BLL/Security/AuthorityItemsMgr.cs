@@ -7,124 +7,167 @@ using System.Text;
 
 namespace Metro.DynamicModeules.BLL.Security
 {
+    public enum AuthorityItemType
+    {
+        /// <summary>
+        /// 取消 = 0
+        /// </summary>
+        Cancel,
 
+        /// <summary>
+        /// 系统关闭 = 0
+        /// </summary>
+        Close,
+
+        /// <summary>
+        /// 关闭窗体 = 0
+        /// </summary>
+        CloseBox,
+
+        /// <summary>
+        /// 查看修改历史 = 0
+        /// </summary>
+        History,
+
+        /// <summary>
+        /// 显示帮助信息 = 0
+        /// </summary>
+        Question,
+
+        /// <summary>
+        /// 添加= 1
+        /// </summary>
+        Add,
+
+        /// <summary>
+        /// 删除 = 2
+        /// </summary>
+        Delete,
+
+        /// <summary>
+        /// 修改 = 4
+        /// </summary>
+        EditBox,
+
+        /// <summary>
+        /// 批准 = 8
+        /// </summary>
+        Approve,
+
+        /// <summary>
+        /// 变更 = 16
+        /// </summary>
+        Change,
+
+        /// <summary>
+        /// 打印 = 32
+        /// </summary>
+        Print,
+
+        /// <summary>
+        /// 打印预览 = 64
+        /// </summary>
+        Preview,
+
+        /// <summary>
+        /// 作废 = 128
+        /// </summary>
+        TrashSolid,
+
+        /// <summary>
+        /// 生成单据 = 256
+        /// </summary>
+        Receipt,
+
+        /// <summary>
+        /// 复制单据 = 512
+        /// </summary>
+        CopySolid,
+
+        /// <summary>
+        /// 导出单据 = 1024
+        /// </summary>
+        Export,
+
+        /// <summary>
+        /// 锁定 = 2048
+        /// </summary>
+        Lock,
+
+        /// <summary>
+        /// 保存 = 4096
+        /// </summary>
+        Save,
+
+        /// <summary>
+        /// 附件管理 = 8192
+        /// </summary>
+        Attachment,
+
+        /// <summary>
+        /// 查看版本历史 = 16384
+        /// </summary>
+        Versions,
+
+        /// <summary>
+        /// 查询 = 16384 * 2,
+        /// </summary>
+        Search
+    }
     /// <summary>
     /// 功能点权限管理
     /// </summary>
     public class AuthorityItemsMgr
-    {
-        #region 按钮的权限变量
+    { 
         /// <summary>
-        /// 取消
+        /// 这里是本地的所有按钮对象
         /// </summary>
-        public static readonly int Cancel = 0;
+        public static ObservableCollection<tb_MyAuthorityItem> AllAuthorityItems { get; set; }
 
-        /// <summary>
-        /// 系统关闭
-        /// </summary>
-        public static readonly int Close = 0;
-
-        /// <summary>
-        /// 关闭窗体
-        /// </summary>
-        public static readonly int CloseBox = 0;
-
-        /// <summary>
-        /// 查看修改历史
-        /// </summary>
-        public static readonly int History = 0;
-
-        /// <summary>
-        /// 显示帮助信息
-        /// </summary>
-        public static readonly int Question = 0;
-
-        /// <summary>
-        /// 添加
-        /// </summary>
-        public static readonly int Add = 1;
-
-        /// <summary>
-        /// 删除
-        /// </summary>
-        public static readonly int Delete = 2;
-
-        /// <summary>
-        /// 修改
-        /// </summary>
-        public static readonly int EditBox = 4;
-
-        /// <summary>
-        /// 批准
-        /// </summary>
-        public static readonly int Approve = 8;
-
-        /// <summary>
-        /// 变更
-        /// </summary>
-        public static readonly int Change = 16;
-
-        /// <summary>
-        /// 打印
-        /// </summary>
-        public static readonly int Print = 32;
-
-        /// <summary>
-        /// 打印预览
-        /// </summary>
-        public static readonly int Preview = 64;
-
-        /// <summary>
-        /// 作废
-        /// </summary>
-        public static readonly int TrashSolid = 128;
-
-        /// <summary>
-        /// 生成单据
-        /// </summary>
-        public static readonly int Receipt = 256;
-
-        /// <summary>
-        /// 复制单据
-        /// </summary>
-        public static readonly int CopySolid = 512;
-
-        /// <summary>
-        /// 导出单据
-        /// </summary>
-        public static readonly int Export = 1024;
-
-        /// <summary>
-        /// 锁定
-        /// </summary>
-        public static readonly int Lock = 2048;
-
-        /// <summary>
-        /// 保存
-        /// </summary>
-        public static readonly int Save = 4096;
-
-        /// <summary>
-        /// 附件管理
-        /// </summary>
-        public static readonly int Attachment = 8192;
-
-        /// <summary>
-        /// 查看版本历史
-        /// </summary>
-        public static readonly int Versions = 16384;
-
-        /// <summary>
-        /// 查询
-        /// </summary>
-        public static readonly int Search = 16384 * 2;
-
-        #endregion
-
-        public static ObservableCollection<tb_MyAuthorityItem> AuthorityItems { get; set; }
         = new ObservableCollection<tb_MyAuthorityItem>
         {
-
+        new tb_MyAuthorityItem{
+            Code = AuthorityItemType.Cancel .ToString(),AuthorityValue= 0},
+        new tb_MyAuthorityItem{
+            Code =AuthorityItemType.Close .ToString(),AuthorityValue= 0},
+        new tb_MyAuthorityItem{
+            Code =AuthorityItemType.CloseBox .ToString(),AuthorityValue= 0},
+        new tb_MyAuthorityItem{
+            Code =AuthorityItemType.History .ToString(),AuthorityValue= 0},
+        new tb_MyAuthorityItem{
+            Code =AuthorityItemType.Question .ToString(),AuthorityValue= 0},
+        new tb_MyAuthorityItem{
+            Code =AuthorityItemType.Add .ToString(),AuthorityValue= 1},
+        new tb_MyAuthorityItem{
+            Code =AuthorityItemType.Delete .ToString(),AuthorityValue= 2},
+        new tb_MyAuthorityItem{
+            Code =AuthorityItemType.EditBox .ToString(),AuthorityValue= 4},
+        new tb_MyAuthorityItem{
+            Code =AuthorityItemType.Approve .ToString(),AuthorityValue= 8},
+        new tb_MyAuthorityItem{
+            Code =AuthorityItemType.Change .ToString(),AuthorityValue= 16},
+        new tb_MyAuthorityItem{
+            Code =AuthorityItemType.Print .ToString(),AuthorityValue= 32},
+        new tb_MyAuthorityItem{
+            Code =AuthorityItemType.Preview .ToString(),AuthorityValue= 64},
+        new tb_MyAuthorityItem{
+            Code =AuthorityItemType.TrashSolid .ToString(),AuthorityValue= 128},
+        new tb_MyAuthorityItem{
+            Code =AuthorityItemType.Receipt .ToString(),AuthorityValue= 256},
+        new tb_MyAuthorityItem{
+            Code =AuthorityItemType.CopySolid .ToString(),AuthorityValue= 512},
+        new tb_MyAuthorityItem{
+            Code =AuthorityItemType.Export .ToString(),AuthorityValue= 1024},
+        new tb_MyAuthorityItem{
+            Code =AuthorityItemType.Lock .ToString(),AuthorityValue= 2048},
+        new tb_MyAuthorityItem{
+            Code =AuthorityItemType.Save .ToString(),AuthorityValue= 4096},
+        new tb_MyAuthorityItem{
+            Code =AuthorityItemType.Attachment .ToString(),AuthorityValue= 8192},
+        new tb_MyAuthorityItem{
+            Code =AuthorityItemType.Versions .ToString(),AuthorityValue= 16384},
+        new tb_MyAuthorityItem{
+            Code =AuthorityItemType.Search .ToString(),AuthorityValue= 16384 * 2},
         };
     }
 }

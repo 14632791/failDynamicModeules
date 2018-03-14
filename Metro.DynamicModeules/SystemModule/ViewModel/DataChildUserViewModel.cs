@@ -48,5 +48,10 @@ namespace SystemModule.ViewModel
         {
             throw new NotImplementedException();
         }
+
+        protected override tb_MyMenu GetMenu()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

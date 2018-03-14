@@ -19,7 +19,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     /// 带数据处理的子窗体viewModel
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class DataChildBaseViewModel<T> : ChildBaseViewModel, IDataOperatable<T>, ISummaryView<T>, IPrintableForm
+    public abstract class DataChildBaseViewModel<T> : ChildBaseViewModel//, IDataOperatable<T>, ISummaryView<T>, IPrintableForm
            where T : class, new()
     {
 
@@ -162,8 +162,8 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             base.InitButtons();
 
-            List<IButtonInfo> dataButton = this.GetDataOperatableButtons();
-            List<IButtonInfo> printButton = this.GetPrintableButtons();
+            List<ButtonInfoViewModel> dataButton = this.GetDataOperatableButtons();
+            List<ButtonInfoViewModel> printButton = this.GetPrintableButtons();
             foreach (var item in dataButton)
             {
                 this.Buttons.Add(item);
@@ -180,7 +180,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         protected virtual void SetEditMode()
         {
-            foreach (IButtonInfo button in Buttons)
+            foreach (ButtonInfoViewModel button in Buttons)
             {
 
             }
@@ -246,9 +246,9 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 打印操作按钮
         /// </summary>
         /// <returns></returns>
-        public List<IButtonInfo> GetPrintableButtons()
+        public List<ButtonInfoViewModel> GetPrintableButtons()
         {
-            List<IButtonInfo> btns = new List<IButtonInfo>();
+            List<ButtonInfoViewModel> btns = new List<ButtonInfoViewModel>();
             //if (this.ButtonAuthorized(ButtonAuthority.PRINT))
             //    btns.Add(this.ToolbarRegister.CreateButton("btnPrint", "打印", PackIconModernKind.Printer, new Size(57, 28), this.DoPrint));
             return btns;
@@ -258,7 +258,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 打印报表
         /// </summary>
         /// <param name="button"></param>
-        public virtual void DoPrint(IButtonInfo button) { }
+        public virtual void DoPrint() { }
 
         #endregion
 
@@ -268,10 +268,10 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 数据操作按钮
         /// </summary>
         /// <returns></returns>
-        public List<IButtonInfo> GetDataOperatableButtons()
+        public List<ButtonInfoViewModel> GetDataOperatableButtons()
         {
 
-            List<IButtonInfo> list = new List<IButtonInfo>();
+            List<ButtonInfoViewModel> list = new List<ButtonInfoViewModel>();
             //list.Add(this.ToolbarRegister.CreateButton("btnView", "查看", PackIconModernKind.SocialReadability, new Size(57, 57), this.DoViewContent));
             //list.Add(this.ToolbarRegister.CreateButton("btnAdd", "新增(F4)", PackIconModernKind.EditAdd, new Size(57, 57), this.DoAdd));
             //list.Add(this.ToolbarRegister.CreateButton("btnDelete", "删除(F6)", PackIconModernKind.Delete, new Size(57, 57), (sender) => { this.DoDelete(sender); }));
@@ -338,13 +338,6 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <summary>
         /// 保存数据
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="IsRefreshCache">是否同时刷新缓存</param>
-        //public virtual void DoSave(PackIconButton sender,bool IsRefreshCache)
-        //{
-        //    DoSave(sender);
-        //}
-
         public virtual bool DoSave(T row)
         {
             this._updateType = UpdateType.None;
@@ -353,6 +346,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             this.ButtonStateChanged(_updateType);
             return true;
         }
+
         /// <summary>
         /// 删除记录
         /// </summary>
