@@ -201,6 +201,10 @@
       <Project>{90b53209-c60c-4655-b28d-a1b3e1044ba3}</Project>
       <Name>MaterialDesignColors.Wpf</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Metro.DynamicModeules.BLL\Metro.DynamicModeules.BLL.csproj">
+      <Project>{A674DB78-C6CB-409B-893D-728ABF88EC84}</Project>
+      <Name>Metro.DynamicModeules.BLL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Metro.DynamicModeules.Common\Metro.DynamicModeules.Common.csproj">
       <Project>{269eceff-b6c2-4708-86ba-afbb1a2b045c}</Project>
       <Name>Metro.DynamicModeules.Common</Name>

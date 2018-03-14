@@ -15,7 +15,7 @@ namespace Metro.DynamicModeules.BaseControls.ControlEx
     /// <summary>
     /// 带权限值的icon button
     /// </summary>
-    public class PackIconButton : Button, IButtonInfo
+    public class PackIconButton : Button//, IButtonInfo
     {
         static PackIconButton()
         {

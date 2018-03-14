@@ -23,6 +23,20 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     //[Export(typeof(IMdiChildWindow))]
     public abstract class ChildBaseViewModel : CommonModuleBaseViewModel, IMdiChildWindow, ISystemButtons//IPurviewControllable
     {
+        public ChildBaseViewModel()
+        {
+            MenuItem = GetMenu();
+        }
+        ICommand _closeCommand;
+        public ICommand CloseCommand
+        {
+            get
+            {
+                return _closeCommand ?? (_closeCommand = new RelayCommand(()=> {
+                    Messenger.Default.Send(MessengerToken.ClosedTagPage, Owner);
+                }));
+            }
+        }
         /// <summary>
         /// 单击该控件时，打开对应的控件
         /// </summary>
@@ -39,24 +53,25 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             Messenger.Default.Send( MessengerToken.FocusedChild, Owner);
         }
 
-        tb_MyMenu _subItem;
+        tb_MyMenu _item;
         /// <summary>
         /// 对应的子项实体
         /// </summary>
-        public tb_MyMenu SubItem
+        public tb_MyMenu MenuItem
         {
             get
             {
-                return _subItem;
+                return _item;
             }
             set
             {
-                _subItem = value;
-                RaisePropertyChanged(() => SubItem);
+                _item = value;
+                RaisePropertyChanged(() => MenuItem);
             }
         }
+        protected abstract tb_MyMenu GetMenu();
 
-        ObservableCollection<IButtonInfo> _buttons = new ObservableCollection<IButtonInfo>();
+        ObservableCollection<IButtonInfo> _buttons ;
         /// <summary>
         /// 初始化子窗体的按钮数组
         /// </summary>
@@ -87,11 +102,12 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 _systemButtons = value;
                 RaisePropertyChanged(() => SystemButtons);
             }
-        } 
+        }
+
 
         #region IPurviewControllable 接口实现
 
-               
+
 
         /// <summary>
         /// 派生类通过重写该虚方法自定义每个按钮可用状态
@@ -113,9 +129,9 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         }
 
         /// <summary>
-        /// 可以通过外部调用该方法重新设置按钮权限.
+        /// 获取该界面的功能点
         /// </summary>
-        public abstract void SetButtonAuthority();
+        public abstract ObservableCollection<tb_MyAuthorityItem> GetAuthoritys();
 
         #endregion
 
@@ -151,22 +167,21 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             //return _systemButtons;
         }
 
-        public virtual void DoHelp(IButtonInfo sender)
+        public virtual void DoHelp( )
         {
             //Msg.AskQuestion("帮助文档!");
         }
 
-        public virtual void DoClose(IButtonInfo sender)
+        public virtual void DoClose( )
         {
             //NotifyObserver();
         }
-        /// <summary>
-        /// 初始化菜单
-        /// </summary>
+
         public void InitMenu()
         {
             throw new NotImplementedException();
         }
+
 
 
         #endregion

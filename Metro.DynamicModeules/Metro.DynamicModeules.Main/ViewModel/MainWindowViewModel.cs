@@ -33,7 +33,7 @@ namespace Metro.DynamicModeules.Main.ViewModel
         private readonly IDialogCoordinator _dialogCoordinator;
         int? _integerGreater10Property;
         private bool _animateOnPositionChange = true;
-
+       
         MainWindowViewModel()
         {
             #region 初始化属性成员
@@ -43,6 +43,8 @@ namespace Metro.DynamicModeules.Main.ViewModel
             TabPages = new ObservableCollection<ChildBaseViewModel>();
             //检查子界面
             Messenger.Default.Register<ChildBaseViewModel>(this, MessengerToken.FocusedChild, SetFocusedChild);
+            Messenger.Default.Register<ChildBaseViewModel>(this, MessengerToken.ClosedTagPage, ClosedTagPage);
+            
             #endregion
 
         }
@@ -559,7 +561,18 @@ namespace Metro.DynamicModeules.Main.ViewModel
             }
             FocusedPage = page;
         }
-
+        /// <summary>
+        /// 移除page内容
+        /// </summary>
+        /// <param name="page"></param>
+        private void ClosedTagPage(ChildBaseViewModel page)
+        {
+            if (TabPages.Contains(page))
+            {
+                TabPages.Remove(page);
+            }
+        }
+        
         #region 上方的按钮列表
 
         //ObservableCollection<tb_MyAuthorityItem> _buttons;

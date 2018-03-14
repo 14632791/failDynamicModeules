@@ -21,6 +21,7 @@
             
             <!--module列表内部的子列表样式-->
             <Style x:Key="LeftSubModuleStyle" TargetType="{x:Type ListBox}">
+                <Setter Property="SelectedItem" Value="{Binding FocusedChild}"/>
                 <Setter Property="ItemContainerStyle">
                     <Setter.Value>
                         <Style TargetType="{x:Type ListBoxItem}">
@@ -28,10 +29,10 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                        <Button Command="{Binding ClickCommand}">
+                                        <Button Command="{Binding OpenOwnerCommand}">
                                             <StackPanel Orientation="Horizontal">
                                                 <ContentPresenter Content="{Binding Icon}"/>
-                                                <TextBlock Text="{Binding FormMenuName}"/>
+                                                <TextBlock Text="{Binding SubItem.MenuName}"/>
                                             </StackPanel>
                                         </Button>
                                     </ControlTemplate>
@@ -54,8 +55,7 @@
                                     <ControlTemplate>
                                         <Expander Header="{Binding Module.ModuleName}" >
                                             <ListBox Margin="1" ItemsSource="{Binding SubModuleList}" Style="{StaticResource LeftSubModuleStyle}"
-                   
-                                                     BorderThickness="0">
+                                             SelectedItem="{Binding FocusedChild}"  BorderThickness="0">
                                             </ListBox>
                                         </Expander>
                                     </ControlTemplate>
@@ -71,9 +71,8 @@
             <DataTemplate x:Key="RightTabControlItemTemplate">
                             <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="20"
                                                CloseButtonEnabled="True" Content="{Binding Owner}"
-                                               CloseTabCommand="{Binding NeverCloseTabCommand}"
-                                               CloseTabCommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}"
-                                               Header="{Binding MenuName}">
+                                               CloseTabCommand="{Binding CloseCommand}"
+                                               Header="{Binding MenuItem.MenuName}">
                                 
                             </Controls:MetroTabItem>
                         </DataTemplate>
@@ -186,17 +185,17 @@
                 <RowDefinition Height="90"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-                      
-                <ItemsControl ItemsSource="{Binding Buttons}" >
+
+            <ItemsControl ItemsSource="{Binding FocusedPage.Buttons}" >
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <controlEx:PackIconButton/>
+                        <Button Style="{StaticResource IconButtonStyle}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
             <Controls:MetroAnimatedTabControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding TabPages}"
-                 SelectedItem="{Binding ActivatePage}"   
+                 SelectedItem="{Binding FocusedPage}"   
                  ItemTemplate="{StaticResource RightTabControlItemTemplate}">
             </Controls:MetroAnimatedTabControl> 
 

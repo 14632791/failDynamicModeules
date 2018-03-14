@@ -2,7 +2,17 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
                     xmlns:ControlEx="clr-namespace:Metro.DynamicModeules.BaseControls.ControlEx">
-   
+    <Style TargetType="{x:Type Button}" x:Key="IconButtonStyle" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Content">
+            <Setter.Value>
+                <StackPanel Orientation="Horizontal">
+                    <ContentPresenter  Content="{Binding Icon}"/>
+                    <TextBlock Text="{Binding AuthorityItem.AuthorityName}"/>
+                </StackPanel>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Command" Value="{Binding ClickCommand}"/>
+    </Style>
     <Style TargetType="{x:Type ControlEx:PackIconButton}">
         <Setter Property="Content">
             <Setter.Value>

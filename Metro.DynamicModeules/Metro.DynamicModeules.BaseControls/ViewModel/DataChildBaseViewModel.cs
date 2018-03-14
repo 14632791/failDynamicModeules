@@ -11,6 +11,7 @@ using Metro.DynamicModeules.Models;
 using Metro.DynamicModeules.Common;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using Metro.DynamicModeules.BLL.Base;
 
 namespace Metro.DynamicModeules.BaseControls.ViewModel
 {
@@ -21,9 +22,18 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     public abstract class DataChildBaseViewModel<T> : ChildBaseViewModel, IDataOperatable<T>, ISummaryView<T>, IPrintableForm
            where T : class, new()
     {
-        
-       
 
+        public DataChildBaseViewModel()
+        {
+            InitializeForm();
+            _bll = InitBll();
+        }
+        protected BllBase<T> _bll;
+        /// <summary>
+        /// 初始化业务逻辑层的对象
+        /// </summary>
+        /// <returns></returns>
+        protected abstract BllBase<T> InitBll();
         string _stateName;
         /// <summary>
         /// 状态字符
@@ -83,11 +93,10 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <summary>
         /// 自定义初始化窗体操作, 窗体的Load事件必须调用此方法
         /// </summary>
-        protected virtual void InitializeForm() //此方法由基类的Load事件调用
+        protected virtual void InitializeForm()
         {
             this.InitButtons();//初始化本窗体的按钮
             this.SetViewMode();//预设为数据查看模式
-            this.SetButtonAuthority();//设置按钮权限
             //无操作状态下不可输入数据
             //SetDetailEditorsAccessable(_DetailGroupControl, false);
         }

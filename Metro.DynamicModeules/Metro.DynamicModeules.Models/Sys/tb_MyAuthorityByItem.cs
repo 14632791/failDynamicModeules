@@ -10,26 +10,10 @@ namespace Metro.DynamicModeules.Models.Sys
     [Table("tb_MyAuthorityByItem")]
     public class tb_MyAuthorityByItem: NotifyPropertyChanged
     {
-        [Key]
-        [Column(Order = 0)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int ItemId
-        {
-            get
-            {
-                return _itemId;
-            }
-            set
-            {
-                if (Equals(_itemId, value)) return;
-                _itemId = value;
-                RaisePropertyChanged("ItemId");
-            }
-        }
-        int _itemId;
+        
 
         [Key]
-        [Column(Order = 1)]
+        [Column("MenuId",Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int MenuId
         {
@@ -45,5 +29,26 @@ namespace Metro.DynamicModeules.Models.Sys
             }
         }
         int _menuId;
+
+        /// <summary>
+        /// °´Å¥code
+        /// </summary>
+        [Column("code",Order =0)]
+        [StringLength(20)]
+        [Key]
+        public string AuthorityCode
+        {
+            get
+            {
+                return _code;
+            }
+            set
+            {
+                if (Equals(_code, value)) return;
+                _code = value;
+                RaisePropertyChanged("AuthorityCode");
+            }
+        }
+        private string _code;
     }
 }

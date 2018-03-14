@@ -22,9 +22,12 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 子窗口插件
         /// </summary>
         [ImportMany(typeof(IMdiChildWindow), AllowRecomposition = true)]
-        public ObservableCollection<Lazy<IMdiChildWindow>> SubModuleList { get; set; }
+        public ObservableCollection<IMdiChildWindow> SubModuleList { get; set; }
                
-
+        /// <summary>
+        /// 当前选中的子项
+        /// </summary>
+        public IMdiChildWindow FocusedChild { get; set; }
         /// <summary>
         /// 获取该模块的实体对象
         /// </summary>
@@ -37,7 +40,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         public virtual void InitMenu()
         {
-            SubModuleList = new ObservableCollection<Lazy<IMdiChildWindow>>();
+            SubModuleList = new ObservableCollection<IMdiChildWindow>();
             AggregateCatalog aggregateCatalog = new AggregateCatalog();
             AssemblyCatalog assemblyCatalog = new AssemblyCatalog(typeof(IMdiChildWindow).Assembly);
             aggregateCatalog.Catalogs.Add(assemblyCatalog);

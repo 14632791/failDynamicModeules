@@ -1,8 +1,4 @@
-﻿using Metro.DynamicModeules.BaseControls.Models;
-using System;
-using System.Collections.ObjectModel;
-using System.Windows.Controls;
-using SystemModule.ViewModel;
+﻿using System.Windows.Controls;
 
 namespace SystemModule.Views
 {

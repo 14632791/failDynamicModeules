@@ -172,6 +172,10 @@
       <Project>{a482cd5f-389c-41c4-b537-cbac13eaa932}</Project>
       <Name>Metro.DynamicModeules.BaseControls</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Metro.DynamicModeules.BLL\Metro.DynamicModeules.BLL.csproj">
+      <Project>{A674DB78-C6CB-409B-893D-728ABF88EC84}</Project>
+      <Name>Metro.DynamicModeules.BLL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Metro.DynamicModeules.Models\Metro.DynamicModeules.Models.csproj">
       <Project>{937e0d53-9696-48ab-b12f-736bc6d43f15}</Project>
       <Name>Metro.DynamicModeules.Models</Name>

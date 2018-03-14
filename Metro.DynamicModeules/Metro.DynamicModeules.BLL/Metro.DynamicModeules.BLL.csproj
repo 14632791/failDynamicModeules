@@ -131,14 +131,10 @@
     <Compile Include="DataDict\BllCustomer.cs" />
     <Compile Include="DataDict\BllAccountIDs.cs" />
     <Compile Include="DataDict\BllPayType.cs" />
-    <Compile Include="GenerateItemsDef.cs" />
-    <Compile Include="Security\ActionNodeTag.cs" />
-    <Compile Include="Security\AuthNodeTag.cs" />
+    <Compile Include="Security\AuthorityItemsMgr.cs" />
     <Compile Include="Security\BllAuthorityItem.cs" />
     <Compile Include="Security\BllModules.cs" />
     <Compile Include="Security\BllMenu.cs" />
-    <Compile Include="Security\GroupAuthority.cs" />
-    <Compile Include="Security\MenuMgr.cs" />
     <Compile Include="Security\BllUserGroupRole.cs" />
     <Compile Include="Security\BllUserGroup.cs" />
     <Compile Include="Security\DomainLdapTools.cs" />

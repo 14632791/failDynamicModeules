@@ -14,5 +14,10 @@ namespace Metro.DynamicModeules.BLL.Base
         /// 检查子界面
         /// </summary>
         FocusedChild,
+
+        /// <summary>
+        /// 关闭page
+        /// </summary>
+        ClosedTagPage
     }
 }

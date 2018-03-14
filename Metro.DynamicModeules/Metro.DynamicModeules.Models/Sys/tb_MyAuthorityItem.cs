@@ -11,32 +11,35 @@ namespace Metro.DynamicModeules.Models.Sys
     /// 功能点字典
     /// </summary>
     [Table("tb_MyAuthorityItem")]
-    public partial class tb_MyAuthorityItem : INotifyPropertyChanged
+    public class tb_MyAuthorityItem : INotifyPropertyChanged
     {
-	   [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-       public tb_MyAuthorityItem()
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tb_MyAuthorityItem()
         {
-            //tb_MyMenu = new ObservableCollection<tb_MyMenu>();
         }
+     
+
         /// <summary>
-        /// 主键id
+        /// 按钮名称
         /// </summary>
+        [Column("code")]
+        [StringLength(20)]
         [Key]
-        [Column("isid")]
-        public int isid
+        public string Code
         {
             get
             {
-                return _isid;
+                return _code;
             }
             set
             {
-                if (Equals(_isid, value)) return;
-                _isid = value;
-                RaisePropertyChanged("isid");
+                if (Equals(_code, value)) return;
+                _code = value;
+                RaisePropertyChanged("Code");
             }
         }
-        private int _isid;
+        private string _code;
+
         /// <summary>
         /// 按钮名称
         /// </summary>
@@ -75,8 +78,8 @@ namespace Metro.DynamicModeules.Models.Sys
             }
         }
         private int _AuthorityValue;
-		
-	    //public virtual ICollection<tb_MyMenu> tb_MyMenu { get; set; }
+
+        //public virtual ICollection<tb_MyMenu> tb_MyMenu { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
@@ -88,4 +91,5 @@ namespace Metro.DynamicModeules.Models.Sys
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
+      
 }
