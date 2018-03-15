@@ -14,7 +14,7 @@ using SystemModule.Views;
 
 namespace SystemModule.ViewModel
 {
-    [Export(typeof(IModuleBase))]
+    [Export(typeof(ModuleBaseViewModel))]
     public class SystemMainViewModel : ModuleBaseViewModel
     {
         protected override Control GetOwner()

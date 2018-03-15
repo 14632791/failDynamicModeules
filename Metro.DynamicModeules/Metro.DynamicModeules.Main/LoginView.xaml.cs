@@ -69,7 +69,7 @@ namespace Metro.DynamicModeules.Main
             {
                 LogHelper.Error(ex);
                 this.ShowLoginInfo("登录失败，请检查用户名和密码!");
-                await this.ShowMessageAsync("登录失败", "请检查用户名和密码!");
+                await this.ShowMessageAsync("登录失败", ex.Message);
             }
             finally
             {

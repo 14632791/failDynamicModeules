@@ -63,7 +63,7 @@ namespace Metro.DynamicModeules.Models.Sys
         /// 按钮的功能点权限值. 只能为2^次方, 1,2,4,8,16,….2^N
         /// </summary>
         [Column("AuthorityValue")]
-        public int AuthorityValue
+        public int? AuthorityValue
         {
             get
             {
@@ -76,7 +76,7 @@ namespace Metro.DynamicModeules.Models.Sys
                 RaisePropertyChanged("AuthorityValue");
             }
         }
-        private int _AuthorityValue;
+        private int? _AuthorityValue;
 
         //public virtual ICollection<tb_MyMenu> tb_MyMenu { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;

@@ -17,13 +17,25 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     //[Export(typeof(IModuleBase))]
     public abstract class ModuleBaseViewModel : CommonModuleBaseViewModel, IModuleBase
     {
-       
+
         /// <summary>
         /// 子窗口插件
         /// </summary>
         [ImportMany(typeof(IMdiChildWindow), AllowRecomposition = true)]
-        public ObservableCollection<IMdiChildWindow> SubModuleList { get; set; }
-               
+        public ObservableCollection<IMdiChildWindow> SubModuleList
+        {
+            get
+            {
+                return _subModuleList;
+            }
+            set
+            {
+                if (Equals(_subModuleList, value)) return;
+                _subModuleList = value;
+                RaisePropertyChanged(() => SubModuleList);
+            }
+        }
+        ObservableCollection<IMdiChildWindow> _subModuleList;
         /// <summary>
         /// 当前选中的子项
         /// </summary>
@@ -34,7 +46,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <returns></returns>
         protected abstract sys_Modules GetModule();
 
-       
+
         /// <summary>
         /// 初始化该模块下的所有子项
         /// </summary>
@@ -58,7 +70,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         public override void Initialize()
         {
-            base.Initialize();           
+            base.Initialize();
             Module = GetModule();
             InitMenu();
         }
@@ -75,7 +87,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             Initialize();
         }
         public sys_Modules Module { get; set; }
-       
+
 
         public Control Owner { get; set; }
         /// <summary>
@@ -84,7 +96,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <returns></returns>
         protected abstract Control GetOwner();
 
-       
+
         /// <summary>
         /// 获取该模块的图标
         /// </summary>
@@ -108,7 +120,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 RaisePropertyChanged("Icon");
             }
         }
-              
+
 
         /// <summary>
         /// 初始化

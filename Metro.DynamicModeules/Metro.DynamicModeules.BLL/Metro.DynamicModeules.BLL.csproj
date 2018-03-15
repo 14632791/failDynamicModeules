@@ -154,8 +154,6 @@
     <Compile Include="Security\BllMenu.cs" />
     <Compile Include="Security\BllUserGroupRole.cs" />
     <Compile Include="Security\BllUserGroup.cs" />
-    <Compile Include="Security\DomainLdapTools.cs" />
-    <Compile Include="Security\NovellLdapTools.cs" />
     <Compile Include="Security\BllUser.cs" />
     <Compile Include="DataDictCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

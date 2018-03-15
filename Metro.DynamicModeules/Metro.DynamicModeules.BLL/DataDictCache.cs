@@ -235,7 +235,7 @@ namespace Metro.DynamicModeules.BLL
             Modules = await _bllModules.GetSearchList(predicate);
             //所有子项
             //所有按钮
-            Expression<Func<tb_MyAuthorityItem, bool>> predAuthorityItem = SerializeHelper.CreateExpression<tb_MyAuthorityItem, bool>("isid>@0", new object[] { -1 });
+            Expression<Func<tb_MyAuthorityItem, bool>> predAuthorityItem = SerializeHelper.CreateExpression<tb_MyAuthorityItem, bool>("AuthorityName!=@0", new object[] { ""});
             AuthorityItems = await _bllAuthItem.GetSearchList(predAuthorityItem);
             AuthorityByItems = await _bllAuthItem.GetAllAuthItems();
         }

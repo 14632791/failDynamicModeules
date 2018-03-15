@@ -82,8 +82,8 @@ namespace SystemModule.ViewModel
                 MenuName = "menuItemUserMgr",
                 MenuCaption = "用户管理",
                 MenuType = MenuType.DataForm.ToString(),
-                ModuleID = Module.ModuleID
             };
+            //ModuleID = Module.ModuleID
             Expression<Func<tb_MyMenu, bool>> predicate = SerializeHelper.CreateExpression<tb_MyMenu, bool>("MenuName=@0", new object[] { "menuItemUserMgr" });
             BllMenu _bllMenu = new BllMenu();
             var menus = await _bllMenu.GetSearchList(predicate);
