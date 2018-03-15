@@ -35,8 +35,8 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         /// <returns></returns>
         protected abstract BllBase<T> InitBll();
-       
-       
+
+
 
         /// <summary>
         /// 自定义初始化窗体操作, 窗体的Load事件必须调用此方法
@@ -59,15 +59,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             get { return this.IsAddOrEditMode; }
         }
 
-       
 
-        /// <summary>
-        /// 是否修改了数据
-        /// </summary>
-        public bool IsDataChanged
-        {
-            get { return this.IsAddOrEditMode; }
-        }
 
         /// <summary>
         /// 是否新增/修改模式
@@ -77,17 +69,26 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             get { return (UpdateType == UpdateType.Add) || (UpdateType == UpdateType.Modify); }
         }
 
-       
-        public virtual string UpdateTypeName
+        /// <summary>
+        /// 对应的文本控件是否可编辑
+        /// </summary>
+        public bool HasEnabled
         {
             get
             {
-                if (UpdateType.Add == UpdateType) return "(新增模式)";
-                else if (UpdateType.Modify == UpdateType) return "(修改模式)";
-                else return "(查看模式)";
+                return _hasEnabled;
+            }
+            set
+            {
+                _hasEnabled = value;
+                RaisePropertyChanged(() => HasEnabled);
             }
         }
-
+        bool _hasEnabled;
+        /// <summary>
+        /// 原始数据
+        /// </summary>
+        public T OriginalData { get; set; }
         /// <summary>
         /// 初始化数据窗体的按钮
         /// </summary>
@@ -95,15 +96,15 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             base.InitButtons();
             List<ButtonInfoViewModel> dataButton = (List<ButtonInfoViewModel>)this.GetDataOperatableButtons();
-            List<ButtonInfoViewModel> printButton = this.GetPrintableButtons();
+            //List<ButtonInfoViewModel> printButton = this.GetPrintableButtons();
             foreach (var item in dataButton)
             {
                 this.Buttons.Add(item);
             }
-            foreach (var item in printButton)
-            {
-                this.Buttons.Add(item);
-            }
+            //foreach (var item in printButton)
+            //{
+            //    this.Buttons.Add(item);
+            //}
         }
 
         /// <summary>        
@@ -117,16 +118,9 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
 
             }
             //_buttons.FirstOrDefault(b=>b.Name=="btnView").IsEnabled = false;
-            //_buttons.FirstOrDefault(b => b.Name == "btnAdd").IsEnabled = false;
-            //_buttons.FirstOrDefault(b=>b.Name=="btnDelete").IsEnabled = false;
-            //_buttons.FirstOrDefault(b=>b.Name=="btnEdit").IsEnabled = false;
-            //_buttons.FirstOrDefault(b=>b.Name=="btnPrint").IsEnabled = false;
-            //_buttons.FirstOrDefault(b=>b.Name=="btnPreview").IsEnabled = false;
-            //_buttons.FirstOrDefault(b=>b.Name=="btnSave").IsEnabled = true;
-            //_buttons.FirstOrDefault(b=>b.Name=="btnCancel").IsEnabled = true;
         }
 
-       
+
 
         /// <summary>
         /// 检查按钮的权限
@@ -158,123 +152,29 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
 
         }
 
-        #region IPrintableForm 成员
 
-        /// <summary>
-        /// 打印操作按钮
-        /// </summary>
-        /// <returns></returns>
-        public List<ButtonInfoViewModel> GetPrintableButtons()
-        {
-            List<ButtonInfoViewModel> btns = new List<ButtonInfoViewModel>();
-            //if (this.ButtonAuthorized(ButtonAuthority.PRINT))
-            //    btns.Add(this.ToolbarRegister.CreateButton("btnPrint", "打印", PackIconModernKind.Printer, new Size(57, 28), this.DoPrint));
-            return btns;
-        }
-
-        /// <summary>
-        /// 打印报表
-        /// </summary>
-        /// <param name="button"></param>
-        public virtual void DoPrint() { }
-
-        #endregion
 
         #region IDataOperatable接口的方法
 
-       
+
         /// <summary>
         /// 查看选中记录的数据
         /// </summary>
         /// <param name="sender"></param>
-        public virtual void DoViewContent(T row)
+        public override void DoViewContent()
         {
+            base.DoViewContent();
             this.ButtonStateChanged(UpdateType);
         }
 
-        
+
 
         #endregion
 
         #region Set Editors Accessable
 
-        /// <summary>
-        /// 控制明细页面上的控件可被编辑.
-        /// </summary>
-        protected virtual void SetDetailEditorsAccessable(Control panel, bool value)
-        {
-            if (panel == null) return;
-            //for (int i = 0; i < panel.Controls.Count; i++)
-            //{
-            //    SetControlAccessable(panel.Controls[i], value);
-            //}
-            //controlNavigatorSummary.Enabled = !value;
-        }
 
-        /// <summary>
-        /// 设置控件状态.ReadOnly or Enable = false/true
-        /// </summary>
-        protected void SetControlAccessable(Control control, bool value)
-        {
-            try
-            {
-                if (control is Label) return;
-                //if (control is ControlNavigator) return;
-                //if (control is UserControl) return;
 
-                //if (control.Controls.Count > 0)
-                //{
-                //    foreach (Control c in control.Controls)
-                //        SetControlAccessable(c, value);
-                //}
-                //if (control is ListBox)//2015.7.9 陈刚 对ListBox控件作禁用设置
-                //{
-                //    ListBox lstBox = control as ListBox;
-                //    lstBox.Enabled = value;
-                //    return;
-                //}
-                //System.Type type = control.GetType();
-                //PropertyInfo[] infos = type.GetProperties();
-                //foreach (PropertyInfo info in infos)
-                //{
-                //    if (info.Name == "ReadOnly")//ReadOnly
-                //    {
-                //        info.SetValue(control, !value, null);
-                //        return;
-                //    }
-                //    if (info.Name == "Properties")//Properties.ReadOnly
-                //    {
-                //        object o = info.GetValue(control, null);
-                //        if (o is RepositoryItem)
-                //        {
-                //            ((RepositoryItem)o).ReadOnly = !value;
-                //        }
-                //        //解决日期控件和ButtonEdit在浏览状态下也能按button的问题
-                //        if ((o is RepositoryItemButtonEdit) && (((RepositoryItemButtonEdit)o).Buttons.Count > 0))
-                //            ((RepositoryItemButtonEdit)o).Buttons[0].Enabled = value;
-                //        if ((o is RepositoryItemDateEdit) && (((RepositoryItemDateEdit)o).Buttons.Count > 0))
-                //            ((RepositoryItemDateEdit)o).Buttons[0].Enabled = value;
-                //        return;
-                //    }
-                //    if (info.Name == "Views")//OptionsBehavior.Editable
-                //    {
-                //        object o = info.GetValue(control, null);
-                //        if (null == o) return;
-                //        foreach (object view in (GridControlViewCollection)o)
-                //        {
-                //            if (view is ColumnView)
-                //                ((ColumnView)view).OptionsBehavior.Editable = value;
-                //        }
-                //        return;
-                //    }
-
-                //}
-            }
-            catch (Exception ex)
-            {
-                // Msg.ShowException(ex);
-            }
-        }
 
         /// <summary>
         /// 设置Grid自定义按钮(Add,Insert,Delete)状态
@@ -293,21 +193,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <summary>
         /// 设置某个编辑控件状态.ReadOnly or Enable . (递归)循环控制
         /// </summary>
-        protected void SetControlAccessableCycle(Control control, bool value)
-        {
-            //if (control.HasChildren)
-            //{
-            //    foreach (Control ctrl in control.Controls)
-            //    {
-            //        //DevExpress的内部(Inner)控件
-            //        if (ctrl.Name == string.Empty)
-            //            SetControlAccessable(control, value);
-            //        else
-            //            SetControlAccessableCycle(ctrl, value);
-            //    }
-            //}
-            //else SetControlAccessable(control, value);
-        }
+
 
         /// <summary>
         /// 双击表格事件
@@ -342,19 +228,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
 
         #endregion
 
-        /// <summary>
-        /// 获取Summary表的数据源.         
-        /// </summary>
-        //protected DataTable SummaryTable
-        //{
-        //    get
-        //    {
-        //        if (View == null) return null;
-        //        return (DataTable)DataSource;
-        //    }
-        //}
 
-        // UpdateType UpdateType { get; }
 
         public int RowCount
         {
@@ -382,7 +256,20 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             }
         }
 
-        public T FocusedRow { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        T _focusedRow;
+        public T FocusedRow
+        {
+            get
+            {
+                return _focusedRow;
+            }
+            set
+            {
+                _focusedRow = value;
+                RaisePropertyChanged(() => FocusedRow);
+                //OriginalData = value.CloneModel();
+            }
+        }
 
 
         /// <summary>
@@ -397,56 +284,6 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             }
             return null;
         }
-
-        #region Summary数据导航功能
-
-        /// <summary>
-        /// 移到第一条记录
-        /// </summary>
-        protected virtual void DoMoveFirst()
-        {
-            if (View == null) return;
-            MoveFirst();
-            // if (tcBusiness.SelectedTabPage != tpSummary)
-            DoViewContent(null);
-        }
-
-        /// <summary>
-        /// 移到上一条记录
-        /// </summary>
-        protected virtual void DoMovePrevious()
-        {
-            if (View == null) return;
-            MovePrior();
-            //if (tcBusiness.SelectedTabPage != tpSummary)
-            DoViewContent(null);
-        }
-
-        /// <summary>
-        /// 移到下一条记录
-        /// </summary>
-        protected virtual void DoMoveNext()
-        {
-            if (View == null) return;
-            MoveNext();
-            // if (tcBusiness.SelectedTabPage != tpSummary)
-            DoViewContent(null);
-        }
-
-        /// <summary>
-        /// 移到最后一条记录
-        /// </summary>
-        protected virtual void DoMoveLast()
-        {
-            if (View == null) return;
-            MoveLast();
-            //if (tcBusiness.SelectedTabPage != tpSummary)
-            DoViewContent(null);
-        }
-
-        #endregion
-
-
 
         /// <summary>
         /// 显示明细页
@@ -656,34 +493,92 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             }
         }
 
-        public void DoViewContent()
+
+        /// <summary>
+        /// 刷新数据源
+        /// </summary>
+        public virtual void RefreshDataSource()
         {
             throw new NotImplementedException();
         }
 
-        public void RefreshDataSource()
+        #region Summary数据导航功能
+
+
+        ICommand _moveCommand;
+        /// <summary>
+        /// 导航command
+        /// </summary>
+        public ICommand NavigateCommand
         {
-            throw new NotImplementedException();
+            get
+            {
+                return _moveCommand ?? (_moveCommand = new RelayCommand<NavigateType>((navType) =>
+                {
+                    switch (navType)
+                    {
+                        case NavigateType.First:
+                            MoveFirst();
+                            break;
+                        case NavigateType.Last:
+                            MoveLast();
+                            break;
+                        case NavigateType.Next:
+                            MoveNext();
+                            break;
+                        case NavigateType.Previous:
+                            MovePrior();
+                            break;
+                    }
+                }));
+            }
+        }
+        public virtual void MoveFirst()
+        {
+            View.MoveCurrentToFirst();
         }
 
-        public void MoveFirst()
+        public virtual void MovePrior()
         {
-            throw new NotImplementedException();
+            View.MoveCurrentToPrevious();
         }
 
-        public void MovePrior()
+        public virtual void MoveNext()
         {
-            throw new NotImplementedException();
+            View.MoveCurrentToNext();
         }
 
-        public void MoveNext()
+        public virtual void MoveLast()
         {
-            throw new NotImplementedException();
+            View.MoveCurrentToLast();
         }
 
-        public void MoveLast()
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
+
+    }
+    /// <summary>
+    /// 导航类型
+    /// </summary>
+    public enum NavigateType
+    {
+        /// <summary>
+        /// 第一页
+        /// </summary>
+        First,
+
+        /// <summary>
+        /// 上一页
+        /// </summary>
+        Previous,
+
+        /// <summary>
+        /// 下一页
+        /// </summary>
+        Next,
+
+        /// <summary>
+        /// 最后一页
+        /// </summary>
+        Last
     }
 }

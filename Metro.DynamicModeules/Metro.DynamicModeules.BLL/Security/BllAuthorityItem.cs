@@ -46,7 +46,7 @@ namespace Metro.DynamicModeules.BLL.Security
         /// 获取所有的自定义按钮tb_MyAuthorityItem与模块子项tb_MyMenu之间的关系表
         /// </summary>
         /// <returns></returns>
-        public async Task<List<tb_MyAuthorityByItem>> GetAllItems()
+        public async Task<List<tb_MyAuthorityByItem>> GetAllAuthItems()
         {
             return await WebRequestHelper.PostHttpAsync<List<tb_MyAuthorityByItem>>(GetApiUrl("GetAllItems"));
         }

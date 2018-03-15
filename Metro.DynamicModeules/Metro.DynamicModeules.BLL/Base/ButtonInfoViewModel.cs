@@ -15,9 +15,9 @@ namespace Metro.DynamicModeules.BLL.Base
         {
             Icon = icon;
             AuthorityItem = item;
-            this.action = action;
+            this._action = action;
+            IsEnabled = true;
         }
-        //public IDataOperatable DataOperatabler { get; set; }
         tb_MyAuthorityItem _authorityItem;
         public tb_MyAuthorityItem AuthorityItem
         {
@@ -31,8 +31,23 @@ namespace Metro.DynamicModeules.BLL.Base
                 RaisePropertyChanged(() => AuthorityItem);
             }
         }
-
-
+        bool _isEnabled;
+        /// <summary>
+        /// 是否启动
+        /// </summary>
+        public bool IsEnabled
+        {
+            get
+            {
+                return _isEnabled;
+            }
+            set
+            {
+                if (Equals(_isEnabled, value)) return;
+                _icon = value;
+                RaisePropertyChanged("IsEnabled");
+            }
+        }
 
         object _icon;
         /// <summary>
@@ -62,9 +77,9 @@ namespace Metro.DynamicModeules.BLL.Base
             // get; set;
             get
             {
-                return _clickCommand ?? (_clickCommand = new RelayCommand(action));
+                return _clickCommand ?? (_clickCommand = new RelayCommand(_action));
             }
         }
-        protected Action action;
+        private Action _action;
     }
 }

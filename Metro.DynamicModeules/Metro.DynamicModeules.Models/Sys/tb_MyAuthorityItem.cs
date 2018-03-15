@@ -19,7 +19,7 @@ namespace Metro.DynamicModeules.Models.Sys
         }
 
         /// <summary>
-        /// 按钮名称
+        /// 按钮代码
         /// </summary>
         [Column("code")]
         [StringLength(20)]

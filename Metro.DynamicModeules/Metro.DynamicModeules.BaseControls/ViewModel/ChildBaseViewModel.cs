@@ -23,12 +23,9 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     /// 模板子项的基类
     /// </summary>
     //[Export(typeof(IMdiChildWindow))]
-    public abstract class ChildBaseViewModel : CommonModuleBaseViewModel, IDataOperatable, IMdiChildWindow, ISystemButtons, IPurviewControllable
-    {
-        public ChildBaseViewModel()
-        {
-            MenuItem = GetMenu();
-        }
+    public abstract class ChildBaseViewModel : CommonModuleBaseViewModel, IDataOperatable, IMdiChildWindow, IPurviewControllable//ISystemButtons
+    {       
+       
         ICommand _closeCommand;
         public ICommand CloseCommand
         {
@@ -121,43 +118,18 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             set
             {
                 _updateType = value;
-                StateName = GetStateName();
             }
         }
 
-        string _stateName;
-        /// <summary>
-        /// 状态字符
-        /// </summary>
-        public string StateName
+
+        public virtual string UpdateTypeName
         {
             get
             {
-                return _stateName;
+                if (UpdateType.Add == UpdateType) return "(新增模式)";
+                else if (UpdateType.Modify == UpdateType) return "(修改模式)";
+                else return "(查看模式)";
             }
-            set
-            {
-                _stateName = value;
-                RaisePropertyChanged(() => StateName);
-            }
-        }
-
-
-        protected virtual string GetStateName()
-        {
-            string utype = "(查看模式)";
-            switch (_updateType)
-            {
-                case UpdateType.Add:
-                    utype = "(新增模式)";
-                    break;
-                case UpdateType.Modify:
-                    utype = "(修改模式)";
-                    break;
-                default:
-                    break;
-            }
-            return utype;
         }
 
         public virtual bool DataChanged
@@ -191,8 +163,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             //_buttons.FirstOrDefault(b=>b.Name=="btnView").IsEnabled = _AllowDataOperate;
             //_buttons.FirstOrDefault(b=>b.Name=="btnAdd").IsEnabled = _AllowDataOperate && ButtonAuthorized(ButtonAuthority.ADD);
             }
-
-        public object Data { get; set; }
+        
 
         #region IPurviewControllable 接口实现
 
@@ -226,7 +197,12 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
 
         #region IMdiChildForm 接口实现
 
-
+        public override void Initialize()
+        {
+            base.Initialize();
+            MenuItem = GetMenu();
+            InitButtons();
+        }
 
         /// <summary>
         /// 模板方法.初始化本窗体的按钮.
@@ -249,15 +225,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
 
         }
 
-        public virtual void DoHelp()
-        {
-            //Msg.AskQuestion("帮助文档!");
-        }
-
-        public virtual void DoClose()
-        {
-            //NotifyObserver();
-        }
+       
 
         public void InitMenu()
         {
@@ -276,9 +244,18 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         }
         #endregion
 
-       
+
         #region IDataOperatable的接口
 
+        public virtual void DoHelp()
+        {
+            //Msg.AskQuestion("帮助文档!");
+        }
+
+        public virtual void DoClose()
+        {
+            //NotifyObserver();
+        }
         /// <summary>
         /// 新增记录
         /// </summary>

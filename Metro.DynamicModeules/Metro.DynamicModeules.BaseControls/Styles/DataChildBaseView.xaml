@@ -21,7 +21,7 @@
                             </controlEx:FlipPanel.FrontContent>                           
                         </controlEx:FlipPanel>
 
-                        <controlEx:GridNavigation Grid.Row="1"/>
+                        <controlEx:GridNavigation Grid.Row="1" NavigateCommand="{Binding NavigateCommand}"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

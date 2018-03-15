@@ -33,7 +33,7 @@ namespace Metro.DynamicModeules.Models.Sys
         /// <summary>
         /// °´Å¥code
         /// </summary>
-        [Column("code",Order =0)]
+        [Column("code",Order =1)]
         [StringLength(20)]
         [Key]
         public string AuthorityCode

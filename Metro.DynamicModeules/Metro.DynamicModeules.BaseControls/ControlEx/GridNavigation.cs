@@ -58,30 +58,5 @@ namespace Metro.DynamicModeules.BaseControls.ControlEx
 
 
     }
-
-    /// <summary>
-    /// 导航类型
-    /// </summary>
-    public enum NavigateType
-    {
-        /// <summary>
-        /// 第一页
-        /// </summary>
-        First,
-
-        /// <summary>
-        /// 上一页
-        /// </summary>
-        Previous,
-
-        /// <summary>
-        /// 下一页
-        /// </summary>
-        Next,
-
-        /// <summary>
-        /// 最后一页
-        /// </summary>
-        Last
-    }
+        
 }

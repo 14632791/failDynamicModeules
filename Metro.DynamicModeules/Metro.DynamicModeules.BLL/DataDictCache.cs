@@ -60,7 +60,7 @@ namespace Metro.DynamicModeules.BLL
 
         #endregion
 
-        #region 2.数据表缓存数据. 局域变易及属性定义
+        #region 2.数据表缓存数据属性定义
 
         /// <summary>
         /// 当前用户
@@ -219,7 +219,7 @@ namespace Metro.DynamicModeules.BLL
             }
         }
         ObservableCollection<tb_MyUserGroup> _loginUserGroups;
-
+        public List<tb_MyAuthorityByItem> AuthorityByItems { get; set; }
 
         #endregion
 
@@ -230,13 +230,14 @@ namespace Metro.DynamicModeules.BLL
         public async void DownloadBaseCacheData()
         {   //获取当前用户组
             LoginUserGroups = await _bllUserGroup.GetGroupsByAccount(LoginUser.Account);
-             //所有模块
-            Expression<Func<sys_Modules, bool>> predicate = SerializeHelper.CreateExpression<sys_Modules, bool>("ModuleID>@0", new object[] { -1});
-            Modules=await _bllModules.GetSearchList(predicate);
+            //所有模块
+            Expression<Func<sys_Modules, bool>> predicate = SerializeHelper.CreateExpression<sys_Modules, bool>("ModuleID>@0", new object[] { -1 });
+            Modules = await _bllModules.GetSearchList(predicate);
             //所有子项
             //所有按钮
             Expression<Func<tb_MyAuthorityItem, bool>> predAuthorityItem = SerializeHelper.CreateExpression<tb_MyAuthorityItem, bool>("isid>@0", new object[] { -1 });
-           AuthorityItems = await _bllAuthItem.GetSearchList(predAuthorityItem);
+            AuthorityItems = await _bllAuthItem.GetSearchList(predAuthorityItem);
+            AuthorityByItems = await _bllAuthItem.GetAllAuthItems();
         }
 
     }

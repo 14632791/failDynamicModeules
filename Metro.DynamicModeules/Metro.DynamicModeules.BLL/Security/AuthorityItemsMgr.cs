@@ -10,6 +10,9 @@ using System.Text;
 
 namespace Metro.DynamicModeules.BLL.Security
 {
+    /// <summary>
+    /// 按钮字典主键枚举
+    /// </summary>
     public enum AuthorityItemType
     {
         /// <summary>
@@ -117,109 +120,51 @@ namespace Metro.DynamicModeules.BLL.Security
         /// </summary>
         Search
     }
+
     /// <summary>
     /// 功能点权限管理
     /// </summary>
     public class AuthorityItemsMgr
     {
-        #region 不使用
-        //IDataOperatable DataOperatabler { get; set; }
-        //public AuthorityItemsMgr(IDataOperatable dataOperatabler)
-        //{
-        //    DataOperatabler = dataOperatabler;
-        //}
         /// <summary>
-        /// 这里是本地的所有按钮对象
+        /// 根据窗体、及其关系表返回对应的button
         /// </summary>
-        //       public static ObservableCollection<ButtonInfoViewModel> AllAuthorityItems { get; set; }
+        /// <param name="menu"></param>
+        /// <param name="autyItems"></param>
+        /// <returns></returns>
+        public ObservableCollection<ButtonInfoViewModel> GetButtonsByMeun(tb_MyMenu menu, IDataOperatable operatabler)
+        {
+            var items = DataDictCache.Instance.AuthorityByItems.Where(i => i.MenuId == menu.isid);
+            if (null == items)
+            {
+                return null;
+            }
+            var codes = items.Select(i => i.AuthorityCode).Distinct();
+            var auths = DataDictCache.Instance.AuthorityItems.Where(i => codes.Contains(i.Code));
+            if (null == auths)
+            {
+                return null;
+            }
+            ObservableCollection<ButtonInfoViewModel> models = new ObservableCollection<ButtonInfoViewModel>();
+            foreach (var item in auths)
+            {
+                models.Add(GenerateButton(item, operatabler));
+            }
+            return models;
+        }
 
-        //       = new ObservableCollection<ButtonInfoViewModel>
-        //       {
-        //           new ButtonInfoViewModel(new PackIconModern{Kind=PackIconModernKind.Cancel},
-        //               new tb_MyAuthorityItem{
-        //           Code = AuthorityItemType.Cancel .ToString(),AuthorityValue= 0,AuthorityName="取消"}),
-        //new ButtonInfoViewModel(new PackIconMaterial{ Kind=PackIconMaterialKind.Close },
-        //       new tb_MyAuthorityItem{
-        //           Code =AuthorityItemType.Close .ToString(),AuthorityValue= 0,AuthorityName="系统关闭"}),
-
-        //new ButtonInfoViewModel(new PackIconMaterial {Kind=PackIconMaterialKind.CloseBox },
-        //       new tb_MyAuthorityItem{
-        //           Code =AuthorityItemType.CloseBox .ToString(),AuthorityValue= 0,AuthorityName="关闭窗体"}),
-
-        //       new ButtonInfoViewModel(new PackIconFontAwesome{Kind=PackIconFontAwesomeKind.HistorySolid },
-        //       new tb_MyAuthorityItem{
-        //           Code =AuthorityItemType.History .ToString(),AuthorityValue= 0,AuthorityName="查看修改历史"}),
-
-        //       new ButtonInfoViewModel(new PackIconOcticons{ Kind= PackIconOcticonsKind.Question },
-        //       new tb_MyAuthorityItem{
-        //           Code =AuthorityItemType.Question .ToString(),AuthorityValue= 0,AuthorityName="显示帮助信息"}),
-        //       new ButtonInfoViewModel(new PackIconModern {Kind=PackIconModernKind.EditAdd},
-        //       new tb_MyAuthorityItem{
-        //           Code =AuthorityItemType.Add .ToString(),AuthorityValue= 1,AuthorityName="添加"}),
-
-        //       new ButtonInfoViewModel(new PackIconMaterial{ Kind=PackIconMaterialKind.Close},
-        //       new tb_MyAuthorityItem{
-        //           Code =AuthorityItemType.Delete .ToString(),AuthorityValue= 2,AuthorityName="删除"}),
-        //       new ButtonInfoViewModel(new PackIconModern {Kind=PackIconModernKind.EditBox },
-        //       new tb_MyAuthorityItem{
-        //           Code =AuthorityItemType.EditBox .ToString(),AuthorityValue= 4,AuthorityName="修改"}),
-
-
-        //       new ButtonInfoViewModel(new PackIconFontAwesome {Kind=PackIconFontAwesomeKind.SmileRegular },
-        //       new tb_MyAuthorityItem{
-        //           Code =AuthorityItemType.Approve .ToString(),AuthorityValue= 8,AuthorityName="批准"}),
-
-        //       new ButtonInfoViewModel(new PackIconFontAwesome {Kind=PackIconFontAwesomeKind.ExchangeAltSolid},
-        //       new tb_MyAuthorityItem{
-        //           Code =AuthorityItemType.Change .ToString(),AuthorityValue= 16,AuthorityName="变更"}),
-
-        //       new ButtonInfoViewModel(new PackIconEntypo {Kind=PackIconEntypoKind.Print },
-        //       new tb_MyAuthorityItem{
-        //           Code =AuthorityItemType.Print .ToString(),AuthorityValue= 32,AuthorityName="打印"}),
-
-        //       new ButtonInfoViewModel(new PackIconMaterial{ Kind=PackIconMaterialKind.FileFind },
-        //       new tb_MyAuthorityItem{
-        //           Code =AuthorityItemType.Preview .ToString(),AuthorityValue= 64,AuthorityName="打印预览"}),
-
-        //       new ButtonInfoViewModel(new PackIconFontAwesome {Kind=PackIconFontAwesomeKind.TrashSolid },
-        //       new tb_MyAuthorityItem{
-        //           Code =AuthorityItemType.TrashSolid .ToString(),AuthorityValue= 128,AuthorityName="作废"}),
-
-        //       new ButtonInfoViewModel(new PackIconMaterial {Kind=PackIconMaterialKind.Receipt },
-        //       new tb_MyAuthorityItem{
-        //           Code =AuthorityItemType.Receipt .ToString(),AuthorityValue= 256,AuthorityName="生成单据"}),
-
-        //       new ButtonInfoViewModel(new PackIconFontAwesome {Kind=PackIconFontAwesomeKind.CopySolid },
-        //       new tb_MyAuthorityItem{
-        //           Code =AuthorityItemType.CopySolid .ToString(),AuthorityValue= 512,AuthorityName="复制单据"}),
-
-        //       new ButtonInfoViewModel(new PackIconEntypo{ Kind=PackIconEntypoKind.Export},
-        //       new tb_MyAuthorityItem{
-        //           Code =AuthorityItemType.Export .ToString(),AuthorityValue= 1024,AuthorityName="导出单据"}),
-
-        //       new ButtonInfoViewModel(new PackIconFontAwesome {Kind=PackIconFontAwesomeKind.LockSolid},
-        //       new tb_MyAuthorityItem{
-        //           Code =AuthorityItemType.Lock .ToString(),AuthorityValue= 2048,AuthorityName="锁定"}),
-
-        //       new ButtonInfoViewModel(new PackIconEntypo {Kind=PackIconEntypoKind.Save},
-        //       new tb_MyAuthorityItem{
-        //           Code =AuthorityItemType.Save .ToString(),AuthorityValue= 4096,AuthorityName="保存"}),
-
-        //       new ButtonInfoViewModel(new PackIconEntypo {Kind=PackIconEntypoKind.Attachment},
-        //       new tb_MyAuthorityItem{
-        //           Code =AuthorityItemType.Attachment .ToString(),AuthorityValue= 8192,AuthorityName="附件管理"}),
-
-        //       new ButtonInfoViewModel(new PackIconOcticons {Kind=PackIconOcticonsKind.Versions},
-        //       new tb_MyAuthorityItem{
-        //           Code =AuthorityItemType.Versions .ToString(),AuthorityValue= 16384,AuthorityName="历史版本"}),
-
-        //       new ButtonInfoViewModel(new PackIconOcticons{ Kind=PackIconOcticonsKind.Search},
-        //       new tb_MyAuthorityItem{
-        //           Code =AuthorityItemType.Search .ToString(),AuthorityValue= 16384 * 2,AuthorityName="查询"})
-        //       };
-        #endregion
-
-          
+        public static ButtonInfoViewModel GenerateButton(tb_MyAuthorityItem item, IDataOperatable operatabler)
+        {
+            AuthorityItemType autyType;
+            Enum.TryParse(item.Code, out autyType);
+            return GenerateButton(autyType, operatabler);
+        }
+        /// <summary>
+        /// 生成按钮对象
+        /// </summary>
+        /// <param name="authType"></param>
+        /// <param name="operatabler"></param>
+        /// <returns></returns>
         public static ButtonInfoViewModel GenerateButton(AuthorityItemType authType, IDataOperatable operatabler)
         {
             ButtonInfoViewModel button = null;
