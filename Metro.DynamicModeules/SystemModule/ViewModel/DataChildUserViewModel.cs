@@ -13,6 +13,9 @@ using System.Text;
 using System.Windows.Controls;
 using SystemModule.Views;
 using System.Collections.ObjectModel;
+using Metro.DynamicModeules.Common.ExpressionSerialization;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace SystemModule.ViewModel
 {
@@ -31,7 +34,7 @@ namespace SystemModule.ViewModel
                 BackContent = new UserBackView()
             };
         }
-        
+
 
         protected override object GetIcon()
         {
@@ -44,11 +47,52 @@ namespace SystemModule.ViewModel
             return _bllUser;
         }
 
-        public override ObservableCollection<tb_MyAuthorityItem> GetAuthoritys()
+        protected override async Task<tb_MyMenu> GetMenu()
         {
-            throw new NotImplementedException();
+            tb_MyMenu myMenu = new tb_MyMenu
+            {
+                MenuName = "menuItemUserMgr",
+                MenuCaption = "用户管理",
+                MenuType = MenuType.DataForm.ToString(),
+                ModuleID = Module.ModuleID
+            };
+            Expression<Func<tb_MyMenu, bool>> predicate = SerializeHelper.CreateExpression<tb_MyMenu, bool>("MenuName=@0", new object[] { myMenu.MenuName });
+            BllMenu _bllMenu = new BllMenu();
+            var menus = await _bllMenu.GetSearchList(predicate);
+            if (null != menus && menus.Count > 0)
+            {
+                var menu = menus.First();
+                myMenu.isid = menu.isid;
+                myMenu.Authorities = menu.Authorities;
+            }
+            return myMenu;
         }
 
-       
+        public override async void RefreshDataSource()
+        {
+            Expression<Func<tb_MyUser, bool>> predicate = SerializeHelper.CreateExpression<tb_MyUser, bool>("Account!=@0", new object[] { "" });
+            //获取所有用户数据
+            DataSource = await _bllUser.GetSearchList(predicate);
+        }
+
+        public override async void InitMenu()
+        {
+            MyMenu = new tb_MyMenu
+            {
+                MenuName = "menuItemUserMgr",
+                MenuCaption = "用户管理",
+                MenuType = MenuType.DataForm.ToString(),
+                ModuleID = Module.ModuleID
+            };
+            Expression<Func<tb_MyMenu, bool>> predicate = SerializeHelper.CreateExpression<tb_MyMenu, bool>("MenuName=@0", new object[] { "menuItemUserMgr" });
+            BllMenu _bllMenu = new BllMenu();
+            var menus = await _bllMenu.GetSearchList(predicate);
+            if (null != menus && menus.Count > 0)
+            {
+                var menu = menus.First();
+                MyMenu.isid = menu.isid;
+                MyMenu.Authorities = menu.Authorities;
+            }
+        }
     }
 }

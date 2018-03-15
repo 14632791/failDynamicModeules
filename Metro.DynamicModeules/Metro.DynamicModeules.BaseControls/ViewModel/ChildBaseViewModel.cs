@@ -16,6 +16,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Metro.DynamicModeules.Interface;
 using System.Collections;
+using System.Threading.Tasks;
 
 namespace Metro.DynamicModeules.BaseControls.ViewModel
 {
@@ -24,8 +25,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     /// </summary>
     //[Export(typeof(IMdiChildWindow))]
     public abstract class ChildBaseViewModel : CommonModuleBaseViewModel, IDataOperatable, IMdiChildWindow, IPurviewControllable//ISystemButtons
-    {       
-       
+    {
         ICommand _closeCommand;
         public ICommand CloseCommand
         {
@@ -33,7 +33,9 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             {
                 return _closeCommand ?? (_closeCommand = new RelayCommand(() =>
                 {
-                    Messenger.Default.Send(MessengerToken.ClosedTagPage, Owner);
+                    if (this.DataChanged)
+                        //        e.Cancel = !Msg.AskQuestion("您修改了数据没有保存，确定要退出吗?");
+                        Messenger.Default.Send(MessengerToken.ClosedTagPage, Owner);
                 }));
             }
         }
@@ -57,7 +59,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <summary>
         /// 对应的子项实体
         /// </summary>
-        public tb_MyMenu MenuItem
+        public tb_MyMenu MyMenu
         {
             get
             {
@@ -66,10 +68,10 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             set
             {
                 _item = value;
-                RaisePropertyChanged(() => MenuItem);
+                RaisePropertyChanged(() => MyMenu);
             }
         }
-        protected abstract tb_MyMenu GetMenu();
+        protected abstract  Task<tb_MyMenu> GetMenu();
 
         ObservableCollection<ButtonInfoViewModel> _buttons;
         /// <summary>
@@ -88,22 +90,22 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             }
         }
 
-        ObservableCollection<ButtonInfoViewModel> _systemButtons = new ObservableCollection<ButtonInfoViewModel>();
-        /// <summary>
-        /// 子窗体的系统按钮
-        /// </summary>
-        public ObservableCollection<ButtonInfoViewModel> SystemButtons
-        {
-            get
-            {
-                return _systemButtons;
-            }
-            set
-            {
-                _systemButtons = value;
-                RaisePropertyChanged(() => SystemButtons);
-            }
-        }
+        //ObservableCollection<ButtonInfoViewModel> _systemButtons = new ObservableCollection<ButtonInfoViewModel>();
+        ///// <summary>
+        ///// 子窗体的系统按钮
+        ///// </summary>
+        //public ObservableCollection<ButtonInfoViewModel> SystemButtons
+        //{
+        //    get
+        //    {
+        //        return _systemButtons;
+        //    }
+        //    set
+        //    {
+        //        _systemButtons = value;
+        //        RaisePropertyChanged(() => SystemButtons);
+        //    }
+        //}
 
         /// <summary>
         /// 数据操作状态
@@ -162,8 +164,8 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             //_buttons.FirstOrDefault(b=>b.Name=="btnView").IsEnabled = _AllowDataOperate;
             //_buttons.FirstOrDefault(b=>b.Name=="btnAdd").IsEnabled = _AllowDataOperate && ButtonAuthorized(ButtonAuthority.ADD);
-            }
-        
+        }
+
 
         #region IPurviewControllable 接口实现
 
@@ -191,7 +193,11 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <summary>
         /// 获取该界面的功能点
         /// </summary>
-        public abstract ObservableCollection<tb_MyAuthorityItem> GetAuthoritys();
+        public  ObservableCollection<ButtonInfoViewModel> Authoritys
+        {
+            get;set;
+
+        }
 
         #endregion
 
@@ -200,7 +206,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         public override void Initialize()
         {
             base.Initialize();
-            MenuItem = GetMenu();
+            InitMenu();
             InitButtons();
         }
 
@@ -209,26 +215,26 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         ///  </summary>
         public virtual void InitButtons()
         {
-            var bi = this.GetSystemButtons();
-            foreach (var item in bi)
-            {
-                SystemButtons.Add((ButtonInfoViewModel)item);
-            }
+            //var bi = this.GetSystemButtons();
+            //foreach (var item in bi)
+            //{
+            //    SystemButtons.Add((ButtonInfoViewModel)item);
+            //}
         }
 
         /// <summary>
         /// 系统按钮列表。注：子窗体享用系统按钮，如帮助/关闭窗体常用功能。
         /// </summary>        
-        public virtual IList GetSystemButtons()
+        //public virtual IList GetSystemButtons()
+        //{
+        //    return new List<ButtonInfoViewModel>();
+        //}
+
+
+
+        public virtual async void InitMenu()
         {
-            return new List<ButtonInfoViewModel>();
-
-        }
-
-       
-
-        public void InitMenu()
-        {
+            MyMenu =await GetMenu();
         }
 
         public IList GetDataOperatableButtons()

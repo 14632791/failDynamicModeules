@@ -46,6 +46,10 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             aggregateCatalog.Catalogs.Add(assemblyCatalog);
             var container = new CompositionContainer(aggregateCatalog);
             container.ComposeParts(this);
+            foreach (var item in SubModuleList)
+            {
+                item.Module = Module;
+            }
         }
 
 

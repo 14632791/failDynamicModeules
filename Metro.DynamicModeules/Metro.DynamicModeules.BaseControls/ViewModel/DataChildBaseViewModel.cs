@@ -22,13 +22,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     /// <typeparam name="T"></typeparam>
     public abstract class DataChildBaseViewModel<T> : ChildBaseViewModel, ISummaryView<T>//, IPrintableForm
            where T : class, new()
-    {
-
-        public DataChildBaseViewModel()
-        {
-            InitializeForm();
-            _bll = InitBll();
-        }
+    {        
         protected BllBase<T> _bll;
         /// <summary>
         /// 初始化业务逻辑层的对象
@@ -36,20 +30,13 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <returns></returns>
         protected abstract BllBase<T> InitBll();
 
-
-
-        /// <summary>
-        /// 自定义初始化窗体操作, 窗体的Load事件必须调用此方法
-        /// </summary>
-        protected virtual void InitializeForm()
+        public override void Initialize()
         {
-            this.InitButtons();//初始化本窗体的按钮
+            _bll = InitBll();
             this.SetViewMode();//预设为数据查看模式
-            //无操作状态下不可输入数据
-            //SetDetailEditorsAccessable(_DetailGroupControl, false);
+            base.Initialize();
         }
-
-
+       
 
         /// <summary>
         /// 是否数据发生改变
@@ -58,8 +45,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             get { return this.IsAddOrEditMode; }
         }
-
-
+        
 
         /// <summary>
         /// 是否新增/修改模式
@@ -121,7 +107,6 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         }
 
 
-
         /// <summary>
         /// 检查按钮的权限
         /// </summary>
@@ -151,7 +136,6 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             //PackIconSimpleIcons Amazon;  // PackIconControl<PackIconSimpleIconsKind>
 
         }
-
 
 
         #region IDataOperatable接口的方法
@@ -320,14 +304,6 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             //{ Msg.ShowException(ex); }
         }
 
-        /// <summary>
-        /// 显示当前操作消息
-        /// </summary>
-        protected void ShowTip(string tip)
-        {
-            //lblPrompt.Text = tip;
-            //lblPrompt.Update();
-        }
 
         /// <summary>
         ///获取当前光标所在的资料行. 
@@ -343,22 +319,12 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 return GetDataRow(FocusedRowHandle);
             }
         }
-
-        /// <summary>
-        /// 关窗体中...
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        //private void FrmBaseDataForm_FormClosing(object sender, FormClosingEventArgs e)
-        //{
-        //    if (this.DataChanged)
-        //        e.Cancel = !Msg.AskQuestion("您修改了数据没有保存，确定要退出吗?");
-        //}
+        
 
         /// <summary>
         /// 清空容器内输入框.
         /// </summary>
-        public void ClearContainerEditorText(Control container)
+        public virtual void ClearContainerEditorText( )
         {
             //for (int i = 0; i < container.child.Count; i++)
             //{
@@ -368,41 +334,6 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             //        ((TextBoxBase)container.Controls[i]).Clear();
             //}
         }
-
-
-        /// <summary>
-        /// 绑定Summary的导航按钮.
-        /// </summary>        
-        //protected void BindingSummaryNavigator(ControlNavigator navigator, DataGrid gc)
-        //{
-        //    navigator.NavigatableControl = gc;
-        //    navigator.ButtonClick += new NavigatorButtonClickEventHandler(OnSummaryNavigatorButtonClick);
-        //}
-
-        /// <summary>
-        /// 主表格导航按钮的事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        //private void OnSummaryNavigatorButtonClick(object sender, NavigatorButtonClickEventArgs e)
-        //{
-        //    try
-        //    {
-        //        CCursor.ShowWaitCursor();
-        //        NavigatorButton btn = (NavigatorButton)e.Button;
-        //        ControlNavigatorButtons buttons = ((ControlNavigator)sender).Buttons;
-        //        if (e.Button == buttons.First) DoMoveFirst();
-        //        if (e.Button == buttons.Prev) DoMovePrior();
-        //        if (e.Button == buttons.Next) DoMoveNext();
-        //        if (e.Button == buttons.Last) DoMoveLast();
-        //    }
-        //    finally
-        //    {
-        //        e.Handled = true;
-        //        CCursor.ShowDefaultCursor();
-        //    }
-        //}
-
 
 
 
@@ -497,10 +428,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <summary>
         /// 刷新数据源
         /// </summary>
-        public virtual void RefreshDataSource()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void RefreshDataSource();
 
         #region Summary数据导航功能
 
