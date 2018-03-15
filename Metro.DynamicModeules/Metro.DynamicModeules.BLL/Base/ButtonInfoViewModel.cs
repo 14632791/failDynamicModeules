@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.Command;
 using Metro.DynamicModeules.Interface.Sys;
 using Metro.DynamicModeules.Models.Sys;
+using System;
 
 namespace Metro.DynamicModeules.BLL.Base
 {
@@ -10,10 +11,11 @@ namespace Metro.DynamicModeules.BLL.Base
     /// </summary>
     public class ButtonInfoViewModel : ViewModelBase//, IButtonInfo
     {
-        public ButtonInfoViewModel(object icon, tb_MyAuthorityItem item)
+        public ButtonInfoViewModel(object icon, tb_MyAuthorityItem item, Action action)
         {
             Icon = icon;
             AuthorityItem = item;
+            this.action = action;
         }
         //public IDataOperatable DataOperatabler { get; set; }
         tb_MyAuthorityItem _authorityItem;
@@ -57,14 +59,12 @@ namespace Metro.DynamicModeules.BLL.Base
         RelayCommand _clickCommand;
         public RelayCommand ClickCommand
         {
-            get; set;
-            //get
-            //{
-            //    return _clickCommand ?? (_clickCommand = new RelayCommand(OnClick));
-            //}
+            // get; set;
+            get
+            {
+                return _clickCommand ?? (_clickCommand = new RelayCommand(action));
+            }
         }
-        protected virtual void OnClick()
-        {
-        }
+        protected Action action;
     }
 }

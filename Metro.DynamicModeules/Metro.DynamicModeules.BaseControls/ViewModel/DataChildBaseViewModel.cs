@@ -20,7 +20,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     /// 带数据处理的子窗体viewModel
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class DataChildBaseViewModel<T> : ChildBaseViewModel, IDataOperatable, ISummaryView<T>//, IPrintableForm
+    public abstract class DataChildBaseViewModel<T> : ChildBaseViewModel, ISummaryView<T>//, IPrintableForm
            where T : class, new()
     {
 
@@ -35,61 +35,8 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         /// <returns></returns>
         protected abstract BllBase<T> InitBll();
-        string _stateName;
-        /// <summary>
-        /// 状态字符
-        /// </summary>
-        public string StateName
-        {
-            get
-            {
-                return _stateName;
-            }
-            set
-            {
-                _stateName = value;
-                RaisePropertyChanged(() => StateName);
-            }
-        }
-
-        /// <summary>
-        /// 数据操作状态
-        /// </summary>
-        protected UpdateType _updateType = UpdateType.None;
-        public UpdateType DataUpdateType
-        {
-            get
-            {
-                return _updateType;
-            }
-            set
-            {
-                _updateType = value;
-                StateName = GetStateName();
-            }
-        }
-        protected virtual string GetStateName()
-        {
-            string utype = "(查看模式)";
-            switch (_updateType)
-            {
-                case UpdateType.Add:
-                    utype = "(新增模式)";
-                    break;
-                case UpdateType.Modify:
-                    utype = "(修改模式)";
-                    break;
-                default:
-                    break;
-            }
-            return utype;
-        }
-
-        /// <summary>
-        /// 是否允许用户操作数据
-        /// </summary>
-        protected bool _AllowDataOperate = true;
-
+       
+       
 
         /// <summary>
         /// 自定义初始化窗体操作, 窗体的Load事件必须调用此方法
@@ -107,23 +54,12 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <summary>
         /// 是否数据发生改变
         /// </summary>
-        public bool DataChanged
+        public override bool DataChanged
         {
             get { return this.IsAddOrEditMode; }
         }
 
-        /// <summary>
-        /// 是否允许用户操作数据
-        /// </summary>
-        public bool AllowDataOperate
-        {
-            get { return _AllowDataOperate; }
-            set
-            {
-                _AllowDataOperate = value;
-                this.SetViewMode();
-            }
-        }
+       
 
         /// <summary>
         /// 是否修改了数据
@@ -138,20 +74,16 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         public bool IsAddOrEditMode
         {
-            get { return (_updateType == UpdateType.Add) || (_updateType == UpdateType.Modify); }
+            get { return (UpdateType == UpdateType.Add) || (UpdateType == UpdateType.Modify); }
         }
 
-        /// <summary>
-        /// 数据操作状态
-        /// </summary>
-        public UpdateType UpdateType { get { return _updateType; } }
-
+       
         public virtual string UpdateTypeName
         {
             get
             {
-                if (UpdateType.Add == _updateType) return "(新增模式)";
-                else if (UpdateType.Modify == _updateType) return "(修改模式)";
+                if (UpdateType.Add == UpdateType) return "(新增模式)";
+                else if (UpdateType.Modify == UpdateType) return "(修改模式)";
                 else return "(查看模式)";
             }
         }
@@ -194,21 +126,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             //_buttons.FirstOrDefault(b=>b.Name=="btnCancel").IsEnabled = true;
         }
 
-        /// <summary>        
-        ///设置为查看模式
-        ///数据操作两种状态.1：数据修改状态 2：查看数据状态 
-        /// </summary>
-        protected virtual void SetViewMode()
-        {
-            //_buttons.FirstOrDefault(b=>b.Name=="btnView").IsEnabled = _AllowDataOperate;
-            //_buttons.FirstOrDefault(b=>b.Name=="btnAdd").IsEnabled = _AllowDataOperate && ButtonAuthorized(ButtonAuthority.ADD);
-            //_buttons.FirstOrDefault(b=>b.Name=="btnDelete").IsEnabled = _AllowDataOperate && ButtonAuthorized(ButtonAuthority.DELETE);
-            //_buttons.FirstOrDefault(b=>b.Name=="btnEdit").IsEnabled = _AllowDataOperate && ButtonAuthorized(ButtonAuthority.EDIT);
-            //_buttons.FirstOrDefault(b=>b.Name=="btnPrint").IsEnabled = ButtonAuthorized(ButtonAuthority.PRINT);
-            //_buttons.FirstOrDefault(b=>b.Name=="btnPreview").IsEnabled = ButtonAuthorized(ButtonAuthority.PREVIEW);
-            //_buttons.FirstOrDefault(b=>b.Name=="btnSave").IsEnabled = false;
-            //_buttons.FirstOrDefault(b => b.Name == "btnCancel").IsEnabled = false;
-        }
+       
 
         /// <summary>
         /// 检查按钮的权限
@@ -264,99 +182,17 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
 
         #region IDataOperatable接口的方法
 
-        /// <summary>
-        /// 数据操作按钮
-        /// </summary>
-        /// <returns></returns>
-        public IList GetDataOperatableButtons()
-        {
-
-            List<ButtonInfoViewModel> list = new List<ButtonInfoViewModel>();
-            //list.Add(this.ToolbarRegister.CreateButton("btnView", "查看", PackIconModernKind.SocialReadability, new Size(57, 57), this.DoViewContent));
-            //list.Add(this.ToolbarRegister.CreateButton("btnAdd", "新增(F4)", PackIconModernKind.EditAdd, new Size(57, 57), this.DoAdd));
-            //list.Add(this.ToolbarRegister.CreateButton("btnDelete", "删除(F6)", PackIconModernKind.Delete, new Size(57, 57), (sender) => { this.DoDelete(sender); }));
-            //list.Add(this.ToolbarRegister.CreateButton("btnEdit", "修改(F5)", PackIconModernKind.Edit, new Size(57, 57), this.DoEdit));
-            //list.Add(this.ToolbarRegister.CreateButton("btnSave", "保存(F2)", PackIconModernKind.Save, new Size(57, 57), (sender) => { this.DoSave(sender); } ));
-            //list.Add(this.ToolbarRegister.CreateButton("btnCancel", "取消(F3)", PackIconModernKind.Cancel, new Size(57, 57), this.DoCancel));
-            return list;
-        }
-
+       
         /// <summary>
         /// 查看选中记录的数据
         /// </summary>
         /// <param name="sender"></param>
         public virtual void DoViewContent(T row)
         {
-            this.ButtonStateChanged(_updateType);
+            this.ButtonStateChanged(UpdateType);
         }
 
-        /// <summary>
-        /// 新增记录
-        /// </summary>
-        /// <param name="sender"></param>
-        public virtual void DoAdd()
-        {
-            this._updateType = UpdateType.Add;
-            this.SetEditMode();
-            this.ButtonStateChanged(_updateType);
-        }
-
-        /// <summary>
-        /// 修改数据
-        /// </summary>
-        /// <param name="sender"></param>
-        public virtual void DoEdit()
-        {
-            this._updateType = UpdateType.Modify;
-            this.SetEditMode();
-            this.ButtonStateChanged(_updateType);
-        }
-
-        /// <summary>
-        /// 取消新增或修改
-        /// </summary>
-        /// <param name="sender"></param>
-        public virtual void DoCancel()
-        {
-            try
-            {
-                this._updateType = UpdateType.None;
-                this.SetViewMode();
-                this.ButtonStateChanged(_updateType);
-
-                if (_updateType == UpdateType.Add)
-                    this.ShowSummaryPage(true);
-                else if (RowCount > 0)
-                {
-                    //this.DoViewContent(row);
-                }
-            }
-            catch (Exception e)
-            {
-                // Msg.ShowException(e);
-            }
-        }
-
-        /// <summary>
-        /// 保存数据
-        /// </summary>
-        public virtual bool DoSave()
-        {
-            this._updateType = UpdateType.None;
-            this.SetViewMode();
-            this.ShowDetailPage(false);
-            this.ButtonStateChanged(_updateType);
-            return true;
-        }
-
-        /// <summary>
-        /// 删除记录
-        /// </summary>
-        /// <param name="sender"></param>
-        public virtual bool DoDelete()
-        {
-            return true;
-        }
+        
 
         #endregion
 
@@ -788,7 +624,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             try
             {
                 //如果是新增后保存,在表格内插入一条记录.
-                if (_updateType == UpdateType.Add)
+                if (UpdateType == UpdateType.Add)
                 {
                     T newrow = new T();//表格的数据源增加一条记录
                     this.ReplaceDataRowChanges(summary, newrow);//替换数据
@@ -797,7 +633,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 }
 
                 //如果是修改后保存,将最新数据替换当前记录的数据.
-                if (_updateType == UpdateType.Modify || _updateType == UpdateType.None)
+                if (UpdateType == UpdateType.Modify || UpdateType == UpdateType.None)
                 {
                     var dr = GetDataRow(FocusedRowHandle);
                     this.ReplaceDataRowChanges(summary, dr);//替换数据
@@ -815,7 +651,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             {
                 if (isSave)
                 {
-                    _updateType = UpdateType.None;
+                    UpdateType = UpdateType.None;
                 }
             }
         }
