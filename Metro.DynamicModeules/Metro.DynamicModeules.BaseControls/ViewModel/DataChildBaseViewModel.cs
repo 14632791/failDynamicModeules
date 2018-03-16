@@ -18,7 +18,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     /// <typeparam name="T"></typeparam>
     public abstract class DataChildBaseViewModel<T> : ChildBaseViewModel, ISummaryView<T>//, IPrintableForm
            where T : class, new()
-    {        
+    {
         protected BllBase<T> _bll;
         /// <summary>
         /// 初始化业务逻辑层的对象
@@ -31,8 +31,9 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             _bll = InitBll();
             this.SetViewMode();//预设为数据查看模式
             base.Initialize();
+            RefreshDataSource();
         }
-       
+
 
         /// <summary>
         /// 是否数据发生改变
@@ -41,7 +42,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             get { return this.IsAddOrEditMode; }
         }
-        
+
 
         /// <summary>
         /// 是否新增/修改模式
@@ -315,12 +316,12 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 return GetDataRow(FocusedRowHandle);
             }
         }
-        
+
 
         /// <summary>
         /// 清空容器内输入框.
         /// </summary>
-        public virtual void ClearContainerEditorText( )
+        public virtual void ClearContainerEditorText()
         {
             //for (int i = 0; i < container.child.Count; i++)
             //{

@@ -28,9 +28,9 @@ namespace SystemModule.ViewModel
         BllUser _bllUser;
         protected override Control GetOwner()
         {
-            return new DataChildBaseView
+            return new FlipPanel
             {
-                Content = new UserFrontView(),
+                FrontContent = new UserFrontView(),
                 BackContent = new UserBackView()
             };
         }
@@ -74,6 +74,6 @@ namespace SystemModule.ViewModel
             //获取所有用户数据
             DataSource = await _bllUser.GetSearchList(predicate);
         }
-        
+
     }
 }

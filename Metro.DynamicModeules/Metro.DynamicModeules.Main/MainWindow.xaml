@@ -197,9 +197,8 @@
             </ItemsControl>
             <Controls:MetroAnimatedTabControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding TabPages}" 
                  SelectedItem="{Binding FocusedPage,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"   
-                Controls:TabControlHelper.Underlined="TabItems" 
+                Controls:TabControlHelper.Underlined="SelectedTabItem" 
                  ItemContainerStyle="{StaticResource RightTabItemStyle}">
-                <!--ItemTemplate="{StaticResource RightTabControlItemTemplate}"-->
             </Controls:MetroAnimatedTabControl>
 
         </Grid>

@@ -115,7 +115,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\SimpleCommand.cs" />
-    <Compile Include="ControlEx\DataChildBaseView.cs" />
     <Compile Include="ControlEx\FlipPanel.cs" />
     <Compile Include="ControlEx\GridNavigation.cs" />
     <Compile Include="ControlEx\Msg.cs" />
@@ -154,10 +153,6 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Styles\DataChildBaseView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Styles\FlipPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
