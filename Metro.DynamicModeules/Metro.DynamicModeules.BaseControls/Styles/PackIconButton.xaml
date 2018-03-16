@@ -6,7 +6,7 @@
         <Setter Property="Content">
             <Setter.Value>
                 <StackPanel Orientation="Horizontal">
-                    <ContentPresenter  Content="{Binding Icon}"/>
+                    <ContentPresenter  Content="{Binding Icon}" Margin="2"/>
                     <TextBlock Text="{Binding AuthorityItem.AuthorityName}"/>
                 </StackPanel>
             </Setter.Value>

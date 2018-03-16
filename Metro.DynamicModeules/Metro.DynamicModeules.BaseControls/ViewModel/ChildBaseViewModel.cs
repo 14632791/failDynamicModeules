@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Metro.DynamicModeules.BLL.Base;
+using Metro.DynamicModeules.BLL.Security;
 using Metro.DynamicModeules.Interface.Sys;
 using Metro.DynamicModeules.Models.Sys;
 using System;
@@ -43,13 +44,15 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         }
         ICommand _clickCommand;
         protected virtual void OnOpenOwner()
-        {
-            //Messenger.Default.Send(MessengerToken.FocusedChild, Owner);            
+        {         
             if (!MdiMainWindow.TabPages.Contains(this))
             {
                 MdiMainWindow.TabPages.Add(this);
             }
-            MdiMainWindow.FocusedPage = this;
+            if (MdiMainWindow.FocusedPage != this)
+            {
+                MdiMainWindow.FocusedPage = this;
+            }
         }
 
         tb_MyMenu _item;
@@ -214,20 +217,25 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         ///  </summary>
         public virtual void InitButtons()
         {
-            //var bi = this.GetSystemButtons();
-            //foreach (var item in bi)
-            //{
-            //    SystemButtons.Add((ButtonInfoViewModel)item);
-            //}
+            Buttons = new ObservableCollection<ButtonInfoViewModel>();
+            var bi = this.GetSystemButtons();
+            foreach (var item in bi)
+            {
+                Buttons.Add((ButtonInfoViewModel)item);
+            }
         }
 
         /// <summary>
         /// 系统按钮列表。注：子窗体享用系统按钮，如帮助/关闭窗体常用功能。
         /// </summary>        
-        //public virtual IList GetSystemButtons()
-        //{
-        //    return new List<ButtonInfoViewModel>();
-        //}
+        public virtual IList GetSystemButtons()
+        {
+            List < ButtonInfoViewModel > btns= new List<ButtonInfoViewModel>();
+            btns.Add(AuthorityItemsMgr.GenerateButton(AuthorityItemType.Close, this));
+            btns.Add(AuthorityItemsMgr.GenerateButton(AuthorityItemType.CloseBox, this));
+            btns.Add(AuthorityItemsMgr.GenerateButton(AuthorityItemType.Question, this));
+            return btns;
+        }
 
 
 
@@ -239,13 +247,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         public IList GetDataOperatableButtons()
         {
             List<ButtonInfoViewModel> list = new List<ButtonInfoViewModel>();
-            //list.Add(this.ToolbarRegister.CreateButton("btnView", "查看", PackIconModernKind.SocialReadability, new Size(57, 57), this.DoViewContent));
-            //list.Add(this.ToolbarRegister.CreateButton("btnAdd", "新增(F4)", PackIconModernKind.EditAdd, new Size(57, 57), this.DoAdd));
-            //list.Add(this.ToolbarRegister.CreateButton("btnDelete", "删除(F6)", PackIconModernKind.Delete, new Size(57, 57), (sender) => { this.DoDelete(sender); }));
-            //list.Add(this.ToolbarRegister.CreateButton("btnEdit", "修改(F5)", PackIconModernKind.Edit, new Size(57, 57), this.DoEdit));
-            //list.Add(this.ToolbarRegister.CreateButton("btnSave", "保存(F2)", PackIconModernKind.Save, new Size(57, 57), (sender) => { this.DoSave(sender); } ));
-            //list.Add(this.ToolbarRegister.CreateButton("btnCancel", "取消(F3)", PackIconModernKind.Cancel, new Size(57, 57), this.DoCancel));
-            return list;
+           return list;
         }
         #endregion
 

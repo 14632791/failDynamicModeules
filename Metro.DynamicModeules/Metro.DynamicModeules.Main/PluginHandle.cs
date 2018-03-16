@@ -2,6 +2,7 @@
 using Metro.DynamicModeules.Main.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 
@@ -18,11 +19,18 @@ namespace Metro.DynamicModeules.Main
         private PluginHandle()
         {
             InitializePlugins();
+            //加载所有项及子项
             foreach (var item in PluginList)
             {
                 item.Value.MdiMainWindow = MainWindowViewModel.Instance;
+                foreach (var sub in item.Value.SubModuleList)
+                {
+                    sub.IModule = item.Value;
+                    sub.MdiMainWindow = MainWindowViewModel.Instance;
+                }
             }
         }
+
         private static object _lockobj = new object();
         private static PluginHandle _instance;
         public static PluginHandle Instance
@@ -48,13 +56,13 @@ namespace Metro.DynamicModeules.Main
         /// <summary>
         /// 存储MEF导出分类
         /// </summary>
-        AggregateCatalog catalog = new AggregateCatalog();
+        AggregateCatalog catalog = null;// new AggregateCatalog();
 
         /// <summary>
         /// 存储所有主模块的插件
         /// </summary>
         [ImportMany(typeof(ModuleBaseViewModel), AllowRecomposition = true)]
-        public List<Lazy<ModuleBaseViewModel>> PluginList { get; set; }
+        public ObservableCollection<Lazy<ModuleBaseViewModel>> PluginList { get; set; }
 
         /// <summary>
         /// 存储插件容器
@@ -64,11 +72,11 @@ namespace Metro.DynamicModeules.Main
         /// <summary>
         /// 初始化插件,在插件容器中初始化
         /// </summary>
-        public void InitializePlugins()
+        private void InitializePlugins()
         {
             try
             {
-                PluginList = new List<Lazy<ModuleBaseViewModel>>();
+                //PluginList = new ObservableCollection<Lazy<ModuleBaseViewModel>>();
                 catalog = new AggregateCatalog();
                 //添加插件容器中的导出项目录
                 catalog.Catalogs.Add(new AssemblyCatalog(System.Reflection.Assembly.GetEntryAssembly()));
@@ -107,7 +115,7 @@ namespace Metro.DynamicModeules.Main
             PluginList = null;
         }
     }
-   
+
     /// <summary>
     /// 主界面的载体
     /// </summary>

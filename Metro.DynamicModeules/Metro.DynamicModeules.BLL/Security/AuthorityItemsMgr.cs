@@ -132,7 +132,7 @@ namespace Metro.DynamicModeules.BLL.Security
         /// <param name="menu"></param>
         /// <param name="autyItems"></param>
         /// <returns></returns>
-        public ObservableCollection<ButtonInfoViewModel> GetButtonsByMeun(tb_MyMenu menu, IDataOperatable operatabler)
+        public static ObservableCollection<ButtonInfoViewModel> GetButtonsByMeun(tb_MyMenu menu, IDataOperatable operatabler)
         {
             var items = DataDictCache.Instance.AuthorityByItems.Where(i => i.MenuId == menu.isid);
             if (null == items)

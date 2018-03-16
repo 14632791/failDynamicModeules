@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using Metro.DynamicModeules.Interface.Sys;
 using Metro.DynamicModeules.Models.Sys;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
@@ -46,23 +47,20 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <returns></returns>
         protected abstract sys_Modules GetModule();
 
-
+         
         /// <summary>
         /// 初始化该模块下的所有子项
         /// </summary>
         public virtual void InitMenu()
         {
-            SubModuleList = new ObservableCollection<IMdiChildView>();
-            AggregateCatalog aggregateCatalog = new AggregateCatalog();
-            AssemblyCatalog assemblyCatalog = new AssemblyCatalog(typeof(IMdiChildView).Assembly);
-            aggregateCatalog.Catalogs.Add(assemblyCatalog);
-            var container = new CompositionContainer(aggregateCatalog);
-            container.ComposeParts(this);
-            foreach (var item in SubModuleList)
-            {
-                item.IModule = this;
-                item.MdiMainWindow = MdiMainWindow;
-            }
+            //SubModuleList = new ObservableCollection<IMdiChildView>();
+            AggregateCatalog catalog = new AggregateCatalog();
+            //添加插件容器中的导出项目录
+            catalog.Catalogs.Add(new AssemblyCatalog(System.Reflection.Assembly.GetEntryAssembly()));
+            //添加程序运行路径下的导出项目录
+            //catalog.Catalogs.Add(new DirectoryCatalog(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location),"*.dll"));
+            CompositionContainer cc = new CompositionContainer(catalog);
+            cc.ComposeParts(this);
         }
 
 
