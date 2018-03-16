@@ -29,10 +29,10 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                        <Button Command="{Binding OpenOwnerCommand}">
-                                            <StackPanel Orientation="Horizontal">
-                                                <ContentPresenter Content="{Binding Icon}"/>
-                                                <TextBlock Text="{Binding SubItem.MenuName}"/>
+                                        <Button Command="{Binding OpenOwnerCommand}" HorizontalContentAlignment="Left" >
+                                            <StackPanel Orientation="Horizontal" >
+                                                <ContentPresenter Content="{Binding Icon}" VerticalAlignment="Center" Margin="6,0"/>
+                                                <TextBlock Text="{Binding MyMenu.MenuCaption}" VerticalAlignment="Center"/>
                                             </StackPanel>
                                         </Button>
                                     </ControlTemplate>
@@ -176,7 +176,7 @@
         </Menu>
         <Line X1="0" Y1="0" Y2="0" X2="3000" Grid.Row="1" Grid.ColumnSpan="2"  Stroke="{DynamicResource AccentColorBrush}"/>
 
-        <ListBox ItemsSource="{Binding Modules}" 
+        <ListBox ItemsSource="{Binding Modules}" VerticalAlignment="Stretch"
                  Style="{StaticResource LeftModuleStyle}" Grid.Row="1"/>
         <GridSplitter HorizontalAlignment="Right" Grid.Row="1" Margin="0,1"
                       Grid.Column="0" Width="3"/>

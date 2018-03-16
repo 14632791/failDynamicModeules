@@ -8,8 +8,7 @@ using Metro.DynamicModeules.BaseControls.Commands;
 using Metro.DynamicModeules.BaseControls.ViewModel;
 using Metro.DynamicModeules.BLL;
 using Metro.DynamicModeules.BLL.Base;
-using Metro.DynamicModeules.Models;
-using Metro.DynamicModeules.Models.Sys;
+using Metro.DynamicModeules.Interface.Sys;
 using NHotkey;
 using NHotkey.Wpf;
 using System;
@@ -19,7 +18,6 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,30 +26,38 @@ using System.Windows.Media;
 
 namespace Metro.DynamicModeules.Main.ViewModel
 {
-    public class MainWindowViewModel : ViewModelBase, IDataErrorInfo, IDisposable
+    public class MainWindowViewModel : ViewModelBase, IMdiMainWindow,IDataErrorInfo, IDisposable
     {
         private readonly IDialogCoordinator _dialogCoordinator;
         int? _integerGreater10Property;
         private bool _animateOnPositionChange = true;
-       
+        static MainWindowViewModel _instance;
+        public static MainWindowViewModel Instance
+        {
+            get
+            {
+                if (null == _instance)
+                {
+                    _instance = new MainWindowViewModel();
+                }
+                return _instance;
+            }
+        }
+
         MainWindowViewModel()
         {
             #region 初始化属性成员
 
             //Buttons = new ObservableCollection<tb_MyAuthorityItem>();
             Modules = new ObservableCollection<ModuleBaseViewModel>();
-            TabPages = new ObservableCollection<ChildBaseViewModel>();
+            TabPages = new ObservableCollection<IMdiChildView>();
             //检查子界面
             Messenger.Default.Register<ChildBaseViewModel>(this, MessengerToken.FocusedChild, SetFocusedChild);
             Messenger.Default.Register<ChildBaseViewModel>(this, MessengerToken.ClosedTagPage, ClosedTagPage);
-            
-            #endregion
 
-        }
-        public MainWindowViewModel(IDialogCoordinator dialogCoordinator):this()
-        {
+            #endregion
             this.Title = "Flyout Binding Test";
-            _dialogCoordinator = dialogCoordinator;
+            _dialogCoordinator = MahApps.Metro.Controls.Dialogs.DialogCoordinator.Instance;
             // SampleData.Seed();
 
             // create accent color menu items for the demo
@@ -85,7 +91,7 @@ namespace Metro.DynamicModeules.Main.ViewModel
             catch (HotkeyAlreadyRegisteredException exception)
             {
                 System.Diagnostics.Trace.TraceWarning("Uups, the hotkey {0} is already registered!", exception.Name);
-            }           
+            }
         }
 
         public void Dispose()
@@ -234,54 +240,6 @@ namespace Metro.DynamicModeules.Main.ViewModel
             }
         }
 
-        private ICommand textBoxButtonCmd;
-
-        public ICommand TextBoxButtonCmd
-        {
-            get
-            {
-                return this.textBoxButtonCmd ?? (this.textBoxButtonCmd = new SimpleCommand
-                {
-                    CanExecuteDelegate = x => true,
-                    ExecuteDelegate = async x =>
-                    {
-                        if (x is string)
-                        {
-                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("Wow, you typed Return and got", (string)x);
-                        }
-                        else if (x is TextBox)
-                        {
-                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("TextBox Button was clicked!", string.Format("Text: {0}", ((TextBox)x).Text));
-                        }
-                        else if (x is PasswordBox)
-                        {
-                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("PasswordBox Button was clicked!", string.Format("Password: {0}", ((PasswordBox)x).Password));
-                        }
-                    }
-                });
-            }
-        }
-
-        private ICommand textBoxButtonCmdWithParameter;
-
-        public ICommand TextBoxButtonCmdWithParameter
-        {
-            get
-            {
-                return this.textBoxButtonCmdWithParameter ?? (this.textBoxButtonCmdWithParameter = new SimpleCommand
-                {
-                    CanExecuteDelegate = x => true,
-                    ExecuteDelegate = async x =>
-                    {
-                        if (x is String)
-                        {
-                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("TextBox Button with parameter was clicked!",
-                                                                                                  string.Format("Parameter: {0}", x));
-                        }
-                    }
-                });
-            }
-        }
 
 
 
@@ -311,112 +269,6 @@ namespace Metro.DynamicModeules.Main.ViewModel
         [Description("Test-Property")]
         public string Error { get { return string.Empty; } }
 
-        private ICommand singleCloseTabCommand;
-
-        public ICommand SingleCloseTabCommand
-        {
-            get
-            {
-                return this.singleCloseTabCommand ?? (this.singleCloseTabCommand = new SimpleCommand
-                {
-                    CanExecuteDelegate = x => true,
-                    ExecuteDelegate = async x =>
-                    {
-                        await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("Closing tab!", string.Format("You are now closing the '{0}' tab", x));
-                    }
-                });
-            }
-        }
-
-        private ICommand neverCloseTabCommand;
-
-        public ICommand NeverCloseTabCommand
-        {
-            get { return this.neverCloseTabCommand ?? (this.neverCloseTabCommand = new SimpleCommand { CanExecuteDelegate = x => false }); }
-        }
-
-
-        private ICommand showInputDialogCommand;
-
-        public ICommand ShowInputDialogCommand
-        {
-            get
-            {
-                return this.showInputDialogCommand ?? (this.showInputDialogCommand = new SimpleCommand
-                {
-                    CanExecuteDelegate = x => true,
-                    ExecuteDelegate = async x =>
-                    {
-                        await _dialogCoordinator.ShowInputAsync(this, "From a VM", "This dialog was shown from a VM, without knowledge of Window").ContinueWith(t => Console.WriteLine(t.Result));
-                    }
-                });
-            }
-        }
-
-        private ICommand showLoginDialogCommand;
-
-        public ICommand ShowLoginDialogCommand
-        {
-            get
-            {
-                return this.showLoginDialogCommand ?? (this.showLoginDialogCommand = new SimpleCommand
-                {
-                    CanExecuteDelegate = x => true,
-                    ExecuteDelegate = async x =>
-                    {
-                        await _dialogCoordinator.ShowLoginAsync(this, "Login from a VM", "This login dialog was shown from a VM, so you can be all MVVM.").ContinueWith(t => Console.WriteLine(t.Result));
-                    }
-                });
-            }
-        }
-
-        private ICommand showMessageDialogCommand;
-
-        public ICommand ShowMessageDialogCommand
-        {
-            get
-            {
-                return this.showMessageDialogCommand ?? (this.showMessageDialogCommand = new SimpleCommand
-                {
-                    CanExecuteDelegate = x => true,
-                    ExecuteDelegate = x => PerformDialogCoordinatorAction(this.ShowMessage((string)x), (string)x == "DISPATCHER_THREAD")
-                });
-            }
-        }
-
-        private Action ShowMessage(string startingThread)
-        {
-            return () =>
-            {
-                var message = $"MVVM based messages!\n\nThis dialog was created by {startingThread} Thread with ID=\"{Thread.CurrentThread.ManagedThreadId}\"\n" +
-                              $"The current DISPATCHER_THREAD Thread has the ID=\"{Application.Current.Dispatcher.Thread.ManagedThreadId}\"";
-                this._dialogCoordinator.ShowMessageAsync(this, $"Message from VM created by {startingThread}", message).ContinueWith(t => Console.WriteLine(t.Result));
-            };
-        }
-
-        private ICommand showProgressDialogCommand;
-
-        public ICommand ShowProgressDialogCommand
-        {
-            get
-            {
-                return this.showProgressDialogCommand ?? (this.showProgressDialogCommand = new SimpleCommand
-                {
-                    CanExecuteDelegate = x => true,
-                    ExecuteDelegate = x => RunProgressFromVm()
-                });
-            }
-        }
-
-        private async void RunProgressFromVm()
-        {
-            var controller = await _dialogCoordinator.ShowProgressAsync(this, "Progress from VM", "Progressing all the things, wait 3 seconds");
-            controller.SetIndeterminate();
-
-            await TaskEx.Delay(3000);
-
-            await controller.CloseAsync();
-        }
 
         private static void PerformDialogCoordinatorAction(Action action, bool runInMainThread)
         {
@@ -443,7 +295,7 @@ namespace Metro.DynamicModeules.Main.ViewModel
             }
         }
 
-      
+
 
         public IEnumerable<string> BrushResources { get; private set; }
 
@@ -545,9 +397,13 @@ namespace Metro.DynamicModeules.Main.ViewModel
             RaisePropertyChanged("IsNoScaleSmallerFrame");
         }
 
-        public bool IsScaleDownLargerFrame { get { return ((MetroWindow)Application.Current.MainWindow).IconScalingMode == MultiFrameImageMode.ScaleDownLargerFrame; } }
+        public bool IsScaleDownLargerFrame {
+            get {
+                return ((MetroWindow)Application.Current.MainWindow).IconScalingMode == MultiFrameImageMode.ScaleDownLargerFrame; } }
 
-        public bool IsNoScaleSmallerFrame { get { return ((MetroWindow)Application.Current.MainWindow).IconScalingMode == MultiFrameImageMode.NoScaleSmallerFrame; } }
+        public bool IsNoScaleSmallerFrame {
+            get {
+                return ((MetroWindow)Application.Current.MainWindow).IconScalingMode == MultiFrameImageMode.NoScaleSmallerFrame; } }
 
         #region Expand 2018.3.13
         /// <summary>
@@ -555,11 +411,11 @@ namespace Metro.DynamicModeules.Main.ViewModel
         /// </summary>
         private void SetFocusedChild(ChildBaseViewModel page)
         {
-            if (!TabPages.Contains(page))
-            {
-                TabPages.Add(page);
-            }
-            FocusedPage = page;
+            //if (!TabPages.Contains(page))
+            //{
+            //    TabPages.Add(page);
+            //}
+            //FocusedPage = page;
         }
         /// <summary>
         /// 移除page内容
@@ -567,28 +423,13 @@ namespace Metro.DynamicModeules.Main.ViewModel
         /// <param name="page"></param>
         private void ClosedTagPage(ChildBaseViewModel page)
         {
-            if (TabPages.Contains(page))
-            {
-                TabPages.Remove(page);
-            }
+            //if (TabPages.Contains(page))
+            //{
+            //    TabPages.Remove(page);
+            //}
         }
-        
-        #region 上方的按钮列表
 
-        //ObservableCollection<tb_MyAuthorityItem> _buttons;
-        //public ObservableCollection<tb_MyAuthorityItem> Buttons
-        //{
-        //    get
-        //    {
-        //        return _buttons;
-        //    }
-        //    set
-        //    {
-        //        _buttons = value;
-        //        RaisePropertyChanged(() => Buttons);
-        //    }
-        //}
-        #endregion
+
 
         #region 左则的模块列表
 
@@ -609,8 +450,8 @@ namespace Metro.DynamicModeules.Main.ViewModel
         #endregion
 
         #region 右下方的tabItems列表
-        ObservableCollection<ChildBaseViewModel> _tabPages;
-        public ObservableCollection<ChildBaseViewModel> TabPages
+        ObservableCollection<IMdiChildView> _tabPages;
+        public ObservableCollection<IMdiChildView> TabPages
         {
             get
             {
@@ -626,8 +467,8 @@ namespace Metro.DynamicModeules.Main.ViewModel
         /// <summary>
         /// 当前选中的page
         /// </summary>
-        ChildBaseViewModel _activatePage;
-        public ChildBaseViewModel FocusedPage
+        IMdiChildView _activatePage;
+        public IMdiChildView FocusedPage
         {
             get
             {
@@ -641,7 +482,7 @@ namespace Metro.DynamicModeules.Main.ViewModel
         }
     }
 
-#endregion
+    #endregion
 
     #region 其它类定义
 

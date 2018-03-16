@@ -1,5 +1,5 @@
 ﻿using Metro.DynamicModeules.BaseControls.ViewModel;
-using Metro.DynamicModeules.Interface.Sys;
+using Metro.DynamicModeules.Main.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -18,6 +18,10 @@ namespace Metro.DynamicModeules.Main
         private PluginHandle()
         {
             InitializePlugins();
+            foreach (var item in PluginList)
+            {
+                item.Value.MdiMainWindow = MainWindowViewModel.Instance;
+            }
         }
         private static object _lockobj = new object();
         private static PluginHandle _instance;

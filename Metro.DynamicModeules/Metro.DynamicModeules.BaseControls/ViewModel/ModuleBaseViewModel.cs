@@ -1,9 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
-using MahApps.Metro.IconPacks;
 using Metro.DynamicModeules.Interface.Sys;
-using Metro.DynamicModeules.Models;
 using Metro.DynamicModeules.Models.Sys;
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
@@ -17,12 +14,15 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     //[Export(typeof(IModuleBase))]
     public abstract class ModuleBaseViewModel : CommonModuleBaseViewModel, IModuleBase
     {
-
+        /// <summary>
+        /// 对应的主窗体
+        /// </summary>
+        public IMdiMainWindow MdiMainWindow { get; set; }
         /// <summary>
         /// 子窗口插件
         /// </summary>
-        [ImportMany(typeof(IMdiChildWindow), AllowRecomposition = true)]
-        public ObservableCollection<IMdiChildWindow> SubModuleList
+        [ImportMany(typeof(IMdiChildView), AllowRecomposition = true)]
+        public ObservableCollection<IMdiChildView> SubModuleList
         {
             get
             {
@@ -35,11 +35,11 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 RaisePropertyChanged(() => SubModuleList);
             }
         }
-        ObservableCollection<IMdiChildWindow> _subModuleList;
+        ObservableCollection<IMdiChildView> _subModuleList;
         /// <summary>
         /// 当前选中的子项
         /// </summary>
-        public IMdiChildWindow FocusedChild { get; set; }
+        public IMdiChildView FocusedChild { get; set; }
         /// <summary>
         /// 获取该模块的实体对象
         /// </summary>
@@ -52,15 +52,16 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         public virtual void InitMenu()
         {
-            SubModuleList = new ObservableCollection<IMdiChildWindow>();
+            SubModuleList = new ObservableCollection<IMdiChildView>();
             AggregateCatalog aggregateCatalog = new AggregateCatalog();
-            AssemblyCatalog assemblyCatalog = new AssemblyCatalog(typeof(IMdiChildWindow).Assembly);
+            AssemblyCatalog assemblyCatalog = new AssemblyCatalog(typeof(IMdiChildView).Assembly);
             aggregateCatalog.Catalogs.Add(assemblyCatalog);
             var container = new CompositionContainer(aggregateCatalog);
             container.ComposeParts(this);
             foreach (var item in SubModuleList)
             {
-                item.Module = Module;
+                item.IModule = this;
+                item.MdiMainWindow = MdiMainWindow;
             }
         }
 

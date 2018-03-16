@@ -22,7 +22,7 @@ namespace SystemModule.ViewModel
     /// <summary>
     /// 用户管理界面
     /// </summary>
-    [Export(typeof(IMdiChildWindow))]
+    [Export(typeof(IMdiChildView))]
     public class DataChildUserViewModel : DataChildBaseViewModel<tb_MyUser>
     {
         BllUser _bllUser;
@@ -54,7 +54,7 @@ namespace SystemModule.ViewModel
                 MenuName = "menuItemUserMgr",
                 MenuCaption = "用户管理",
                 MenuType = MenuType.DataForm.ToString(),
-                ModuleID = Module.ModuleID
+                //ModuleID = Module.ModuleID
             };
             Expression<Func<tb_MyMenu, bool>> predicate = SerializeHelper.CreateExpression<tb_MyMenu, bool>("MenuName=@0", new object[] { myMenu.MenuName });
             BllMenu _bllMenu = new BllMenu();
@@ -74,25 +74,6 @@ namespace SystemModule.ViewModel
             //获取所有用户数据
             DataSource = await _bllUser.GetSearchList(predicate);
         }
-
-        public override async void InitMenu()
-        {
-            MyMenu = new tb_MyMenu
-            {
-                MenuName = "menuItemUserMgr",
-                MenuCaption = "用户管理",
-                MenuType = MenuType.DataForm.ToString(),
-            };
-            //ModuleID = Module.ModuleID
-            Expression<Func<tb_MyMenu, bool>> predicate = SerializeHelper.CreateExpression<tb_MyMenu, bool>("MenuName=@0", new object[] { "menuItemUserMgr" });
-            BllMenu _bllMenu = new BllMenu();
-            var menus = await _bllMenu.GetSearchList(predicate);
-            if (null != menus && menus.Count > 0)
-            {
-                var menu = menus.First();
-                MyMenu.isid = menu.isid;
-                MyMenu.Authorities = menu.Authorities;
-            }
-        }
+        
     }
 }

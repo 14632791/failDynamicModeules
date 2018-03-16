@@ -7,10 +7,8 @@
 ///* 
 ///* Copyright 2015 Metro.DynamicModeules software
 ///**************************************************************************/
-using Metro.DynamicModeules.BLL.Security;
 using Metro.DynamicModeules.Common;
 using Metro.DynamicModeules.Common.ExpressionSerialization;
-using Metro.DynamicModeules.Interface.Service.Base;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

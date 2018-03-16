@@ -17,9 +17,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metro.DynamicModeules.BLL",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metro.DynamicModeules.Common", "Metro.DynamicModeules.Common\Metro.DynamicModeules.Common.csproj", "{269ECEFF-B6C2-4708-86BA-AFBB1A2B045C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metro.DynamicModeules.Interface", "..\..\DynamicWebApi\Metro.DynamicModeules.WebApi\Metro.DynamicModeules.Interface\Metro.DynamicModeules.Interface.csproj", "{66B7A24B-9FB9-4436-A269-F6740E700C03}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemModule", "SystemModule\SystemModule.csproj", "{8E2BC205-7975-4F33-A87A-F9E55A69C107}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metro.DynamicModeules.Interface", "..\..\DynamicWebApi\Metro.DynamicModeules.WebApi\Metro.DynamicModeules.Interface\Metro.DynamicModeules.Interface.csproj", "{66B7A24B-9FB9-4436-A269-F6740E700C03}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -103,18 +103,6 @@ Global
 		{269ECEFF-B6C2-4708-86BA-AFBB1A2B045C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{269ECEFF-B6C2-4708-86BA-AFBB1A2B045C}.Release|x86.ActiveCfg = Release|x86
 		{269ECEFF-B6C2-4708-86BA-AFBB1A2B045C}.Release|x86.Build.0 = Release|x86
-		{66B7A24B-9FB9-4436-A269-F6740E700C03}.AppVeyor|Any CPU.ActiveCfg = Release|Any CPU
-		{66B7A24B-9FB9-4436-A269-F6740E700C03}.AppVeyor|Any CPU.Build.0 = Release|Any CPU
-		{66B7A24B-9FB9-4436-A269-F6740E700C03}.AppVeyor|x86.ActiveCfg = Release|Any CPU
-		{66B7A24B-9FB9-4436-A269-F6740E700C03}.AppVeyor|x86.Build.0 = Release|Any CPU
-		{66B7A24B-9FB9-4436-A269-F6740E700C03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66B7A24B-9FB9-4436-A269-F6740E700C03}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{66B7A24B-9FB9-4436-A269-F6740E700C03}.Debug|x86.ActiveCfg = Debug|x86
-		{66B7A24B-9FB9-4436-A269-F6740E700C03}.Debug|x86.Build.0 = Debug|x86
-		{66B7A24B-9FB9-4436-A269-F6740E700C03}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{66B7A24B-9FB9-4436-A269-F6740E700C03}.Release|Any CPU.Build.0 = Release|Any CPU
-		{66B7A24B-9FB9-4436-A269-F6740E700C03}.Release|x86.ActiveCfg = Release|Any CPU
-		{66B7A24B-9FB9-4436-A269-F6740E700C03}.Release|x86.Build.0 = Release|Any CPU
 		{8E2BC205-7975-4F33-A87A-F9E55A69C107}.AppVeyor|Any CPU.ActiveCfg = Release|Any CPU
 		{8E2BC205-7975-4F33-A87A-F9E55A69C107}.AppVeyor|Any CPU.Build.0 = Release|Any CPU
 		{8E2BC205-7975-4F33-A87A-F9E55A69C107}.AppVeyor|x86.ActiveCfg = Release|Any CPU
@@ -127,6 +115,18 @@ Global
 		{8E2BC205-7975-4F33-A87A-F9E55A69C107}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8E2BC205-7975-4F33-A87A-F9E55A69C107}.Release|x86.ActiveCfg = Release|Any CPU
 		{8E2BC205-7975-4F33-A87A-F9E55A69C107}.Release|x86.Build.0 = Release|Any CPU
+		{66B7A24B-9FB9-4436-A269-F6740E700C03}.AppVeyor|Any CPU.ActiveCfg = Release|Any CPU
+		{66B7A24B-9FB9-4436-A269-F6740E700C03}.AppVeyor|Any CPU.Build.0 = Release|Any CPU
+		{66B7A24B-9FB9-4436-A269-F6740E700C03}.AppVeyor|x86.ActiveCfg = Release|x86
+		{66B7A24B-9FB9-4436-A269-F6740E700C03}.AppVeyor|x86.Build.0 = Release|x86
+		{66B7A24B-9FB9-4436-A269-F6740E700C03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66B7A24B-9FB9-4436-A269-F6740E700C03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66B7A24B-9FB9-4436-A269-F6740E700C03}.Debug|x86.ActiveCfg = Debug|x86
+		{66B7A24B-9FB9-4436-A269-F6740E700C03}.Debug|x86.Build.0 = Debug|x86
+		{66B7A24B-9FB9-4436-A269-F6740E700C03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66B7A24B-9FB9-4436-A269-F6740E700C03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66B7A24B-9FB9-4436-A269-F6740E700C03}.Release|x86.ActiveCfg = Release|x86
+		{66B7A24B-9FB9-4436-A269-F6740E700C03}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

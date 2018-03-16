@@ -1,22 +1,14 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+﻿using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
-using MahApps.Metro.IconPacks;
 using Metro.DynamicModeules.BLL.Base;
 using Metro.DynamicModeules.Interface.Sys;
-using Metro.DynamicModeules.Models;
 using Metro.DynamicModeules.Models.Sys;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
-using System.Windows.Controls;
-using System.Windows.Input;
-using Metro.DynamicModeules.Interface;
-using System.Collections;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Metro.DynamicModeules.BaseControls.ViewModel
 {
@@ -24,7 +16,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     /// 模板子项的基类
     /// </summary>
     //[Export(typeof(IMdiChildWindow))]
-    public abstract class ChildBaseViewModel : CommonModuleBaseViewModel, IDataOperatable, IMdiChildWindow, IPurviewControllable//ISystemButtons
+    public abstract class ChildBaseViewModel : CommonModuleBaseViewModel, IDataOperatable, IMdiChildView, IPurviewControllable//ISystemButtons
     {
         ICommand _closeCommand;
         public ICommand CloseCommand
@@ -52,7 +44,12 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         ICommand _clickCommand;
         protected virtual void OnOpenOwner()
         {
-            Messenger.Default.Send(MessengerToken.FocusedChild, Owner);
+            //Messenger.Default.Send(MessengerToken.FocusedChild, Owner);            
+            if (!MdiMainWindow.TabPages.Contains(this))
+            {
+                MdiMainWindow.TabPages.Add(this);
+            }
+            MdiMainWindow.FocusedPage = this;
         }
 
         tb_MyMenu _item;
@@ -71,7 +68,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 RaisePropertyChanged(() => MyMenu);
             }
         }
-        protected abstract  Task<tb_MyMenu> GetMenu();
+        protected abstract Task<tb_MyMenu> GetMenu();
 
         ObservableCollection<ButtonInfoViewModel> _buttons;
         /// <summary>
@@ -193,11 +190,13 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <summary>
         /// 获取该界面的功能点
         /// </summary>
-        public  ObservableCollection<ButtonInfoViewModel> Authoritys
+        public ObservableCollection<ButtonInfoViewModel> Authoritys
         {
-            get;set;
+            get; set;
 
         }
+        public IModuleBase IModule { get; set; }
+        public IMdiMainWindow MdiMainWindow { get; set; }
 
         #endregion
 
@@ -234,7 +233,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
 
         public virtual async void InitMenu()
         {
-            MyMenu =await GetMenu();
+            MyMenu = await GetMenu();
         }
 
         public IList GetDataOperatableButtons()

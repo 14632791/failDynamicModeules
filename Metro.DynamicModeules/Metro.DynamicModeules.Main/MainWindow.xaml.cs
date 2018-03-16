@@ -21,10 +21,10 @@ namespace Metro.DynamicModeules.Main
         public MainWindow()
         {
             InitializeComponent();
-            _viewModel = new MainWindowViewModel(DialogCoordinator.Instance);
-             DataContext = _viewModel;           
+            _viewModel = MainWindowViewModel.Instance;// DialogCoordinator.Instance);
+            DataContext = _viewModel;
             Closing += (s, e) =>
-            {               
+            {
                 if (!e.Cancel)
                 {
                     _viewModel.Dispose();
@@ -134,7 +134,7 @@ namespace Metro.DynamicModeules.Main
 
         public void ShowProgress(string msg)
         {
-            
+
             throw new NotImplementedException();
         }
 

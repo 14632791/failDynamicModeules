@@ -1,18 +1,14 @@
-﻿using Metro.DynamicModeules.Interface.Sys;
+﻿using GalaSoft.MvvmLight.Command;
+using Metro.DynamicModeules.BLL.Base;
+using Metro.DynamicModeules.Common;
+using Metro.DynamicModeules.Interface.Sys;
+using Metro.DynamicModeules.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Collections.ObjectModel;
-using System.Windows.Data;
-using Metro.DynamicModeules.Interface;
 using System.Windows.Controls;
-using Metro.DynamicModeules.Models;
-using Metro.DynamicModeules.Common;
+using System.Windows.Data;
 using System.Windows.Input;
-using GalaSoft.MvvmLight.Command;
-using Metro.DynamicModeules.BLL.Base;
-using System.Collections;
 
 namespace Metro.DynamicModeules.BaseControls.ViewModel
 {
