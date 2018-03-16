@@ -18,7 +18,7 @@
                 <ResourceDictionary Source="pack://application:,,,/Metro.DynamicModeules.BaseControls;component/Themes/Generic.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
+
             <!--module列表内部的子列表样式-->
             <Style x:Key="LeftSubModuleStyle" TargetType="{x:Type ListBox}">
                 <Setter Property="SelectedItem" Value="{Binding FocusedChild}"/>
@@ -42,11 +42,11 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-            
+
             <!--主窗体左则的module列表样式-->
             <Style TargetType="{x:Type ListBox}" x:Key="LeftModuleStyle">
                 <Setter Property="SelectionMode" Value="Single"/>
-                <Setter Property="ItemContainerStyle">                    
+                <Setter Property="ItemContainerStyle">
                     <Setter.Value>
                         <Style TargetType="{x:Type ListBoxItem}">
                             <Setter Property="Margin" Value="2"/>
@@ -61,22 +61,19 @@
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
-                        </Style>                       
+                        </Style>
                     </Setter.Value>
                 </Setter>
             </Style>
-            
-            <!--右下方tabControl列表模板-->
 
-            <DataTemplate x:Key="RightTabControlItemTemplate">
-                            <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="15"
-                                               CloseButtonEnabled="True" Content="{Binding Owner}"
-                                               CloseTabCommand="{Binding CloseCommand}"
-                                               Header="{Binding MyMenu.MenuCaption}">
-                                
-                            </Controls:MetroTabItem>
-                        </DataTemplate>
-                   
+            <!--右下方tabControl列表样式-->
+            <Style TargetType="{x:Type Controls:MetroTabItem}" x:Key="RightTabItemStyle">
+                <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="15"/>
+                <Setter Property="CloseButtonEnabled" Value="True"/>
+                <Setter Property="Content" Value="{Binding Owner}"/>
+                <Setter Property="CloseTabCommand" Value="{Binding CloseCommand}"/>
+                <Setter Property="Header" Value="{Binding MyMenu.MenuCaption}"/>
+            </Style>
             
             <Ellipse x:Key="AppThemeMenuIcon"
                      Width="16"
@@ -186,28 +183,24 @@
                 <RowDefinition Height="90"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-           <ItemsControl BorderThickness="1"  ItemsSource="{Binding FocusedPage.Buttons}" >
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
+            <ItemsControl BorderThickness="1"  ItemsSource="{Binding FocusedPage.Buttons}" >
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
                         <Button Style="{StaticResource IconButtonStyle}" Width="40" Height="40" />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
-                </ItemsControl>
-            <Controls:MetroAnimatedTabControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding TabPages}" BorderThickness="1"
+            </ItemsControl>
+            <Controls:MetroAnimatedTabControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding TabPages}" 
                  SelectedItem="{Binding FocusedPage,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"   
-                Controls:TabControlHelper.Underlined="TabItems"
-                 ItemTemplate="{StaticResource RightTabControlItemTemplate}">
-                <!--<Controls:MetroAnimatedTabControl.ItemContainerStyle>
-                    <Style TargetType="{x:Type TabItem}">
-                        <Setter Property="Content" Value="{Binding}"/>
-                    </Style>
-                </Controls:MetroAnimatedTabControl.ItemContainerStyle>-->   
-            </Controls:MetroAnimatedTabControl> 
+                Controls:TabControlHelper.Underlined="TabItems" 
+                 ItemContainerStyle="{StaticResource RightTabItemStyle}">
+                <!--ItemTemplate="{StaticResource RightTabControlItemTemplate}"-->
+            </Controls:MetroAnimatedTabControl>
 
         </Grid>
         <StatusBar Grid.Row="2" Grid.ColumnSpan="2">
