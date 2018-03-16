@@ -3,13 +3,14 @@ using GalaSoft.MvvmLight.Command;
 using Metro.DynamicModeules.Interface.Sys;
 using Metro.DynamicModeules.Models.Sys;
 using System;
+using System.Windows.Input;
 
 namespace Metro.DynamicModeules.BLL.Base
 {
     /// <summary>
     /// ButtonInfo的viewModel
     /// </summary>
-    public class ButtonInfoViewModel : ViewModelBase//, IButtonInfo
+    public class ButtonInfoViewModel : ViewModelBase, IButtonInfo
     {
         public ButtonInfoViewModel(object icon, tb_MyAuthorityItem item, Action action)
         {
@@ -31,7 +32,7 @@ namespace Metro.DynamicModeules.BLL.Base
                 RaisePropertyChanged(() => AuthorityItem);
             }
         }
-        bool _isEnabled;
+        bool _isEnabled=true;
         /// <summary>
         /// 是否启动
         /// </summary>
@@ -45,11 +46,11 @@ namespace Metro.DynamicModeules.BLL.Base
             {
                 if (Equals(_isEnabled, value)) return;
                 _icon = value;
-                RaisePropertyChanged("IsEnabled");
+                RaisePropertyChanged(()=> IsEnabled);
             }
         }
 
-        object _icon;
+        object _icon=null;
         /// <summary>
         /// 图标
         /// </summary>
@@ -63,7 +64,7 @@ namespace Metro.DynamicModeules.BLL.Base
             {
                 if (Equals(_icon, value)) return;
                 _icon = value;
-                RaisePropertyChanged("Icon");
+                RaisePropertyChanged(()=> Icon);
             }
         }
         public int Index
@@ -71,8 +72,8 @@ namespace Metro.DynamicModeules.BLL.Base
             get;
             set;
         }
-        RelayCommand _clickCommand;
-        public RelayCommand ClickCommand
+        ICommand _clickCommand;
+        public ICommand ClickCommand
         {
             // get; set;
             get

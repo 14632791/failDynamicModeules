@@ -16,7 +16,6 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     /// <summary>
     /// 模板子项的基类
     /// </summary>
-    //[Export(typeof(IMdiChildWindow))]
     public abstract class ChildBaseViewModel : CommonModuleBaseViewModel, IDataOperatable, IMdiChildView, IPurviewControllable//ISystemButtons
     {
         ICommand _closeCommand;
@@ -27,8 +26,13 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 return _closeCommand ?? (_closeCommand = new RelayCommand(() =>
                 {
                     if (this.DataChanged)
+                    {
                         //        e.Cancel = !Msg.AskQuestion("您修改了数据没有保存，确定要退出吗?");
-                        Messenger.Default.Send(MessengerToken.ClosedTagPage, Owner);
+                    }
+                    if (MdiMainWindow.TabPages.Contains(this))
+                    {
+                        MdiMainWindow.TabPages.Remove(this);
+                    }
                 }));
             }
         }
@@ -44,7 +48,8 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         }
         ICommand _clickCommand;
         protected virtual void OnOpenOwner()
-        {         
+        {
+            InitButtons();
             if (!MdiMainWindow.TabPages.Contains(this))
             {
                 MdiMainWindow.TabPages.Add(this);
@@ -73,11 +78,11 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         }
         protected abstract Task<tb_MyMenu> GetMenu();
 
-        ObservableCollection<ButtonInfoViewModel> _buttons;
+        IList<IButtonInfo> _buttons;
         /// <summary>
         /// 初始化子窗体的按钮数组
         /// </summary>
-        public IList Buttons
+        public IList<IButtonInfo> Buttons
         {
             get
             {
@@ -85,7 +90,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             }
             set
             {
-                _buttons = (ObservableCollection<ButtonInfoViewModel>)value;
+                _buttons = value;
                 RaisePropertyChanged(() => Buttons);
             }
         }
@@ -217,7 +222,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         ///  </summary>
         public virtual void InitButtons()
         {
-            Buttons = new ObservableCollection<ButtonInfoViewModel>();
+            Buttons = new ObservableCollection<IButtonInfo>();
             var bi = this.GetSystemButtons();
             foreach (var item in bi)
             {
