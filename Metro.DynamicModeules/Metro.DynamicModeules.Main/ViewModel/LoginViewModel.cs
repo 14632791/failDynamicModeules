@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Metro.DynamicModeules.Main.ViewModel
 {
@@ -65,6 +66,7 @@ namespace Metro.DynamicModeules.Main.ViewModel
         }
         private void SaveLoginInfo()
         {
+            
             //存在用户配置文件，自动加载登录信息
             string cfgINI = AppDomain.CurrentDomain.BaseDirectory + Globals.INI_CFG;
             IniFile ini = new IniFile(cfgINI);

@@ -69,7 +69,7 @@
             <!--右下方tabControl列表模板-->
 
             <DataTemplate x:Key="RightTabControlItemTemplate">
-                            <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="20"
+                            <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="15"
                                                CloseButtonEnabled="True" Content="{Binding Owner}"
                                                CloseTabCommand="{Binding CloseCommand}"
                                                Header="{Binding MyMenu.MenuCaption}">
@@ -186,11 +186,10 @@
                 <RowDefinition Height="90"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-           <ItemsControl   ItemsSource="{Binding FocusedPage.Buttons}" >
+           <ItemsControl BorderThickness="1"  ItemsSource="{Binding FocusedPage.Buttons}" >
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                        <Button Style="{StaticResource IconButtonStyle}" Width="100" Height="50"
-                                ToolTip="{Binding AuthorityItem.AuthorityName}"/>
+                        <Button Style="{StaticResource IconButtonStyle}" Width="40" Height="40" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemsPanel>
@@ -199,9 +198,15 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 </ItemsControl>
-            <Controls:MetroAnimatedTabControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding TabPages}"
-                 SelectedItem="{Binding FocusedPage}"   
+            <Controls:MetroAnimatedTabControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding TabPages}" BorderThickness="1"
+                 SelectedItem="{Binding FocusedPage,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"   
+                Controls:TabControlHelper.Underlined="TabItems"
                  ItemTemplate="{StaticResource RightTabControlItemTemplate}">
+                <!--<Controls:MetroAnimatedTabControl.ItemContainerStyle>
+                    <Style TargetType="{x:Type TabItem}">
+                        <Setter Property="Content" Value="{Binding}"/>
+                    </Style>
+                </Controls:MetroAnimatedTabControl.ItemContainerStyle>-->   
             </Controls:MetroAnimatedTabControl> 
 
         </Grid>

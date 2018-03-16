@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <ListView ItemsSource="{Binding}">
+        <ListView ItemsSource="{Binding DataSource}">
             <ListView.View>
                 <GridView>
                     <GridView.Columns>

@@ -15,10 +15,8 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     //[Export(typeof(IModuleBase))]
     public abstract class ModuleBaseViewModel : CommonModuleBaseViewModel, IModuleBase
     {
-        /// <summary>
-        /// 对应的主窗体
-        /// </summary>
-        public IMdiMainWindow MdiMainWindow { get; set; }
+        public sys_Modules Module { get; set; }
+        
         /// <summary>
         /// 子窗口插件
         /// </summary>
@@ -79,14 +77,17 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     /// <summary>
     /// 主模块与子模块通用的基类
     /// </summary>
-    public abstract class CommonModuleBaseViewModel : ViewModelBase
+    public abstract class CommonModuleBaseViewModel : ViewModelBase,ICommonModuleBase
     {
         public CommonModuleBaseViewModel()
         {
             Initialize();
         }
-        public sys_Modules Module { get; set; }
 
+        /// <summary>
+        /// 对应的主窗体
+        /// </summary>
+        public IMdiMainWindow MdiMainWindow { get; set; }
 
         public Control Owner { get; set; }
         /// <summary>

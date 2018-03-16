@@ -3,16 +3,19 @@
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
                     xmlns:ControlEx="clr-namespace:Metro.DynamicModeules.BaseControls.ControlEx">
     <Style TargetType="{x:Type Button}"  x:Key="IconButtonStyle" BasedOn="{StaticResource {x:Type Button}}">
-        <Setter Property="Content">
+        <!--<Setter Property="Content">
             <Setter.Value>
                 <StackPanel Orientation="Horizontal">
                     <ContentPresenter  Content="{Binding Icon}" Margin="2" VerticalAlignment="Center"/>
                     <TextBlock Text="{Binding AuthorityItem.AuthorityName}" Margin="2" VerticalAlignment="Center"/>
                 </StackPanel>
             </Setter.Value>
-        </Setter>
+        </Setter>-->
+        <Setter Property="ToolTip"  Value="{Binding AuthorityItem.AuthorityName}"/>
+        <Setter Property="Content" Value="{Binding Icon}"/>
         <Setter Property="Command" Value="{Binding ClickCommand}"/>
         <Setter Property="Margin" Value="2,5"/>
+        <Setter Property="IsEnabled" Value="{Binding IsEnabled}"/>
     </Style>
     <!--<Style TargetType="{x:Type ControlEx:PackIconButton}">
         <Setter Property="Content">

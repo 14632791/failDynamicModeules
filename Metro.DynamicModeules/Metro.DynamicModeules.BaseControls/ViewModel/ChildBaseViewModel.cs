@@ -235,10 +235,13 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>        
         public virtual IList GetSystemButtons()
         {
-            List < ButtonInfoViewModel > btns= new List<ButtonInfoViewModel>();
-            btns.Add(AuthorityItemsMgr.GenerateButton(AuthorityItemType.Close, this));
-            btns.Add(AuthorityItemsMgr.GenerateButton(AuthorityItemType.CloseBox, this));
-            btns.Add(AuthorityItemsMgr.GenerateButton(AuthorityItemType.Question, this));
+            List<ButtonInfoViewModel> btns = new List<ButtonInfoViewModel>();
+            ButtonInfoViewModel model = AuthorityItemsMgr.GenerateButton(AuthorityItemType.Close, this);
+            btns.Add(model);
+            model = AuthorityItemsMgr.GenerateButton(AuthorityItemType.CloseBox, this);
+            btns.Add(model);
+            model = AuthorityItemsMgr.GenerateButton(AuthorityItemType.Question, this);
+            btns.Add(model);
             return btns;
         }
 
@@ -252,7 +255,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         public IList GetDataOperatableButtons()
         {
             List<ButtonInfoViewModel> list = new List<ButtonInfoViewModel>();
-           return list;
+            return list;
         }
         #endregion
 

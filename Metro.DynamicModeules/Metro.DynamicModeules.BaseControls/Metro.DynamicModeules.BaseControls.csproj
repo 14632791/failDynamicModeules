@@ -119,8 +119,6 @@
     <Compile Include="ControlEx\FlipPanel.cs" />
     <Compile Include="ControlEx\GridNavigation.cs" />
     <Compile Include="ControlEx\Msg.cs" />
-    <Compile Include="ControlEx\PackIcon.cs" />
-    <Compile Include="ControlEx\PackIconBase.cs" />
     <Compile Include="ControlEx\PackIconButton.cs" />
     <Compile Include="Converters\MathConverter.cs" />
     <Compile Include="Converters\MathMultipleConverter.cs" />
@@ -177,10 +175,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\Controls.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Expander.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

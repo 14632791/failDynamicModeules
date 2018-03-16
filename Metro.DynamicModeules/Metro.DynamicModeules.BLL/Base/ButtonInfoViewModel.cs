@@ -1,8 +1,10 @@
-﻿using GalaSoft.MvvmLight;
+﻿using ControlzEx;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Metro.DynamicModeules.Interface.Sys;
 using Metro.DynamicModeules.Models.Sys;
 using System;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Metro.DynamicModeules.BLL.Base
@@ -15,6 +17,9 @@ namespace Metro.DynamicModeules.BLL.Base
         public ButtonInfoViewModel(object icon, tb_MyAuthorityItem item, Action action)
         {
             Icon = icon;
+            Control packIcon = (Control)Icon;
+            packIcon.Width = 25;
+            packIcon.Height = 25;
             AuthorityItem = item;
             this._action = action;
             IsEnabled = true;
@@ -44,13 +49,12 @@ namespace Metro.DynamicModeules.BLL.Base
             }
             set
             {
-                if (Equals(_isEnabled, value)) return;
-                _icon = value;
+                _isEnabled = value;
                 RaisePropertyChanged(()=> IsEnabled);
             }
         }
 
-        object _icon=null;
+        object _icon ;
         /// <summary>
         /// 图标
         /// </summary>
@@ -75,9 +79,12 @@ namespace Metro.DynamicModeules.BLL.Base
         ICommand _clickCommand;
         public ICommand ClickCommand
         {
-            // get; set;
             get
             {
+                if(null== _action)
+                {
+                    _action=new Action(() =>{ });
+                }
                 return _clickCommand ?? (_clickCommand = new RelayCommand(_action));
             }
         }
