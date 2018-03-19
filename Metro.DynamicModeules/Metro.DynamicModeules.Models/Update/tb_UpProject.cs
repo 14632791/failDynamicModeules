@@ -17,7 +17,7 @@ namespace Metro.DynamicModeules.Models.Update
         public string name { get; set; }
 
         [Required]
-        public int type { get; set; }
+        public int updateType { get; set; }
 
         [Required(ErrorMessage = "必填")]
         [Key]
