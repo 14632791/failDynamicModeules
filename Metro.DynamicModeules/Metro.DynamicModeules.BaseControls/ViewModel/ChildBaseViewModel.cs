@@ -204,7 +204,6 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
 
         }
         public IModuleBase IModule { get; set; }
-        public IMdiMainWindow MdiMainWindow { get; set; }
 
         #endregion
 

@@ -58,9 +58,7 @@
 
                         <!-- This is the back content. -->
                         <Border x:Name="BackContent" BorderBrush="{TemplateBinding BorderBrush}"
-           BorderThickness="{TemplateBinding BorderThickness}"
-           CornerRadius="{TemplateBinding CornerRadius}"
-           >
+           BorderThickness="{TemplateBinding BorderThickness}"  CornerRadius="{TemplateBinding CornerRadius}" >
                             <ContentPresenter
                      Content="{TemplateBinding BackContent}">
                             </ContentPresenter>
@@ -77,31 +75,10 @@
                                 <RotateTransform  x:Name="FlipButtonTransform" Angle="-90"></RotateTransform>
                             </ToggleButton.RenderTransform>
                         </ToggleButton>
-                        
-                        <!--<ToggleButton RenderTransformOrigin="0.5,0.5"
-                     Margin="0,10,0,0" Width="19" Height="19">
-                            <ToggleButton.Template>
-                                <ControlTemplate>
-                                    <Grid>
-                                        <Ellipse Stroke="{DynamicResource AccentColorBrush}"  Fill="AliceBlue"  />
-                                        <Path Data="M1,1.5L4.5,5 8,1.5"
-                             Stroke="{DynamicResource AccentColorBrush}" StrokeThickness="2"
-                             HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        </Path>
-                                    </Grid>
-                                </ControlTemplate>
-                            </ToggleButton.Template>
-
-                            <ToggleButton.RenderTransform>
-                                <RotateTransform x:Name="FlipButtonTransform" Angle="-90"></RotateTransform>
-                            </ToggleButton.RenderTransform>
-                        </ToggleButton>-->
-
 
                         <!--导航栏-->
                         <local:GridNavigation HorizontalAlignment="Left" Grid.Row="1" NavigateCommand="{Binding NavigateCommand}" Width="300" Margin="5"/>
                     </Grid>
-
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

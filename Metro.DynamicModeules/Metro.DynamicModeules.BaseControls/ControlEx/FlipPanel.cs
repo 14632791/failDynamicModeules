@@ -114,7 +114,7 @@ namespace Metro.DynamicModeules.BaseControls.ControlEx
             {
                 if (IsFlipped)
                 {
-                    front.Visibility = Visibility.Hidden;
+                    front.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
@@ -130,7 +130,7 @@ namespace Metro.DynamicModeules.BaseControls.ControlEx
                 }
                 else
                 {
-                    back.Visibility = Visibility.Hidden;
+                    back.Visibility = Visibility.Collapsed;
                 }
             }
         }

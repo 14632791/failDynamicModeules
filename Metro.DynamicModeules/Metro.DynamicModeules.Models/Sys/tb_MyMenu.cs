@@ -21,6 +21,7 @@ namespace Metro.DynamicModeules.Models.Sys
 
         [Key]
         [Column("isid")]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int isid
         {
             get

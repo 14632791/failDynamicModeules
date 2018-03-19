@@ -28,11 +28,11 @@ namespace SystemModule.ViewModel
         BllUser _bllUser;
         protected override Control GetOwner()
         {
-            return new FlipPanel
-            {
-                FrontContent = new UserFrontView(),
-                BackContent = new UserBackView()
-            };
+            FlipPanel flip = new FlipPanel();
+            flip.IsFlipped = false;
+            flip.FrontContent = new UserFrontView();
+            flip.BackContent = new UserBackView();
+            return flip;
         }
 
 
