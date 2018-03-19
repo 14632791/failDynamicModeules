@@ -125,6 +125,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             set
             {
                 _updateType = value;
+                RaisePropertyChanged(() => UpdateType);
             }
         }
 
@@ -276,7 +277,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <param name="sender"></param>
         public virtual void DoAdd()
         {
-            this._updateType = UpdateType.Add;
+            UpdateType = UpdateType.Add;
             //this.SetEditMode();
             //this.ButtonStateChanged(_updateType);
         }
@@ -287,7 +288,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <param name="sender"></param>
         public virtual void DoEdit()
         {
-            this._updateType = UpdateType.Modify;
+            UpdateType = UpdateType.Modify;
             //this.SetEditMode();
             //this.ButtonStateChanged(_updateType);
         }
@@ -300,7 +301,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             try
             {
-                this._updateType = UpdateType.None;
+                UpdateType = UpdateType.None;
                 this.SetViewMode();
                 //this.ButtonStateChanged(_updateType);
 
@@ -322,7 +323,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         public virtual void DoSave()
         {
-            this._updateType = UpdateType.None;
+            UpdateType = UpdateType.None;
             this.SetViewMode();
             //this.ShowDetailPage(false);
             //this.ButtonStateChanged(_updateType);
@@ -335,7 +336,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <param name="sender"></param>
         public virtual void DoDelete()
         {
-
+           
         }
 
         public virtual void DoViewContent()

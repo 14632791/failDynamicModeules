@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using Metro.DynamicModeules.BaseControls.ControlEx;
 using Metro.DynamicModeules.BLL.Base;
 using Metro.DynamicModeules.Common;
 using Metro.DynamicModeules.Interface.Sys;
@@ -19,6 +20,13 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     public abstract class DataChildBaseViewModel<T> : ChildBaseViewModel, ISummaryView<T>//, IPrintableForm
            where T : class, new()
     {
+        protected FlipPanel _flipPanel
+        {
+            get
+            {
+                return (FlipPanel)Owner;
+            }
+        }
         protected BllBase<T> _bll;
         /// <summary>
         /// 初始化业务逻辑层的对象
@@ -171,18 +179,24 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             //}
         }
 
-        /// <summary>
-        /// 设置某个编辑控件状态.ReadOnly or Enable . (递归)循环控制
-        /// </summary>
+        ICommand _gridDoubleClickCommand;
+        public ICommand GridDoubleClickCommand
+        {
+            get
+            {
+                return _gridDoubleClickCommand ?? (_gridDoubleClickCommand = new RelayCommand(OnGridViewDoubleClick));
+            }
+        }
 
 
         /// <summary>
-        /// 双击表格事件
+        /// 双击表格方法
         /// </summary>
-        protected virtual void OnGridViewDoubleClick(object sender, EventArgs e)
+        protected virtual void OnGridViewDoubleClick()
         {
             try
             {
+                _flipPanel.IsFlipped = !_flipPanel.IsFlipped;
                 //if (SystemConfig.CurrentConfig == null) return;
                 //if (!this.HasData()) return;
                 //PackIconButton btn = _buttons.GetButtonByName("btnEdit");
@@ -219,7 +233,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             }
         }
 
-        public int FocusedRowHandle { get; set; }
+
         public ObservableCollection<T> DataSource { get; set; }
 
         public ListCollectionView View
@@ -238,6 +252,9 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         }
 
         T _focusedRow;
+        /// <summary>
+        /// 选中的当前行
+        /// </summary>
         public T FocusedRow
         {
             get
@@ -253,18 +270,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         }
 
 
-        /// <summary>
-        ///获取指定的资料行
-        /// </summary>
-        public T GetDataRow(int rowIndex)
-        {
-            if (rowIndex < 0) return default(T);
-            if (View != null)
-            {
-                return View.GetItemAt(rowIndex) as T;
-            }
-            return null;
-        }
+
 
         /// <summary>
         /// 显示明细页
@@ -302,20 +308,6 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         }
 
 
-        /// <summary>
-        ///获取当前光标所在的资料行. 
-        /// </summary>
-        protected T GetFocusedRow()
-        {
-            if (FocusedRowHandle < 0)
-            {
-                return default(T);
-            }
-            else
-            {
-                return GetDataRow(FocusedRowHandle);
-            }
-        }
 
 
         /// <summary>
@@ -333,37 +325,6 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         }
 
 
-
-        /// <summary>
-        /// 删除表格内指定行号的记录
-        /// </summary>
-        /// <param name="rowHandle"></param>
-        protected virtual void DeleteSummaryRow(int rowHandle)
-        {
-            if (rowHandle >= 0)
-            {
-                View.RemoveAt(rowHandle);
-            }
-        }
-
-        /// <summary>
-        /// 在保存时有此情况发生: 不会更新最后一个编辑框里的数据!
-        /// 当移除焦点后会更新输入框的数据. 2015.7.15 陈刚 确保最后录入的数据能绑定到对应的数据源中
-        /// </summary>
-        protected void UpdateLastControl()
-        {
-            try
-            {
-                //if (ActiveControl == null) return;
-                //Control ctl = ActiveControl;
-                //txtFocusForSave.Focus();
-                //ActiveControl = ctl;
-            }
-            catch (Exception ex)
-            {
-                // Msg.ShowException(ex);
-            }
-        }
 
         /// <summary>
         /// 替换记录对应字段的数据。
@@ -400,8 +361,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 //如果是修改后保存,将最新数据替换当前记录的数据.
                 if (UpdateType == UpdateType.Modify || UpdateType == UpdateType.None)
                 {
-                    var dr = GetDataRow(FocusedRowHandle);
-                    this.ReplaceDataRowChanges(summary, dr);//替换数据
+                    this.ReplaceDataRowChanges(summary, FocusedRow);//替换数据
                     //dr.Table.AcceptChanges();
                     //RefreshRow(FocusedRowHandle);//修改或新增要刷新Grid数据          
                 }
@@ -460,22 +420,22 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         }
         public virtual void MoveFirst()
         {
-            View.MoveCurrentToFirst();
+            View?.MoveCurrentToFirst();
         }
 
         public virtual void MovePrior()
         {
-            View.MoveCurrentToPrevious();
+            View?.MoveCurrentToPrevious();
         }
 
         public virtual void MoveNext()
         {
-            View.MoveCurrentToNext();
+            View?.MoveCurrentToNext();
         }
 
         public virtual void MoveLast()
         {
-            View.MoveCurrentToLast();
+            View?.MoveCurrentToLast();
         }
 
         #endregion

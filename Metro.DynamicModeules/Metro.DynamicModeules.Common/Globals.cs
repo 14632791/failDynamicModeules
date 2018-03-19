@@ -1,14 +1,7 @@
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
-using System.Windows.Forms;
-using System.Runtime.InteropServices;
-using System.Globalization;
 using System.IO;
-using System.Collections;
-using System.Data;
 
 namespace Metro.DynamicModeules.Common
 {
@@ -43,12 +36,24 @@ namespace Metro.DynamicModeules.Common
         /// 配置文件
         /// </summary>
         public const string INI_CFG = @"\config\user.ini";
-
+        static readonly IniFile _ini ;
         /// <summary>
         /// PMS web的根路径 2017.9.14
         /// </summary>
         public static readonly string WEBURL = ConfigHelper.GetConfigString("weburl");
 
+        static Globals()
+        {
+            //存在用户配置文件，自动加载登录信息
+            string cfgINI = AppDomain.CurrentDomain.BaseDirectory + INI_CFG;
+            _ini = new IniFile(cfgINI);
+            PageSize=Convert.ToInt32(_ini.IniReadValue("Page", "Size"));
+        }
+
+        /// <summary>
+        /// 当前页的大小
+        /// </summary>
+        public static readonly int PageSize;
         /// <summary>
         /// 加载Debug\Images目录下的的图片
         /// </summary>
@@ -56,7 +61,7 @@ namespace Metro.DynamicModeules.Common
         /// <returns></returns>
         public static Image LoadImage(string imgFileName)
         {
-            string file = Application.StartupPath + @"\images\" + imgFileName;
+            string file = AppDomain.CurrentDomain.BaseDirectory + @"\images\" + imgFileName;
             if (File.Exists(file))
                 return Image.FromFile(file);
             else
@@ -70,10 +75,10 @@ namespace Metro.DynamicModeules.Common
         /// <returns></returns>
         public static Bitmap LoadBitmap(string imgFileName)
         {
-            string file = Application.StartupPath + @"\images\" + imgFileName;
+            string file = AppDomain.CurrentDomain.BaseDirectory + @"\images\" + imgFileName;
 
             if (File.Exists(file))
-                return new Bitmap(Bitmap.FromFile(file));
+                return new Bitmap(Image.FromFile(file));
             else
                 return null;
         }

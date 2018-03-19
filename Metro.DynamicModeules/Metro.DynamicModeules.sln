@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemModule", "SystemModul
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metro.DynamicModeules.Interface", "..\..\DynamicWebApi\Metro.DynamicModeules.WebApi\Metro.DynamicModeules.Interface\Metro.DynamicModeules.Interface.csproj", "{66B7A24B-9FB9-4436-A269-F6740E700C03}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateClient", "UpdateClient\UpdateClient.csproj", "{C46C8CCD-4D5D-44AA-9C01-12AB98E5E920}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		AppVeyor|Any CPU = AppVeyor|Any CPU
@@ -127,6 +129,18 @@ Global
 		{66B7A24B-9FB9-4436-A269-F6740E700C03}.Release|Any CPU.Build.0 = Release|Any CPU
 		{66B7A24B-9FB9-4436-A269-F6740E700C03}.Release|x86.ActiveCfg = Release|x86
 		{66B7A24B-9FB9-4436-A269-F6740E700C03}.Release|x86.Build.0 = Release|x86
+		{C46C8CCD-4D5D-44AA-9C01-12AB98E5E920}.AppVeyor|Any CPU.ActiveCfg = Release|Any CPU
+		{C46C8CCD-4D5D-44AA-9C01-12AB98E5E920}.AppVeyor|Any CPU.Build.0 = Release|Any CPU
+		{C46C8CCD-4D5D-44AA-9C01-12AB98E5E920}.AppVeyor|x86.ActiveCfg = Release|x86
+		{C46C8CCD-4D5D-44AA-9C01-12AB98E5E920}.AppVeyor|x86.Build.0 = Release|x86
+		{C46C8CCD-4D5D-44AA-9C01-12AB98E5E920}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C46C8CCD-4D5D-44AA-9C01-12AB98E5E920}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C46C8CCD-4D5D-44AA-9C01-12AB98E5E920}.Debug|x86.ActiveCfg = Debug|x86
+		{C46C8CCD-4D5D-44AA-9C01-12AB98E5E920}.Debug|x86.Build.0 = Debug|x86
+		{C46C8CCD-4D5D-44AA-9C01-12AB98E5E920}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C46C8CCD-4D5D-44AA-9C01-12AB98E5E920}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C46C8CCD-4D5D-44AA-9C01-12AB98E5E920}.Release|x86.ActiveCfg = Release|x86
+		{C46C8CCD-4D5D-44AA-9C01-12AB98E5E920}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -64,7 +64,6 @@ namespace Metro.DynamicModeules.BaseControls.ControlEx
             set
             {
                 SetValue(IsFlippedProperty, value);
-
                 ChangeVisualState(true);
             }
         }
