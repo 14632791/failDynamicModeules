@@ -17,6 +17,9 @@ namespace UpdateClient
         protected override void OnStartup(StartupEventArgs e)
         {
             SetSingleSelfApp();// MessageBox.Show("只允许运行一个升级实例！");
+            this.DispatcherUnhandledException += Application_DispatcherUnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            base.OnStartup(e);
             string paramstr = string.Empty;
             if (null != e.Args && e.Args.Count() > 0)
             {
@@ -25,7 +28,18 @@ namespace UpdateClient
             CheckEntry(paramstr);
             ViewBase view = new ViewBase();
             view.Show();
-            base.OnStartup(e);
+        }
+
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            LogHelper.Error((Exception)e.ExceptionObject);
+            //Msg.DevShowError("非UI线程异常，请联系开发人员");
+        }
+        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            //Msg.ShowException(e.Exception);
+            LogHelper.Error(e.Exception);
+            e.Handled = true;
         }
         /// <summary>
         /// 入口检查

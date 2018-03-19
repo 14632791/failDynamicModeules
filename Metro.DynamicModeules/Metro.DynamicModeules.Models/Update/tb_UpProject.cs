@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Metro.DynamicModeules.Models.Update
 {
+    //[Table("tb_UpProject")]
     public class tb_UpProject
     {
         //public string id { get; set; }
