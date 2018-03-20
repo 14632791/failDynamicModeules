@@ -9,8 +9,10 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-                      xmlns:controlEx="clr-namespace:Metro.DynamicModeules.BaseControls.ControlEx;assembly=Metro.DynamicModeules.BaseControls"
+         Dialog:DialogParticipation.Register="{Binding}"             
+        xmlns:controlEx="clr-namespace:Metro.DynamicModeules.BaseControls.ControlEx;assembly=Metro.DynamicModeules.BaseControls"
         Title="MainWindow" Height="800" Width="1024">
+    
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

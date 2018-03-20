@@ -74,14 +74,14 @@
     </Style>
 
     <!--  note: default style for textblock is now in MetroWindow !!!  -->
-
+    <Thickness x:Key="TextBoxMargin">2,2,2,0</Thickness>
     <Style BasedOn="{StaticResource MetroValidationPopup}" TargetType="{x:Type Controls:CustomValidationPopup}" />
     <Style BasedOn="{StaticResource MetroToolTip}" TargetType="ToolTip" />
     <Style BasedOn="{StaticResource MahApps.Metro.Styles.MetroButton}" TargetType="Button" />
     <Style BasedOn="{StaticResource MahApps.Metro.Styles.MetroButton}" TargetType="RepeatButton" />
     <Style BasedOn="{StaticResource MahApps.Metro.Styles.MetroToggleButton}" TargetType="ToggleButton" />
     <Style BasedOn="{StaticResource MetroTextBox}" TargetType="TextBox">
-        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Margin" Value="{StaticResource TextBoxMargin}"/>
     </Style>
     <Style BasedOn="{StaticResource MetroRichTextBox}" TargetType="RichTextBox" />
     <Style BasedOn="{StaticResource MetroSlider}" TargetType="Slider" />

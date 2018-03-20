@@ -75,7 +75,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 RaisePropertyChanged(() => HasEnabled);
             }
         }
-        bool _hasEnabled;
+        bool _hasEnabled=true;
         /// <summary>
         /// 原始数据
         /// </summary>
@@ -197,6 +197,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             try
             {
                 _flipPanel.IsFlipped = !_flipPanel.IsFlipped;
+                //Buttons
                 //if (SystemConfig.CurrentConfig == null) return;
                 //if (!this.HasData()) return;
                 //PackIconButton btn = _buttons.GetButtonByName("btnEdit");
@@ -264,7 +265,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             set
             {
                 _focusedRow = value;
-                RaisePropertyChanged(() => FocusedRow);
+                RaisePropertyChanged("FocusedRow");
                 //OriginalData = value.CloneModel();
             }
         }

@@ -16,8 +16,12 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     /// <summary>
     /// 模板子项的基类
     /// </summary>
-    public abstract class ChildBaseViewModel : CommonModuleBaseViewModel, IDataOperatable, IMdiChildView, IPurviewControllable//ISystemButtons
+    public abstract class ChildBaseViewModel : CommonModuleBaseViewModel, IDataOperatable, IMdiChildViewModel, IPurviewControllable//ISystemButtons
     {
+        public ChildBaseViewModel()
+        {
+            Initialize();//这里才初始化
+        }
         ICommand _closeCommand;
         public ICommand CloseCommand
         {
@@ -49,9 +53,10 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         ICommand _clickCommand;
         protected virtual void OnOpenOwner()
         {
-            InitButtons();
             if (!MdiMainWindow.TabPages.Contains(this))
             {
+                Owner = GetOwner(); //指定窗体
+                Owner.DataContext = this;
                 MdiMainWindow.TabPages.Add(this);
             }
             if (MdiMainWindow.FocusedPage != this)

@@ -22,7 +22,7 @@ namespace SystemModule.ViewModel
     /// <summary>
     /// 用户管理界面
     /// </summary>
-    [Export(typeof(IMdiChildView))]
+    [Export(typeof(IMdiChildViewModel))]
     public class DataChildUserViewModel : DataChildBaseViewModel<tb_MyUser>
     {
         BllUser _bllUser;
@@ -74,6 +74,16 @@ namespace SystemModule.ViewModel
             //获取所有用户数据
             DataSource = await _bllUser.GetSearchList(predicate);
         }
-
+        public string this[string columnName]
+        {
+            get
+            {
+                if(null!= FocusedRow&&columnName == "FocusedRow" && string.IsNullOrEmpty(FocusedRow.Account))
+                {
+                    return "用户账号不能为空！";
+                }
+                return null;
+            }
+        }
     }
 }

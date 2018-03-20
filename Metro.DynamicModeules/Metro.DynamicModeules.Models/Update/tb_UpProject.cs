@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 
 namespace Metro.DynamicModeules.Models.Update
 {
-    //[Table("tb_UpProject")]
+    [Table("tb_UpProject")]
     public class tb_UpProject
     {
-        //public string id { get; set; }
 
         [Required(ErrorMessage = "必填")]
         public string name { get; set; }

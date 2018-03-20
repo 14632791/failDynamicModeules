@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Metro.DynamicModeules.Models.Update
 {
-    //[Table("tb_Update")]
+    [Table("tb_Update")]
     public class tb_Update //: PagedModel
     {
         /// <summary>

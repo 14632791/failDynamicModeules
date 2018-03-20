@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <ListView ItemsSource="{Binding DataSource}" Focusable="True" SelectedValue="{Binding FocusedRow,Mode=TwoWay}">
+        <ListView ItemsSource="{Binding DataSource}" Focusable="True" SelectedItem="{Binding FocusedRow,Mode=TwoWay}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
                     <i:InvokeCommandAction Command="{Binding GridDoubleClickCommand}"/>

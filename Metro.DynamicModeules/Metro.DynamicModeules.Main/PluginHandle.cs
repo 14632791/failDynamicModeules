@@ -97,13 +97,13 @@ namespace Metro.DynamicModeules.Main
             }
         }
 
-        public void Exec(string name)
-        {
-            foreach (Lazy<ModuleBaseViewModel> plugin in PluginList)
-            {
-                plugin.Value.Initialize();
-            }
-        }
+        //public void Exec(string name)
+        //{
+        //    foreach (Lazy<ModuleBaseViewModel> plugin in PluginList)
+        //    {
+        //        plugin.Value.Initialize();
+        //    }
+        //}
 
         /// <summary>
         /// 清理工作、释放内存

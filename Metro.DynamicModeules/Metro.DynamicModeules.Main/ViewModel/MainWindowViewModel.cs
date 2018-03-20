@@ -26,7 +26,7 @@ using System.Windows.Media;
 
 namespace Metro.DynamicModeules.Main.ViewModel
 {
-    public class MainWindowViewModel : ViewModelBase, IMdiMainWindow,IDataErrorInfo, IDisposable
+    public class MainWindowViewModel : ViewModelBase, IMdiMainViewModel,IDataErrorInfo, IDisposable
     {
         private readonly IDialogCoordinator _dialogCoordinator;
         int? _integerGreater10Property;
@@ -50,7 +50,7 @@ namespace Metro.DynamicModeules.Main.ViewModel
 
             //Buttons = new ObservableCollection<tb_MyAuthorityItem>();
             Modules = new ObservableCollection<ModuleBaseViewModel>();
-            TabPages = new ObservableCollection<IMdiChildView>();
+            TabPages = new ObservableCollection<IMdiChildViewModel>();
             //检查子界面
             Messenger.Default.Register<ChildBaseViewModel>(this, MessengerToken.FocusedChild, SetFocusedChild);
             Messenger.Default.Register<ChildBaseViewModel>(this, MessengerToken.ClosedTagPage, ClosedTagPage);
@@ -450,8 +450,8 @@ namespace Metro.DynamicModeules.Main.ViewModel
         #endregion
 
         #region 右下方的tabItems列表
-        ObservableCollection<IMdiChildView> _tabPages;
-        public ObservableCollection<IMdiChildView> TabPages
+        ObservableCollection<IMdiChildViewModel> _tabPages;
+        public ObservableCollection<IMdiChildViewModel> TabPages
         {
             get
             {
@@ -467,8 +467,8 @@ namespace Metro.DynamicModeules.Main.ViewModel
         /// <summary>
         /// 当前选中的page
         /// </summary>
-        IMdiChildView _activatePage;
-        public IMdiChildView FocusedPage
+        IMdiChildViewModel _activatePage;
+        public IMdiChildViewModel FocusedPage
         {
             get
             {

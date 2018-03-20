@@ -118,6 +118,7 @@
     <Compile Include="ControlEx\FlipPanel.cs" />
     <Compile Include="ControlEx\GridNavigation.cs" />
     <Compile Include="ControlEx\Msg.cs" />
+    <Compile Include="ControlEx\PasswordBoxHelper.cs" />
     <Compile Include="Converters\MathConverter.cs" />
     <Compile Include="Converters\MathMultipleConverter.cs" />
     <Compile Include="Converters\NavigateTypeConverter.cs" />
@@ -148,10 +149,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interface\" />
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="Styles\FlipPanel.xaml">
       <Generator>MSBuild:Compile</Generator>

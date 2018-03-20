@@ -6,10 +6,11 @@
         xmlns:local="clr-namespace:Metro.DynamicModeules.Main" 
                       ShowMaxRestoreButton="False" 
                       ShowMinButton="False" 
-        mc:Ignorable="d" 
+        mc:Ignorable="d" ResizeMode="NoResize" WindowStyle="None"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:viewModel="clr-namespace:Metro.DynamicModeules.Main.ViewModel"
-        Height="450" Width="500" >
+                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                      Height="450" Width="500" >
     <Controls:MetroWindow.DataContext>
         <viewModel:LoginViewModel/>
     </Controls:MetroWindow.DataContext>
@@ -28,48 +29,57 @@
             </LinearGradientBrush>
         </Grid.Background>
         <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="欢 迎 使 用" Grid.ColumnSpan="3"   Style="{DynamicResource DescriptionHeaderStyle}" VerticalAlignment="Center"/>
-        <Label Content="用户名" FontSize="14" Grid.Row="1" Style="{DynamicResource DescriptionHeaderStyle}" HorizontalAlignment="Right"  VerticalAlignment="Center"/>
-        <TextBox Margin="{StaticResource ControlMargin}"
-                  Name="txtUser" Grid.Row="1" Background="Transparent"  Grid.Column="1"   HorizontalAlignment="Stretch" 
+        <Button Width="30" HorizontalAlignment="Right" Grid.Column="2" Margin="5"
+                        Height="30"  Click="tbtnLogin_Click" ToolTip="登录"
+                        Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
+            <iconPacks:PackIconMaterial Kind="Close" />
+        </Button>
+        <Label Content="Welcome" Grid.ColumnSpan="3"  Grid.Row="1" Style="{DynamicResource DescriptionHeaderStyle}" VerticalAlignment="Center"/>
+        <TextBox Margin="{StaticResource ControlMargin}" 
+                  Name="txtUser" Grid.Row="2" Background="Transparent"  Grid.Column="1"   HorizontalAlignment="Stretch" 
                          Controls:TextBoxHelper.ClearTextButton="True"
-                         Controls:TextBoxHelper.IsWaitingForData="False"
-                         Controls:TextBoxHelper.UseFloatingWatermark="False"
+                         Controls:TextBoxHelper.IsWaitingForData="True"
+                         Controls:TextBoxHelper.UseFloatingWatermark="True"
                          Controls:TextBoxHelper.Watermark="请输入用户名"
                           VerticalContentAlignment="Center"
+                 ToolTip="用户名"
                  Text="{Binding UserName}"
                          SpellCheck.IsEnabled="True"/>
 
-        <Label Content="密  码" FontSize="14" Grid.Row="2" Style="{DynamicResource DescriptionHeaderStyle}" HorizontalAlignment="Right"  VerticalAlignment="Center"/>
-        <PasswordBox Margin="{StaticResource ControlMargin}"
+         <PasswordBox Margin="{StaticResource ControlMargin}"
                        Controls:TextBoxHelper.SelectAllOnFocus="True"
                       Controls:TextBoxHelper.ClearTextButton="True"
-                     HorizontalAlignment="Stretch" 
+                     Controls:TextBoxHelper.UseFloatingWatermark="True"
+                     Style="{StaticResource MetroButtonRevealedPasswordBox}"
+                     HorizontalAlignment="Stretch" ToolTip="密码"
                      VerticalContentAlignment="Center" 
-                     Name="txtPwd" Grid.Row="2" Grid.Column="1"  Background="Transparent" 
+                     Name="txtPwd" Grid.Row="3" Grid.Column="1"  Background="Transparent" 
                              Controls:TextBoxHelper.Watermark="请输入密码" />
-        <CheckBox Content="记住密码" Name="chkSaveLoginInfo" Grid.Row="3" Grid.Column="1" Margin="5"/>
-        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Orientation="Horizontal">
-
-            <Button Width="130" 
-                          Margin="{StaticResource ControlMargin}"
-                          Content="登 录" Name="tbtnLogin" Click="tbtnLogin_Click"/>
-            <!--<ToggleButton Width="100"
-                          Margin="{StaticResource ControlMargin}"
-                          Content="取 消"
-                          Style="{DynamicResource MetroFlatToggleButton}" />-->
+       
+        <StackPanel Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <CheckBox Content="记住密码" Name="chkSaveLoginInfo"  HorizontalAlignment="Left"  Margin="5"/>
+            <ToggleButton Width="100" HorizontalAlignment="Right"
+                          Margin="30,5"
+                          Content="登 录" Click="tbtnLogin_Click"
+                          Style="{DynamicResource MetroFlatToggleButton}" />
+            <!--<Button Width="30" HorizontalAlignment="Right"  Margin="30,5"
+                        Height="30"  Click="tbtnLogin_Click" ToolTip="登录"
+                        Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
+                <iconPacks:PackIconMaterial Kind="Login" />
+            </Button>-->
 
         </StackPanel>
         <!--<Controls:ProgressRing Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" 

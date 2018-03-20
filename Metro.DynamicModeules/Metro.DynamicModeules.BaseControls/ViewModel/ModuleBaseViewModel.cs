@@ -15,13 +15,17 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     //[Export(typeof(IModuleBase))]
     public abstract class ModuleBaseViewModel : CommonModuleBaseViewModel, IModuleBase
     {
+        public ModuleBaseViewModel()
+        {
+            Initialize();
+        }
         public sys_Modules Module { get; set; }
         
         /// <summary>
         /// 子窗口插件
         /// </summary>
-        [ImportMany(typeof(IMdiChildView), AllowRecomposition = true)]
-        public ObservableCollection<IMdiChildView> SubModuleList
+        [ImportMany(typeof(IMdiChildViewModel), AllowRecomposition = true)]
+        public ObservableCollection<IMdiChildViewModel> SubModuleList
         {
             get
             {
@@ -34,11 +38,11 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 RaisePropertyChanged(() => SubModuleList);
             }
         }
-        ObservableCollection<IMdiChildView> _subModuleList;
+        ObservableCollection<IMdiChildViewModel> _subModuleList;
         /// <summary>
         /// 当前选中的子项
         /// </summary>
-        public IMdiChildView FocusedChild { get; set; }
+        public IMdiChildViewModel FocusedChild { get; set; }
         /// <summary>
         /// 获取该模块的实体对象
         /// </summary>
@@ -70,6 +74,8 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             base.Initialize();
             Module = GetModule();
             InitMenu();
+            Owner = GetOwner();//获取窗体
+            Owner.DataContext = this;//指定数据源
         }
 
     }
@@ -81,13 +87,13 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     {
         public CommonModuleBaseViewModel()
         {
-            Initialize();
+            //Initialize();
         }
 
         /// <summary>
         /// 对应的主窗体
         /// </summary>
-        public IMdiMainWindow MdiMainWindow { get; set; }
+        public IMdiMainViewModel MdiMainWindow { get; set; }
 
         public Control Owner { get; set; }
         /// <summary>
@@ -128,8 +134,6 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         public virtual void Initialize()
         {
             Icon = GetIcon();
-            Owner = GetOwner();
-            Owner.DataContext = this;//指定数据源
         }
 
     }
