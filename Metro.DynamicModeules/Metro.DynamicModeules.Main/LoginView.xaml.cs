@@ -96,5 +96,10 @@ namespace Metro.DynamicModeules.Main
             txtPwd.Password = CEncoder.Decode(ini.IniReadValue("LoginWindow", "Password"));
             chkSaveLoginInfo.IsChecked = ini.IniReadValue("LoginWindow", "SaveLogin") == "Y";
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
