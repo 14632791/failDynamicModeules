@@ -27,35 +27,36 @@ namespace Metro.DynamicModeules.BaseControls.ControlEx
         public static readonly DependencyProperty NavigateCommandProperty =
             DependencyProperty.Register("NavigateCommand", typeof(ICommand), typeof(GridNavigation), new PropertyMetadata(null));
 
+        
 
         /// <summary>
-        /// 总页数
+        /// 总数量
         /// </summary>
-        public int Total
+        public int TotalItems
         {
-            get { return (int)GetValue(TotalProperty); }
-            set { SetValue(TotalProperty, value); }
+            get { return (int)GetValue(TotalItemsProperty); }
+            set { SetValue(TotalItemsProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Total.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty TotalProperty =
-            DependencyProperty.Register("Total", typeof(int), typeof(GridNavigation), new PropertyMetadata(0));
+        // Using a DependencyProperty as the backing store for TotalItems.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty TotalItemsProperty =
+            DependencyProperty.Register("TotalItems", typeof(int), typeof(GridNavigation), new PropertyMetadata(0));
 
 
 
         /// <summary>
-        /// 当前页数
+        /// 当前数据
         /// </summary>
-        public int CurrentPage
+        public int CurrentItem
         {
-            get { return (int)GetValue(CurrentPageProperty); }
-            set { SetValue(CurrentPageProperty, value); }
+            get { return (int)GetValue(CurrentItemProperty); }
+            set { SetValue(CurrentItemProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for CurrentPage.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty CurrentPageProperty =
-            DependencyProperty.Register("CurrentPage", typeof(int), typeof(GridNavigation), new PropertyMetadata(0));
-
+        // Using a DependencyProperty as the backing store for CurrentItem.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CurrentItemProperty =
+            DependencyProperty.Register("CurrentItem", typeof(int), typeof(GridNavigation), new PropertyMetadata(0));
+        
 
     }
         

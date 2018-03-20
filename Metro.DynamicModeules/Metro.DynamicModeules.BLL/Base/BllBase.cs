@@ -84,8 +84,22 @@ namespace Metro.DynamicModeules.BLL.Base
             XElement xmlPredicate = SerializeHelper.SerializeExpression(where);
             return await WebRequestHelper.PostHttpAsync<long>(GetApiUrl("GetListCount"), xmlPredicate);
         }
-        public async Task<ObservableCollection<T>> GetSearchListByPage<TKey>(Expression<Func<T, bool>> where, Expression<Func<T, TKey>> orderBy, int pageSize, int pageIndex)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <param name="where"></param>
+        /// <param name="orderBy"></param>
+        /// <param name="pageSize">可默认为0，就按配置的数量来定</param>
+        /// <param name="pageIndex">第一页从0开始</param>
+        /// <returns></returns>
+        public async Task<ObservableCollection<T>> GetSearchListByPage<TKey>(Expression<Func<T, bool>> where, Expression<Func<T, TKey>> orderBy, int pageSize=0, int pageIndex=0)
         {
+            if (0 == pageSize)
+            {
+                pageSize = Globals.PageSize;
+            }
             XElement xmlPredicate = SerializeHelper.SerializeExpression(where);
             XElement xmlOrderBy = SerializeHelper.SerializeExpression(orderBy);
             var apiParams = new { xmlPredicate, xmlOrderBy, pageSize, pageIndex };

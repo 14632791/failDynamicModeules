@@ -15,39 +15,47 @@
                 <ControlTemplate TargetType="{x:Type controlEx:GridNavigation}">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width=".5*"/>
-                            <ColumnDefinition Width=".5*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition/>
-                            <ColumnDefinition Width=".5*"/>
-                            <ColumnDefinition Width=".5*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Margin="1"  Command="{TemplateBinding NavigateCommand}" BorderThickness="0" >
+                        <Button Margin="1"  Command="{TemplateBinding NavigateCommand}"  ToolTip="第一页" BorderThickness="0" >
                             <Button.CommandParameter>
                                 <viewModel:NavigateType>First</viewModel:NavigateType>
                             </Button.CommandParameter>
-                            <iconPacks:PackIconMaterial Kind="PageFirst"  ToolTip="第一页"/>
+                            <iconPacks:PackIconMaterial Kind="PageFirst"/>
                         </Button>
-                        <Button Margin="1" Grid.Column="1" Command="{TemplateBinding NavigateCommand}"  BorderThickness="0" >
+
+                        <Button Margin="1" Grid.Column="1" Command="{TemplateBinding NavigateCommand}"  ToolTip="上一页"  BorderThickness="0" >
                             <Button.CommandParameter>
                                 <viewModel:NavigateType>Previous</viewModel:NavigateType>
                             </Button.CommandParameter>
-                            <iconPacks:PackIconModern  Kind="NavigatePrevious"  ToolTip="上一页"/>
+                            <iconPacks:PackIconModern  Kind="NavigatePrevious"/>
                         </Button>
+
+                        
                         
                         <TextBlock FontSize="14" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <TextBlock.Text>
-                                <MultiBinding StringFormat="记录 {0} of {1}">
-                                    <Binding Path="View.CurrentPosition" RelativeSource="{RelativeSource Mode=TemplatedParent}"/>
-                                    <Binding Path="View.Count" RelativeSource="{RelativeSource Mode=TemplatedParent}"/>
+                                <MultiBinding StringFormat="页数 {0} of {1},位置{2}/{3}">
+                                    <Binding Path="CurrentPage" RelativeSource="{RelativeSource Mode=TemplatedParent}"/>
+                                    <Binding Path="TotalPages" RelativeSource="{RelativeSource Mode=TemplatedParent}"/>
+                                    <Binding Path="CurrentItem" RelativeSource="{RelativeSource Mode=TemplatedParent}"/>
+                                    <Binding Path="Total" RelativeSource="{RelativeSource Mode=TemplatedParent}"/>
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
+
+                                             
                         <Button Margin="1"  Grid.Column="3" ToolTip="下一页" BorderThickness="0"  Command="{TemplateBinding NavigateCommand}" >
                             <Button.CommandParameter>
                                 <viewModel:NavigateType>Next</viewModel:NavigateType>
                             </Button.CommandParameter>
                             <iconPacks:PackIconModern  Kind="NavigateNext" />
                         </Button>
+                        
                         <Button Margin="1"  Grid.Column="4" ToolTip="最后一页"  BorderThickness="0" Command="{TemplateBinding NavigateCommand}">
                             <Button.CommandParameter>
                                 <viewModel:NavigateType>Last</viewModel:NavigateType>
@@ -59,4 +67,73 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
+    <!--导航条的DataTemplate-->
+    <DataTemplate x:Key="ViewNavigationDataTemplate">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Margin="1"  Command="{Binding NavigateCommand}"  ToolTip="第一页" BorderThickness="0" >
+                <Button.CommandParameter>
+                    <viewModel:NavigateType>First</viewModel:NavigateType>
+                </Button.CommandParameter>
+                <iconPacks:PackIconMaterial Kind="PageFirst"/>
+            </Button>
+
+            <Button Margin="1" Grid.Column="1" Command="{Binding NavigateCommand}"  ToolTip="上一页"  BorderThickness="0" >
+                <Button.CommandParameter>
+                    <viewModel:NavigateType>Previous</viewModel:NavigateType>
+                </Button.CommandParameter>
+                <iconPacks:PackIconModern  Kind="NavigatePrevious"/>
+            </Button>
+
+            <Button Margin="1" Grid.Column="2" Command="{Binding NavigateCommand}"  ToolTip="上一条"  BorderThickness="0" >
+                <Button.CommandParameter>
+                    <viewModel:NavigateType>Left</viewModel:NavigateType>
+                </Button.CommandParameter>
+                <iconPacks:PackIconFontAwesome Kind="ArrowAltCircleLeftRegular" />
+            </Button>
+
+            <TextBlock FontSize="14" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="页数 {0} of {1},位置{2}/{3}">
+                        <Binding Path="CurrentPage" />
+                        <Binding Path="TotalPages"/>
+                        <Binding Path="CurrentItem" />
+                        <Binding Path="Total" />
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+
+            <Button Margin="1" Grid.Column="4" Command="{Binding NavigateCommand}"  ToolTip="下一条"  BorderThickness="0" >
+                <Button.CommandParameter>
+                    <viewModel:NavigateType>Right</viewModel:NavigateType>
+                </Button.CommandParameter>
+                <iconPacks:PackIconFontAwesome Kind="ArrowAltCircleRightRegular" />
+            </Button>
+
+
+            <Button Margin="1"  Grid.Column="5" ToolTip="下一页" BorderThickness="0"  Command="{Binding NavigateCommand}" >
+                <Button.CommandParameter>
+                    <viewModel:NavigateType>Next</viewModel:NavigateType>
+                </Button.CommandParameter>
+                <iconPacks:PackIconModern  Kind="NavigateNext" />
+            </Button>
+
+            <Button Margin="1"  Grid.Column="6" ToolTip="最后一页"  BorderThickness="0" Command="{Binding NavigateCommand}">
+                <Button.CommandParameter>
+                    <viewModel:NavigateType>Last</viewModel:NavigateType>
+                </Button.CommandParameter>
+                <iconPacks:PackIconMaterial Kind="PageLast" />
+            </Button>
+        </Grid>
+    </DataTemplate>
+
 </ResourceDictionary>

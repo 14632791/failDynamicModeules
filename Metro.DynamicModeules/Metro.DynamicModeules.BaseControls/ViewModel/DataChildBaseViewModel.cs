@@ -36,6 +36,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
 
         public override void Initialize()
         {
+            View.CurrentChanged += View_CurrentChanged;
             _bll = InitBll();
             this.SetViewMode();//预设为数据查看模式
             base.Initialize();
@@ -75,7 +76,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 RaisePropertyChanged(() => HasEnabled);
             }
         }
-        bool _hasEnabled=true;
+        bool _hasEnabled = true;
         /// <summary>
         /// 原始数据
         /// </summary>
@@ -225,16 +226,6 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         #endregion
 
 
-
-        public int RowCount
-        {
-            get
-            {
-                return DataSource == null ? 0 : DataSource.Count;
-            }
-        }
-
-
         public ObservableCollection<T> DataSource { get; set; }
 
         public ListCollectionView View
@@ -260,6 +251,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             get
             {
+
                 return _focusedRow;
             }
             set
@@ -390,16 +382,74 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
 
         #region Summary数据导航功能
 
-
-        ICommand _moveCommand;
+        int _total;
         /// <summary>
-        /// 导航command
+        /// 总条数
+        /// </summary>
+        public int Total
+        {
+            get { return _total; }
+            set
+            {
+                _total = value;
+                RaisePropertyChanged("Total");
+            }
+        }
+
+        int _currentItem;
+        /// <summary>
+        /// 当前数据
+        /// </summary>
+        public int CurrentItem
+        {
+            get { return _currentItem; }
+            set
+            {
+                _currentItem = value;
+                RaisePropertyChanged("CurrentItem");
+            }
+        }
+
+
+
+        int _currentPage;
+        /// <summary>
+        /// 当前页数
+        /// </summary>
+        public int CurrentPage
+        {
+            get { return _currentPage; }
+            set
+            {
+                _currentPage = value;
+                RaisePropertyChanged("CurrentPage");
+            }
+        }
+
+        int _totalPages;
+        /// <summary>
+        /// 总页数
+        /// </summary>
+        public int TotalPages
+        {
+            get { return _totalPages; }
+            set
+            {
+                _totalPages = value;
+                RaisePropertyChanged("TotalPages");
+            }
+        }
+
+
+        ICommand _navigateCommand;
+        /// <summary>
+        /// 数据行导航command
         /// </summary>
         public ICommand NavigateCommand
         {
             get
             {
-                return _moveCommand ?? (_moveCommand = new RelayCommand<NavigateType>((navType) =>
+                return _navigateCommand ?? (_navigateCommand = new RelayCommand<NavigateType>((navType) =>
                 {
                     switch (navType)
                     {
@@ -413,34 +463,63 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                             MoveNext();
                             break;
                         case NavigateType.Previous:
-                            MovePrior();
+                            MovePrevious();
+                            break;
+                        default:
                             break;
                     }
                 }));
             }
         }
+
+
+        /// <summary>
+        /// 第一条
+        /// </summary>
         public virtual void MoveFirst()
         {
             View?.MoveCurrentToFirst();
         }
 
-        public virtual void MovePrior()
+        /// <summary>
+        /// 上一条
+        /// </summary>
+        public virtual void MovePrevious()
         {
             View?.MoveCurrentToPrevious();
         }
 
+        /// <summary>
+        /// 下一条
+        /// </summary>
         public virtual void MoveNext()
         {
             View?.MoveCurrentToNext();
         }
 
+        /// <summary>
+        /// 最后一条
+        /// </summary>
         public virtual void MoveLast()
         {
             View?.MoveCurrentToLast();
         }
 
+        /// <summary>
+        /// view改变后触发的事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void View_CurrentChanged(object sender, EventArgs e)
+        {
+            FocusedRow = (T)View.CurrentItem;
+        }
+
         #endregion
 
+        #region 分页导航
+
+        #endregion
     }
     /// <summary>
     /// 导航类型
@@ -456,6 +535,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 上一页
         /// </summary>
         Previous,
+
 
         /// <summary>
         /// 下一页

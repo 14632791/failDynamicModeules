@@ -87,7 +87,6 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     {
         public CommonModuleBaseViewModel()
         {
-            //Initialize();
         }
 
         /// <summary>

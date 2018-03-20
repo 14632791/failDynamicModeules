@@ -75,7 +75,10 @@
                         </ToggleButton>
 
                         <!--导航栏-->
-                        <local:GridNavigation HorizontalAlignment="Left" Grid.Row="1" NavigateCommand="{Binding NavigateCommand}" Width="300" Margin="5"/>
+                        <!--<local:GridNavigation HorizontalAlignment="Left" Grid.Row="1" 
+                         NavigateCommand="{Binding NavigateCommand}" Width="300" Margin="5"/>-->
+                        <ContentPresenter ContentTemplate="{StaticResource ViewNavigationDataTemplate}"
+                                          HorizontalAlignment="Left" Grid.Row="1"  Width="300" Margin="5"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

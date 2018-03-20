@@ -341,7 +341,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <param name="sender"></param>
         public virtual void DoDelete()
         {
-           
+
         }
 
         public virtual void DoViewContent()
@@ -428,7 +428,6 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         }
 
         #endregion
-
-
+               
     }
 }
