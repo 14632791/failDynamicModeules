@@ -21,14 +21,14 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Margin="1"  Command="{TemplateBinding NavigateCommand}"  ToolTip="第一页" BorderThickness="0" >
+                        <Button Margin="1"  Command="{TemplateBinding NavigateCommand}"  ToolTip="{TemplateBinding FirstTip}" BorderThickness="0" >
                             <Button.CommandParameter>
                                 <viewModel:NavigateType>First</viewModel:NavigateType>
                             </Button.CommandParameter>
                             <iconPacks:PackIconMaterial Kind="PageFirst"/>
                         </Button>
 
-                        <Button Margin="1" Grid.Column="1" Command="{TemplateBinding NavigateCommand}"  ToolTip="上一页"  BorderThickness="0" >
+                        <Button Margin="1" Grid.Column="1" Command="{TemplateBinding NavigateCommand}"  ToolTip="{TemplateBinding PreviousTip}"  BorderThickness="0" >
                             <Button.CommandParameter>
                                 <viewModel:NavigateType>Previous</viewModel:NavigateType>
                             </Button.CommandParameter>
@@ -39,24 +39,22 @@
                         
                         <TextBlock FontSize="14" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <TextBlock.Text>
-                                <MultiBinding StringFormat="页数 {0} of {1},位置{2}/{3}">
-                                    <Binding Path="CurrentPage" RelativeSource="{RelativeSource Mode=TemplatedParent}"/>
-                                    <Binding Path="TotalPages" RelativeSource="{RelativeSource Mode=TemplatedParent}"/>
+                                <MultiBinding StringFormat=" {0} of {1}">
                                     <Binding Path="CurrentItem" RelativeSource="{RelativeSource Mode=TemplatedParent}"/>
-                                    <Binding Path="Total" RelativeSource="{RelativeSource Mode=TemplatedParent}"/>
+                                    <Binding Path="TotalItems" RelativeSource="{RelativeSource Mode=TemplatedParent}"/>
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
 
                                              
-                        <Button Margin="1"  Grid.Column="3" ToolTip="下一页" BorderThickness="0"  Command="{TemplateBinding NavigateCommand}" >
+                        <Button Margin="1"  Grid.Column="3" ToolTip="{TemplateBinding NextTip}" BorderThickness="0"  Command="{TemplateBinding NavigateCommand}" >
                             <Button.CommandParameter>
                                 <viewModel:NavigateType>Next</viewModel:NavigateType>
                             </Button.CommandParameter>
                             <iconPacks:PackIconModern  Kind="NavigateNext" />
                         </Button>
                         
-                        <Button Margin="1"  Grid.Column="4" ToolTip="最后一页"  BorderThickness="0" Command="{TemplateBinding NavigateCommand}">
+                        <Button Margin="1"  Grid.Column="4" ToolTip="{TemplateBinding LastTip}"  BorderThickness="0" Command="{TemplateBinding NavigateCommand}">
                             <Button.CommandParameter>
                                 <viewModel:NavigateType>Last</viewModel:NavigateType>
                             </Button.CommandParameter>

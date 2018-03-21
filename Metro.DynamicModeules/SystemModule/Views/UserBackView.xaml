@@ -62,7 +62,6 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="80"/>
                     <ColumnDefinition/>
-                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="45"/>
@@ -71,14 +70,13 @@
                 <Label Content="输入密码："/>
                 <PasswordBox Margin="{StaticResource TextBoxMargin}" controlEx:PasswordBoxHelper.Attach="True" controlEx:PasswordBoxHelper.Password="{Binding Path=View.CurrentItem.Password,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
-                             Controls:TextBoxHelper.Watermark="Password" Grid.Column="1"/>
+                            Height="40"  Grid.Column="1"/>
                  <Label Content="确认密码：" Grid.Row="1"/>
                 <PasswordBox Margin="{StaticResource TextBoxMargin}" controlEx:PasswordBoxHelper.Attach="True" controlEx:PasswordBoxHelper.Password="{Binding Path=View.CurrentItem.Password,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
-                             Controls:TextBoxHelper.Watermark="Password" Grid.Column="1" Grid.Row="1"/>
+                             Height="40" Grid.Column="1" Grid.Row="1"/>
             </Grid>
         </GroupBox>
-        <TextBlock Text="数据明细" Grid.Row="10"/>
-        <controlEx:GridNavigation Grid.Column="1" Grid.Row="10"/>
+       
     </Grid>
 </UserControl>

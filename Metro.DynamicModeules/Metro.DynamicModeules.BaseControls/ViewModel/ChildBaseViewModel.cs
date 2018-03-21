@@ -212,7 +212,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
 
         #region IMdiChildForm 接口实现
 
-       
+
 
         /// <summary>
         /// 模板方法.初始化本窗体的按钮.
@@ -248,11 +248,13 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             MyMenu = await GetMenu();
         }
-
+        /// <summary>
+        /// 这里要加增删查改
+        /// </summary>
+        /// <returns></returns>
         protected virtual IList GetDataOperatableButtons()
         {
-            List<ButtonInfoViewModel> list = new List<ButtonInfoViewModel>();
-            return list;
+            return AuthorityItemsMgr.GetButtonsByMeun(MyMenu, this);
         }
         #endregion
 
