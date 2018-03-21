@@ -423,13 +423,13 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
 
         #endregion
 
-        public override void Initialize()
+        public override async void Initialize()
         {
             base.Initialize();
             Icon = GetIcon();
             Owner = GetOwner(); //指定窗体
             Owner.DataContext = this;
-            InitMenu();
+            await Task.Factory.StartNew(InitMenu);
             InitButtons();
             this.SetViewMode();//预设为数据查看模式
         }

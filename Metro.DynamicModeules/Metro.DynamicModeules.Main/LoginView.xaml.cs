@@ -7,6 +7,7 @@ using Metro.DynamicModeules.Models;
 using Metro.DynamicModeules.Models.Sys;
 using System;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Metro.DynamicModeules.Main
@@ -46,14 +47,12 @@ namespace Metro.DynamicModeules.Main
                     {
                         SaveLoginInfo();//跟据选项保存登录信息  
                     }
-                    //Dispatcher.Invoke(new Action(() =>
-                    //{
                     DataDictCache.Instance.LoginUser = user[0];
+                    await Task.Factory.StartNew(DataDictCache.Instance.DownloadBaseCacheData);
                     Window mainpage = PluginHandle.Instance.Host.Value as Window;
                     mainpage.Show();
                     this.Hide();
-                    this.Close(); //关闭登陆窗体
-                                  // }));
+                    this.Close(); 
                 }
                 else
                 {

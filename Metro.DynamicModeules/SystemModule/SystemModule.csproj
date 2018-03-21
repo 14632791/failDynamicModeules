@@ -113,7 +113,11 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ViewModel\DataChildUserViewModel.cs" />
+    <Compile Include="ViewModel\GroupDataChildViewModel.cs" />
+    <Compile Include="ViewModel\UserDataChildViewModel.cs" />
+    <Compile Include="Views\GroupBackView.xaml.cs">
+      <DependentUpon>GroupBackView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SystemMainView.xaml.cs">
       <DependentUpon>SystemMainView.xaml</DependentUpon>
     </Compile>
@@ -122,9 +126,16 @@
     <Compile Include="Views\UserBackView.xaml.cs">
       <DependentUpon>UserBackView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\GroupFrontView.xaml.cs">
+      <DependentUpon>GroupFrontView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserFrontView.xaml.cs">
       <DependentUpon>UserFrontView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\GroupBackView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SystemMainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -132,6 +143,10 @@
     <Page Include="Views\UserBackView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GroupFrontView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\UserFrontView.xaml">
       <SubType>Designer</SubType>

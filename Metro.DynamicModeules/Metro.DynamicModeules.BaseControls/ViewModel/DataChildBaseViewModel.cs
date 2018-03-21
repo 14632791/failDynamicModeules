@@ -90,7 +90,10 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             base.InitButtons();
             List<ButtonInfoViewModel> dataButton = (List<ButtonInfoViewModel>)this.GetDataOperatableButtons();
-            //List<ButtonInfoViewModel> printButton = this.GetPrintableButtons();
+            if (null == dataButton)
+            {
+                return;
+            }
             foreach (var item in dataButton)
             {
                 this.Buttons.Add(item);
@@ -390,7 +393,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             }
         }
 
-               
+
 
         #region Summary数据导航功能
 
@@ -403,13 +406,13 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             get { return null == View ? 0 : View.Count; }
         }
 
-       
+
         /// <summary>
         /// 当前位置
         /// </summary>
         public int CurrentPosition
         {
-            get { return null==View?0:View.CurrentPosition+1; }
+            get { return null == View ? 0 : View.CurrentPosition + 1; }
         }
 
 
@@ -421,7 +424,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             get
             {
-                return _navigateCommand ?? (_navigateCommand = new RelayCommand<NavigateType>(MoveViewPosition, 
+                return _navigateCommand ?? (_navigateCommand = new RelayCommand<NavigateType>(MoveViewPosition,
                     (navType) =>
                 {
                     return null != View && (navType == NavigateType.First && View?.CurrentPosition > 0 ||
@@ -459,7 +462,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
 
 
 
-        int _currentPage=0;
+        int _currentPage = 0;
         /// <summary>
         /// 当前页数
         /// </summary>
@@ -540,7 +543,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         /// <returns></returns>
         protected abstract Expression<Func<T, bool>> GetSearchExpression();
-        
+
 
         /// <summary>
         /// 刷新数据源
@@ -549,7 +552,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             var expression = GetSearchExpression();
             DataSource = await _bll.GetSearchListByPage(expression, Globals.PageSize, CurrentPage < 0 ? 0 : CurrentPage);
-         }
+        }
         protected async virtual void GetListCount()
         {
             long total = await _bll.GetListCount(GetSearchExpression());//获取总数量
@@ -562,7 +565,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             {
                 int total2 = (int)total;
                 TotalPages = total2 / Globals.PageSize;
-                if(total2 % Globals.PageSize > 0)
+                if (total2 % Globals.PageSize > 0)
                 {
                     TotalPages++;
                 }
@@ -594,7 +597,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             }
         }
         #endregion
-        
+
     }
     /// <summary>
     /// 导航类型

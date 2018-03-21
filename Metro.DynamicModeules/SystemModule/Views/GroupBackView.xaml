@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="SystemModule.Views.GroupBackView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SystemModule.Views"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Metro.DynamicModeules.BaseControls;component/Themes/Controls.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+           </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="250"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <GroupBox Header="组基本信息">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Content="组名："/>
+                <TextBox Grid.Column="1"/>
+                <Label Content="说明：" Grid.Row="1"/>
+                <TextBox Grid.Column="1" Grid.Row="1" TextWrapping="Wrap"/>
+            </Grid>
+        </GroupBox>
+        
+        <GroupBox Header="组用户资料" Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <GroupBox Header="可选用户">
+                    <ListBox/>
+                </GroupBox>
+                <GroupBox Header="已选用户" Grid.Column="2">
+                    <ListBox/>
+                </GroupBox>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.Resources>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Margin" Value="10"/>
+                            <Setter Property="Height" Value="35"/>
+                        </Style>
+                    </Grid.Resources>
+                    <Button Grid.Row="0">
+                        <iconPacks:PackIconMaterialLight Kind="ChevronDoubleRight" />
+                    </Button>
+                    <Button Grid.Row="1">
+                        <iconPacks:PackIconMaterialLight Kind="ChevronDoubleRight" />
+                    </Button>
+                    <Button Grid.Row="2">
+                        <iconPacks:PackIconEntypo Kind="ChevronThinLeft" />
+                    </Button>
+                    <Button Grid.Row="3">
+                        <iconPacks:PackIconMaterialLight Kind="ChevronDoubleLeft" />
+                    </Button>
+                </Grid>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="组权限" Grid.Column="1" Grid.RowSpan="2">
+            <Menu></Menu>
+        </GroupBox>
+    </Grid>
+</UserControl>

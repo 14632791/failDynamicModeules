@@ -20,18 +20,18 @@ using System.Threading.Tasks;
 namespace SystemModule.ViewModel
 {
     /// <summary>
-    /// 用户管理界面
+    /// 用户组管理界面
     /// </summary>
     [Export(typeof(IMdiChildViewModel))]
-    public class DataChildUserViewModel : DataChildBaseViewModel<tb_MyUser>
+    public class GroupDataChildViewModel : DataChildBaseViewModel<tb_MyUserGroup>
     {
-        BllUser _bllUser;
+        BllUserGroup _bllGroup;
         protected override Control GetOwner()
         {
             FlipPanel flip = new FlipPanel();
             flip.IsFlipped = false;
-            flip.FrontContent = new UserFrontView();
-            flip.BackContent = new UserBackView();
+            flip.FrontContent = new GroupFrontView();
+            flip.BackContent = new GroupBackView();
             return flip;
         }
 
@@ -41,20 +41,20 @@ namespace SystemModule.ViewModel
             return new PackIconMaterial { Kind = PackIconMaterialKind.AccountSettingsVariant };
         }
 
-        protected override BllBase<tb_MyUser> InitBll()
+        protected override BllBase<tb_MyUserGroup> InitBll()
         {
-            _bllUser = new BllUser();
-            return _bllUser;
+            _bllGroup = new BllUserGroup();
+            return _bllGroup;
         }
 
         protected override async Task<tb_MyMenu> GetMenu()
         {
             tb_MyMenu myMenu = new tb_MyMenu
             {
-                MenuName = "menuItemUserMgr",
-                MenuCaption = "用户管理",
+                MenuName = "menuItemUserGroupMgr",
+                MenuCaption = "用户组管理",
                 MenuType = MenuType.DataForm.ToString(),
-                isid=7001
+                isid=7002
             };
             Expression<Func<tb_MyMenu, bool>> predicate = SerializeHelper.CreateExpression<tb_MyMenu, bool>("MenuName=@0", new object[] { myMenu.MenuName });
             BllMenu _bllMenu = new BllMenu();
@@ -68,34 +68,21 @@ namespace SystemModule.ViewModel
             return myMenu;
         }
         
-        protected override Expression<Func<tb_MyUser, bool>> GetSearchExpression()
+        protected override Expression<Func<tb_MyUserGroup, bool>> GetSearchExpression()
         {
             string expression;
             object[] values = null;
             if (string.IsNullOrEmpty(SearchText))
             {
-                expression = "Account!=''";
+                expression = "GroupName!=''";
             }
             else
             {
-                expression = "Account=@0";
+                expression = "GroupName=@0";
                 values = new object[] { SearchText };
             }
-            Expression<Func<tb_MyUser, bool>> predicate = SerializeHelper.CreateExpression<tb_MyUser, bool>(expression,values);
+            Expression<Func<tb_MyUserGroup, bool>> predicate = SerializeHelper.CreateExpression<tb_MyUserGroup, bool>(expression,values);
             return predicate;
-        }
-
-
-        public string this[string columnName]
-        {
-            get
-            {
-                if(null!= FocusedRow&&columnName == "FocusedRow" && string.IsNullOrEmpty(FocusedRow.Account))
-                {
-                    return "用户账号不能为空！";
-                }
-                return null;
-            }
-        }
+        }                
     }
 }

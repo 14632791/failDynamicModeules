@@ -75,7 +75,6 @@ namespace Metro.DynamicModeules.BLL
             {
                 _loginUser = value;
                 RaisePropertyChanged("LoginUser");
-                DownloadBaseCacheData();
             }
         }
         private tb_MyUser _loginUser;
