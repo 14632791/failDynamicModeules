@@ -94,15 +94,14 @@ namespace Metro.DynamicModeules.BLL.Base
         /// <param name="pageSize">可默认为0，就按配置的数量来定</param>
         /// <param name="pageIndex">第一页从0开始</param>
         /// <returns></returns>
-        public async Task<ObservableCollection<T>> GetSearchListByPage<TKey>(Expression<Func<T, bool>> where, Expression<Func<T, TKey>> orderBy, int pageSize=0, int pageIndex=0)
+        public async Task<ObservableCollection<T>> GetSearchListByPage(Expression<Func<T, bool>> where, int pageSize=0, int pageIndex=0) //where TKey:struct
         {
             if (0 == pageSize)
             {
                 pageSize = Globals.PageSize;
             }
             XElement xmlPredicate = SerializeHelper.SerializeExpression(where);
-            XElement xmlOrderBy = SerializeHelper.SerializeExpression(orderBy);
-            var apiParams = new { xmlPredicate, xmlOrderBy, pageSize, pageIndex };
+            var apiParams = new { xmlPredicate,pageSize, pageIndex };
             return await WebRequestHelper.PostHttpAsync<ObservableCollection<T>>(GetApiUrl("GetSearchListByPage"), apiParams);
         }
 

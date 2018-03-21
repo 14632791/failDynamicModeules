@@ -20,7 +20,6 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     {
         public ChildBaseViewModel()
         {
-            Initialize();//这里才初始化
         }
         ICommand _closeCommand;
         public ICommand CloseCommand
@@ -55,8 +54,6 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             if (!MdiMainWindow.TabPages.Contains(this))
             {
-                Owner = GetOwner(); //指定窗体
-                Owner.DataContext = this;
                 MdiMainWindow.TabPages.Add(this);
             }
             if (MdiMainWindow.FocusedPage != this)
@@ -215,12 +212,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
 
         #region IMdiChildForm 接口实现
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            InitMenu();
-            InitButtons();
-        }
+       
 
         /// <summary>
         /// 模板方法.初始化本窗体的按钮.
@@ -257,7 +249,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             MyMenu = await GetMenu();
         }
 
-        public IList GetDataOperatableButtons()
+        protected virtual IList GetDataOperatableButtons()
         {
             List<ButtonInfoViewModel> list = new List<ButtonInfoViewModel>();
             return list;
@@ -428,6 +420,16 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         }
 
         #endregion
-               
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            Icon = GetIcon();
+            Owner = GetOwner(); //指定窗体
+            Owner.DataContext = this;
+            InitMenu();
+            InitButtons();
+            this.SetViewMode();//预设为数据查看模式
+        }
     }
 }

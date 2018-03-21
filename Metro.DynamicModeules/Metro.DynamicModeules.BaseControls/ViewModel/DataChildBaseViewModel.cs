@@ -7,6 +7,7 @@ using Metro.DynamicModeules.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq.Expressions;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -36,14 +37,15 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
 
         public override void Initialize()
         {
-            View.CurrentChanged += View_CurrentChanged;
-            _bll = InitBll();
-            this.SetViewMode();//预设为数据查看模式
             base.Initialize();
-            RefreshDataSource();
+            _bll = InitBll();
+            //RefreshDataSource();
         }
 
-
+        protected override void SetViewMode()
+        {
+            base.SetViewMode();
+        }
         /// <summary>
         /// 是否数据发生改变
         /// </summary>
@@ -225,8 +227,22 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
 
         #endregion
 
+        // View.CurrentChanged += View_CurrentChanged;
+        ObservableCollection<T> _dataSource;
+        public ObservableCollection<T> DataSource
+        {
+            get
+            {
 
-        public ObservableCollection<T> DataSource { get; set; }
+                return _dataSource;
+            }
+            set
+            {
+                _dataSource = value;
+                RaisePropertyChanged("DataSource");
+                //OriginalData = value.CloneModel();
+            }
+        }
 
         public ListCollectionView View
         {
@@ -348,7 +364,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                     T newrow = new T();//表格的数据源增加一条记录
                     this.ReplaceDataRowChanges(summary, newrow);//替换数据
                     DataSource.Add(newrow);
-                    RefreshDataSource();
+                    //RefreshDataSource();
                 }
 
                 //如果是修改后保存,将最新数据替换当前记录的数据.
@@ -374,45 +390,76 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             }
         }
 
-
-        /// <summary>
-        /// 刷新数据源
-        /// </summary>
-        public abstract void RefreshDataSource();
+               
 
         #region Summary数据导航功能
 
         int _total;
         /// <summary>
-        /// 总条数
+        /// 总条数 View.Count
         /// </summary>
         public int Total
         {
-            get { return _total; }
-            set
-            {
-                _total = value;
-                RaisePropertyChanged("Total");
-            }
+            get { return null == View ? 0 : View.Count; }
         }
 
-        int _currentItem;
+       
         /// <summary>
-        /// 当前数据
+        /// 当前位置
         /// </summary>
-        public int CurrentItem
+        public int CurrentPosition
         {
-            get { return _currentItem; }
-            set
+            get { return null==View?0:View.CurrentPosition+1; }
+        }
+
+
+        ICommand _navigateCommand;
+        /// <summary>
+        /// 数据行导航command
+        /// </summary>
+        public ICommand NavigateCommand
+        {
+            get
             {
-                _currentItem = value;
-                RaisePropertyChanged("CurrentItem");
+                return _navigateCommand ?? (_navigateCommand = new RelayCommand<NavigateType>(MoveViewPosition, 
+                    (navType) =>
+                {
+                    return null != View && (navType == NavigateType.First && View?.CurrentPosition > 0 ||
+                       navType == NavigateType.Previous && View?.CurrentPosition > 0 ||
+                       navType == NavigateType.Next && View?.CurrentPosition > View?.Count - 1 ||
+                        navType == NavigateType.Last && View?.CurrentPosition > View?.Count - 1);
+                }));
+            }
+        }
+
+        /// <summary>
+        /// 移动viewdata的当前位置
+        /// </summary>
+        /// <param name="navType"></param>
+        protected virtual void MoveViewPosition(NavigateType navType)
+        {
+            switch (navType)
+            {
+                case NavigateType.First:
+                    View?.MoveCurrentToFirst();
+                    break;
+                case NavigateType.Last:
+                    View?.MoveCurrentToLast();
+                    break;
+                case NavigateType.Next:
+                    View?.MoveCurrentToNext();
+                    break;
+                case NavigateType.Previous:
+                    View?.MoveCurrentToPrevious();
+                    break;
+                default:
+                    break;
             }
         }
 
 
 
-        int _currentPage;
+        int _currentPage=0;
         /// <summary>
         /// 当前页数
         /// </summary>
@@ -439,72 +486,88 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 RaisePropertyChanged("TotalPages");
             }
         }
-
-
-        ICommand _navigateCommand;
+        ICommand _getDataByPageCmd;
         /// <summary>
         /// 数据行导航command
         /// </summary>
-        public ICommand NavigateCommand
+        public ICommand GetDataByPageCmd
         {
             get
             {
-                return _navigateCommand ?? (_navigateCommand = new RelayCommand<NavigateType>((navType) =>
-                {
-                    switch (navType)
+                return _getDataByPageCmd ?? (_getDataByPageCmd = new RelayCommand<NavigateType>(GetDataByPage,
+                    (navType) =>
                     {
-                        case NavigateType.First:
-                            MoveFirst();
-                            break;
-                        case NavigateType.Last:
-                            MoveLast();
-                            break;
-                        case NavigateType.Next:
-                            MoveNext();
-                            break;
-                        case NavigateType.Previous:
-                            MovePrevious();
-                            break;
-                        default:
-                            break;
-                    }
-                }));
+                        return null != View && (navType == NavigateType.First && View?.CurrentPosition > 0 ||
+                           navType == NavigateType.Previous && View?.CurrentPosition > 0 ||
+                           navType == NavigateType.Next && View?.CurrentPosition > View?.Count - 1 ||
+                            navType == NavigateType.Last && View?.CurrentPosition > View?.Count - 1);
+                    }));
             }
         }
-
-
         /// <summary>
-        /// 第一条
+        /// 获取指定页面的数据
         /// </summary>
-        public virtual void MoveFirst()
+        /// <param name="navType"></param>
+        protected virtual void GetDataByPage(NavigateType navType)
         {
-            View?.MoveCurrentToFirst();
+            GetListCount();
+            if (TotalPages <= 0)//没有任何数据就直接返回了
+            {
+                return;
+            }
+            switch (navType)
+            {
+                case NavigateType.First:
+                    CurrentPage = 1;
+                    break;
+                case NavigateType.Last:
+                    CurrentPage = TotalPages;
+                    break;
+                case NavigateType.Next:
+                    CurrentPage++;
+                    break;
+                case NavigateType.Previous:
+                    CurrentPage--;
+                    break;
+                default:
+                    break;
+            }
+            RefreshDataSource();
         }
 
         /// <summary>
-        /// 上一条
+        /// 搜索条件
         /// </summary>
-        public virtual void MovePrevious()
-        {
-            View?.MoveCurrentToPrevious();
-        }
+        /// <returns></returns>
+        protected abstract Expression<Func<T, bool>> GetSearchExpression();
+        
 
         /// <summary>
-        /// 下一条
+        /// 刷新数据源
         /// </summary>
-        public virtual void MoveNext()
+        public async virtual void RefreshDataSource()
         {
-            View?.MoveCurrentToNext();
-        }
-
-        /// <summary>
-        /// 最后一条
-        /// </summary>
-        public virtual void MoveLast()
+            var expression = GetSearchExpression();
+            DataSource = await _bll.GetSearchListByPage(expression, Globals.PageSize, CurrentPage < 0 ? 0 : CurrentPage);
+         }
+        protected async virtual void GetListCount()
         {
-            View?.MoveCurrentToLast();
+            long total = await _bll.GetListCount(GetSearchExpression());//获取总数量
+            if (0 <= total)
+            {
+                CurrentPage = 0;
+                TotalPages = 0;
+            }
+            else
+            {
+                int total2 = (int)total;
+                TotalPages = total2 / Globals.PageSize;
+                if(total2 % Globals.PageSize > 0)
+                {
+                    TotalPages++;
+                }
+            }
         }
-
         /// <summary>
         /// view改变后触发的事件
         /// </summary>
@@ -515,11 +578,23 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             FocusedRow = (T)View.CurrentItem;
         }
 
-        #endregion
 
-        #region 分页导航
+        string _search;
 
+        /// <summary>
+        /// 搜索字符串
+        /// </summary>
+        public string SearchText
+        {
+            get { return _search; }
+            set
+            {
+                _search = value;
+                RaisePropertyChanged("SearchText");
+            }
+        }
         #endregion
+        
     }
     /// <summary>
     /// 导航类型

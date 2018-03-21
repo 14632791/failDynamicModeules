@@ -35,9 +35,12 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="45"/>
             <RowDefinition Height="45"/>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="45"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Label Content="登录账号："/>
+        
+         <Label Content="登录账号："/>
         <TextBox Grid.Column="1" 
          Text="{Binding View.CurrentItem.Account,ValidatesOnDataErrors=True,NotifyOnValidationError=True,
             Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
@@ -75,5 +78,7 @@
                              Controls:TextBoxHelper.Watermark="Password" Grid.Column="1" Grid.Row="1"/>
             </Grid>
         </GroupBox>
+        <TextBlock Text="数据明细" Grid.Row="10"/>
+        <controlEx:GridNavigation Grid.Column="1" Grid.Row="10"/>
     </Grid>
 </UserControl>

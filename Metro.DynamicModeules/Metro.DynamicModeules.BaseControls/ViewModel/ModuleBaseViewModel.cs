@@ -15,12 +15,8 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     //[Export(typeof(IModuleBase))]
     public abstract class ModuleBaseViewModel : CommonModuleBaseViewModel, IModuleBase
     {
-        public ModuleBaseViewModel()
-        {
-            Initialize();
-        }
         public sys_Modules Module { get; set; }
-        
+
         /// <summary>
         /// 子窗口插件
         /// </summary>
@@ -49,7 +45,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <returns></returns>
         protected abstract sys_Modules GetModule();
 
-         
+
         /// <summary>
         /// 初始化该模块下的所有子项
         /// </summary>
@@ -71,11 +67,11 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         public override void Initialize()
         {
-            base.Initialize();
+            Icon = GetIcon();
+            Owner = GetOwner(); //指定窗体
+            Owner.DataContext = this;
             Module = GetModule();
             InitMenu();
-            Owner = GetOwner();//获取窗体
-            Owner.DataContext = this;//指定数据源
         }
 
     }
@@ -83,10 +79,11 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     /// <summary>
     /// 主模块与子模块通用的基类
     /// </summary>
-    public abstract class CommonModuleBaseViewModel : ViewModelBase,ICommonModuleBase
+    public abstract class CommonModuleBaseViewModel : ViewModelBase, ICommonModuleBase
     {
         public CommonModuleBaseViewModel()
         {
+            Initialize();//这里就开始初始化
         }
 
         /// <summary>
@@ -132,7 +129,6 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         public virtual void Initialize()
         {
-            Icon = GetIcon();
         }
 
     }

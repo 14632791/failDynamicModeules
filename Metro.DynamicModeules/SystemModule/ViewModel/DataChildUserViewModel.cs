@@ -54,7 +54,7 @@ namespace SystemModule.ViewModel
                 MenuName = "menuItemUserMgr",
                 MenuCaption = "用户管理",
                 MenuType = MenuType.DataForm.ToString(),
-                //ModuleID = Module.ModuleID
+                isid=7001
             };
             Expression<Func<tb_MyMenu, bool>> predicate = SerializeHelper.CreateExpression<tb_MyMenu, bool>("MenuName=@0", new object[] { myMenu.MenuName });
             BllMenu _bllMenu = new BllMenu();
@@ -67,13 +67,25 @@ namespace SystemModule.ViewModel
             }
             return myMenu;
         }
-
-        public override async void RefreshDataSource()
+        
+        protected override Expression<Func<tb_MyUser, bool>> GetSearchExpression()
         {
-            Expression<Func<tb_MyUser, bool>> predicate = SerializeHelper.CreateExpression<tb_MyUser, bool>("Account!=@0", new object[] { "" });
-            //获取所有用户数据
-            DataSource = await _bllUser.GetSearchList(predicate);
+            string expression;
+            object[] values = null;
+            if (string.IsNullOrEmpty(SearchText))
+            {
+                expression = "Account!=''";
+            }
+            else
+            {
+                expression = "Account=@0";
+                values = new object[] { SearchText };
+            }
+            Expression<Func<tb_MyUser, bool>> predicate = SerializeHelper.CreateExpression<tb_MyUser, bool>(expression,values);
+            return predicate;
         }
+
+
         public string this[string columnName]
         {
             get

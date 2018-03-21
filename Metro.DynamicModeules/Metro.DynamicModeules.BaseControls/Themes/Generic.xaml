@@ -6,7 +6,7 @@
         <ResourceDictionary Source="pack://application:,,,/Metro.DynamicModeules.BaseControls;component/Styles/ModuleBaseView.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/Metro.DynamicModeules.BaseControls;component/Styles/FlipPanel.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/Metro.DynamicModeules.BaseControls;component/Styles/GridNavigation.xaml"/>
-        <ResourceDictionary Source="pack://application:,,,/Metro.DynamicModeules.BaseControls;component/Styles/PackIconButton.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Metro.DynamicModeules.BaseControls;component/Styles/PackIconButton.xaml"/>       
         <ResourceDictionary Source="pack://application:,,,/Metro.DynamicModeules.BaseControls;component/Themes/Controls.xaml"/>
     </ResourceDictionary.MergedDictionaries>
        

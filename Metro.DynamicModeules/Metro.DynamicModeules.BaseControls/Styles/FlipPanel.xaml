@@ -59,9 +59,7 @@
                         <!-- This is the back content. -->
                         <Border x:Name="BackContent" BorderBrush="{TemplateBinding BorderBrush}"
            BorderThickness="{TemplateBinding BorderThickness}"  CornerRadius="{TemplateBinding CornerRadius}" >
-                            <ContentPresenter
-                     Content="{TemplateBinding BackContent}">
-                            </ContentPresenter>
+                            <ContentPresenter Content="{TemplateBinding BackContent}"/>
                         </Border>
 
                         <!-- This the flip button. -->
@@ -75,10 +73,9 @@
                         </ToggleButton>
 
                         <!--导航栏-->
-                        <!--<local:GridNavigation HorizontalAlignment="Left" Grid.Row="1" 
-                         NavigateCommand="{Binding NavigateCommand}" Width="300" Margin="5"/>-->
-                        <ContentPresenter ContentTemplate="{StaticResource ViewNavigationDataTemplate}"
-                                          HorizontalAlignment="Left" Grid.Row="1"  Width="300" Margin="5"/>
+                        <local:GridNavigation HorizontalAlignment="Left" Grid.Row="1" 
+                         NavigateCommand="{Binding NavigateCommand}" Width="300" Margin="5"/>
+                      
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

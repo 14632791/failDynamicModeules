@@ -113,11 +113,12 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
@@ -177,15 +178,11 @@
         <!--Modules PluginHandle.Instance.PluginList-->
         <ListBox ItemsSource="{Binding Modules}"
                  VerticalAlignment="Stretch"
-                 Style="{StaticResource LeftModuleStyle}" Grid.Row="1"/>
-        <GridSplitter HorizontalAlignment="Right" Grid.Row="1" Margin="0,1"
+                 Style="{StaticResource LeftModuleStyle}" Grid.Row="2"/>
+        <GridSplitter HorizontalAlignment="Right" Grid.Row="2" Margin="0,1"
                       Grid.Column="0" Width="3"/>
-        <Grid Grid.Column="1" Grid.Row="1" Margin="3,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="90"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <ItemsControl BorderThickness="1"  ItemsSource="{Binding FocusedPage.Buttons}" >
+        
+            <ItemsControl BorderThickness="1" Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding FocusedPage.Buttons}" >
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Button Style="{StaticResource IconButtonStyle}" Width="40" Height="40" />
@@ -197,14 +194,13 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
-            <Controls:MetroAnimatedTabControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding TabPages}" 
+            <Controls:MetroAnimatedTabControl Grid.Column="1" Grid.Row="2" ItemsSource="{Binding TabPages}" 
                  SelectedItem="{Binding FocusedPage,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"   
                 Controls:TabControlHelper.Underlined="SelectedTabItem" 
                  ItemContainerStyle="{StaticResource RightTabItemStyle}">
             </Controls:MetroAnimatedTabControl>
 
-        </Grid>
-        <StatusBar Grid.Row="2" Grid.ColumnSpan="2">
+        <StatusBar Grid.Row="3" Grid.ColumnSpan="2">
             <StatusBarItem>当前版本：</StatusBarItem>
             <Separator Style="{StaticResource MetroStatusBarSeparator}" />
             <StatusBarItem Content="登录名：" />
