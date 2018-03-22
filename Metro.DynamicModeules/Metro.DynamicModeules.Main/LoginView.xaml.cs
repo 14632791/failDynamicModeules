@@ -51,7 +51,6 @@ namespace Metro.DynamicModeules.Main
                     await Task.Factory.StartNew(DataDictCache.Instance.DownloadBaseCacheData);
                     Window mainpage = PluginHandle.Instance.Host.Value as Window;
                     mainpage.Show();
-                    this.Hide();
                     this.Close(); 
                 }
                 else

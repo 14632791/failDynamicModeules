@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Metro.DynamicModeules.Main" 
                       ShowMaxRestoreButton="False" ShowTitleBar="False"
                       ShowMinButton="False" 
+                      WindowStartupLocation="CenterScreen"
         mc:Ignorable="d" ResizeMode="NoResize" WindowStyle="None"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:viewModel="clr-namespace:Metro.DynamicModeules.Main.ViewModel"
