@@ -203,26 +203,7 @@
 
 
        
-        <Grid DataContext="{Binding DataContext.FocusedPage,ElementName=mainWindow}" Grid.Row="3" Grid.Column="1" >
-            <!-- This the flip button. -->
-            <ToggleButton Width="48" x:Name="FlipButton" ToolTip="{Binding UpdateTypeName}"
-                              Height="48"  Margin="4" RenderTransformOrigin="0.5,0.5"
-                              Style="{DynamicResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}">
-                <iconPacks:PackIconMaterial Width="20" Height="20" Kind="ToggleSwitch" />
-                <ToggleButton.RenderTransform>
-                    <RotateTransform  x:Name="FlipButtonTransform" Angle="-90"></RotateTransform>
-                </ToggleButton.RenderTransform>
-            </ToggleButton>
-            <!--左导航栏-->
-        <controlEx:GridNavigation HorizontalAlignment="Left" 
-                                  CurrentItem="{Binding CurrentPage}" TotalItems="{Binding TotalPages}"
-                         NavigateCommand="{Binding GetDataByPageCmd}" Width="300" Margin="5"/>
-        <!--右导航栏-->
-        <controlEx:GridNavigation HorizontalAlignment="Right"  TipType="1"
-                                CurrentItem="{Binding CurrentPosition}" TotalItems="{Binding Total}"
-                         NavigateCommand="{Binding NavigateCommand}" Width="300" Margin="5"/>
-        </Grid>
-        
+       
         <StatusBar Grid.Row="4" Grid.ColumnSpan="2">
             <StatusBarItem>当前版本：</StatusBarItem>
             <Separator Style="{StaticResource MetroStatusBarSeparator}" />

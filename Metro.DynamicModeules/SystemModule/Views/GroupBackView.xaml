@@ -82,7 +82,7 @@
             </Grid>
         </GroupBox>
         <GroupBox Header="组权限" Grid.Column="1" Grid.RowSpan="2">
-            <Menu></Menu>
+            <TreeView></TreeView>
         </GroupBox>
     </Grid>
 </UserControl>
