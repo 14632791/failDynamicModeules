@@ -16,6 +16,8 @@ using System.Collections.ObjectModel;
 using Metro.DynamicModeules.Common.ExpressionSerialization;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using GalaSoft.MvvmLight.Command;
 
 namespace SystemModule.ViewModel
 {
@@ -67,7 +69,7 @@ namespace SystemModule.ViewModel
             }
             return myMenu;
         }
-        
+
         protected override Expression<Func<tb_MyUserGroup, bool>> GetSearchExpression()
         {
             string expression;
@@ -81,8 +83,64 @@ namespace SystemModule.ViewModel
                 expression = "GroupName=@0";
                 values = new object[] { SearchText };
             }
-            Expression<Func<tb_MyUserGroup, bool>> predicate = SerializeHelper.CreateExpression<tb_MyUserGroup, bool>(expression,values);
+            Expression<Func<tb_MyUserGroup, bool>> predicate = SerializeHelper.CreateExpression<tb_MyUserGroup, bool>(expression, values);
             return predicate;
-        }                
+        }
+
+        ObservableCollection<tb_MyUser> _enabledUsers;
+        /// <summary>
+        /// 可选用户
+        /// </summary>
+        public ObservableCollection<tb_MyUser> EnabledUsers
+        {
+            get
+            {
+                return _enabledUsers;
+            }
+            set
+            {
+                _enabledUsers = value;
+                RaisePropertyChanged(() => EnabledUsers);
+            }
+        }
+        /// <summary>
+        /// 当前选中的可用用户
+        /// </summary>
+        public tb_MyUser FocusedEnabledUsers { get; set; }
+        ObservableCollection<tb_MyUser> _selectedUsers;
+        /// <summary>
+        /// 已选用户
+        /// </summary>
+        public ObservableCollection<tb_MyUser> SelectedUsers
+        {
+            get
+            {
+                return _selectedUsers;
+            }
+            set
+            {
+                _selectedUsers = value;
+                RaisePropertyChanged(() => SelectedUsers);
+            }
+        }
+
+        /// <summary>
+        /// 当前已选的有焦点的用户
+        /// </summary>
+        public tb_MyUser FocusedSelectedUsers { get; set; }
+
+        ICommand _selectedUserCmd;
+        public ICommand SelectedUserCmd
+        {
+            get
+            {
+                return _selectedUserCmd ?? (_selectedUserCmd = new RelayCommand(OnSelectedUser));
+            }
+            
+        }
+        private void OnSelectedUser()
+        {
+
+        }
     }
 }

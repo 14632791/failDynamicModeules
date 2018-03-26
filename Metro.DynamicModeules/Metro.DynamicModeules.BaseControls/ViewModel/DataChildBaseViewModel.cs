@@ -2,6 +2,7 @@
 using Metro.DynamicModeules.BaseControls.ControlEx;
 using Metro.DynamicModeules.BLL.Base;
 using Metro.DynamicModeules.Common;
+using Metro.DynamicModeules.Common.ExpressionSerialization;
 using Metro.DynamicModeules.Interface.Sys;
 using Metro.DynamicModeules.Models;
 using System;
@@ -517,7 +518,23 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 搜索条件
         /// </summary>
         /// <returns></returns>
-        protected abstract Expression<Func<T, bool>> GetSearchExpression();
+        protected abstract Expression<Func<T, bool>> GetSearchExpression();// string fieldName)
+//        {
+//            string expression;
+//        object[] values = null;
+//            if (string.IsNullOrEmpty(SearchText))
+//            {
+//                expression = string.Format("{0}!=''", fieldName);
+//    }
+//            else
+//            {
+//                expression = string.Format("{0}=@0", fieldName); ;
+//                values = new object[] { SearchText
+//};
+//            }
+//            Expression<Func<T, bool>> predicate = SerializeHelper.CreateExpression<T, bool>(expression, values);
+//            return predicate;
+//        }
 
 
         /// <summary>

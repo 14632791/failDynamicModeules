@@ -23,5 +23,7 @@ namespace SystemModule.Views
         {
             InitializeComponent();
         }
+
+       
     }
 }
