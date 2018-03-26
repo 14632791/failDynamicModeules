@@ -134,13 +134,43 @@ namespace SystemModule.ViewModel
         {
             get
             {
-                return _selectedUserCmd ?? (_selectedUserCmd = new RelayCommand(OnSelectedUser));
+                return _selectedUserCmd ?? (_selectedUserCmd = new RelayCommand<SelectedUserType>(OnSelectedUser));
             }
             
         }
-        private void OnSelectedUser()
+        private void OnSelectedUser(SelectedUserType userType)
         {
-
+            switch (userType)
+            {
+                default:
+                    break;
+            }
         }
+    }
+
+    /// <summary>
+    /// 用户操作类型
+    /// </summary>
+    public enum SelectedUserType
+    {
+        /// <summary>
+        /// 选中一个
+        /// </summary>
+        Selected,
+
+        /// <summary>
+        /// 选中所有
+        /// </summary>
+        SelectedAll,
+
+        /// <summary>
+        /// 反选其中一人
+        /// </summary>
+        UnSelected,
+
+        /// <summary>
+        /// 全反选所有
+        /// </summary>
+        UnSelectedAll
     }
 }
