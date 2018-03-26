@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using Metro.DynamicModeules.BaseControls.ControlEx;
 using Metro.DynamicModeules.BLL.Base;
 using Metro.DynamicModeules.BLL.Security;
 using Metro.DynamicModeules.Interface.Sys;
@@ -21,6 +22,14 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         public ChildBaseViewModel()
         {
         }
+        protected FlipPanel _flipPanel
+        {
+            get
+            {
+                return (FlipPanel)Owner;
+            }
+        }
+
         ICommand _closeCommand;
         public ICommand CloseCommand
         {
@@ -170,6 +179,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         protected virtual void SetViewMode()
         {
+            _flipPanel.IsFlipped = true;
             //_buttons.FirstOrDefault(b=>b.Name=="btnView").IsEnabled = _AllowDataOperate;
             //_buttons.FirstOrDefault(b=>b.Name=="btnAdd").IsEnabled = _AllowDataOperate && ButtonAuthorized(ButtonAuthority.ADD);
         }
@@ -199,7 +209,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         }
 
         /// <summary>
-        /// 获取该界面的功能点
+        /// 该界面的功能点
         /// </summary>
         public ObservableCollection<ButtonInfoViewModel> Authoritys
         {
@@ -221,24 +231,31 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             Buttons = new ObservableCollection<IButtonInfo>();
             var bi = this.GetSystemButtons();
+            var bi2 = GetDataOperatableButtons();
             foreach (var item in bi)
+            {
+                Buttons.Add((ButtonInfoViewModel)item);
+            }
+            foreach (var item in bi2)
             {
                 Buttons.Add((ButtonInfoViewModel)item);
             }
         }
 
         /// <summary>
-        /// 系统按钮列表。注：子窗体享用系统按钮，如帮助/关闭窗体常用功能。
+        /// 系统按钮列表。注：子窗体享用系统按钮，如帮助/关闭窗体常用功能。默认有增删查改
         /// </summary>        
         public virtual IList GetSystemButtons()
         {
             List<ButtonInfoViewModel> btns = new List<ButtonInfoViewModel>();
-            ButtonInfoViewModel model = AuthorityItemsMgr.GenerateButton(AuthorityItemType.Close, this);
-            btns.Add(model);
-            model = AuthorityItemsMgr.GenerateButton(AuthorityItemType.CloseBox, this);
-            btns.Add(model);
-            model = AuthorityItemsMgr.GenerateButton(AuthorityItemType.Question, this);
-            btns.Add(model);
+            btns.AddRange(
+                new List<ButtonInfoViewModel>
+                {
+                    AuthorityItemsMgr.GenerateButton(AuthorityItemType.Close, this),
+                    AuthorityItemsMgr.GenerateButton(AuthorityItemType.CloseBox, this),
+                    AuthorityItemsMgr.GenerateButton(AuthorityItemType.Question, this),
+        });
+
             return btns;
         }
 
@@ -249,16 +266,25 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             MyMenu = await GetMenu();
         }
         /// <summary>
-        /// 这里要加增删查改
+        /// 这里要加增删查改或自定义按钮
         /// </summary>
         /// <returns></returns>
         protected virtual IList GetDataOperatableButtons()
         {
-            return AuthorityItemsMgr.GetButtonsByMeun(MyMenu, this);
+            List<ButtonInfoViewModel> btns = new List<ButtonInfoViewModel>();
+            btns.AddRange(
+               new List<ButtonInfoViewModel>
+               {
+                    AuthorityItemsMgr.GenerateButton(AuthorityItemType.Add, this),
+                    AuthorityItemsMgr.GenerateButton(AuthorityItemType.Delete, this),
+                    AuthorityItemsMgr.GenerateButton(AuthorityItemType.Search, this),
+                    AuthorityItemsMgr.GenerateButton(AuthorityItemType.EditBox, this)
+       });
+            return btns;// AuthorityItemsMgr.GetButtonsByMeun(MyMenu, this);
         }
         #endregion
 
-
+       
         #region IDataOperatable的接口
 
         public virtual void DoHelp()
@@ -338,6 +364,9 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
 
         }
 
+        /// <summary>
+        /// 查看数据
+        /// </summary>
         public virtual void DoViewContent()
         {
 

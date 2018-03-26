@@ -30,8 +30,8 @@ namespace SystemModule.ViewModel
         {
             FlipPanel flip = new FlipPanel();
             flip.IsFlipped = false;
-            flip.FrontContent = new GroupFrontView();
-            flip.BackContent = new GroupBackView();
+            flip.FrontContent = new FrontGroupView();
+            flip.BackContent = new BackGroupView();
             return flip;
         }
 

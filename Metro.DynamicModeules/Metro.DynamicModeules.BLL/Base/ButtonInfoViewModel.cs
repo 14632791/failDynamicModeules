@@ -1,9 +1,11 @@
 ﻿using ControlzEx;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Metro.DynamicModeules.Common;
 using Metro.DynamicModeules.Interface.Sys;
 using Metro.DynamicModeules.Models.Sys;
 using System;
+using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -37,7 +39,7 @@ namespace Metro.DynamicModeules.BLL.Base
                 RaisePropertyChanged(() => AuthorityItem);
             }
         }
-        bool _isEnabled=true;
+        bool _isEnabled = true;
         /// <summary>
         /// 是否启动
         /// </summary>
@@ -50,11 +52,11 @@ namespace Metro.DynamicModeules.BLL.Base
             set
             {
                 _isEnabled = value;
-                RaisePropertyChanged(()=> IsEnabled);
+                RaisePropertyChanged(() => IsEnabled);
             }
         }
 
-        object _icon ;
+        object _icon;
         /// <summary>
         /// 图标
         /// </summary>
@@ -68,7 +70,7 @@ namespace Metro.DynamicModeules.BLL.Base
             {
                 if (Equals(_icon, value)) return;
                 _icon = value;
-                RaisePropertyChanged(()=> Icon);
+                RaisePropertyChanged(() => Icon);
             }
         }
         public int Index
@@ -81,13 +83,31 @@ namespace Metro.DynamicModeules.BLL.Base
         {
             get
             {
-                if(null== _action)
-                {
-                    _action=new Action(() =>{ });
-                }
-                return _clickCommand ?? (_clickCommand = new RelayCommand(_action));
+                return _clickCommand ?? (_clickCommand = new RelayCommand(OnCommand, () => IsEnabled));
             }
         }
         private Action _action;
+        static object _cmdLock = new object();
+        private void OnCommand()
+        {
+            if (!Monitor.TryEnter(_cmdLock))
+            {
+                return;
+            }
+            try
+            {
+                IsEnabled = false;
+                _action?.BeginInvoke(null, null);//这里通过委托异步实现
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+            }
+            finally
+            {
+                IsEnabled = true;
+                Monitor.Exit(_cmdLock);
+            }
+        }
     }
 }

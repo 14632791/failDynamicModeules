@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace SystemModule.Views
 {
     /// <summary>
-    /// GroupBackView.xaml 的交互逻辑
+    /// UserFrontView.xaml 的交互逻辑
     /// </summary>
-    public partial class GroupBackView : UserControl
+    public partial class FrontGroupView : UserControl
     {
-        public GroupBackView()
+        public FrontGroupView()
         {
             InitializeComponent();
         }

@@ -21,13 +21,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     public abstract class DataChildBaseViewModel<T> : ChildBaseViewModel, ISummaryView<T>//, IPrintableForm
            where T : class, new()
     {
-        protected FlipPanel _flipPanel
-        {
-            get
-            {
-                return (FlipPanel)Owner;
-            }
-        }
+      
         protected BllBase<T> _bll;
         /// <summary>
         /// 初始化业务逻辑层的对象
@@ -83,26 +77,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 原始数据
         /// </summary>
         public T OriginalData { get; set; }
-        /// <summary>
-        /// 初始化数据窗体的按钮
-        /// </summary>
-        public override void InitButtons()
-        {
-            base.InitButtons();
-            List<ButtonInfoViewModel> dataButton = (List<ButtonInfoViewModel>)this.GetDataOperatableButtons();
-            if (null == dataButton)
-            {
-                return;
-            }
-            foreach (var item in dataButton)
-            {
-                this.Buttons.Add(item);
-            }
-            //foreach (var item in printButton)
-            //{
-            //    this.Buttons.Add(item);
-            //}
-        }
+      
 
         /// <summary>        
         ///设置为编辑模式

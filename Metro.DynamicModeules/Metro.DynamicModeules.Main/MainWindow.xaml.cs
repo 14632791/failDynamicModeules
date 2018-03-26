@@ -1,6 +1,7 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Metro.DynamicModeules.BaseControls.ViewModel;
+using Metro.DynamicModeules.Interface.Sys;
 using Metro.DynamicModeules.Main.ViewModel;
 using System;
 using System.ComponentModel.Composition;

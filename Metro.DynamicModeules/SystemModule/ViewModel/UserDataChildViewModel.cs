@@ -30,8 +30,8 @@ namespace SystemModule.ViewModel
         {
             FlipPanel flip = new FlipPanel();
             flip.IsFlipped = false;
-            flip.FrontContent = new UserFrontView();
-            flip.BackContent = new UserBackView();
+            flip.FrontContent = new FrontUserView();
+            flip.BackContent = new BackUserView();
             return flip;
         }
 

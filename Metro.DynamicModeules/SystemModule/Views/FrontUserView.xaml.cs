@@ -17,9 +17,9 @@ namespace SystemModule.Views
     /// <summary>
     /// UserFrontView.xaml 的交互逻辑
     /// </summary>
-    public partial class GroupFrontView : UserControl
+    public partial class FrontUserView : UserControl
     {
-        public GroupFrontView()
+        public FrontUserView()
         {
             InitializeComponent();
         }

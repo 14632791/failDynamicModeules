@@ -18,9 +18,9 @@ namespace SystemModule.Views
     /// <summary>
     /// UserBackView.xaml 的交互逻辑
     /// </summary>
-    public partial class UserBackView : UserControl
+    public partial class BackUserView : UserControl
     {
-        public UserBackView()
+        public BackUserView()
         {
             InitializeComponent();
         }

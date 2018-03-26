@@ -1,4 +1,5 @@
 ﻿using Metro.DynamicModeules.BaseControls.ViewModel;
+using Metro.DynamicModeules.Interface.Sys;
 using Metro.DynamicModeules.Main.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -119,18 +120,18 @@ namespace Metro.DynamicModeules.Main
     /// <summary>
     /// 主界面的载体
     /// </summary>
-    public interface IHost
-    {
-        /// <summary>
-        /// 需要加载的模块
-        /// </summary>
-        /// <param name="info"></param>
-        void Exec();
+    //public interface IHost
+    //{
+    //    /// <summary>
+    //    /// 需要加载的模块
+    //    /// </summary>
+    //    /// <param name="info"></param>
+    //    void Exec();
 
-        /// <summary>
-        /// 显示加载进度
-        /// </summary>
-        /// <param name="msg"></param>
-        void ShowProgress(string msg);
-    }
+    //    /// <summary>
+    //    /// 显示加载进度
+    //    /// </summary>
+    //    /// <param name="msg"></param>
+    //    void ShowProgress(string msg);
+    //}
 }

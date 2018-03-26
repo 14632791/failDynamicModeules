@@ -115,24 +115,22 @@
   <ItemGroup>
     <Compile Include="ViewModel\GroupDataChildViewModel.cs" />
     <Compile Include="ViewModel\UserDataChildViewModel.cs" />
-    <Compile Include="Views\GroupBackView.xaml.cs">
-      <DependentUpon>GroupBackView.xaml</DependentUpon>
+    <Compile Include="Views\BackGroupView.xaml.cs">
+      <DependentUpon>BackGroupView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FrontGroupView.cs" />
     <Compile Include="Views\SystemMainView.xaml.cs">
       <DependentUpon>SystemMainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\SystemMainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="Views\UserBackView.xaml.cs">
-      <DependentUpon>UserBackView.xaml</DependentUpon>
+    <Compile Include="Views\BackUserView.xaml.cs">
+      <DependentUpon>BackUserView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\GroupFrontView.xaml.cs">
-      <DependentUpon>GroupFrontView.xaml</DependentUpon>
+    <Compile Include="Views\FrontUserView.xaml.cs">
+      <DependentUpon>FrontUserView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserFrontView.xaml.cs">
-      <DependentUpon>UserFrontView.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Views\GroupBackView.xaml">
+    <Page Include="Views\BackGroupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -140,15 +138,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\UserBackView.xaml">
+    <Page Include="Views\BackUserView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\GroupFrontView.xaml">
+    <Page Include="Views\FrontGroupView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\UserFrontView.xaml">
+    <Page Include="Views\FrontUserView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
