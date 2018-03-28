@@ -225,6 +225,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             {
                 _dataSource = value;
                 RaisePropertyChanged("DataSource");
+                RaisePropertyChanged("View");
                 //OriginalData = value.CloneModel();
             }
         }
@@ -237,6 +238,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 if (null != DataSource)
                 {
                     _view = CollectionViewSource.GetDefaultView(DataSource) as ListCollectionView;
+                    _view.CurrentChanged -= View_CurrentChanged;
                     _view.CurrentChanged += View_CurrentChanged;
                 }
                 return _view;
@@ -544,7 +546,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             long total = await _bll.GetListCount(GetSearchExpression());//获取总数量
 
-            if (total <=0 )
+            if (total <= 0)
             {
                 CurrentPage = 0;
                 TotalPages = 0;
