@@ -79,11 +79,11 @@
                                     <RotateTransform  x:Name="FlipButtonTransform" Angle="-90"></RotateTransform>
                                 </ToggleButton.RenderTransform>
                             </ToggleButton>
-                            <!--左导航栏-->
+                            <!--左遂页导航栏-->
                             <local:GridNavigation HorizontalAlignment="Left" 
                                   CurrentItem="{Binding CurrentPage}" TotalItems="{Binding TotalPages}"
                          NavigateCommand="{Binding GetDataByPageCmd}" Width="300" Margin="5"/>
-                            <!--右导航栏-->
+                            <!--右遂条导航栏-->
                             <local:GridNavigation HorizontalAlignment="Right"  TipType="1" Grid.Column="2"
                                 CurrentItem="{Binding CurrentPosition}" TotalItems="{Binding Total}"
                          NavigateCommand="{Binding NavigateCommand}" Width="300" Margin="5"/>

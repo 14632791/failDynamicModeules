@@ -8,7 +8,9 @@ using Metro.DynamicModeules.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -22,7 +24,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
     public abstract class DataChildBaseViewModel<T> : ChildBaseViewModel, ISummaryView<T>//, IPrintableForm
            where T : class, new()
     {
-      
+
         protected BllBase<T> _bll;
         /// <summary>
         /// 初始化业务逻辑层的对象
@@ -46,7 +48,9 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         public override bool DataChanged
         {
-            get { return this.IsAddOrEditMode; }
+            get { return this.IsAddOrEditMode;
+                
+            }
         }
 
 
@@ -55,7 +59,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         public bool IsAddOrEditMode
         {
-            get { return (UpdateType == UpdateType.Add) || (UpdateType == UpdateType.Modify); }
+            get { return (UpdateType == DataRowState.Added) || (UpdateType == DataRowState.Modified); }
         }
 
         /// <summary>
@@ -112,7 +116,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <summary>
         /// 按钮状态发生变化
         /// </summary>        
-        protected virtual void ButtonStateChanged(UpdateType currentState)
+        protected virtual void ButtonStateChanged(DataRowState currentState)
         {
             //PackIconMaterial FileFind;  // PackIconControl<PackIconMaterialKind>
             //PackIconMaterialLight Kind; //PackIconControl<PackIconMaterialLightKind>
@@ -338,7 +342,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             try
             {
                 //如果是新增后保存,在表格内插入一条记录.
-                if (UpdateType == UpdateType.Add)
+                if (UpdateType == DataRowState.Added)
                 {
                     T newrow = new T();//表格的数据源增加一条记录
                     this.ReplaceDataRowChanges(summary, newrow);//替换数据
@@ -347,7 +351,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 }
 
                 //如果是修改后保存,将最新数据替换当前记录的数据.
-                if (UpdateType == UpdateType.Modify || UpdateType == UpdateType.None)
+                if (UpdateType == DataRowState.Modified || UpdateType == DataRowState.Unchanged)
                 {
                     this.ReplaceDataRowChanges(summary, FocusedRow);//替换数据
                     //dr.Table.AcceptChanges();
@@ -364,7 +368,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             {
                 if (isSave)
                 {
-                    UpdateType = UpdateType.None;
+                    UpdateType = DataRowState.Unchanged;
                 }
             }
         }
@@ -487,7 +491,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 获取指定页面的数据
         /// </summary>
         /// <param name="navType"></param>
-        protected virtual void GetDataByPage(NavigateType navType)
+        protected async virtual void GetDataByPage(NavigateType navType)
         {
             GetListCount();
             if (TotalPages <= 0)//没有任何数据就直接返回了
@@ -511,39 +515,22 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 default:
                     break;
             }
-            RefreshDataSource();
+           await RefreshDataSource(CurrentPage < 0 ? 0 : CurrentPage);
         }
 
         /// <summary>
         /// 搜索条件
         /// </summary>
         /// <returns></returns>
-        protected abstract Expression<Func<T, bool>> GetSearchExpression();// string fieldName)
-//        {
-//            string expression;
-//        object[] values = null;
-//            if (string.IsNullOrEmpty(SearchText))
-//            {
-//                expression = string.Format("{0}!=''", fieldName);
-//    }
-//            else
-//            {
-//                expression = string.Format("{0}=@0", fieldName); ;
-//                values = new object[] { SearchText
-//};
-//            }
-//            Expression<Func<T, bool>> predicate = SerializeHelper.CreateExpression<T, bool>(expression, values);
-//            return predicate;
-//        }
-
+        protected abstract Expression<Func<T, bool>> GetSearchExpression();
 
         /// <summary>
         /// 刷新数据源
         /// </summary>
-        public async virtual void RefreshDataSource()
+        public async virtual Task RefreshDataSource(int page=0)
         {
             var expression = GetSearchExpression();
-            DataSource = await _bll.GetSearchListByPage(expression, Globals.PageSize, CurrentPage < 0 ? 0 : CurrentPage);
+            DataSource = await _bll.GetSearchListByPage(expression, Globals.PageSize, page);
         }
         protected async virtual void GetListCount()
         {
@@ -588,6 +575,15 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 RaisePropertyChanged("SearchText");
             }
         }
+        /// <summary>
+        /// 该功能是search按钮专用，与数据刷新有区别
+        /// </summary>
+        public async override void DoSearch()
+        {
+            base.DoSearch();
+           await RefreshDataSource();
+        }
+        
         #endregion
 
     }

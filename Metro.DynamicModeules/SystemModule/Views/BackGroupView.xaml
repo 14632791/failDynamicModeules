@@ -59,10 +59,12 @@
                 </GroupBox>
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid.Resources>
                         <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
@@ -70,16 +72,16 @@
                             <Setter Property="Height" Value="35"/>
                         </Style>
                     </Grid.Resources>
-                    <Button Grid.Row="0">
-                        <iconPacks:PackIconMaterialLight Kind="ChevronDoubleRight" />
-                    </Button>
                     <Button Grid.Row="1">
                         <iconPacks:PackIconMaterialLight Kind="ChevronDoubleRight" />
                     </Button>
                     <Button Grid.Row="2">
-                        <iconPacks:PackIconEntypo Kind="ChevronThinLeft" />
+                        <iconPacks:PackIconMaterialLight Kind="ChevronDoubleRight" />
                     </Button>
                     <Button Grid.Row="3">
+                        <iconPacks:PackIconEntypo Kind="ChevronThinLeft" />
+                    </Button>
+                    <Button Grid.Row="4">
                         <iconPacks:PackIconMaterialLight Kind="ChevronDoubleLeft" />
                     </Button>
                 </Grid>

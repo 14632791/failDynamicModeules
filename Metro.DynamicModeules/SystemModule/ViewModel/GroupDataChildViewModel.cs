@@ -30,11 +30,10 @@ namespace SystemModule.ViewModel
         BllUserGroup _bllGroup;
         protected override Control GetOwner()
         {
-            FlipPanel flip = new FlipPanel();
-            flip.IsFlipped = false;
-            flip.FrontContent = new FrontGroupView();
-            flip.BackContent = new BackGroupView();
-            return flip;
+            base.GetOwner();
+            _flipPanel.FrontContent = new FrontGroupView();
+            _flipPanel.BackContent = new BackGroupView();
+            return _flipPanel;
         }
 
 
@@ -56,7 +55,7 @@ namespace SystemModule.ViewModel
                 MenuName = "menuItemUserGroupMgr",
                 MenuCaption = "用户组管理",
                 MenuType = MenuType.DataForm.ToString(),
-                isid=7002
+                isid = 7002
             };
             Expression<Func<tb_MyMenu, bool>> predicate = SerializeHelper.CreateExpression<tb_MyMenu, bool>("MenuName=@0", new object[] { myMenu.MenuName });
             BllMenu _bllMenu = new BllMenu();
@@ -76,13 +75,14 @@ namespace SystemModule.ViewModel
             object[] values = null;
             if (string.IsNullOrEmpty(SearchText))
             {
-                expression = "GroupName!=''";
+                expression = "GroupName!=@0";
+                SearchText = "";
             }
             else
             {
                 expression = "GroupName=@0";
-                values = new object[] { SearchText };
             }
+            values = new object[] { SearchText };
             Expression<Func<tb_MyUserGroup, bool>> predicate = SerializeHelper.CreateExpression<tb_MyUserGroup, bool>(expression, values);
             return predicate;
         }
@@ -136,7 +136,7 @@ namespace SystemModule.ViewModel
             {
                 return _selectedUserCmd ?? (_selectedUserCmd = new RelayCommand<SelectedUserType>(OnSelectedUser));
             }
-            
+
         }
         private void OnSelectedUser(SelectedUserType userType)
         {

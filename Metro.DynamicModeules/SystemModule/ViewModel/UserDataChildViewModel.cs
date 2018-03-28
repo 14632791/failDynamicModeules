@@ -28,11 +28,10 @@ namespace SystemModule.ViewModel
         BllUser _bllUser;
         protected override Control GetOwner()
         {
-            FlipPanel flip = new FlipPanel();
-            flip.IsFlipped = false;
-            flip.FrontContent = new FrontUserView();
-            flip.BackContent = new BackUserView();
-            return flip;
+            base.GetOwner();
+            _flipPanel.FrontContent = new FrontUserView();
+            _flipPanel.BackContent = new BackUserView();
+            return _flipPanel;
         }
 
 
@@ -54,7 +53,7 @@ namespace SystemModule.ViewModel
                 MenuName = "menuItemUserMgr",
                 MenuCaption = "用户管理",
                 MenuType = MenuType.DataForm.ToString(),
-                isid=7001
+                isid = 7001
             };
             Expression<Func<tb_MyMenu, bool>> predicate = SerializeHelper.CreateExpression<tb_MyMenu, bool>("MenuName=@0", new object[] { myMenu.MenuName });
             BllMenu _bllMenu = new BllMenu();
@@ -67,21 +66,22 @@ namespace SystemModule.ViewModel
             }
             return myMenu;
         }
-        
+
         protected override Expression<Func<tb_MyUser, bool>> GetSearchExpression()
         {
             string expression;
             object[] values = null;
             if (string.IsNullOrEmpty(SearchText))
             {
-                expression = "Account!=''";
+                expression = "Account!=@0";
+                SearchText = "";
             }
             else
             {
                 expression = "Account=@0";
-                values = new object[] { SearchText };
             }
-            Expression<Func<tb_MyUser, bool>> predicate = SerializeHelper.CreateExpression<tb_MyUser, bool>(expression,values);
+            values = new object[] { SearchText };
+            Expression<Func<tb_MyUser, bool>> predicate = SerializeHelper.CreateExpression<tb_MyUser, bool>(expression, values);
             return predicate;
         }
 
@@ -90,7 +90,7 @@ namespace SystemModule.ViewModel
         {
             get
             {
-                if(null!= FocusedRow&&columnName == "FocusedRow" && string.IsNullOrEmpty(FocusedRow.Account))
+                if (null != FocusedRow && columnName == "FocusedRow" && string.IsNullOrEmpty(FocusedRow.Account))
                 {
                     return "用户账号不能为空！";
                 }

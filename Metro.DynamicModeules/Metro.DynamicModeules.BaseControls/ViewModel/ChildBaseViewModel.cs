@@ -9,8 +9,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace Metro.DynamicModeules.BaseControls.ViewModel
 {
@@ -126,8 +128,8 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <summary>
         /// 数据操作状态
         /// </summary>
-        private UpdateType _updateType = UpdateType.None;
-        public UpdateType UpdateType
+        private DataRowState _updateType = DataRowState.Unchanged;
+        public DataRowState UpdateType
         {
             get
             {
@@ -145,9 +147,20 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             get
             {
-                if (UpdateType.Add == UpdateType) return "(新增模式)";
-                else if (UpdateType.Modify == UpdateType) return "(修改模式)";
-                else return "(查看模式)";
+                string name = "(查看模式)";
+                switch (UpdateType)
+                {
+                    case DataRowState.Added:
+                        name = "(新增模式)";
+                        break;
+                    case DataRowState.Deleted:
+                        name = "(删除模式)";
+                        break;
+                    case DataRowState.Modified:
+                        name = "(修改模式)";
+                        break;
+                }
+                return name;
             }
         }
 
@@ -179,7 +192,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         protected virtual void SetViewMode()
         {
-            _flipPanel.IsFlipped = true;
+            _flipPanel.IsFlipped = false;
             //_buttons.FirstOrDefault(b=>b.Name=="btnView").IsEnabled = _AllowDataOperate;
             //_buttons.FirstOrDefault(b=>b.Name=="btnAdd").IsEnabled = _AllowDataOperate && ButtonAuthorized(ButtonAuthority.ADD);
         }
@@ -302,7 +315,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <param name="sender"></param>
         public virtual void DoAdd()
         {
-            UpdateType = UpdateType.Add;
+            UpdateType = DataRowState.Added;
             //this.SetEditMode();
             //this.ButtonStateChanged(_updateType);
         }
@@ -313,7 +326,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <param name="sender"></param>
         public virtual void DoEdit()
         {
-            UpdateType = UpdateType.Modify;
+            UpdateType = DataRowState.Modified;
             //this.SetEditMode();
             //this.ButtonStateChanged(_updateType);
         }
@@ -326,7 +339,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             try
             {
-                UpdateType = UpdateType.None;
+                UpdateType = DataRowState.Unchanged;
                 this.SetViewMode();
                 //this.ButtonStateChanged(_updateType);
 
@@ -348,7 +361,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         public virtual void DoSave()
         {
-            UpdateType = UpdateType.None;
+            UpdateType = DataRowState.Unchanged;
             this.SetViewMode();
             //this.ShowDetailPage(false);
             //this.ButtonStateChanged(_updateType);
@@ -447,7 +460,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
 
         public virtual void DoSearch()
         {
-
+            
         }
 
         #endregion
@@ -461,6 +474,11 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             await Task.Factory.StartNew(InitMenu);
             InitButtons();
             this.SetViewMode();//预设为数据查看模式
+        }
+        protected override Control GetOwner()
+        {
+            Owner = new FlipPanel();
+            return Owner;
         }
     }
 }

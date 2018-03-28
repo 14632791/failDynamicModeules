@@ -198,7 +198,7 @@ namespace Metro.DynamicModeules.Models.Sys
         }
         private Nullable<short> _IsLocked;
         [Column("CreateTime")]
-        public Nullable<System.DateTime> CreateTime
+        public Nullable<System.DateTime> CreatedTime
         {
             get
             {

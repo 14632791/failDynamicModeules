@@ -118,7 +118,7 @@
     <Compile Include="Views\BackGroupView.xaml.cs">
       <DependentUpon>BackGroupView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FrontGroupView.cs" />
+    <Compile Include="Views\FrontGroupView.xaml.cs" />
     <Compile Include="Views\SystemMainView.xaml.cs">
       <DependentUpon>SystemMainView.xaml</DependentUpon>
     </Compile>
