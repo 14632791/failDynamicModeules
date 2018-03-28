@@ -46,8 +46,9 @@
             </Style>
 
             <!--主窗体左则的module列表样式-->
-            <Style TargetType="{x:Type ListBox}" x:Key="LeftModuleStyle">
+            <Style TargetType="{x:Type ListBox}" x:Key="LeftModuleStyle" BasedOn="{StaticResource {x:Type ListBox}}">
                 <Setter Property="SelectionMode" Value="Single"/>
+                <Setter Property="VerticalAlignment" Value="Stretch"/>
                 <Setter Property="ItemContainerStyle">
                     <Setter.Value>
                         <Style TargetType="{x:Type ListBoxItem}">
@@ -197,7 +198,7 @@
             </ItemsControl>
             <Controls:MetroAnimatedTabControl Grid.Column="1" Grid.Row="2" ItemsSource="{Binding TabPages}" 
                  SelectedItem="{Binding FocusedPage,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"   
-                Controls:TabControlHelper.Underlined="SelectedTabItem" 
+                Controls:TabControlHelper.Underlined="SelectedTabItem" BorderBrush="Black"
                  ItemContainerStyle="{StaticResource RightTabItemStyle}">
             </Controls:MetroAnimatedTabControl>
 

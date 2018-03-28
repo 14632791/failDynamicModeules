@@ -48,8 +48,10 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         public override bool DataChanged
         {
-            get { return this.IsAddOrEditMode;
-                
+            get
+            {
+                return this.IsAddOrEditMode;
+
             }
         }
 
@@ -82,7 +84,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 原始数据
         /// </summary>
         public T OriginalData { get; set; }
-      
+
 
         /// <summary>        
         ///设置为编辑模式
@@ -227,18 +229,17 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             }
         }
 
+        ListCollectionView _view = null;
         public ListCollectionView View
         {
             get
             {
-                if (null == DataSource)
+                if (null != DataSource)
                 {
-                    return null;
+                    _view = CollectionViewSource.GetDefaultView(DataSource) as ListCollectionView;
+                    _view.CurrentChanged += View_CurrentChanged;
                 }
-                else
-                {
-                    return CollectionViewSource.GetDefaultView(DataSource) as ListCollectionView;
-                }
+                return _view;
             }
         }
 
@@ -383,7 +384,10 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         public int Total
         {
-            get { return null == View ? 0 : View.Count; }
+            get
+            {
+                return null == View ? 0 : View.Count;
+            }
         }
 
 
@@ -392,7 +396,10 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         public int CurrentPosition
         {
-            get { return null == View ? 0 : View.CurrentPosition + 1; }
+            get
+            {
+                return null == View ? 0 : View.CurrentPosition + 1;
+            }
         }
 
 
@@ -471,7 +478,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         }
         ICommand _getDataByPageCmd;
         /// <summary>
-        /// 数据行导航command
+        /// 数据页导航command
         /// </summary>
         public ICommand GetDataByPageCmd
         {
@@ -515,7 +522,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 default:
                     break;
             }
-           await RefreshDataSource(CurrentPage < 0 ? 0 : CurrentPage);
+            await RefreshDataSource(CurrentPage < 0 ? 0 : CurrentPage);
         }
 
         /// <summary>
@@ -527,15 +534,17 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <summary>
         /// 刷新数据源
         /// </summary>
-        public async virtual Task RefreshDataSource(int page=0)
+        public async virtual Task RefreshDataSource(int page = 0)
         {
             var expression = GetSearchExpression();
+            await GetListCount();
             DataSource = await _bll.GetSearchListByPage(expression, Globals.PageSize, page);
         }
-        protected async virtual void GetListCount()
+        protected async virtual Task GetListCount()
         {
             long total = await _bll.GetListCount(GetSearchExpression());//获取总数量
-            if (0 <= total)
+
+            if (total <=0 )
             {
                 CurrentPage = 0;
                 TotalPages = 0;
@@ -558,6 +567,8 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         private void View_CurrentChanged(object sender, EventArgs e)
         {
             FocusedRow = (T)View.CurrentItem;
+            RaisePropertyChanged(() => Total);
+            RaisePropertyChanged(() => CurrentPosition);
         }
 
 
@@ -581,9 +592,9 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         public async override void DoSearch()
         {
             base.DoSearch();
-           await RefreshDataSource();
+            await RefreshDataSource();
         }
-        
+
         #endregion
 
     }
