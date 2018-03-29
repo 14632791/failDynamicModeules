@@ -18,6 +18,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using System.Data;
 
 namespace SystemModule.ViewModel
 {
@@ -35,7 +36,7 @@ namespace SystemModule.ViewModel
             _flipPanel.BackContent = new BackGroupView();
             return _flipPanel;
         }
-
+        BllUser _bllUser = new BllUser();
 
         protected override object GetIcon()
         {
@@ -68,7 +69,12 @@ namespace SystemModule.ViewModel
             }
             return myMenu;
         }
-
+        public async override void Initialize()
+        {
+            base.Initialize();
+            //获取所有用户信息
+            AllUsers = await _bllUser.GetAllUsers();
+        }
         protected override Expression<Func<tb_MyUserGroup, bool>> GetSearchExpression()
         {
             string expression;
@@ -87,6 +93,66 @@ namespace SystemModule.ViewModel
             return predicate;
         }
 
+        #region 用户选择操作
+        ObservableCollection<tb_MyUser> _allUsers;
+        /// <summary>
+        /// 所有用户信息
+        /// </summary>
+        public ObservableCollection<tb_MyUser> AllUsers
+        {
+            get
+            {
+                return _allUsers;
+            }
+            set
+            {
+                _allUsers = value;
+                RaisePropertyChanged(() => AllUsers);
+            }
+        }
+        /// <summary>
+        /// 当前组关系
+        /// </summary>
+        ObservableCollection<tb_MyUserGroupRe> _currentRelations;
+        tb_MyUserGroupRe[] _currentRelationsBak=null;
+        protected async override void View_CurrentChanged(object sender, EventArgs e)
+        {
+            base.View_CurrentChanged(sender, e);
+            //获取该组用户集合
+            _currentRelations = await _bllGroup.GetUserRelationByGroup(FocusedRow.GroupCode);
+            _currentRelations?.CopyTo(_currentRelationsBak, 0);
+            DistributionUsers();
+        }
+
+        /// <summary>
+        /// 分配用户,是否第一次
+        /// </summary>
+        private void DistributionUsers(bool isFirst=true)
+        {
+            SelectedUsers = new ObservableCollection<tb_MyUser>();
+            EnabledUsers = new ObservableCollection<tb_MyUser>();
+            if ( _currentRelations?.Count < 1&& isFirst)
+            {
+                EnabledUsers = AllUsers;
+                return;
+            }
+            var userkeys = _currentRelations?.Select(r => r.Account);
+            foreach (var user in AllUsers)
+            {
+                if (null!= userkeys&&userkeys.Contains(user.Account)|| user.DataState == DataRowState.Added)
+                {
+                    if(user.DataState != DataRowState.Added)
+                    {
+                        user.DataState = DataRowState.Added;
+                    }
+                    SelectedUsers.Add(user);
+                }
+                else
+                {
+                    EnabledUsers.Add(user);
+                }
+            }           
+        }
         ObservableCollection<tb_MyUser> _enabledUsers;
         /// <summary>
         /// 可选用户
@@ -134,27 +200,40 @@ namespace SystemModule.ViewModel
         {
             get
             {
-                return _selectedUserCmd ?? (_selectedUserCmd = new RelayCommand<SelectedUserType>(OnSelectedUser));
+                return _selectedUserCmd ?? (_selectedUserCmd = new RelayCommand<SelectedUserType>(OnSelectedUser, (userType) =>
+                     (userType == SelectedUserType.Selected && null != FocusedEnabledUser || userType == SelectedUserType.SelectedAll) && EnabledUsers?.Count > 0 ||
+                     (userType == SelectedUserType.UnSelected && null != FocusedSelectedUser || userType == SelectedUserType.UnSelectedAll) && SelectedUsers?.Count > 0));
             }
         }
         private void OnSelectedUser(SelectedUserType userType)
         {
             switch (userType)
-            {
+            {    //只做Logic操作，并不是真的add or remove
                 case SelectedUserType.Selected:
-                    EnabledUsers.Remove(FocusedEnabledUser);
-                    SelectedUsers.Add(FocusedEnabledUser);
+                    FocusedEnabledUser.DataState = DataRowState.Added;
                     break;
                 case SelectedUserType.SelectedAll:
+                    foreach (var item in EnabledUsers)
+                    {
+                        item.DataState = DataRowState.Added;
+                    }
                     break;
                 case SelectedUserType.UnSelected:
+                    FocusedSelectedUser.DataState = DataRowState.Deleted;
                     break;
                 case SelectedUserType.UnSelectedAll:
+                    foreach (var item in SelectedUsers)
+                    {
+                        item.DataState = DataRowState.Deleted;
+                    }
                     break;
                 default:
                     break;
             }
+            DistributionUsers(false);
         }
+
+        #endregion
     }
 
     /// <summary>

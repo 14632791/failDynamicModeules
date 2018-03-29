@@ -37,6 +37,14 @@ namespace Metro.DynamicModeules.Models
         /// <returns></returns>
         public static bool CompareModel<T>(this T oneT, T twoT) where T : class
         {
+            if (oneT == null && twoT == null)
+            {
+                return true;
+            }
+            else if (oneT == null || twoT == null)
+            {
+                return false;
+            }
             bool result = true;//两个类型作比较时使用,如果有不一样的就false
             Type typeOne = oneT.GetType();
             Type typeTwo = twoT.GetType();

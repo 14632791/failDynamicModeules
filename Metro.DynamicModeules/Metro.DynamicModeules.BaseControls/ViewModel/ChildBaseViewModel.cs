@@ -13,6 +13,7 @@ using System.Data;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Controls;
+using Metro.DynamicModeules.BLL;
 
 namespace Metro.DynamicModeules.BaseControls.ViewModel
 {
@@ -39,7 +40,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             {
                 return _closeCommand ?? (_closeCommand = new RelayCommand(() =>
                 {
-                    if (this.DataChanged)
+                    if (DataHasChanged())
                     {
                         //        e.Cancel = !Msg.AskQuestion("您修改了数据没有保存，确定要退出吗?");
                     }
@@ -139,34 +140,45 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             {
                 _updateType = value;
                 RaisePropertyChanged(() => UpdateType);
-            }
-        }
-
-
-        public virtual string UpdateTypeName
-        {
-            get
-            {
-                string name = "(查看模式)";
                 switch (UpdateType)
                 {
                     case DataRowState.Added:
-                        name = "(新增模式)";
+                        UpdateTypeName = "(新增模式)";
                         break;
                     case DataRowState.Deleted:
-                        name = "(删除模式)";
+                        UpdateTypeName = "(删除模式)";
                         break;
                     case DataRowState.Modified:
-                        name = "(修改模式)";
+                        UpdateTypeName = "(修改模式)";
+                        break;
+                    default:
+                        UpdateTypeName = "(查看模式)";
                         break;
                 }
-                return name;
             }
         }
 
-        public virtual bool DataChanged
+        string _updateTypeName;
+        public string UpdateTypeName
         {
-            get;
+            get
+            {
+                return _updateTypeName;
+            }
+            set
+            {
+                _updateTypeName = value;
+                RaisePropertyChanged(() => UpdateTypeName);
+            }
+        }
+
+        /// <summary>
+        /// 判断数据是否有改变
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool DataHasChanged()
+        {
+            return true;
         }
 
         /// <summary>
@@ -177,14 +189,25 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <summary>
         /// 是否允许用户操作数据
         /// </summary>
-        public bool AllowDataOperate
+        //public bool AllowDataOperate
+        //{
+        //    get { return _allowDataOperate; }
+        //    set
+        //    {
+        //        _allowDataOperate = value;
+        //        this.SetViewMode();
+        //    }
+        //}
+
+        /// <summary>
+        /// 当操作状态发生变化时,按钮的可用属性也会变
+        /// </summary>        
+        protected virtual void ButtonStateChanged(DataRowState currentState)
         {
-            get { return _allowDataOperate; }
-            set
-            {
-                _allowDataOperate = value;
-                this.SetViewMode();
-            }
+           //PackIconModern _3dCollada;  //PackIconControl<PackIconModernKind>
+            //PackIconEntypo AircraftLand;  //PackIconControl<PackIconEntypoKind>
+            //PackIconSimpleIcons Amazon;  // PackIconControl<PackIconSimpleIconsKind>
+
         }
         /// <summary>        
         ///设置为查看模式
@@ -193,21 +216,38 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         protected virtual void SetViewMode()
         {
             _flipPanel.IsFlipped = false;
-            //_buttons.FirstOrDefault(b=>b.Name=="btnView").IsEnabled = _AllowDataOperate;
-            //_buttons.FirstOrDefault(b=>b.Name=="btnAdd").IsEnabled = _AllowDataOperate && ButtonAuthorized(ButtonAuthority.ADD);
+            foreach (ButtonInfoViewModel button in Buttons)
+            {
+                button.IsEnabled = ButtonAuthorized(button.AuthorityItem.AuthorityValue.Value);
+            }
         }
 
+        /// <summary>        
+        ///设置为编辑模式
+        /// </summary>
+        protected virtual void SetEditMode()
+        {
+            _flipPanel.IsFlipped = true;
+            foreach (ButtonInfoViewModel button in Buttons)
+            {
+                button.IsEnabled = false;
+            }
+        }
 
         #region IPurviewControllable 接口实现
 
 
 
         /// <summary>
-        /// 派生类通过重写该虚方法自定义每个按钮可用状态
+        /// 检查按钮的权限
         /// </summary>
         public virtual bool ButtonAuthorized(int authorityValue)
         {
-            return false;
+            //超级用户拥有所有权限
+            //窗体可用权限=2^n= 1+2+4=7
+            //比如新增功能点是2,那么检查新增按钮的方法是：  2 & 7 = 2，表示有权限。
+            bool isAuth = DataDictCache.Instance.LoginUser.FlagAdmin == "Y" || (authorityValue & this.MyMenu.Authorities) == authorityValue;
+            return isAuth;
         }
 
 
@@ -224,11 +264,10 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <summary>
         /// 该界面的功能点
         /// </summary>
-        public ObservableCollection<ButtonInfoViewModel> Authoritys
-        {
-            get; set;
-
-        }
+        //public ObservableCollection<ButtonInfoViewModel> Authoritys
+        //{
+        //    get; set;
+        //}
         public IModuleBase IModule { get; set; }
 
         #endregion
@@ -293,11 +332,11 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                     AuthorityItemsMgr.GenerateButton(AuthorityItemType.Search, this),
                     AuthorityItemsMgr.GenerateButton(AuthorityItemType.EditBox, this)
        });
-            return btns;// AuthorityItemsMgr.GetButtonsByMeun(MyMenu, this);
+            return btns;
         }
         #endregion
 
-       
+
         #region IDataOperatable的接口
 
         public virtual void DoHelp()
@@ -327,8 +366,8 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         public virtual void DoEdit()
         {
             UpdateType = DataRowState.Modified;
-            //this.SetEditMode();
-            //this.ButtonStateChanged(_updateType);
+            this.SetEditMode();
+            this.ButtonStateChanged(UpdateType);
         }
 
         /// <summary>
@@ -339,16 +378,18 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             try
             {
-                UpdateType = DataRowState.Unchanged;
                 this.SetViewMode();
-                //this.ButtonStateChanged(_updateType);
+                this.ButtonStateChanged(UpdateType);
 
-                //if (_updateType == UpdateType.Add)
-                //    this.ShowSummaryPage(true);
+                if (UpdateType == DataRowState.Added)
+                {
+                    SetViewMode();
+                }
                 //else if (RowCount > 0)
                 //{
                 //    //this.DoViewContent(row);
                 //}
+                UpdateType = DataRowState.Unchanged;
             }
             catch (Exception e)
             {
@@ -364,7 +405,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             UpdateType = DataRowState.Unchanged;
             this.SetViewMode();
             //this.ShowDetailPage(false);
-            //this.ButtonStateChanged(_updateType);
+            this.ButtonStateChanged(_updateType);
             //return true;
         }
 
@@ -406,10 +447,12 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
 
         }
-
+        /// <summary>
+        /// 变更
+        /// </summary>
         public virtual void DoChange()
         {
-
+            
         }
 
         public virtual void DoPrint()
@@ -460,7 +503,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
 
         public virtual void DoSearch()
         {
-            
+
         }
 
         #endregion

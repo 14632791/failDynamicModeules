@@ -1,6 +1,7 @@
 namespace Metro.DynamicModeules.Models.Sys
 {
     using System;
+    using System.Data;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel;
@@ -20,7 +21,7 @@ namespace Metro.DynamicModeules.Models.Sys
             //tb_MyUserGroup = new ObservableCollection<tb_MyUserGroup>();
         }
 
-       
+
         [Key]
         [Column("Account")]
         [Required]
@@ -286,10 +287,13 @@ namespace Metro.DynamicModeules.Models.Sys
         [StringLength(50)]
         public string LastUpdatedBy { get; set; }
 
-        //[JsonIgnore]
-        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        //public virtual ICollection<tb_MyUserGroup> tb_MyUserGroup { get; set; }
 
+        /// <summary>
+        /// 当前对象操作状态，不需要与DB交互
+        /// </summary>
+        [NotMapped]
+        //[JsonIgnore]
+        public DataRowState DataState { get; set; } = DataRowState.Unchanged;
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>

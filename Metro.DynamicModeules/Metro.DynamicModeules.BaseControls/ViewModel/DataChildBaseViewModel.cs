@@ -47,13 +47,9 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <summary>
         /// 是否数据发生改变
         /// </summary>
-        public override bool DataChanged
+        public override bool DataHasChanged()
         {
-            get
-            {
-                return this.IsAddOrEditMode;
-
-            }
+            return IsAddOrEditMode||!FocusedRow.CompareModel(OriginalData); 
         }
 
 
@@ -62,7 +58,12 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         public bool IsAddOrEditMode
         {
-            get { return (UpdateType == DataRowState.Added) || (UpdateType == DataRowState.Modified); }
+            get
+            {
+                return UpdateType == DataRowState.Added ||
+                  UpdateType == DataRowState.Deleted ||
+                  UpdateType == DataRowState.Modified;
+            }
         }
 
         /// <summary>
@@ -85,52 +86,9 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 原始数据
         /// </summary>
         public T OriginalData { get; set; }
+                
 
-
-        /// <summary>        
-        ///设置为编辑模式
-        ///数据操作两种状态.1：数据修改状态 2：查看数据状态 
-        /// </summary>
-        protected virtual void SetEditMode()
-        {
-            _flipPanel.IsFlipped = true;
-            foreach (ButtonInfoViewModel button in Buttons)
-            {
-
-            }
-            //_buttons.FirstOrDefault(b=>b.Name=="btnView").IsEnabled = false;
-        }
-
-
-        /// <summary>
-        /// 检查按钮的权限
-        /// </summary>
-        /// <param name="authorityValue">权限值</param>
-        /// <returns></returns>
-        public override bool ButtonAuthorized(int authorityValue)
-        {
-            //超级用户拥有所有权限
-            //窗体可用权限=2^n= 1+2+4=7
-            //比如新增功能点是2,那么检查新增按钮的方法是：  2 & 7 = 2，表示有权限。
-            //
-            bool isAuth = DataDictCache.Instance.LoginUser.FlagAdmin == "Y" || (authorityValue & this.MyMenu.Authorities) == authorityValue;
-            return isAuth;
-        }
-
-        /// <summary>
-        /// 按钮状态发生变化
-        /// </summary>        
-        protected virtual void ButtonStateChanged(DataRowState currentState)
-        {
-            //PackIconMaterial FileFind;  // PackIconControl<PackIconMaterialKind>
-            //PackIconMaterialLight Kind; //PackIconControl<PackIconMaterialLightKind>
-            //PackIconFontAwesome EyeSlas; //PackIconControl<PackIconFontAwesomeKind>
-            //PackIconOcticons Alert;  //PackIconControl<PackIconOcticonsKind>
-            //PackIconModern _3dCollada;  //PackIconControl<PackIconModernKind>
-            //PackIconEntypo AircraftLand;  //PackIconControl<PackIconEntypoKind>
-            //PackIconSimpleIcons Amazon;  // PackIconControl<PackIconSimpleIconsKind>
-
-        }
+       
 
 
         #region IDataOperatable接口的方法
@@ -231,7 +189,8 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 {
                     _view = CollectionViewSource.GetDefaultView(DataSource) as ListCollectionView;
                     View.CurrentChanged += View_CurrentChanged;
-                    View.Refresh();                }
+                    View.Refresh();
+                }
             }
         }
 
@@ -265,47 +224,9 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 _focusedRow = value;
                 RaisePropertyChanged(() => FocusedRow);
                 View.MoveCurrentTo(value);
-                //OriginalData = value.CloneModel();
             }
         }
 
-
-
-
-        /// <summary>
-        /// 显示明细页
-        /// </summary>
-        protected virtual void ShowDetailPage(bool disableSummaryPage)
-        {
-            try
-            {
-                //this.tpDetail.PageEnabled = true; //2015.6.15 陈刚 不再对Page作禁用
-                //tcBusiness.SelectedTabPage = this.tpDetail;
-                //tpSummary.PageEnabled = !disableSummaryPage;//2015.6.15 陈刚 不再对Page作禁用
-                //FocusEditor(); //第一个编辑框获得焦点.
-                //this.ResumeLayout();
-            }
-            catch (Exception ex)
-            {
-                //Msg.ShowException(ex);
-            }
-        }
-
-        /// <summary>
-        /// 显示主表页
-        /// </summary>
-        protected void ShowSummaryPage(bool disableDetailPage)
-        {
-            //try
-            //{
-            //    this.tpSummary.PageEnabled = true;//2015.6.15 陈刚 不再对Page作禁用
-            //    tcBusiness.SelectedTabPage = this.tpSummary;
-            //    // tpDetail.PageEnabled = !disableDetailPage;//2015.6.15 陈刚 不再对Page作禁用
-            //    if (View != null) SetFocus();
-            //}
-            //catch (Exception ex)
-            //{ Msg.ShowException(ex); }
-        }
 
 
 
@@ -381,6 +302,25 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             }
         }
 
+        #region 数据操作（修改、删除、增加）
+        public override void DoAdd()
+        {
+            base.DoAdd();
+            UpdateType = DataRowState.Added;
+        }
+        public override void DoEdit()
+        {
+            UpdateType = DataRowState.Modified;
+            base.DoEdit();
+            OriginalData = FocusedRow.CloneModel();
+        }
+
+        public override void DoDelete()
+        {
+            base.DoDelete();
+            UpdateType = DataRowState.Deleted;
+        }
+        #endregion
 
 
         #region Summary数据导航功能
@@ -591,7 +531,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected  virtual void View_CurrentChanged(object sender, EventArgs e)
+        protected virtual void View_CurrentChanged(object sender, EventArgs e)
         {
             if (FocusedRow != (T)View.CurrentItem)
             {

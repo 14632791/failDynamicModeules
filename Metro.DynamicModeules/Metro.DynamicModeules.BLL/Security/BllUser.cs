@@ -18,6 +18,8 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Metro.DynamicModeules.Models.Sys;
+using System.Collections.ObjectModel;
+using Metro.DynamicModeules.Common.ExpressionSerialization;
 
 namespace Metro.DynamicModeules.BLL.Security
 {
@@ -29,6 +31,18 @@ namespace Metro.DynamicModeules.BLL.Security
         protected override string GetControllerName()
         {
             return "MyUser";
+        }
+
+        /// <summary>
+        /// 获取当前所有用户信息
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ObservableCollection<tb_MyUser>> GetAllUsers()
+        {
+            string expression = "Account!=@0";
+            object[] values = new object[] { "" };
+            Expression<Func<tb_MyUser, bool>> predicate = SerializeHelper.CreateExpression<tb_MyUser, bool>(expression, values);
+            return await GetSearchList(predicate);
         }
     }
 }

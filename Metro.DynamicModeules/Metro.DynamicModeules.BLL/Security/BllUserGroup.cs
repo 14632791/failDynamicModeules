@@ -20,5 +20,11 @@ namespace Metro.DynamicModeules.BLL.Security
         {
             return await WebRequestHelper.PostHttpAsync<ObservableCollection<tb_MyUserGroup>>(GetApiUrl("GetGroupsByAccount"), userAccount);
         }
+
+        public async Task<ObservableCollection<tb_MyUserGroupRe>> GetUserRelationByGroup(string groupCode)
+        {
+            return await WebRequestHelper.PostHttpAsync<ObservableCollection<tb_MyUserGroupRe>>(GetApiUrl("GetUserRelationByGroup"), groupCode);
+        }
+        
     }
 }
