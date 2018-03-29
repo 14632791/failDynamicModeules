@@ -55,7 +55,8 @@
         <CheckBox Margin="5" IsChecked="{Binding FocusedRow.IsLocked}" Content="锁定用户" Grid.Column="1" Grid.Row="5"/>
 
         <GroupBox Header="所属的组列表" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="9" Margin="{StaticResource  TextBoxMargin}">
-            <ListBox />
+            <ListBox ItemsSource="{Binding FocusedGroups}" DisplayMemberPath="GroupName">               
+            </ListBox>
         </GroupBox>
         <GroupBox Header="密码管理"  Grid.ColumnSpan="2" Grid.Row="6" Grid.RowSpan="3" Margin="{StaticResource  TextBoxMargin}">
             <Grid>

@@ -26,6 +26,7 @@ namespace SystemModule.ViewModel
     public class UserDataChildViewModel : DataChildBaseViewModel<tb_MyUser>
     {
         BllUser _bllUser;
+        BllUserGroup _bllUserGroup = new BllUserGroup();
         protected override Control GetOwner()
         {
             base.GetOwner();
@@ -85,7 +86,28 @@ namespace SystemModule.ViewModel
             return predicate;
         }
 
-
+        ObservableCollection<tb_MyUserGroup> _focusedGroups;
+        /// <summary>
+        /// 当前用户组集合
+        /// </summary>
+        public ObservableCollection<tb_MyUserGroup> FocusedGroups
+        {
+            get
+            {
+                return _focusedGroups;
+            }
+            set
+            {
+                _focusedGroups = value;
+                RaisePropertyChanged(() => FocusedGroups);
+            }
+        }
+        protected async override void View_CurrentChanged(object sender, EventArgs e)
+        {
+            base.View_CurrentChanged(sender, e);
+            //获取该用户所在组
+            FocusedGroups = await _bllUserGroup.GetGroupsByAccount(FocusedRow.Account);
+        }
         public string this[string columnName]
         {
             get

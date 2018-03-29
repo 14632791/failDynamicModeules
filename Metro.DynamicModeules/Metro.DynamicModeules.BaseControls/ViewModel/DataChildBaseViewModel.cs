@@ -231,8 +231,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 {
                     _view = CollectionViewSource.GetDefaultView(DataSource) as ListCollectionView;
                     View.CurrentChanged += View_CurrentChanged;
-                }
-                //OriginalData = value.CloneModel();
+                    View.Refresh();                }
             }
         }
 
@@ -264,7 +263,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             set
             {
                 _focusedRow = value;
-                RaisePropertyChanged(()=> FocusedRow);
+                RaisePropertyChanged(() => FocusedRow);
                 View.MoveCurrentTo(value);
                 //OriginalData = value.CloneModel();
             }
@@ -435,7 +434,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                     return null != View && (navType == NavigateType.First && View?.CurrentPosition > 0 ||
                        navType == NavigateType.Previous && View?.CurrentPosition > 0 ||
                        navType == NavigateType.Next && View?.CurrentPosition < View?.Count - 1 ||
-                        navType == NavigateType.Last && View?.CurrentPosition< View?.Count - 1);
+                        navType == NavigateType.Last && View?.CurrentPosition < View?.Count - 1);
                 }));
             }
         }
@@ -508,7 +507,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                         return null != View && TotalPages > 1 &&
                         (navType == NavigateType.First && CurrentPage > 1 ||
                            navType == NavigateType.Previous && CurrentPage > 1 ||
-                           navType == NavigateType.Next && CurrentPage< TotalPages ||
+                           navType == NavigateType.Next && CurrentPage < TotalPages ||
                             navType == NavigateType.Last && CurrentPage < TotalPages);
                     }));
             }
@@ -542,7 +541,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                     break;
             }
             //如果只有一页就不需要刷新了
-            if(CurrentPage == TotalPages&& CurrentPage == 1)
+            if (CurrentPage == TotalPages && CurrentPage == 1)
             {
                 return;
             }
@@ -592,7 +591,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void View_CurrentChanged(object sender, EventArgs e)
+        protected  virtual void View_CurrentChanged(object sender, EventArgs e)
         {
             if (FocusedRow != (T)View.CurrentItem)
             {
