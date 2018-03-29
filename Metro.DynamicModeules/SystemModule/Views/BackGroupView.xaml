@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:SystemModule.Views"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
+             xmlns:ViewModel="clr-namespace:SystemModule.ViewModel"
              d:DesignHeight="600" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -50,12 +51,12 @@
                     <ColumnDefinition Width="80"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <GroupBox Header="可选用户">
-                    <ListBox ItemsSource="{Binding EnabledUsers}"
-                      SelectedItem="{Binding FocusedEnabledUsers}" />
+                <GroupBox Header="可选用户" Margin="1">
+                    <ListBox ItemsSource="{Binding EnabledUsers}" DisplayMemberPath="UserName"
+                      SelectedItem="{Binding FocusedEnabledUser}" />
                 </GroupBox>
-                <GroupBox Header="已选用户" Grid.Column="2">
-                    <ListBox ItemsSource="{Binding SelectedUsers}" SelectedItem="{Binding FocusedSelectedUsers}"/>
+                <GroupBox Header="已选用户" Grid.Column="2" Margin="1">
+                    <ListBox ItemsSource="{Binding SelectedUsers}" DisplayMemberPath="UserName" SelectedItem="{Binding FocusedSelectedUser}"/>
                 </GroupBox>
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -72,16 +73,28 @@
                             <Setter Property="Height" Value="35"/>
                         </Style>
                     </Grid.Resources>
-                    <Button Grid.Row="1" Margin="3">
+                    <Button Grid.Row="1" Margin="3" Command="{Binding OnSelectedUser}">
+                        <Button.CommandParameter>
+                            <ViewModel:SelectedUserType>SelectedAll</ViewModel:SelectedUserType>
+                        </Button.CommandParameter>
                         <iconPacks:PackIconMaterialLight Kind="ChevronDoubleRight" />
                     </Button>
-                    <Button Grid.Row="2" Margin="3">
-                        <iconPacks:PackIconMaterialLight Kind="ChevronDoubleRight" />
+                    <Button Grid.Row="2" Margin="3" Command="{Binding OnSelectedUser}">
+                        <Button.CommandParameter>
+                            <ViewModel:SelectedUserType>Selected</ViewModel:SelectedUserType>
+                        </Button.CommandParameter>
+                        <iconPacks:PackIconMaterialLight Kind="ChevronRight" />
                     </Button>
-                    <Button Grid.Row="3" Margin="3">
+                    <Button Grid.Row="3" Margin="3"  Command="{Binding OnSelectedUser}">
+                        <Button.CommandParameter>
+                            <ViewModel:SelectedUserType>UnSelected</ViewModel:SelectedUserType>
+                        </Button.CommandParameter>
                         <iconPacks:PackIconEntypo Kind="ChevronThinLeft" />
                     </Button>
-                    <Button Grid.Row="4" Margin="3">
+                    <Button Grid.Row="4" Margin="3"  Command="{Binding OnSelectedUser}">
+                        <Button.CommandParameter>
+                            <ViewModel:SelectedUserType>UnSelectedAll</ViewModel:SelectedUserType>
+                        </Button.CommandParameter>
                         <iconPacks:PackIconMaterialLight Kind="ChevronDoubleLeft" />
                     </Button>
                 </Grid>

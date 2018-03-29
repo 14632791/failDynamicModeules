@@ -106,7 +106,7 @@ namespace SystemModule.ViewModel
         /// <summary>
         /// 当前选中的可用用户
         /// </summary>
-        public tb_MyUser FocusedEnabledUsers { get; set; }
+        public tb_MyUser FocusedEnabledUser { get; set; }
         ObservableCollection<tb_MyUser> _selectedUsers;
         /// <summary>
         /// 已选用户
@@ -127,7 +127,7 @@ namespace SystemModule.ViewModel
         /// <summary>
         /// 当前已选的有焦点的用户
         /// </summary>
-        public tb_MyUser FocusedSelectedUsers { get; set; }
+        public tb_MyUser FocusedSelectedUser { get; set; }
 
         ICommand _selectedUserCmd;
         public ICommand SelectedUserCmd
@@ -136,12 +136,21 @@ namespace SystemModule.ViewModel
             {
                 return _selectedUserCmd ?? (_selectedUserCmd = new RelayCommand<SelectedUserType>(OnSelectedUser));
             }
-
         }
         private void OnSelectedUser(SelectedUserType userType)
         {
             switch (userType)
             {
+                case SelectedUserType.Selected:
+                    EnabledUsers.Remove(FocusedEnabledUser);
+                    SelectedUsers.Add(FocusedEnabledUser);
+                    break;
+                case SelectedUserType.SelectedAll:
+                    break;
+                case SelectedUserType.UnSelected:
+                    break;
+                case SelectedUserType.UnSelectedAll:
+                    break;
                 default:
                     break;
             }
