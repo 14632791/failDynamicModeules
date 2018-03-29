@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using Metro.DynamicModeules.BaseControls.ControlEx;
+using Metro.DynamicModeules.BLL;
 using Metro.DynamicModeules.BLL.Base;
 using Metro.DynamicModeules.Common;
 using Metro.DynamicModeules.Common.ExpressionSerialization;
@@ -92,6 +93,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         protected virtual void SetEditMode()
         {
+            _flipPanel.IsFlipped = true;
             foreach (ButtonInfoViewModel button in Buttons)
             {
 
@@ -111,7 +113,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             //窗体可用权限=2^n= 1+2+4=7
             //比如新增功能点是2,那么检查新增按钮的方法是：  2 & 7 = 2，表示有权限。
             //
-            bool isAuth = true;// Loginer.CurrentUser.IsAdmin() || (authorityValue & this.FormAuthorities) == authorityValue;
+            bool isAuth = DataDictCache.Instance.LoginUser.FlagAdmin == "Y" || (authorityValue & this.MyMenu.Authorities) == authorityValue;
             return isAuth;
         }
 
@@ -212,7 +214,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
 
         #endregion
 
-        // View.CurrentChanged += View_CurrentChanged;
+
         ObservableCollection<T> _dataSource;
         public ObservableCollection<T> DataSource
         {
@@ -224,8 +226,12 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             set
             {
                 _dataSource = value;
-                RaisePropertyChanged("DataSource");
-                RaisePropertyChanged("View");
+                RaisePropertyChanged(() => DataSource);
+                if (null != value)
+                {
+                    _view = CollectionViewSource.GetDefaultView(DataSource) as ListCollectionView;
+                    View.CurrentChanged += View_CurrentChanged;
+                }
                 //OriginalData = value.CloneModel();
             }
         }
@@ -235,13 +241,12 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             get
             {
-                if (null != DataSource)
-                {
-                    _view = CollectionViewSource.GetDefaultView(DataSource) as ListCollectionView;
-                    _view.CurrentChanged -= View_CurrentChanged;
-                    _view.CurrentChanged += View_CurrentChanged;
-                }
                 return _view;
+            }
+            set
+            {
+                _view = value;
+                RaisePropertyChanged(() => View);
             }
         }
 
@@ -259,7 +264,8 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             set
             {
                 _focusedRow = value;
-                RaisePropertyChanged("FocusedRow");
+                RaisePropertyChanged(()=> FocusedRow);
+                View.MoveCurrentTo(value);
                 //OriginalData = value.CloneModel();
             }
         }
@@ -388,11 +394,16 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             get
             {
-                return null == View ? 0 : View.Count;
+                return _total;//null == View ? 0 : View.Count;
+            }
+            set
+            {
+                _total = value;
+                RaisePropertyChanged(() => Total);
             }
         }
 
-
+        int _currentPosition;
         /// <summary>
         /// 当前位置
         /// </summary>
@@ -400,7 +411,12 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             get
             {
-                return null == View ? 0 : View.CurrentPosition + 1;
+                return _currentPosition;// null == View ? 0 : View.CurrentPosition + 1;
+            }
+            set
+            {
+                _currentPosition = value;
+                RaisePropertyChanged(() => CurrentPosition);
             }
         }
 
@@ -418,8 +434,8 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 {
                     return null != View && (navType == NavigateType.First && View?.CurrentPosition > 0 ||
                        navType == NavigateType.Previous && View?.CurrentPosition > 0 ||
-                       navType == NavigateType.Next && View?.CurrentPosition > View?.Count - 1 ||
-                        navType == NavigateType.Last && View?.CurrentPosition > View?.Count - 1);
+                       navType == NavigateType.Next && View?.CurrentPosition < View?.Count - 1 ||
+                        navType == NavigateType.Last && View?.CurrentPosition< View?.Count - 1);
                 }));
             }
         }
@@ -489,10 +505,11 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 return _getDataByPageCmd ?? (_getDataByPageCmd = new RelayCommand<NavigateType>(GetDataByPage,
                     (navType) =>
                     {
-                        return null != View && (navType == NavigateType.First && View?.CurrentPosition > 0 ||
-                           navType == NavigateType.Previous && View?.CurrentPosition > 0 ||
-                           navType == NavigateType.Next && View?.CurrentPosition > View?.Count - 1 ||
-                            navType == NavigateType.Last && View?.CurrentPosition > View?.Count - 1);
+                        return null != View && TotalPages > 1 &&
+                        (navType == NavigateType.First && CurrentPage > 1 ||
+                           navType == NavigateType.Previous && CurrentPage > 1 ||
+                           navType == NavigateType.Next && CurrentPage< TotalPages ||
+                            navType == NavigateType.Last && CurrentPage < TotalPages);
                     }));
             }
         }
@@ -502,7 +519,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <param name="navType"></param>
         protected async virtual void GetDataByPage(NavigateType navType)
         {
-            GetListCount();
+            await GetListCount();
             if (TotalPages <= 0)//没有任何数据就直接返回了
             {
                 return;
@@ -524,7 +541,12 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 default:
                     break;
             }
-            await RefreshDataSource(CurrentPage < 0 ? 0 : CurrentPage);
+            //如果只有一页就不需要刷新了
+            if(CurrentPage == TotalPages&& CurrentPage == 1)
+            {
+                return;
+            }
+            await RefreshDataSource(CurrentPage);
         }
 
         /// <summary>
@@ -559,6 +581,10 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 {
                     TotalPages++;
                 }
+                if (TotalPages > 0)
+                {
+                    CurrentPage = 1;
+                }
             }
         }
         /// <summary>
@@ -568,9 +594,12 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// <param name="e"></param>
         private void View_CurrentChanged(object sender, EventArgs e)
         {
-            FocusedRow = (T)View.CurrentItem;
-            RaisePropertyChanged(() => Total);
-            RaisePropertyChanged(() => CurrentPosition);
+            if (FocusedRow != (T)View.CurrentItem)
+            {
+                FocusedRow = (T)View.CurrentItem;
+            }
+            Total = View.Count;
+            CurrentPosition = View.CurrentPosition + 1;
         }
 
 
