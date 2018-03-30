@@ -6,10 +6,19 @@
              xmlns:local="clr-namespace:SystemModule.Views"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
+             xmlns:bll="clr-namespace:Metro.DynamicModeules.BLL.Base;assembly=Metro.DynamicModeules.BLL"
+             xmlns:Isys="clr-namespace:Metro.DynamicModeules.Interface.Sys;assembly=Metro.DynamicModeules.Interface"
              xmlns:ViewModel="clr-namespace:SystemModule.ViewModel"
              d:DesignHeight="600" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
+            <HierarchicalDataTemplate DataType="{x:Type Isys:SubModuleList}">
+
+            </HierarchicalDataTemplate>
+            <HierarchicalDataTemplate DataType="{x:Type Isys:IModuleBase}">
+                
+            </HierarchicalDataTemplate>
+            
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Metro.DynamicModeules.BaseControls;component/Themes/Controls.xaml"/>
             </ResourceDictionary.MergedDictionaries>
