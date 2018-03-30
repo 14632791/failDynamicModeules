@@ -136,7 +136,7 @@ namespace SystemModule.ViewModel
                 EnabledUsers = AllUsers;
                 return;
             }
-            var userkeys = _currentRelations?.Select(r => r.Account);
+            IEnumerable<string> userkeys = _currentRelations?.Select(r => r.Account);
             foreach (var user in AllUsers)
             {
                 if (null!= userkeys&&userkeys.Contains(user.Account)|| user.DataState == DataRowState.Added)
