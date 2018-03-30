@@ -120,7 +120,12 @@ namespace SystemModule.ViewModel
             base.View_CurrentChanged(sender, e);
             //获取该组用户集合
             _currentRelations = await _bllGroup.GetUserRelationByGroup(FocusedRow.GroupCode);
+            _currentRelationsBak = new tb_MyUserGroupRe[_currentRelations.Count];
             _currentRelations?.CopyTo(_currentRelationsBak, 0);
+            foreach (var item in AllUsers)
+            {
+                item.DataState = DataRowState.Unchanged;
+            }
             DistributionUsers();
         }
 
@@ -131,7 +136,7 @@ namespace SystemModule.ViewModel
         {
             SelectedUsers = new ObservableCollection<tb_MyUser>();
             EnabledUsers = new ObservableCollection<tb_MyUser>();
-            if ( _currentRelations?.Count < 1&& isFirst)
+            if ( (null== _currentRelations||_currentRelations?.Count < 1)&& isFirst)
             {
                 EnabledUsers = AllUsers;
                 return;
@@ -139,7 +144,7 @@ namespace SystemModule.ViewModel
             IEnumerable<string> userkeys = _currentRelations?.Select(r => r.Account);
             foreach (var user in AllUsers)
             {
-                if (null!= userkeys&&userkeys.Contains(user.Account)|| user.DataState == DataRowState.Added)
+                if (null!= userkeys&&userkeys.Contains(user.Account)&& user.DataState == DataRowState.Unchanged || user.DataState == DataRowState.Added)
                 {
                     if(user.DataState != DataRowState.Added)
                     {
