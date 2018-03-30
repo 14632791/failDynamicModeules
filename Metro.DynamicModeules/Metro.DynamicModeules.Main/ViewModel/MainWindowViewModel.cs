@@ -49,7 +49,7 @@ namespace Metro.DynamicModeules.Main.ViewModel
             #region 初始化属性成员
 
             //Buttons = new ObservableCollection<tb_MyAuthorityItem>();
-            Modules = new ObservableCollection<ModuleBaseViewModel>();
+            Modules = new ObservableCollection<IModuleBase>();
             TabPages = new ObservableCollection<IMdiChildViewModel>();
            
             #endregion
@@ -408,11 +408,11 @@ namespace Metro.DynamicModeules.Main.ViewModel
 
         #region 左则的模块列表
 
-        ObservableCollection<ModuleBaseViewModel> _modules;
+        ObservableCollection<IModuleBase> _modules;
         /// <summary>
-        /// 左则的模块列表
+        /// 左则的模块列表 ModuleBaseViewModel=> IModuleBase
         /// </summary>
-        public ObservableCollection<ModuleBaseViewModel> Modules
+        public ObservableCollection<IModuleBase> Modules
         {
             get
             {

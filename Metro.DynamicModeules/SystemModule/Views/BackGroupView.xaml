@@ -101,7 +101,7 @@
             </Grid>
         </GroupBox>
         <GroupBox Header="组权限" Grid.Column="1" Grid.RowSpan="2">
-            <TreeView></TreeView>
+            <TreeView DisplayMemberPath="Module.ModuleName" ItemsSource="{Binding MdiMainWindow.Modules}"></TreeView>
         </GroupBox>
     </Grid>
 </UserControl>
