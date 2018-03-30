@@ -1,13 +1,11 @@
 ﻿using Metro.DynamicModeules.BaseControls.ViewModel;
 using Metro.DynamicModeules.Interface.Sys;
-using Metro.DynamicModeules.Main.ViewModel;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 
-namespace Metro.DynamicModeules.Main
+namespace Metro.DynamicModeules.BaseControls.Commands
 {
 
     /// <summary>
@@ -21,15 +19,15 @@ namespace Metro.DynamicModeules.Main
         {
             InitializePlugins();
             //加载所有项及子项
-            foreach (var item in PluginList)
-            {
-                item.Value.MdiMainWindow = MainWindowViewModel.Instance;
-                foreach (var sub in item.Value.SubModuleList)
-                {
-                    sub.IModule = item.Value;
-                    sub.MdiMainWindow = MainWindowViewModel.Instance;
-                }
-            }
+            //foreach (var item in PluginList)
+            //{
+            //    item.Value.MdiMainWindow = MainWindowViewModel.Instance;
+            //    foreach (var sub in item.Value.SubModuleList)
+            //    {
+            //        sub.IModule = item.Value;
+            //        sub.MdiMainWindow = MainWindowViewModel.Instance;
+            //    }
+            //}
         }
 
         private static object _lockobj = new object();
@@ -98,13 +96,7 @@ namespace Metro.DynamicModeules.Main
             }
         }
 
-        //public void Exec(string name)
-        //{
-        //    foreach (Lazy<ModuleBaseViewModel> plugin in PluginList)
-        //    {
-        //        plugin.Value.Initialize();
-        //    }
-        //}
+       
 
         /// <summary>
         /// 清理工作、释放内存
@@ -116,22 +108,4 @@ namespace Metro.DynamicModeules.Main
             PluginList = null;
         }
     }
-
-    /// <summary>
-    /// 主界面的载体
-    /// </summary>
-    //public interface IHost
-    //{
-    //    /// <summary>
-    //    /// 需要加载的模块
-    //    /// </summary>
-    //    /// <param name="info"></param>
-    //    void Exec();
-
-    //    /// <summary>
-    //    /// 显示加载进度
-    //    /// </summary>
-    //    /// <param name="msg"></param>
-    //    void ShowProgress(string msg);
-    //}
 }

@@ -51,10 +51,7 @@ namespace Metro.DynamicModeules.Main.ViewModel
             //Buttons = new ObservableCollection<tb_MyAuthorityItem>();
             Modules = new ObservableCollection<ModuleBaseViewModel>();
             TabPages = new ObservableCollection<IMdiChildViewModel>();
-            //检查子界面
-            Messenger.Default.Register<ChildBaseViewModel>(this, MessengerToken.FocusedChild, SetFocusedChild);
-            Messenger.Default.Register<ChildBaseViewModel>(this, MessengerToken.ClosedTagPage, ClosedTagPage);
-
+           
             #endregion
             this.Title = "Flyout Binding Test";
             _dialogCoordinator = MahApps.Metro.Controls.Dialogs.DialogCoordinator.Instance;
@@ -406,34 +403,15 @@ namespace Metro.DynamicModeules.Main.ViewModel
                 return ((MetroWindow)Application.Current.MainWindow).IconScalingMode == MultiFrameImageMode.NoScaleSmallerFrame; } }
 
         #region Expand 2018.3.13
-        /// <summary>
-        /// 设置获得焦点的界面
-        /// </summary>
-        private void SetFocusedChild(ChildBaseViewModel page)
-        {
-            //if (!TabPages.Contains(page))
-            //{
-            //    TabPages.Add(page);
-            //}
-            //FocusedPage = page;
-        }
-        /// <summary>
-        /// 移除page内容
-        /// </summary>
-        /// <param name="page"></param>
-        private void ClosedTagPage(ChildBaseViewModel page)
-        {
-            //if (TabPages.Contains(page))
-            //{
-            //    TabPages.Remove(page);
-            //}
-        }
-
+       
 
 
         #region 左则的模块列表
 
         ObservableCollection<ModuleBaseViewModel> _modules;
+        /// <summary>
+        /// 左则的模块列表
+        /// </summary>
         public ObservableCollection<ModuleBaseViewModel> Modules
         {
             get

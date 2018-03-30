@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Metro.DynamicModeules.BaseControls.Commands;
 using Metro.DynamicModeules.BaseControls.ViewModel;
 using Metro.DynamicModeules.Interface.Sys;
 using Metro.DynamicModeules.Main.ViewModel;
@@ -127,15 +128,19 @@ namespace Metro.DynamicModeules.Main
         {
             foreach (var item in PluginHandle.Instance.PluginList)
             {
-                _viewModel.Modules.Add((ModuleBaseViewModel)item.Value);
-                //Expander expander = new Expander { Header = item.Value.Module.ModuleName };
-                //sPanelRoot.Children.Add(expander);
+                //加载所有项及子项
+                item.Value.MdiMainWindow = _viewModel;
+                foreach (var sub in item.Value.SubModuleList)
+                {
+                    sub.IModule = item.Value;
+                    sub.MdiMainWindow = _viewModel;
+                }
+                _viewModel.Modules.Add(item.Value);
             }
         }
 
         public void ShowProgress(string msg)
         {
-
             throw new NotImplementedException();
         }
 
