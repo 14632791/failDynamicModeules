@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -49,7 +50,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         public override bool DataHasChanged()
         {
-            return IsAddOrEditMode||!FocusedRow.CompareModel(OriginalData); 
+            return IsAddOrEditMode || !FocusedRow.CompareModel(OriginalData);
         }
 
 
@@ -86,9 +87,9 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// 原始数据
         /// </summary>
         public T OriginalData { get; set; }
-                
 
-       
+
+
 
 
         #region IDataOperatable接口的方法
@@ -187,9 +188,12 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 RaisePropertyChanged(() => DataSource);
                 if (null != value)
                 {
-                    _view = CollectionViewSource.GetDefaultView(DataSource) as ListCollectionView;
-                    View.CurrentChanged += View_CurrentChanged;
-                    View.Refresh();
+                    Application.Current.Dispatcher.Invoke(new Action(() =>
+                    {
+                        View = CollectionViewSource.GetDefaultView(DataSource) as ListCollectionView;
+                        View.CurrentChanged += View_CurrentChanged;
+                        View.Refresh();
+                    }));
                 }
             }
         }
