@@ -181,7 +181,7 @@
         <!--Modules PluginHandle.Instance.PluginList-->
         <ListBox ItemsSource="{Binding Modules}"
                  VerticalAlignment="Stretch" Grid.RowSpan="2"
-                 Style="{StaticResource LeftModuleStyle}" Grid.Row="2"/>
+                 Style="{DynamicResource LeftModuleStyle}" Grid.Row="2"/>
         <GridSplitter HorizontalAlignment="Right" Grid.Row="2" Margin="0,1"
                       Grid.Column="0" Width="3"/>
         
@@ -200,7 +200,7 @@
             <Controls:MetroAnimatedTabControl Grid.Column="1" Grid.Row="2" ItemsSource="{Binding TabPages}" 
                  SelectedItem="{Binding FocusedPage,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"   
                 Controls:TabControlHelper.Underlined="SelectedTabItem" BorderBrush="Black"
-                 ItemContainerStyle="{StaticResource RightTabItemStyle}">
+                 ItemContainerStyle="{DynamicResource RightTabItemStyle}">
             </Controls:MetroAnimatedTabControl>
 
 

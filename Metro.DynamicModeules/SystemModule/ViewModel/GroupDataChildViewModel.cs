@@ -40,7 +40,7 @@ namespace SystemModule.ViewModel
 
         protected override object GetIcon()
         {
-            return new PackIconMaterial { Kind = PackIconMaterialKind.AccountSettingsVariant };
+            return new PackIconModern { Kind = PackIconModernKind.Group };
         }
 
         protected override BllBase<tb_MyUserGroup> InitBll()
@@ -120,8 +120,11 @@ namespace SystemModule.ViewModel
             base.View_CurrentChanged(sender, e);
             //获取该组用户集合
             _currentRelations = await _bllGroup.GetUserRelationByGroup(FocusedRow.GroupCode);
-            _currentRelationsBak = new tb_MyUserGroupRe[_currentRelations.Count];
-            _currentRelations?.CopyTo(_currentRelationsBak, 0);
+            if (null != _currentRelations)
+            {
+                _currentRelationsBak = new tb_MyUserGroupRe[_currentRelations.Count];
+                _currentRelations?.CopyTo(_currentRelationsBak, 0);
+            }
             foreach (var item in AllUsers)
             {
                 item.DataState = DataRowState.Unchanged;

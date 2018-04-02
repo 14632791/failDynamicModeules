@@ -38,7 +38,7 @@ namespace SystemModule.ViewModel
 
         protected override object GetIcon()
         {
-            return new PackIconMaterial { Kind = PackIconMaterialKind.AccountSettingsVariant };
+            return new PackIconMaterial { Kind = PackIconMaterialKind.Account };
         }
 
         protected override BllBase<tb_MyUser> InitBll()

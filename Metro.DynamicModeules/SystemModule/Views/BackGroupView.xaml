@@ -12,11 +12,29 @@
              d:DesignHeight="600" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
-            <HierarchicalDataTemplate DataType="{x:Type Isys:SubModuleList}">
+            <DataTemplate  DataType="{x:Type Isys:IButtonInfo}">
+                <StackPanel Orientation="Horizontal" >
+                    <CheckBox/>
+                    <ContentControl Content="{Binding Icon}"/>
+                    <TextBlock Text="{Binding AuthorityItem.AuthorityName}"/>
+                </StackPanel>
+            </DataTemplate>
 
+            <HierarchicalDataTemplate DataType="{x:Type Isys:IMdiChildViewModel}"  ItemsSource="{Binding Buttons}">
+                <StackPanel Orientation="Horizontal"  >
+                    <CheckBox/>
+                    <ContentControl Content="{Binding Icon}"/>
+                    <TextBlock Text="{Binding MyMenu.MenuName}"/>
+                </StackPanel>
             </HierarchicalDataTemplate>
-            <HierarchicalDataTemplate DataType="{x:Type Isys:IModuleBase}">
-                
+            
+            <!-- ItemsSource="{Binding SubModuleList}"是HierarchicalDataTemplate.ItemTemplate内部的数据源-->
+            <HierarchicalDataTemplate DataType="{x:Type Isys:IModuleBase}" ItemsSource="{Binding SubModuleList}">
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox/>
+                    <ContentControl Content="{Binding Icon}" Margin="2"/>
+                    <TextBlock Text="{Binding Module.ModuleName}"/>
+                </StackPanel>
             </HierarchicalDataTemplate>
             
             <ResourceDictionary.MergedDictionaries>
@@ -62,10 +80,11 @@
                 </Grid.ColumnDefinitions>
                 <GroupBox Header="可选用户" Margin="0">
                     <ListBox ItemsSource="{Binding EnabledUsers}" DisplayMemberPath="UserName"
-                      SelectedItem="{Binding FocusedEnabledUser}" />
+                      SelectedItem="{Binding FocusedEnabledUser}"  Style="{StaticResource VirtualisedMetroListBox}"/>
                 </GroupBox>
                 <GroupBox Header="已选用户" Grid.Column="2" Margin="0">
-                    <ListBox ItemsSource="{Binding SelectedUsers}" DisplayMemberPath="UserName" SelectedItem="{Binding FocusedSelectedUser}"/>
+                    <ListBox ItemsSource="{Binding SelectedUsers}"  Style="{StaticResource VirtualisedMetroListBox}"
+                             DisplayMemberPath="UserName" SelectedItem="{Binding FocusedSelectedUser}"/>
                 </GroupBox>
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -110,7 +129,20 @@
             </Grid>
         </GroupBox>
         <GroupBox Header="组权限" Grid.Column="1" Grid.RowSpan="2">
-            <TreeView DisplayMemberPath="Module.ModuleName" ItemsSource="{Binding MdiMainWindow.Modules}"></TreeView>
+            <TreeView ItemsSource="{Binding MdiMainWindow.Modules}">
+                <TreeView.Resources>
+                    <Style  TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                        <Setter Property="Margin" Value="2"/>
+                    </Style>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                    </Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                        <Setter Property="Margin" Value="2"/>
+                    </Style>
+                </TreeView.Resources>
+              
+            </TreeView>
         </GroupBox>
     </Grid>
 </UserControl>
