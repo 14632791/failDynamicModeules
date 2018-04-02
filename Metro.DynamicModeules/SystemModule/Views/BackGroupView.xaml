@@ -9,10 +9,12 @@
              xmlns:bll="clr-namespace:Metro.DynamicModeules.BLL.Base;assembly=Metro.DynamicModeules.BLL"
              xmlns:Isys="clr-namespace:Metro.DynamicModeules.Interface.Sys;assembly=Metro.DynamicModeules.Interface"
              xmlns:ViewModel="clr-namespace:SystemModule.ViewModel"
+             xmlns:bllBase="clr-namespace:Metro.DynamicModeules.BLL.Base;assembly=Metro.DynamicModeules.BLL"
+             xmlns:baseVmodel="clr-namespace:Metro.DynamicModeules.BaseControls.ViewModel;assembly=Metro.DynamicModeules.BaseControls"
              d:DesignHeight="600" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
-            <DataTemplate  DataType="{x:Type Isys:IButtonInfo}">
+            <DataTemplate  DataType="{x:Type bllBase:ButtonInfoViewModel}">
                 <StackPanel Orientation="Horizontal" >
                     <CheckBox/>
                     <ContentControl Content="{Binding Icon}"/>
@@ -20,7 +22,7 @@
                 </StackPanel>
             </DataTemplate>
 
-            <HierarchicalDataTemplate DataType="{x:Type Isys:IMdiChildViewModel}"  ItemsSource="{Binding Buttons}">
+            <HierarchicalDataTemplate DataType="{x:Type baseVmodel:ChildBaseViewModel}"  ItemsSource="{Binding Buttons}">
                 <StackPanel Orientation="Horizontal"  >
                     <CheckBox/>
                     <ContentControl Content="{Binding Icon}"/>
@@ -29,7 +31,7 @@
             </HierarchicalDataTemplate>
             
             <!-- ItemsSource="{Binding SubModuleList}"是HierarchicalDataTemplate.ItemTemplate内部的数据源-->
-            <HierarchicalDataTemplate DataType="{x:Type Isys:IModuleBase}" ItemsSource="{Binding SubModuleList}">
+            <HierarchicalDataTemplate DataType="{x:Type baseVmodel:ModuleBaseViewModel}" ItemsSource="{Binding SubModuleList}">
                 <StackPanel Orientation="Horizontal">
                     <CheckBox/>
                     <ContentControl Content="{Binding Icon}" Margin="2"/>
