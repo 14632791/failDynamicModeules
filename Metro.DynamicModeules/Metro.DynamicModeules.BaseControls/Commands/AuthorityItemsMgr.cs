@@ -1,4 +1,6 @@
 ﻿using MahApps.Metro.IconPacks;
+using Metro.DynamicModeules.BaseControls.ViewModel;
+using Metro.DynamicModeules.BLL;
 using Metro.DynamicModeules.BLL.Base;
 using Metro.DynamicModeules.Interface.Sys;
 using Metro.DynamicModeules.Models.Sys;
@@ -8,7 +10,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace Metro.DynamicModeules.BLL.Security
+namespace Metro.DynamicModeules.BaseControls.Commands
 {
     /// <summary>
     /// 按钮字典主键枚举
@@ -132,7 +134,7 @@ namespace Metro.DynamicModeules.BLL.Security
         /// <param name="menu"></param>
         /// <param name="autyItems"></param>
         /// <returns></returns>
-        public static ObservableCollection<ButtonInfoViewModel> GetButtonsByMeun(tb_MyMenu menu, IDataOperatable operatabler)
+        public static ObservableCollection<ButtonInfoViewModel> GetButtonsByMeun(tb_MyMenu menu, ChildBaseViewModel operatabler)
         {
             var items = DataDictCache.Instance.AuthorityByItems?.Where(i => i.MenuId == menu.isid);
             if (null == items)
@@ -153,7 +155,7 @@ namespace Metro.DynamicModeules.BLL.Security
             return models;
         }
 
-        public static ButtonInfoViewModel GenerateButton(tb_MyAuthorityItem item, IDataOperatable operatabler)
+        public static ButtonInfoViewModel GenerateButton(tb_MyAuthorityItem item, ChildBaseViewModel operatabler)
         {
             AuthorityItemType autyType;
             Enum.TryParse(item.Code, out autyType);
@@ -165,7 +167,7 @@ namespace Metro.DynamicModeules.BLL.Security
         /// <param name="authType"></param>
         /// <param name="operatabler"></param>
         /// <returns></returns>
-        public static ButtonInfoViewModel GenerateButton(AuthorityItemType authType, IDataOperatable operatabler)
+        public static ButtonInfoViewModel GenerateButton(AuthorityItemType authType, ChildBaseViewModel operatabler)
         {
             ButtonInfoViewModel button = null;
             switch (authType)
@@ -362,6 +364,7 @@ namespace Metro.DynamicModeules.BLL.Security
                 default:
                     break;
             }
+            button.MdiChildModel = operatabler;
             return button;
         }
 

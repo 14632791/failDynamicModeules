@@ -150,7 +150,6 @@
     <Compile Include="DataDict\BllCustomer.cs" />
     <Compile Include="DataDict\BllAccountIDs.cs" />
     <Compile Include="DataDict\BllPayType.cs" />
-    <Compile Include="Security\AuthorityItemsMgr.cs" />
     <Compile Include="Security\BllAuthorityItem.cs" />
     <Compile Include="Security\BllModules.cs" />
     <Compile Include="Security\BllMenu.cs" />

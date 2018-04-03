@@ -5,6 +5,7 @@ using Metro.DynamicModeules.Common;
 using Metro.DynamicModeules.Interface.Sys;
 using Metro.DynamicModeules.Models.Sys;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -55,6 +56,49 @@ namespace Metro.DynamicModeules.BLL.Base
                 RaisePropertyChanged(() => IsEnabled);
             }
         }
+        bool _checked;
+        public bool Checked
+        {
+            get
+            {
+                return _checked;
+            }
+            set
+            {
+                if (_checked != value)
+                {
+                    _checked = value;
+                    RaisePropertyChanged(() => Checked);
+                    OnChecked();
+                }
+            }
+        }
+        /// <summary>
+        /// 当被选中时的方法
+        /// </summary>
+        private void OnChecked()
+        {
+            try
+            {
+                //遍历IModule的所有子集
+                if (MdiChildModel.Buttons.All(c => c.Checked))
+                {
+                    MdiChildModel.Checked = true;
+                }
+                else if (MdiChildModel.Buttons.Any(c => c.Checked))
+                {
+                    MdiChildModel.Checked = null;
+                }
+                else
+                {
+                    MdiChildModel.Checked = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+            }
+        }
 
         object _icon;
         /// <summary>
@@ -74,6 +118,11 @@ namespace Metro.DynamicModeules.BLL.Base
             }
         }
         public int Index
+        {
+            get;
+            set;
+        }
+        public IMdiChildViewModel MdiChildModel
         {
             get;
             set;
@@ -109,5 +158,6 @@ namespace Metro.DynamicModeules.BLL.Base
                 Monitor.Exit(_cmdLock);
             }
         }
+
     }
 }

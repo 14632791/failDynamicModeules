@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using Metro.DynamicModeules.Common;
 using Metro.DynamicModeules.Interface.Sys;
 using Metro.DynamicModeules.Models.Sys;
 using System;
@@ -74,7 +75,32 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             InitMenu();
         }
 
+
+        /// <summary>
+        /// 当被选中时的方法
+        /// </summary>
+        protected override void OnChecked()
+        {
+            try
+            {
+                base.OnChecked();
+                if (!Checked.HasValue)
+                {
+                    return;
+                }
+                //向下兼容
+                foreach (var item in SubModuleList)
+                {
+                    item.Checked = Checked.Value;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+            }
+        }
     }
+
 
     /// <summary>
     /// 主模块与子模块通用的基类
@@ -122,14 +148,36 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 RaisePropertyChanged("Icon");
             }
         }
+        bool? _checked;
+        public bool? Checked
+        {
+            get
+            {
+                return _checked;
+            }
+            set
+            {
+                if (_checked != value)
+                {
+                    _checked = value;
+                    RaisePropertyChanged(() => Checked);
+                    OnChecked();
+                }
+            }
+        }
 
-
+        /// <summary>
+        /// 当被选中时的方法
+        /// </summary>
+        protected virtual void OnChecked()
+        {
+        }
         /// <summary>
         /// 初始化
         /// </summary>
         public virtual void Initialize()
         {
         }
-
     }
 }
+

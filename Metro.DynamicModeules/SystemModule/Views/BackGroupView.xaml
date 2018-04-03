@@ -16,7 +16,7 @@
         <ResourceDictionary>
             <DataTemplate  DataType="{x:Type bllBase:ButtonInfoViewModel}">
                 <StackPanel Orientation="Horizontal" >
-                    <CheckBox/>
+                    <CheckBox IsChecked="{Binding Checked}" IsThreeState="False"/>
                     <ContentControl Content="{Binding Icon}"/>
                     <TextBlock Text="{Binding AuthorityItem.AuthorityName}"/>
                 </StackPanel>
@@ -24,7 +24,7 @@
 
             <HierarchicalDataTemplate DataType="{x:Type baseVmodel:ChildBaseViewModel}"  ItemsSource="{Binding Buttons}">
                 <StackPanel Orientation="Horizontal"  >
-                    <CheckBox/>
+                    <CheckBox IsChecked="{Binding Checked}" IsThreeState="True"/>
                     <ContentControl Content="{Binding Icon}"/>
                     <TextBlock Text="{Binding MyMenu.MenuName}"/>
                 </StackPanel>
@@ -33,7 +33,7 @@
             <!-- ItemsSource="{Binding SubModuleList}"是HierarchicalDataTemplate.ItemTemplate内部的数据源-->
             <HierarchicalDataTemplate DataType="{x:Type baseVmodel:ModuleBaseViewModel}" ItemsSource="{Binding SubModuleList}">
                 <StackPanel Orientation="Horizontal">
-                    <CheckBox/>
+                    <CheckBox IsChecked="{Binding Checked}" IsThreeState="True"/>
                     <ContentControl Content="{Binding Icon}" Margin="2"/>
                     <TextBlock Text="{Binding Module.ModuleName}"/>
                 </StackPanel>

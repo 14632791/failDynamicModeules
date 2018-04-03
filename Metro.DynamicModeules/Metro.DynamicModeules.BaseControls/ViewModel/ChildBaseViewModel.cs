@@ -6,6 +6,7 @@ using Metro.DynamicModeules.BLL.Security;
 using Metro.DynamicModeules.Interface.Sys;
 using Metro.DynamicModeules.Models.Sys;
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,6 +15,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Controls;
 using Metro.DynamicModeules.BLL;
+using Metro.DynamicModeules.BaseControls.Commands;
+using Metro.DynamicModeules.Common;
 
 namespace Metro.DynamicModeules.BaseControls.ViewModel
 {
@@ -204,7 +207,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>        
         protected virtual void ButtonStateChanged(DataRowState currentState)
         {
-           //PackIconModern _3dCollada;  //PackIconControl<PackIconModernKind>
+            //PackIconModern _3dCollada;  //PackIconControl<PackIconModernKind>
             //PackIconEntypo AircraftLand;  //PackIconControl<PackIconEntypoKind>
             //PackIconSimpleIcons Amazon;  // PackIconControl<PackIconSimpleIconsKind>
 
@@ -452,7 +455,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         public virtual void DoChange()
         {
-            
+
         }
 
         public virtual void DoPrint()
@@ -522,6 +525,43 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         {
             Owner = new FlipPanel();
             return Owner;
+        }
+
+        /// <summary>
+        /// 当被选中时的方法
+        /// </summary>
+        protected override void OnChecked()
+        {
+            try
+            {
+                base.OnChecked();
+                //遍历IModule的所有子集
+                if (IModule.SubModuleList.All(c => c.Checked.HasValue&& c.Checked.Value))
+                {
+                    IModule.Checked = true;
+                }
+                else if (IModule.SubModuleList.Any(c => c.Checked.HasValue && c.Checked.Value))
+                {
+                    IModule.Checked = null;
+                }
+                else
+                {
+                    IModule.Checked = false;
+                }
+                //向下兼容
+                if (!Checked.HasValue)
+                {
+                    return;
+                }
+                foreach (var item in Buttons)
+                {
+                    item.Checked = Checked.Value;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+            }
         }
     }
 }
