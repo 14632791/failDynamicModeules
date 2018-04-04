@@ -535,6 +535,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             try
             {
                 base.OnChecked();
+                IModule.IsSelfTrigger = false;
                 //遍历IModule的所有子集
                 if (IModule.SubModuleList.All(c => c.Checked.HasValue&& c.Checked.Value))
                 {
@@ -555,12 +556,18 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 }
                 foreach (var item in Buttons)
                 {
+                    item.IsSelfTrigger = false;
                     item.Checked = Checked.Value;
+                    item.IsSelfTrigger = true;
                 }
             }
             catch (Exception ex)
             {
                 LogHelper.Error(ex);
+            }
+            finally
+            {
+                IModule.IsSelfTrigger = true;
             }
         }
     }

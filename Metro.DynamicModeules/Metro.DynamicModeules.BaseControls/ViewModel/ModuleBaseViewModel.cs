@@ -91,7 +91,15 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                 //向下兼容
                 foreach (var item in SubModuleList)
                 {
+                    item.IsSelfTrigger = false;
                     item.Checked = Checked.Value;
+                    foreach (var button in item.Buttons)
+                    {
+                        button.IsSelfTrigger = false;
+                        button.Checked = Checked.Value;
+                        button.IsSelfTrigger = true;
+                    }
+                    item.IsSelfTrigger = true;
                 }
             }
             catch (Exception ex)
@@ -159,13 +167,27 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             {
                 if (_checked != value)
                 {
-                    _checked = value;
+                    //如果是自己点击的就没有null值
+                    if (IsSelfTrigger && null == value)
+                    {
+                        _checked = false;
+                    }
+                    else
+                    {
+                        _checked = value;
+                    }
                     RaisePropertyChanged(() => Checked);
-                    OnChecked();
+                    if (IsSelfTrigger)
+                    {
+                        OnChecked();
+                    }
                 }
             }
         }
-
+        /// <summary>
+        /// 是否是自己触发checked
+        /// </summary>
+        public bool IsSelfTrigger { get; set; } = true;
         /// <summary>
         /// 当被选中时的方法
         /// </summary>

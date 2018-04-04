@@ -69,10 +69,17 @@ namespace Metro.DynamicModeules.BLL.Base
                 {
                     _checked = value;
                     RaisePropertyChanged(() => Checked);
-                    OnChecked();
+                    if (IsSelfTrigger)
+                    {
+                        OnChecked();
+                    }
                 }
             }
         }
+        /// <summary>
+        /// 是否是自己触发,只能由别人控制
+        /// </summary>
+       public bool IsSelfTrigger { get; set; } = true;
         /// <summary>
         /// 当被选中时的方法
         /// </summary>
@@ -80,6 +87,7 @@ namespace Metro.DynamicModeules.BLL.Base
         {
             try
             {
+                MdiChildModel.IsSelfTrigger = false;
                 //遍历IModule的所有子集
                 if (MdiChildModel.Buttons.All(c => c.Checked))
                 {
@@ -97,6 +105,10 @@ namespace Metro.DynamicModeules.BLL.Base
             catch (Exception ex)
             {
                 LogHelper.Error(ex);
+            }
+            finally
+            {
+                MdiChildModel.IsSelfTrigger = true;
             }
         }
 
@@ -145,7 +157,7 @@ namespace Metro.DynamicModeules.BLL.Base
             }
             try
             {
-                IsEnabled = false;
+                //IsEnabled = false;
                 _action?.BeginInvoke(null, null);//这里通过委托异步实现
             }
             catch (Exception ex)
@@ -154,10 +166,9 @@ namespace Metro.DynamicModeules.BLL.Base
             }
             finally
             {
-                IsEnabled = true;
+                //IsEnabled = true;
                 Monitor.Exit(_cmdLock);
             }
         }
-
-    }
+    }       
 }

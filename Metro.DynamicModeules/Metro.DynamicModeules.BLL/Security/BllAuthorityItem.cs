@@ -49,6 +49,6 @@ namespace Metro.DynamicModeules.BLL.Security
         public async Task<List<tb_MyAuthorityByItem>> GetAllAuthItems()
         {
             return await WebRequestHelper.PostHttpAsync<List<tb_MyAuthorityByItem>>(GetApiUrl("GetAllItems"));
-        }
+        }        
     }
 }
