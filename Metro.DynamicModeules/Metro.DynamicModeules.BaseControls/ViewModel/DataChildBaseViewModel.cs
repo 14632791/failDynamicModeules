@@ -146,10 +146,8 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             try
             {
                 _flipPanel.IsFlipped = !_flipPanel.IsFlipped;
-                //Buttons
-                //if (SystemConfig.CurrentConfig == null) return;
-                //if (!this.HasData()) return;
-                //PackIconButton btn = _buttons.GetButtonByName("btnEdit");
+                SetViewMode();
+              
                 //双击表格进入修改状态
                 //if (SystemConfig.CurrentConfig.DoubleClickIntoEditMode)
                 //{
