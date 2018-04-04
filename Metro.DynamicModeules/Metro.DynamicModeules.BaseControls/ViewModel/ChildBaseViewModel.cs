@@ -333,7 +333,8 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                     AuthorityItemsMgr.GenerateButton(AuthorityItemType.Add, this),
                     AuthorityItemsMgr.GenerateButton(AuthorityItemType.Delete, this),
                     AuthorityItemsMgr.GenerateButton(AuthorityItemType.Search, this),
-                    AuthorityItemsMgr.GenerateButton(AuthorityItemType.EditBox, this)
+                    AuthorityItemsMgr.GenerateButton(AuthorityItemType.EditBox, this),
+                     AuthorityItemsMgr.GenerateButton(AuthorityItemType.Save, this)
        });
             return btns;
         }
