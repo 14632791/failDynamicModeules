@@ -120,7 +120,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition MinHeight="60" Height="60"/>
+            <RowDefinition  Height="80"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -188,7 +188,7 @@
             <ItemsControl BorderThickness="1" Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding FocusedPage.Buttons}" >
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Button Style="{StaticResource IconButtonStyle}" Width="40" Height="40" />
+                        <Button Style="{StaticResource IconButtonStyle}" Width="60" Height="50" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemsPanel>

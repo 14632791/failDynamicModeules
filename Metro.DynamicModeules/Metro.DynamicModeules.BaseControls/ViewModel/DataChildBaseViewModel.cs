@@ -146,22 +146,21 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
             try
             {
                 _flipPanel.IsFlipped = !_flipPanel.IsFlipped;
-                SetViewMode();
-              
+
                 //双击表格进入修改状态
-                //if (SystemConfig.CurrentConfig.DoubleClickIntoEditMode)
-                //{
-                //    if (this.ButtonAuthorized(ButtonAuthority.EDIT)) //当前用户有修改权限
-                //    {
-                //        this.DoEdit(btn); //调用修改方法
-                //        return;
-                //    }
-                //}
-                //else //只能查看
-                //{
-                //this.DoViewContent(btn);
-                //  SetDetailEditorsAccessable(_DetailGroupControl, false); //2015.6.15 注释 陈刚 2015.6.15
-                //}
+                if (SystemConfig.CurrentConfig.DoubleClickIntoEditMode)
+                {
+                    if (this.ButtonAuthorized(ButtonAuthority.EDIT)) //当前用户有修改权限
+                    {
+                        this.DoEdit(); //调用修改方法
+                        return;
+                    }
+                }
+                else //只能查看
+                {
+                    this.DoViewContent();
+                    //SetDetailEditorsAccessable(_DetailGroupControl, false); //2015.6.15 注释 陈刚 2015.6.15
+                }
             }
             catch (Exception ex)
             {
@@ -267,8 +266,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         /// </summary>
         protected virtual void UpdateSummaryRow(T summary)
         {
-            if (DataSource == null) return;
-            if (summary == null) return;
+            if (DataSource == null|| summary == null) return;
             bool isSave = false;
             try
             {
@@ -280,12 +278,10 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
                     DataSource.Add(newrow);
                     //RefreshDataSource();
                 }
-
                 //如果是修改后保存,将最新数据替换当前记录的数据.
-                if (UpdateType == DataRowState.Modified || UpdateType == DataRowState.Unchanged)
+               else if (UpdateType == DataRowState.Modified)
                 {
                     this.ReplaceDataRowChanges(summary, FocusedRow);//替换数据
-                    //dr.Table.AcceptChanges();
                     //RefreshRow(FocusedRowHandle);//修改或新增要刷新Grid数据          
                 }
                 isSave = true;

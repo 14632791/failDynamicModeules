@@ -188,7 +188,7 @@ namespace Metro.DynamicModeules.BaseControls.Commands
            Code = AuthorityItemType.Approve.ToString(),
            AuthorityValue = 8,
            AuthorityName = "批准"
-       }, operatabler.DoAdd);
+       }, operatabler.DoApprove);
                     break;
                 case AuthorityItemType.Attachment:
                     button = new ButtonInfoViewModel(new PackIconEntypo { Kind = PackIconEntypoKind.Attachment },

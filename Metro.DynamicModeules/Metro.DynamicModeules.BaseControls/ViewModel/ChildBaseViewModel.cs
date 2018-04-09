@@ -231,7 +231,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         protected virtual void SetEditMode()
         {
             _flipPanel.IsFlipped = true;
-            foreach (ButtonInfoViewModel button in Buttons)
+            foreach (ButtonInfoViewModel button in Buttons)//.Where(b => b.AuthorityItem.Code!= AuthorityItemType.Save.ToString()))
             {
                 button.IsEnabled = false;
             }
@@ -359,7 +359,7 @@ namespace Metro.DynamicModeules.BaseControls.ViewModel
         public virtual void DoAdd()
         {
             UpdateType = DataRowState.Added;
-            //this.SetEditMode();
+            this.SetEditMode();
             //this.ButtonStateChanged(_updateType);
         }
 
